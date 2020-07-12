@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+    dill:  # Django container
+        build:
+            context: .
+        image: django:3.0.8
+        networks:
+            - srm_network
+        volumes:
+            - type: bind
+              source: ./SRM-project
+              target: /src
+        ports:
+            - 8000:8000
+        env_file:
+            - .env
+
+        command: bash scripts/runserver.sh
+
+
+    pumpkin:  # Postgres container
+        image: postgres:12.3
+        networks:
+            - srm_network
+        volumes:
+            - type: bind
+              source: ./pumpkin_src
+              target: /var/lib/postgresql/data
+        restart: unless-stopped
+
+        environment:
+            POSTGRES_DB: 'pumpkin'
+            POSTGRES_USER: 'pumpkin'
+            POSTGRES_PASSWORD: 'Pv16^6C&MzU#'
+
+
+    pomegranate:  # pgAdmin4 container
+        image: dpage/pgadmin4:4.22
+        networks:
+            - srm_network
+        ports:
+            - "8008:80"
+        restart: unless-stopped
+
+        environment:
+            PGADMIN_DEFAULT_EMAIL: 'rainbow_echo@outlook.com'
+            PGADMIN_DEFAULT_PASSWORD: '4M0&kuNhwGAh'
+
+
+networks:
+    srm_network:
