@@ -6,7 +6,7 @@ services:
             context: .
         image: django:3.0.8
         networks:
-            - srm_network
+            - serina-network
         volumes:
             - type: bind
               source: ./serina-project
@@ -23,10 +23,10 @@ services:
     pumpkin:  # Postgres container
         image: postgres:12.3
         networks:
-            - srm_network
+            - serina-network
         volumes:
-            - type: bind
-              source: ./pumpkin_src
+            - type: volume
+              source: pumpkin_database
               target: /var/lib/postgresql/data
         restart: unless-stopped
 
@@ -39,7 +39,7 @@ services:
     pomegranate:  # pgAdmin4 container
         image: dpage/pgadmin4:4.22
         networks:
-            - srm_network
+            - serina-network
         ports:
             - "8008:80"
         restart: unless-stopped
@@ -49,5 +49,9 @@ services:
             PGADMIN_DEFAULT_PASSWORD: '4M0&kuNhwGAh'
 
 
+volumes: 
+    pumpkin_database:
+
+
 networks:
-    srm_network:
+    serina-network:

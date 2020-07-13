@@ -37,6 +37,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third-parties apps
+    'crispy_forms',
+    'debug_toolbar',
+    'django_extensions',
+    'import_export',
+    'paypal.standard.ipn',
+    'rest_framework',
+    'url_filter',
+
+    # Project apps
 ]
 
 MIDDLEWARE = [
@@ -47,6 +58,9 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # Third-parties apps
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'serina.urls'
