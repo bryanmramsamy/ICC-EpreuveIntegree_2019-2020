@@ -1,0 +1,9 @@
+# Imported environnement variables
+*.env
+
+# Python3.8 cache files and directories
+*.pyc
+__pycache__/
+
+# IDE project settings folder
+*.idea/
