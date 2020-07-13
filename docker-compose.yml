@@ -9,12 +9,13 @@ services:
             - srm_network
         volumes:
             - type: bind
-              source: ./SRM-project
+              source: ./serina-project
               target: /src
+        restart: "no"
         ports:
             - 8000:8000
         env_file:
-            - .env
+            - dev.env
 
         command: bash scripts/runserver.sh
 
