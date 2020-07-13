@@ -7,6 +7,8 @@ services:
         image: django:3.0.8
         networks:
             - serina-network
+        depends_on:
+            - pumpkin
         volumes:
             - type: bind
               source: ./serina-project
@@ -37,11 +39,11 @@ services:
 
 
     pomegranate:  # pgAdmin4 container
-        image: dpage/pgadmin4:4.22
+        image: dpage/pgadmin4:4.23
         networks:
             - serina-network
         ports:
-            - "8008:80"
+            - "8080:80"
         restart: unless-stopped
 
         environment:
