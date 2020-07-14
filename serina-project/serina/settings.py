@@ -49,6 +49,11 @@ INSTALLED_APPS = [
     'url_filter',
 
     # Project apps
+    'administration',
+    'inscription',
+    'rating',
+    'registration',
+    'statistic',
 ]
 
 MIDDLEWARE = [
