@@ -7,6 +7,8 @@ from .models import UserProfile
 class UserProfileAdmin(admin.ModelAdmin):
     """UserProfile admin register class"""
 
+    # Listview
+
     list_display = (
         'user',
         'user_last_name',
@@ -40,6 +42,17 @@ class UserProfileAdmin(admin.ModelAdmin):
     user_last_name.short_description = _('Last name')
     user_first_name.short_description = _('First name')
     postalData.short_description = _('Postal locality')
+
+    # Detailview
+
+    readonly_fields = ['user']
+
+    fieldsets = (
+        (_('General information'), {
+            'description': _("User profile's general informations"),
+            'fields': ('user', 'birthday', 'nationality', 'address', 'postalCode', 'postalLocality')
+        }),
+    )
 
 
 admin.site.register(UserProfile, UserProfileAdmin)
