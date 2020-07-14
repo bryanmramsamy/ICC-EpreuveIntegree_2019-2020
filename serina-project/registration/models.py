@@ -33,3 +33,11 @@ class UserProfile(models.Model):
     # def get_absolute_url(self):
     #     """Return absolute url for UserProfile."""
     #     return ('')
+
+
+@receiver(post_save, sender=User)
+def createUserProfile(sender, instance, created, **kwargs):
+    """Create a UserProfile when a User is created and link it to it."""
+
+    if created and not instance.userprofile:
+        UserProfile.objects.create(user=instance)
