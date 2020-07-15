@@ -6,6 +6,6 @@ from django.urls import include
 
 
 urlpatterns = [
+    url(r"^", include('registration.urls')),
     url(r"^admin/", admin.site.urls),
-    url(r"^registration/", include('registration.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
