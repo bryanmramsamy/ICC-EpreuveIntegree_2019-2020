@@ -23,21 +23,21 @@ class UserProfileAdmin(admin.ModelAdmin):
     search_fields = ('user', 'postalCode', 'postalLocality')
     date_hierarchy = 'birthday'
 
-    def user_last_name(self, userprofile):
+    def user_last_name(self, userProfile):
         """Display user's last name in column"""
 
-        return userprofile.user.last_name
+        return userProfile.user.last_name
 
-    def user_first_name(self, userprofile):
+    def user_first_name(self, userProfile):
         """Display user's first name in column"""
 
-        return userprofile.user.first_name
+        return userProfile.user.first_name
 
-    def postalData(self, userprofile):
+    def postalData(self, userProfile):
         """Display user's last name in column"""
 
-        return "{} {}".format(userprofile.postalCode,
-                              userprofile.postalLocality)
+        return "{} {}".format(userProfile.postalCode,
+                              userProfile.postalLocality)
 
     user_last_name.short_description = _('Last name')
     user_first_name.short_description = _('First name')
@@ -50,7 +50,8 @@ class UserProfileAdmin(admin.ModelAdmin):
     fieldsets = (
         (_('General information'), {
             'description': _("User profile's general informations"),
-            'fields': ('user', 'birthday', 'nationality', 'address', 'postalCode', 'postalLocality')
+            'fields': ('user', 'birthday', 'nationality', 'address',
+                       'postalCode', 'postalLocality')
         }),
     )
 
