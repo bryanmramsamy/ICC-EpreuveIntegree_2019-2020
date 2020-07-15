@@ -1,10 +1,13 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import (
+    AuthenticationForm,
+    PasswordChangeForm
+)
 from django.utils.translation import ugettext as _
 
 
 class CustomAuthenticationForm(AuthenticationForm):
-    """Custom Authentication Form used by the CustomLoginView"""
+    """Custom Authentication Form supporting i18n"""
 
     username = forms.CharField(
         label=_('Username'),
@@ -15,3 +18,9 @@ class CustomAuthenticationForm(AuthenticationForm):
         label=_('Password'),
         widget=forms.PasswordInput()
     )
+
+
+class CustomPasswordChangeForm(PasswordChangeForm):
+    """Custom Authentication Form supporting i18n"""
+
+    
