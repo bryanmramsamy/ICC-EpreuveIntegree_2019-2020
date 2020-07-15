@@ -1,8 +1,15 @@
+{% extends 'base.html' %}
 {% load i18n %}
 
-<form action="{% url 'login' %}" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
+{% block title %}
+    {% trans 'Login' %}
+{% endblock title %}
 
-    <input type="submit" value="{% trans 'Sign in' %}">
-</form>
+{% block content %}
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Sign in' %}">
+    </form>
+{% endblock content %}
