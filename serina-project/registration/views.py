@@ -16,14 +16,14 @@ from .forms import (
 
 
 class CustomLoginView(LoginView):
-    """Customized Login View."""
+    """Customized LoginView."""
 
     template_name = "registration/login.html"
     authentication_form = CustomAuthenticationForm
 
 
 def customLogout(request):
-    """Logout redirection"""
+    """Logout redirection."""
 
     logout(request)
     messages.success(request, _("You have been logged out successfully"))
@@ -31,6 +31,21 @@ def customLogout(request):
 
 
 class CustomPasswordChangeView(PasswordChangeView):
+    """Customized PasswordChangeView."""
+
     template_name = "registration/password_change.html"
     # success_url = reverse('password_change_done')
     form_class = CustomPasswordChangeForm
+
+
+def customPasswordChangeDone(request):
+    """Password Change Done redirection to login.
+
+    The user must login again after a password change.
+    """
+
+    messages.success(
+        request,
+        _("Your password has been changed. You must log yourself in again.")
+    )
+    return redirect(reverse('password_change'))

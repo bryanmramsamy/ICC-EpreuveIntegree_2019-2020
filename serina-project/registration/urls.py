@@ -8,5 +8,5 @@ urlpatterns = [
     url(r"^logout/$", views.customLogout, name="logout"),
 
     url(r"^password/change/$", views.CustomPasswordChangeView.as_view(), name="password_change"),
-    
+    url(r"^password/change/done/$", views.customPasswordChangeDone, name="password_change_done"),
 ]
