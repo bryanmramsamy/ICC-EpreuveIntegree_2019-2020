@@ -49,8 +49,8 @@ INSTALLED_APPS = [
     'url_filter',
 
     # Project apps
-    'administration',
     'inscription',
+    'management',
     'rating',
     'registration',
     'statistic',
