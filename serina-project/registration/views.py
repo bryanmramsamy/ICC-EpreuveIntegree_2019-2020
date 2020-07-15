@@ -32,4 +32,5 @@ def customLogout(request):
 
 class CustomPasswordChangeView(PasswordChangeView):
     template_name = "registration/password_change.html"
+    # success_url = reverse('password_change_done')
     form_class = CustomPasswordChangeForm

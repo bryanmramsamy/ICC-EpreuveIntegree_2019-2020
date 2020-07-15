@@ -23,4 +23,17 @@ class CustomAuthenticationForm(AuthenticationForm):
 class CustomPasswordChangeForm(PasswordChangeForm):
     """Custom Authentication Form supporting i18n"""
 
-    
+    old_password = forms.CharField(
+        label=_('Old password'),
+        widget=forms.PasswordInput()
+    )
+
+    new_password1 = forms.CharField(
+        label=_('New password'),
+        widget=forms.PasswordInput()
+    )
+
+    new_password2 = forms.CharField(
+        label=_('New password confirmation'),
+        widget=forms.PasswordInput()
+    )
