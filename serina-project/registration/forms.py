@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import (
     AuthenticationForm,
-    PasswordChangeForm
+    PasswordChangeForm,
+    PasswordResetForm
 )
 from django.utils.translation import ugettext as _
 
@@ -25,7 +26,7 @@ class CustomPasswordChangeForm(PasswordChangeForm):
 
     old_password = forms.CharField(
         label=_('Old password'),
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(attrs={'autofocus': True})
     )
 
     new_password1 = forms.CharField(
@@ -36,4 +37,13 @@ class CustomPasswordChangeForm(PasswordChangeForm):
     new_password2 = forms.CharField(
         label=_('New password confirmation'),
         widget=forms.PasswordInput()
+    )
+
+
+class CustomPasswordResetForm(PasswordResetForm):
+    """Custom PasswordResetForm supporting i18n"""
+
+    email = forms.EmailField(
+        label=_('Email address'),
+        widget=forms.TextInput(attrs={'autofocus': True})
     )

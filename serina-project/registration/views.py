@@ -15,7 +15,8 @@ from django.utils.translation import ugettext as _
 
 from .forms import (
     CustomAuthenticationForm,
-    CustomPasswordChangeForm
+    CustomPasswordChangeForm,
+    CustomPasswordResetForm
 )
 
 
@@ -59,7 +60,7 @@ class CustomPasswordResetView(PasswordResetView):
     """Customized PasswordResetView."""
 
     template_name = "registration/password_reset.html"
-    # form_class = CustomPasswordChangeForm
+    form_class = CustomPasswordResetForm
     # email_template_name = "registration/password_reset_email.html"
     # subject_template_name = "registration/password_reset_subject.txt"
     success_url = "password_reset_done"
