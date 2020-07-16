@@ -3,7 +3,11 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import (
     LoginView,
     PasswordChangeView,
-    PasswordChangeDoneView
+    PasswordChangeDoneView,
+    PasswordResetConfirmView,
+    PasswordResetCompleteView,
+    PasswordResetDoneView,
+    PasswordResetView
 )
 from django.shortcuts import redirect, render
 from django.urls import reverse
@@ -49,3 +53,16 @@ def customPasswordChangeDone(request):
         _("Your password has been changed. You must log yourself in again.")
     )
     return redirect(reverse('password_change'))
+
+
+class CustomPasswordResetViews(PasswordResetView):
+    """Customized PasswordResetView"""
+
+    template_name = "registration/password_reset.html"
+    # form_class = CustomPasswordChangeForm
+    # email_template_name = "registration/password_reset_email.html"
+    # subject_template_name = "registration/password_reset_subject.txt"
+    success_url = "password_reset_done"
+    # from_email = "Serina@SerinaProject.com"  # DEFAULT_FROM_EMAIL = "Serina@SerinaProject.com"
+
+
