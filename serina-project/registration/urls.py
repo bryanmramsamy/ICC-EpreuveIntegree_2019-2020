@@ -18,4 +18,7 @@ urlpatterns = [
         name="password_reset_done"),
     url(r"^password/reset/confirm/(?P<uidb64>[0-9A-Za-z-_]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$", views.CustomPasswordResetConfirmView.as_view(),
         name="password_reset_confirm"),
+    url(r"^password/reset/complete/$",
+        views.CustomPasswordResetCompleteView.as_view(),
+        name="password_reset_complete"),
 ]

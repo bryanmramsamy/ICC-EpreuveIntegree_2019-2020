@@ -82,7 +82,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = "password_reset_complete"
 
 
-class CurtomPasswordResetCompleteView(PasswordResetCompleteView):
+class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     """Customized PasswordResetCompleteView."""
 
     template_name = "registration/password_reset_complete.html"
