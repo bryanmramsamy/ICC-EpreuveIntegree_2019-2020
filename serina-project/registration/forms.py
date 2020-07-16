@@ -44,6 +44,5 @@ class CustomPasswordResetForm(PasswordResetForm):
     """Custom PasswordResetForm supporting i18n"""
 
     email = forms.EmailField(
-        label=_('Email address'),
-        widget=forms.TextInput(attrs={'autofocus': True})
+        label=_('Email address')
     )

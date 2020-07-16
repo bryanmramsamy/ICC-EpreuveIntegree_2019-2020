@@ -14,7 +14,9 @@ urlpatterns = [
 
     url(r"^password/reset/$", views.CustomPasswordResetView.as_view(),
         name="password_reset"),
-    
+
+    url(r"^password/reset/done/$", views.CustomPasswordResetDoneView.as_view(),
+        name="password_reset_done"),
 
 
 ]
