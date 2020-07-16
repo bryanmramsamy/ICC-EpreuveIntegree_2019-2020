@@ -70,3 +70,12 @@ class CustomPasswordResetDoneView(PasswordResetDoneView):
     """Customized PasswordResetDoneView."""
 
     template_name = "registration/password_reset_done.html"
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    """ Curtomized PasswordResetConfirmView."""
+
+    template_name = "registration/password_reset_confirm.html"
+    post_reset_login = True
+    # form_class = CustomSetPasswordForm
+
