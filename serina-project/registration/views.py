@@ -55,7 +55,7 @@ def customPasswordChangeDone(request):
     return redirect(reverse('password_change'))
 
 
-class CustomPasswordResetViews(PasswordResetView):
+class CustomPasswordResetView(PasswordResetView):
     """Customized PasswordResetView."""
 
     template_name = "registration/password_reset.html"
