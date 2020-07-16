@@ -2,9 +2,21 @@ from django import forms
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
-    PasswordResetForm
+    PasswordResetForm,
+    UserCreationForm
 )
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
+
+
+class CustomUserCreationForm(UserCreationForm):
+    """Customized UserCreationForm."""
+
+    class Meta:
+        """Meta definition of CustomUserCreationForm"""
+
+        model = User
+        fields = '__all__'
 
 
 class CustomAuthenticationForm(AuthenticationForm):

@@ -16,8 +16,21 @@ from django.utils.translation import ugettext as _
 from .forms import (
     CustomAuthenticationForm,
     CustomPasswordChangeForm,
-    CustomPasswordResetForm
+    CustomPasswordResetForm,
+    CustomUserCreationForm
 )
+
+
+def register(request):
+    """Register function which creates an new User and a new linked
+    UserProfile."""
+
+    form_user = CustomUserCreationForm(request.POST or None)
+
+    if form_user.is_valid():
+        return redirect('home')
+    else:
+        return render(request, "registration/register.html", locals())
 
 
 class CustomLoginView(LoginView):
@@ -32,7 +45,7 @@ def customLogout(request):
 
     logout(request)
     messages.success(request, _("You have been logged out successfully"))
-    return redirect(reverse('login'))
+    return redirect('login')
 
 
 class CustomPasswordChangeView(PasswordChangeView):
@@ -53,7 +66,7 @@ def customPasswordChangeDone(request):
         request,
         _("Your password has been changed. You must log yourself in again.")
     )
-    return redirect(reverse('password_change'))
+    return redirect('home')
 
 
 class CustomPasswordResetView(PasswordResetView):
