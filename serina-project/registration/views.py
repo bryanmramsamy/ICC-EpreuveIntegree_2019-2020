@@ -56,7 +56,7 @@ def customPasswordChangeDone(request):
 
 
 class CustomPasswordResetViews(PasswordResetView):
-    """Customized PasswordResetView"""
+    """Customized PasswordResetView."""
 
     template_name = "registration/password_reset.html"
     # form_class = CustomPasswordChangeForm
@@ -66,3 +66,7 @@ class CustomPasswordResetViews(PasswordResetView):
     # from_email = "Serina@SerinaProject.com"  # DEFAULT_FROM_EMAIL = "Serina@SerinaProject.com"
 
 
+class CustomPasswordResetDoneView(PasswordResetDoneView):
+    """Customized PasswordResetDoneView."""
+
+    template_name = "registration/password_reset_done.html"
