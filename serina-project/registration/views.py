@@ -78,4 +78,10 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = "registration/password_reset_confirm.html"
     post_reset_login = True
     # form_class = CustomSetPasswordForm
+    success_url = "password_reset_complete"
 
+
+class CurtomPasswordResetCompleteView(PasswordResetCompleteView):
+    """Customized PasswordResetCompleteView."""
+
+    template_name = "registration/password_reset_complete.html"
