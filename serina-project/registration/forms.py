@@ -12,11 +12,39 @@ from django.utils.translation import ugettext as _
 class CustomUserCreationForm(UserCreationForm):
     """Customized UserCreationForm."""
 
+    birthday = forms.DateField(
+        label=_('Birthday date'),
+    )
+
+    nationality = forms.CharField(
+        label=_('Nationality')
+    )
+
+    address = forms.CharField(
+        label=_('Adress')
+    )
+
+    postalCode = forms.CharField(
+        label=_('Postal code')
+    )
+
+    postalLocality = forms.CharField(
+        label=_('Locality')
+    )
+
+
     class Meta:
         """Meta definition of CustomUserCreationForm"""
 
         model = User
-        fields = '__all__'
+        fields = {
+            'username',
+            'first_name',
+            'last_name',
+            'email',
+            'password1',
+            'password2'
+        }
 
 
 class CustomAuthenticationForm(AuthenticationForm):
