@@ -21,7 +21,7 @@ class CustomUserCreationForm(UserCreationForm):
     )
 
     address = forms.CharField(
-        label=_('Adress')
+        label=_('Address')
     )
 
     postalCode = forms.CharField(
@@ -31,7 +31,6 @@ class CustomUserCreationForm(UserCreationForm):
     postalLocality = forms.CharField(
         label=_('Locality')
     )
-
 
     class Meta:
         """Meta definition of CustomUserCreationForm"""
@@ -44,6 +43,14 @@ class CustomUserCreationForm(UserCreationForm):
             'email',
             'password1',
             'password2'
+        }
+        labels = {
+            'username': _('Username'),
+            'password1': _('Password'),
+            'password2': _('Password confirmation'),
+            'email': _('Email'),
+            'first_name': _('First name'),
+            'last_name': _('Last name')
         }
 
 

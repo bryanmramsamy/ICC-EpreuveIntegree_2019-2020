@@ -25,12 +25,39 @@ def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
 
-    form_user = CustomUserCreationForm(request.POST or None)
+    form = CustomUserCreationForm(request.POST or None)
 
-    if form_user.is_valid():
+    if form.is_valid():
+        user = user.save()
+        userProfile_birthday = form.cleaned_data["birthday"]
+        userProfile_nationality = form.cleaned_data["nationality"]
+        userProfile_address = form.cleaned_data["address"]
+        userProfile_postalCode = form.cleaned_data["postalCode"]
+        userProfile_postalLocality = form.cleaned_data["postalLocality"]
+
         return redirect('home')
     else:
         return render(request, "registration/register.html", locals())
+
+
+def inscription(request):
+    """Register a new user"""
+
+    user_form = UserForm(request.POST or None)
+    profil_form = ProfilForm(request.POST or None)
+
+    if user_form.is_valid() and profil_form.is_valid():
+        user = user_form.save()
+        profil = profil_form.save(commit=False)
+        # signal to create profile has been deactivated because profil.pk was used twice
+
+        profil.user = user
+        profil.save()
+
+        return redirect('home')
+    else:
+        return render(request, 'blog/signup.html', locals())
+
 
 
 class CustomLoginView(LoginView):
