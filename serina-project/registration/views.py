@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -28,63 +29,55 @@ def register(request):
     UserProfile."""
 
     # TODO: Check if user is active and already authenticated
-
-    form = RegistrationForm(request.POST or None)
-
-    if form.is_valid():
-        username = "{}.{}".format(
-            form.cleaned_data["first_name"],
-            form.cleaned_data["last_name"]
+    if request.user.is_authenticated:
+        messages.warning(
+            request,
+            _("You are already signed in. "
+              "Please sign out to use a different account.")
         )
-        password = form.cleaned_data["password"]
-        email = form.cleaned_data["email"]
-        first_name = form.cleaned_data["first_name"]
-        last_name = form.cleaned_data["last_name"]
-
-        user = User.objects.create(
-            username=username,
-            password=password,
-            email=email,
-            first_name=first_name,
-            last_name=last_name
+        return redirect('home')
+    elif not request.user.is_active:
+        messages.error(
+            request,
+            _("Your account has been disabled. Contact the management team at "
+              "this address ({}) to get more information.".format(settings.MAIL_MANAGEMENT))
         )
-
-        UserProfile.objects.create(
-            user=user,
-            birthday=form.cleaned_data["birthday"],
-            nationality=form.cleaned_data["nationality"],
-            address=form.cleaned_data["address"],
-            postalCode=form.cleaned_data["postalCode"],
-            postalLocality=form.cleaned_data["postalLocality"]
-        )
-
-        # user = authenticate(username=username, password=password)
-        # NOTE: Not needed because the user is already defined in line 44
-        login(request, user)
-
         return redirect('home')
     else:
-        return render(request, "registration/register.html", locals())
+        form = RegistrationForm(request.POST or None)
 
+        if form.is_valid():
+            username = "{}.{}".format(
+                form.cleaned_data["first_name"],
+                form.cleaned_data["last_name"]
+            )
+            password = form.cleaned_data["password"]
+            email = form.cleaned_data["email"]
+            first_name = form.cleaned_data["first_name"]
+            last_name = form.cleaned_data["last_name"]
 
-def inscription(request):
-    """Register a new user"""
+            user = User.objects.create(
+                username=username,
+                password=password,
+                email=email,
+                first_name=first_name,
+                last_name=last_name
+            )
 
-    user_form = UserForm(request.POST or None)
-    profil_form = ProfilForm(request.POST or None)
+            UserProfile.objects.create(
+                user=user,
+                birthday=form.cleaned_data["birthday"],
+                nationality=form.cleaned_data["nationality"],
+                address=form.cleaned_data["address"],
+                postalCode=form.cleaned_data["postalCode"],
+                postalLocality=form.cleaned_data["postalLocality"]
+            )
 
-    if user_form.is_valid() and profil_form.is_valid():
-        user = user_form.save()
-        profil = profil_form.save(commit=False)
-        # signal to create profile has been deactivated because profil.pk was used twice
+            login(request, user)
 
-        profil.user = user
-        profil.save()
-
-        return redirect('home')
-    else:
-        return render(request, 'blog/signup.html', locals())
-
+            return redirect('home')
+        else:
+            return render(request, "registration/register.html", locals())
 
 
 class CustomLoginView(LoginView):
