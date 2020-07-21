@@ -30,8 +30,11 @@ def register(request):
     form = RegistrationForm(request.POST or None)
 
     if form.is_valid():
-        username = form.cleaned_data["username"]
-        password = form.cleaned_data["password1"]
+        username = "{}.{}".format(
+            form.cleaned_data["first_name"],
+            form.cleaned_data["last_name"]
+        )
+        password = form.cleaned_data["password"]
         email = form.cleaned_data["email"]
         first_name = form.cleaned_data["first_name"]
         last_name = form.cleaned_data["last_name"]
@@ -44,16 +47,16 @@ def register(request):
             last_name=last_name
         )
 
-        userProfile = UserProfile.objects.get(user=user)
+        # userProfile = UserProfile.objects.get(user=user)
 
-        userProfile.birthday = form.cleaned_data["birthday"]
-        print(userProfile.birthday)
-        userProfile.nationality = form.cleaned_data["nationality"]
-        userProfile.address = form.cleaned_data["address"]
-        userProfile.postalCode = form.cleaned_data["postalCode"]
-        userProfile.postalLocality = form.cleaned_data["postalLocality"]
+        # userProfile.birthday = form.cleaned_data["birthday"]
+        # print(userProfile.birthday)
+        # userProfile.nationality = form.cleaned_data["nationality"]
+        # userProfile.address = form.cleaned_data["address"]
+        # userProfile.postalCode = form.cleaned_data["postalCode"]
+        # userProfile.postalLocality = form.cleaned_data["postalLocality"]
 
-        type(userProfile).objects.save()
+        # type(userProfile).objects.save()
 
         user = authenticate(username=username, password=password)
         login(request, user)

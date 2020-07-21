@@ -9,60 +9,51 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 
-class RegistrationForm(forms.ModelForm):
+class RegistrationForm(forms.Form):
     """Customized UserCreationForm."""
 
-    confirm_password = forms.CharField(
-        label=_("Password confirmation"),
+    first_name = forms.CharField(
+        label=_("First name"),
+        required=True,
+    )
+    last_name = forms.CharField(
+        label=_("Last name"),
+        required=True,
+    )
+    email = forms.EmailField(
+        label=_("Email"),
+        required=True,
+    )
+    password = forms.CharField(
+        label=_("Password"),
+        required=True,
         widget=forms.PasswordInput
     )
-
+    confirm_password = forms.CharField(
+        label=_("Password confirmation"),
+        required=True,
+        widget=forms.PasswordInput
+    )
     birthday = forms.DateField(
         label=_('Birthday date'),
+        required=True,
     )
-
     nationality = forms.CharField(
-        label=_('Nationality')
+        label=_('Nationality'),
+        required=True,
     )
-
     address = forms.CharField(
-        label=_('Address')
+        label=_('Address'),
+        required=True,
     )
-
     postalCode = forms.CharField(
-        label=_('Postal code')
+        label=_('Postal code'),
+        required=True,
     )
-
     postalLocality = forms.CharField(
-        label=_('Locality')
+        label=_('Locality'),
+        required=True,
     )
-
-    class Meta:
-        """Meta definition of CustomUserCreationForm"""
-
-        model = User
-        fields = {
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-        }
-
-        labels = {
-            'password1': _('Password'),
-            'password2': _('Password confirmation'),
-            'email': _('Email'),
-            'first_name': _('First name'),
-            'last_name': _('Last name')
-        }
-
-    def __init__(self, *args, **kwargs):
-        """Make email, first_name and last_name fields required."""
-
-        super(RegistrationForm, self).__init__(*args, **kwargs)
-        self.fields['email'].required = True
-        self.fields['first_name'].required = True
-        self.fields['last_name'].required = True
 
 
 class CustomAuthenticationForm(AuthenticationForm):
