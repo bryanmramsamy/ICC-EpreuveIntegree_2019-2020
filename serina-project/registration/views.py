@@ -104,7 +104,7 @@ def customLogout(request):
 
     logout(request)
     messages.success(request, _("You have been logged out successfully"))
-    return redirect('login')
+    return redirect('home')
 
 
 class CustomPasswordChangeView(PasswordChangeView):
