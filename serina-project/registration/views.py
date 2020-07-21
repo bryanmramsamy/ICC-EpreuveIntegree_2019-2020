@@ -36,7 +36,7 @@ def register(request):
               "Please sign out to use a different account.")
         )
         return redirect('home')
-    elif not request.user.is_active:
+    elif not request.user.is_anonymous and not request.user.is_active:
         messages.error(
             request,
             _("Your account has been disabled. Contact the management team at "
