@@ -53,6 +53,14 @@ class CustomUserCreationForm(UserCreationForm):
             'last_name': _('Last name')
         }
 
+    def __init__(self, *args, **kwargs):
+        """Make email, first_name and last_name fields required."""
+
+        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        self.fields['email'].required = True
+        self.fields['first_name'].required = True
+        self.fields['last_name'].required = True
+
 
 class CustomAuthenticationForm(AuthenticationForm):
     """Custom Authentication Form supporting i18n"""
