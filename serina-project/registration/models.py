@@ -13,7 +13,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE,
                                 verbose_name=_("Username"))
-    birthday = models.DateField(auto_now=False, auto_now_add=True,
+    birthday = models.DateField(default="1970-01-01", auto_now=False, auto_now_add=False,
                                 verbose_name=_("Birthday date"))
     nationality = models.CharField(default="Unknown", max_length=50,
                                    verbose_name=_("Nationality"))

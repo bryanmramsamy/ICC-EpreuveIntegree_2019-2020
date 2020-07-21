@@ -1,11 +1,18 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 from .models import UserProfile
 
 
-class UserProfileAdmin(admin.ModelAdmin):
-    """UserProfile admin register class"""
+class UserProfileAdmin(admin.StackedInline):
+
+    # StackedInline
+    model = UserProfile
+    can_delete = False
+    verbose_name = _("User profile")
+    verbose_name_plural = _("Users profile")
 
     # Listview
 
@@ -45,15 +52,13 @@ class UserProfileAdmin(admin.ModelAdmin):
 
     # Detailview
 
-    readonly_fields = ['user']
-
-    fieldsets = (
-        (_('General information'), {
-            'description': _("User profile's general informations"),
-            'fields': ('user', 'birthday', 'nationality', 'address',
-                       'postalCode', 'postalLocality')
-        }),
-    )
+    fields = ['user', 'birthday', 'nationality', 'address', 'postalCode',
+              'postalLocality']
 
 
-admin.site.register(UserProfile, UserProfileAdmin)
+class CustomUserAdmin(UserAdmin):
+    inlines = (UserProfileAdmin,)
+
+
+admin.site.unregister(User)
+admin.site.register(User, CustomUserAdmin)
