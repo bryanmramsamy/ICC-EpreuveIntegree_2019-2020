@@ -13,15 +13,13 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE,
                                 verbose_name=_("Username"))
-    birthday = models.DateField(default="1970-01-01", auto_now=False, auto_now_add=False,
+    birthday = models.DateField(auto_now=False, auto_now_add=False,
                                 verbose_name=_("Birthday date"))
-    nationality = models.CharField(default="Unknown", max_length=50,
+    nationality = models.CharField(max_length=50,
                                    verbose_name=_("Nationality"))
-    address = models.CharField(default="Unknown", max_length=255,
-                               verbose_name=_("Address"))
-    postalCode = models.CharField(default="Unknown", max_length=50,
-                                  verbose_name=_("Postal code"))
-    postalLocality = models.CharField(default="Unknown", max_length=50,
+    address = models.CharField(max_length=255, verbose_name=_("Address"))
+    postalCode = models.CharField(max_length=50, verbose_name=_("Postal code"))
+    postalLocality = models.CharField(max_length=50,
                                       verbose_name=_("Locality"))
 
     class Meta:
@@ -33,17 +31,9 @@ class UserProfile(models.Model):
     def __str__(self):
         """Unicode representation of UserProfile."""
 
-        return _("{}'s profile".format(self.user))
+        return _("[{}] {}'s profile".format(self.pk, self.user))
 
     # TODO: Add method when UserProfile url ready
     # def get_absolute_url(self):
     #     """Return absolute url for UserProfile."""
     #     return ('')
-
-
-@receiver(post_save, sender=User)
-def createUserProfile(sender, instance, created, **kwargs):
-    """Create a UserProfile when a User is created and link it to it."""
-
-    if created:
-        UserProfile.objects.create(user=instance)
