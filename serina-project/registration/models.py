@@ -13,13 +13,15 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE,
                                 verbose_name=_("Username"))
-    birthday = models.DateField(auto_now=False, auto_now_add=False,
+    birthday = models.DateField(auto_now=False, auto_now_add=True,
                                 verbose_name=_("Birthday date"))
-    nationality = models.CharField(max_length=50,
+    nationality = models.CharField(default="Unknown", max_length=50,
                                    verbose_name=_("Nationality"))
-    address = models.CharField(max_length=255, verbose_name=_("Address"))
-    postalCode = models.CharField(max_length=50, verbose_name=_("Postal code"))
-    postalLocality = models.CharField(max_length=50,
+    address = models.CharField(default="Unknown", max_length=255,
+                               verbose_name=_("Address"))
+    postalCode = models.CharField(default="Unknown", max_length=50,
+                                  verbose_name=_("Postal code"))
+    postalLocality = models.CharField(default="Unknown", max_length=50,
                                       verbose_name=_("Locality"))
 
     class Meta:
@@ -43,5 +45,5 @@ class UserProfile(models.Model):
 def createUserProfile(sender, instance, created, **kwargs):
     """Create a UserProfile when a User is created and link it to it."""
 
-    if created and not instance.userprofile:
+    if created:
         UserProfile.objects.create(user=instance)

@@ -1,5 +1,6 @@
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.views import (
     LoginView,
     PasswordChangeView,
@@ -19,6 +20,7 @@ from .forms import (
     CustomPasswordResetForm,
     CustomUserCreationForm
 )
+from .models import UserProfile
 
 
 def register(request):
@@ -30,14 +32,31 @@ def register(request):
     if form.is_valid():
         username = form.cleaned_data["username"]
         password = form.cleaned_data["password1"]
+        email = form.cleaned_data["email"]
         first_name = form.cleaned_data["first_name"]
         last_name = form.cleaned_data["last_name"]
-        user = user.save()
-        userProfile_birthday = form.cleaned_data["birthday"]
-        userProfile_nationality = form.cleaned_data["nationality"]
-        userProfile_address = form.cleaned_data["address"]
-        userProfile_postalCode = form.cleaned_data["postalCode"]
-        userProfile_postalLocality = form.cleaned_data["postalLocality"]
+
+        user = User.objects.create(
+            username=username,
+            password=password,
+            email=email,
+            first_name=first_name,
+            last_name=last_name
+        )
+
+        userProfile = UserProfile.objects.get(user=user)
+
+        userProfile.birthday = form.cleaned_data["birthday"]
+        print(userProfile.birthday)
+        userProfile.nationality = form.cleaned_data["nationality"]
+        userProfile.address = form.cleaned_data["address"]
+        userProfile.postalCode = form.cleaned_data["postalCode"]
+        userProfile.postalLocality = form.cleaned_data["postalLocality"]
+
+        type(userProfile).objects.save()
+
+        user = authenticate(username=username, password=password)
+        login(request, user)
 
         return redirect('home')
     else:
