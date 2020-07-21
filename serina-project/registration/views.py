@@ -18,7 +18,7 @@ from .forms import (
     CustomAuthenticationForm,
     CustomPasswordChangeForm,
     CustomPasswordResetForm,
-    CustomUserCreationForm
+    RegistrationForm
 )
 from .models import UserProfile
 
@@ -27,7 +27,7 @@ def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
 
-    form = CustomUserCreationForm(request.POST or None)
+    form = RegistrationForm(request.POST or None)
 
     if form.is_valid():
         username = form.cleaned_data["username"]

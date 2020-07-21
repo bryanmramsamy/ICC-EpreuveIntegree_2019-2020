@@ -9,8 +9,13 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext as _
 
 
-class CustomUserCreationForm(UserCreationForm):
+class RegistrationForm(forms.ModelForm):
     """Customized UserCreationForm."""
+
+    confirm_password = forms.CharField(
+        label=_("Password confirmation"),
+        widget=forms.PasswordInput
+    )
 
     birthday = forms.DateField(
         label=_('Birthday date'),
@@ -37,15 +42,13 @@ class CustomUserCreationForm(UserCreationForm):
 
         model = User
         fields = {
-            'username',
             'first_name',
             'last_name',
             'email',
-            'password1',
-            'password2'
+            'password',
         }
+
         labels = {
-            'username': _('Username'),
             'password1': _('Password'),
             'password2': _('Password confirmation'),
             'email': _('Email'),
@@ -56,7 +59,7 @@ class CustomUserCreationForm(UserCreationForm):
     def __init__(self, *args, **kwargs):
         """Make email, first_name and last_name fields required."""
 
-        super(CustomUserCreationForm, self).__init__(*args, **kwargs)
+        super(RegistrationForm, self).__init__(*args, **kwargs)
         self.fields['email'].required = True
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
