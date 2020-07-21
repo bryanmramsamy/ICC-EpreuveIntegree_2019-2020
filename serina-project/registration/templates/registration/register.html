@@ -3,7 +3,7 @@
 
 {% block title %}{% trans 'Register' %}{% endblock title %}
 
-{% block messages %}
+{% block additional_messages %}
     {% if form.errors %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -18,7 +18,7 @@
             </div>
         {% endfor %}
     {% endif %}
-{% endblock messages %}
+{% endblock additional_messages %}
 
 {% block content %}
     <form action="{% url 'register' %}" method="post">
