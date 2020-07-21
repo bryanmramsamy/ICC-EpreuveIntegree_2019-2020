@@ -27,6 +27,8 @@ def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
 
+    # TODO: Check if user is active and already authenticated
+
     form = RegistrationForm(request.POST or None)
 
     if form.is_valid():
@@ -47,18 +49,17 @@ def register(request):
             last_name=last_name
         )
 
-        # userProfile = UserProfile.objects.get(user=user)
+        UserProfile.objects.create(
+            user=user,
+            birthday=form.cleaned_data["birthday"],
+            nationality=form.cleaned_data["nationality"],
+            address=form.cleaned_data["address"],
+            postalCode=form.cleaned_data["postalCode"],
+            postalLocality=form.cleaned_data["postalLocality"]
+        )
 
-        # userProfile.birthday = form.cleaned_data["birthday"]
-        # print(userProfile.birthday)
-        # userProfile.nationality = form.cleaned_data["nationality"]
-        # userProfile.address = form.cleaned_data["address"]
-        # userProfile.postalCode = form.cleaned_data["postalCode"]
-        # userProfile.postalLocality = form.cleaned_data["postalLocality"]
-
-        # type(userProfile).objects.save()
-
-        user = authenticate(username=username, password=password)
+        # user = authenticate(username=username, password=password)
+        # NOTE: Not needed because the user is already defined in line 44
         login(request, user)
 
         return redirect('home')
