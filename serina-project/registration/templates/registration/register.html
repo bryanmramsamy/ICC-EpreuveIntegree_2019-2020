@@ -3,30 +3,26 @@
 
 {% block title %}{% trans 'Register' %}{% endblock title %}
 
+{% block messages %}
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endblock messages %}
+
 {% block content %}
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
-        <div>
-            <label for="id_username">{{ form.username.label }}: </label>
-            {{ form.username }}
-        </div>
-        <div>
-            <label for="id_password1">{{ form.password1.label }}: </label>
-            {{ form.password1 }}
-            <p>
-                Your password can’t be too similar to your other personal information.
-                Your password must contain at least 8 characters.
-                Your password can’t be a commonly used password.
-                Your password can’t be entirely numeric.
-            </p>
-        </div>
-        <div>
-            <label for="id_password2">{{ form.password2.label }}: </label>
-            {{ form.password2 }}
-        </div>
-            <label for="id_email">{{ form.email.label }}: </label>
-            {{ form.email }}
-        </div>
         <div>
             <label for="id_first_name">{{ form.first_name.label }}: </label>
             {{ form.first_name }}
@@ -35,6 +31,23 @@
             <label for="id_last_name">{{ form.last_name.label }}: </label>
             {{ form.last_name }}
         </div>
+        </div>
+            <label for="id_email">{{ form.email.label }}: </label>
+            {{ form.email }}
+        </div>
+        <div>
+            <label for="id_password">{{ form.password.label }}: </label>
+            {{ form.password }}
+            <p>
+                Your password can’t be too similar to your other personal information.
+                Your password must contain at least 8 characters.
+                Your password can’t be a commonly used password.
+                Your password can’t be entirely numeric.
+            </p>
+        </div>
+        <div>
+            <label for="id_confirm_password">{{ form.confirm_password.label }}: </label>
+            {{ form.confirm_password }}
         <div>
             <label for="id_birthday">{{ form.birthday.label }}: </label>
             {{ form.birthday }}
