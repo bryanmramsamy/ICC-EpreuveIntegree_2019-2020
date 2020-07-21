@@ -85,6 +85,7 @@ class CustomLoginView(LoginView):
 
     template_name = "registration/login.html"
     authentication_form = CustomAuthenticationForm
+    redirect_authenticated_user = True
 
 
 def customLogout(request):
