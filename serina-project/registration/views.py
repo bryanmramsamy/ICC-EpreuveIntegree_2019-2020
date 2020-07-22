@@ -22,6 +22,7 @@ from .forms import (
     CustomPasswordResetForm,
     RegistrationForm
 )
+from . import group_management
 from .models import UserProfile
 
 
@@ -61,14 +62,14 @@ def register(request):
             latestUserPk = User.objects.latest('pk').pk
 
             user = User.objects.create(
-                username=username_generator(latestUserPk+1),
+                username=group_management.username_generator(latestUserPk+1),
                 password=password,
                 email=email,
                 first_name=first_name.title(),
                 last_name=last_name.title()
             )
 
-            promote_to_guest(user)
+            group_management.promote_to_professor(user)
             user.save()
 
             UserProfile.objects.create(
@@ -85,81 +86,6 @@ def register(request):
             return redirect('home')
         else:
             return render(request, "registration/register.html", locals())
-
-
-def username_generator(pk):
-    """Generate a username registration number.
-
-    The registration number has the (YYMMDDxxx) format with YY current year,
-    MM the current month, DD the current day and xxx the pk given as argument
-    filled with leading zeros.
-    """
-
-    return date.today().strftime("%y%m%d") + str(pk).zfill(3)
-
-
-def remove_from_all_groups(user):
-    """Remove a user from all its groups.
-    Remove the user access as staff member and superuser."""
-
-    groups = Group.objects.all()
-
-    for group in groups:
-        group.user_set.remove(user)
-
-    user.is_staff = False
-    user.is_superuser = False
-
-
-def add_to_group(user, group_name):
-    """Add a user to a given group. Creates it if the group does not exist yet.
-    """
-
-    group, isCreated = Group.objects.get_or_create(name=group_name)
-    group.user_set.add(user)
-
-    return isCreated
-
-
-def change_group(user, group_name):
-    """Remove a user from all its group and add him/her to the given one."""
-
-    remove_from_all_groups(user)
-    add_to_group(user, group_name)
-
-
-def promote_to_guest(user):
-    """Promote a registered user to the 'Guest'-group."""
-
-    change_group(user, 'Guest')
-
-
-def promote_to_student(user):
-    """Promote a registered user to the 'Student'-group."""
-
-    change_group(user, 'Student')
-
-
-def promote_to_professor(user):
-    """Promote a registered user to the 'Professor'-group."""
-
-    change_group(user, 'Professor')
-
-
-def promote_to_manager(user):
-    """Promote a registered user to the 'Manager'-group and make is staff
-    member."""
-
-    change_group(user, 'Manager')
-    user.is_staff = True
-
-
-def promote_to_administrator(user):
-    """Promote a registered user to the 'Administrator'-group and make it
-    superuser."""
-
-    change_group(user, 'Administrator')
-    user.is_superuser = True
 
 
 class CustomLoginView(LoginView):
