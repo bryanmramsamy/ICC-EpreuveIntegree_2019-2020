@@ -24,6 +24,8 @@ def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
                 instance.first_name.lower(),
                 instance.last_name.lower()
             )
+            if group_management.username_exist(instance.username):
+                instance.username += ".{}".format(instance.pk)
         else:
             instance.username = group_management.username_generator(
                 instance.pk,

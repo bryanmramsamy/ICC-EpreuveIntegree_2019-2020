@@ -13,6 +13,12 @@ def username_generator(pk, date):
     return date.strftime("%y%m%d") + str(pk).zfill(3)
 
 
+def username_exist(username):
+    """Check if a username is already taken."""
+
+    return User.objects.filter(username=username).exists()
+
+
 def is_member_of_promoted_group(user):
     """Check if the user is a member of on of the promoted group.
 
