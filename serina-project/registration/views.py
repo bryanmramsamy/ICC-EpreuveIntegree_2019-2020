@@ -2,7 +2,7 @@ from datetime import date
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.contrib.auth.views import (
     LoginView,
     PasswordChangeView,
@@ -68,6 +68,8 @@ def register(request):
                 last_name=last_name.title()
             )
 
+            change_group(user, 'Guest')
+
             UserProfile.objects.create(
                 user=user,
                 birthday=form.cleaned_data["birthday"],
@@ -93,6 +95,32 @@ def username_generator(pk):
     """
 
     return date.today().strftime("%y%m%d") + str(pk).zfill(3)
+
+
+def remove_from_all_groups(user):
+    """Remove a user from all its groups."""
+
+    groups = Group.objects.all()
+
+    for group in groups:
+        group.user_set.remove(user)
+
+
+def add_to_group(user, group_name):
+    """Add a user to a given group. Creates it if the group does not exist yet.
+    """
+
+    group, isCreated = Group.objects.get_or_create(name=group_name)
+    group.user_set.add(user)
+
+    return isCreated
+
+
+def change_group(user, group_name):
+    """Remove a user from all its group and add him/her to the given one."""
+
+    remove_from_all_groups(user)
+    add_to_group(user, group_name)
 
 
 class CustomLoginView(LoginView):
