@@ -5,4 +5,10 @@
 
 {% block content %}
     <h1>Hola</h1>
+
+    <ul>
+        <li><a href="{% url 'register' %}">register</a></li>
+        <li><a href="{% url 'login' %}">login</a></li>
+        <li><a href="{% url 'logout' %}">logout</a></li>
+    </ul>
 {% endblock content %}
