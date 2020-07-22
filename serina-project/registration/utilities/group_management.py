@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group, User
+from django.db.models import Q
 
 
 def username_generator(pk, date):
@@ -10,6 +11,16 @@ def username_generator(pk, date):
     """
 
     return date.strftime("%y%m%d") + str(pk).zfill(3)
+
+
+def is_member_of_promoted_group(user):
+    """Check if the user is a member of on of the promoted group.
+
+    The promoted groups are: 'Professor', 'Manager', 'Administrator'
+    """
+
+    return user.groups.filter(Q(name="Professor") | Q(name="Manager")
+                              | Q(name="Administrator")).exists()
 
 
 def remove_from_all_groups(user):
