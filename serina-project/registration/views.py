@@ -1,8 +1,7 @@
-from datetime import date
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import Group, User
+from django.contrib.auth.models import User
 from django.contrib.auth.views import (
     LoginView,
     PasswordChangeView,
@@ -22,8 +21,8 @@ from .forms import (
     CustomPasswordResetForm,
     RegistrationForm
 )
-from . import group_management
 from .models import UserProfile
+from .utilities import group_management
 
 
 def register(request):

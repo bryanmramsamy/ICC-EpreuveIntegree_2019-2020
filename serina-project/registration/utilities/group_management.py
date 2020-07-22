@@ -1,28 +1,5 @@
 from datetime import date
-from django.conf import settings
-from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import Group, User
-from django.contrib.auth.views import (
-    LoginView,
-    PasswordChangeView,
-    PasswordChangeDoneView,
-    PasswordResetConfirmView,
-    PasswordResetCompleteView,
-    PasswordResetDoneView,
-    PasswordResetView
-)
-from django.shortcuts import redirect, render
-from django.urls import reverse
-from django.utils.translation import ugettext as _
-
-from .forms import (
-    CustomAuthenticationForm,
-    CustomPasswordChangeForm,
-    CustomPasswordResetForm,
-    RegistrationForm
-)
-from .models import UserProfile
 
 
 def username_generator(pk):
