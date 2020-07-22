@@ -1,3 +1,4 @@
+from datetime import date
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -28,7 +29,6 @@ def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
 
-    # TODO: Check if user is active and already authenticated
     if request.user.is_authenticated:
         messages.warning(
             request,
@@ -40,7 +40,9 @@ def register(request):
         messages.error(
             request,
             _("Your account has been disabled. Contact the management team at "
-              "this address ({}) to get more information.".format(settings.MAIL_MANAGEMENT))
+              "this address ({}) to get more information.".format(
+                  settings.MAIL_MANAGEMENT
+                  ))
         )
         return redirect('home')
     else:
@@ -56,12 +58,14 @@ def register(request):
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
 
+            latestUserPk = User.objects.latest('pk').pk
+
             user = User.objects.create(
-                username=username,
+                username=username_generator(latestUserPk+1),
                 password=password,
                 email=email,
-                first_name=first_name,
-                last_name=last_name
+                first_name=first_name.title(),
+                last_name=last_name.title()
             )
 
             UserProfile.objects.create(
@@ -78,6 +82,17 @@ def register(request):
             return redirect('home')
         else:
             return render(request, "registration/register.html", locals())
+
+
+def username_generator(pk):
+    """Generate a username registration number.
+
+    The registration number has the (YYMMDDxxx) format with YY current year,
+    MM the current month, DD the current day and xxx the pk given as argument
+    filled with leading zeros.
+    """
+
+    return date.today().strftime("%y%m%d") + str(pk).zfill(3)
 
 
 class CustomLoginView(LoginView):
