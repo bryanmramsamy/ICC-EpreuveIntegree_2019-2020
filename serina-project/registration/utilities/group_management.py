@@ -1,8 +1,7 @@
-from datetime import date
 from django.contrib.auth.models import Group, User
 
 
-def username_generator(pk):
+def username_generator(pk, date):
     """Generate a username registration number.
 
     The registration number has the (YYMMDDxxx) format with YY current year,
@@ -10,7 +9,7 @@ def username_generator(pk):
     filled with leading zeros.
     """
 
-    return date.today().strftime("%y%m%d") + str(pk).zfill(3)
+    return date.strftime("%y%m%d") + str(pk).zfill(3)
 
 
 def remove_from_all_groups(user):

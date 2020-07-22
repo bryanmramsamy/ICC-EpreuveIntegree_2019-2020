@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -22,7 +24,7 @@ from .forms import (
     RegistrationForm
 )
 from .models import UserProfile
-from .utilities import group_management
+from .utilities import group_management, signals
 
 
 def register(request):
@@ -59,9 +61,10 @@ def register(request):
             last_name = form.cleaned_data["last_name"]
 
             latestUserPk = User.objects.latest('pk').pk
+            dateToday = date.today()
 
             user = User.objects.create(
-                username=group_management.username_generator(latestUserPk+1),
+                username=group_management.username_generator(latestUserPk+1, dateToday),
                 password=password,
                 email=email,
                 first_name=first_name.title(),
