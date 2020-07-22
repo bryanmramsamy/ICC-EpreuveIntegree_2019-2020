@@ -76,7 +76,7 @@ class CustomUserAdmin(UserAdmin):
     def is_admin(self, user):
         """Check if the user is an administrator."""
 
-        return user.is_staff
+        return self.is_member(user, "Administrator")
 
     # def main_group(self, user):
     #     if self.is_manager(user):

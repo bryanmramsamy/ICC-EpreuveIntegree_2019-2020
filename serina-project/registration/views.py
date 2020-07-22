@@ -68,7 +68,8 @@ def register(request):
                 last_name=last_name.title()
             )
 
-            change_group(user, 'Guest')
+            promote_to_guest(user)
+            user.save()
 
             UserProfile.objects.create(
                 user=user,
@@ -98,12 +99,16 @@ def username_generator(pk):
 
 
 def remove_from_all_groups(user):
-    """Remove a user from all its groups."""
+    """Remove a user from all its groups.
+    Remove the user access as staff member and superuser."""
 
     groups = Group.objects.all()
 
     for group in groups:
         group.user_set.remove(user)
+
+    user.is_staff = False
+    user.is_superuser = False
 
 
 def add_to_group(user, group_name):
@@ -121,6 +126,40 @@ def change_group(user, group_name):
 
     remove_from_all_groups(user)
     add_to_group(user, group_name)
+
+
+def promote_to_guest(user):
+    """Promote a registered user to the 'Guest'-group."""
+
+    change_group(user, 'Guest')
+
+
+def promote_to_student(user):
+    """Promote a registered user to the 'Student'-group."""
+
+    change_group(user, 'Student')
+
+
+def promote_to_professor(user):
+    """Promote a registered user to the 'Professor'-group."""
+
+    change_group(user, 'Professor')
+
+
+def promote_to_manager(user):
+    """Promote a registered user to the 'Manager'-group and make is staff
+    member."""
+
+    change_group(user, 'Manager')
+    user.is_staff = True
+
+
+def promote_to_administrator(user):
+    """Promote a registered user to the 'Administrator'-group and make it
+    superuser."""
+
+    change_group(user, 'Administrator')
+    user.is_superuser = True
 
 
 class CustomLoginView(LoginView):
