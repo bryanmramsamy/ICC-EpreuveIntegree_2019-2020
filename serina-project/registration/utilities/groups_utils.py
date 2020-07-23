@@ -5,7 +5,7 @@ from django.db.models import Q
 def is_member_of_promoted_group(user):
     """Check if the user is a member of on of the promoted group.
 
-    The promoted groups are: 'Professor', 'Manager', 'Administrator'
+    The promoted groups are: 'Professor', 'Manager', 'Administrator'.
     """
 
     return user.groups.filter(Q(name="Professor") | Q(name="Manager")

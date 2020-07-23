@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group, User
 from django.utils.translation import ugettext as _
 
 from .models import UserProfile
+from .utilities import groups_utils
 
 
 class UserProfileAdmin(admin.StackedInline):
@@ -40,11 +41,8 @@ class CustomUserAdmin(UserAdmin):
         'last_name',
         'email',
         'date_joined',
-        'is_student',
-        'is_professor',
-        'is_manager',
-        'is_admin',
-        # 'main_group'  # TODO: Fix display main group: Only displays "Guest"
+        'main_group',
+        'is_member_of_promoted_group'
     )
 
     list_filter = ('groups', 'is_active', 'userprofile__nationality')
@@ -53,54 +51,33 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ('username', 'first_name', 'last_name')
     date_hierarchy = 'date_joined'
 
-    def is_member(self, user, group):
-        """Check if the current user is member of the given group."""
+    def main_group(self, user):
+        """Display main group of the user."""
 
-        return user.groups.filter(name=group).exists()
+        if user.groups.filter(name="Administrator").exists():
+            main_group = _("Administrator")
+        elif user.groups.filter(name="Manager").exists():
+            main_group = _("Manager")
+        elif user.groups.filter(name="Professor").exists():
+            main_group = _("Professor")
+        elif user.groups.filter(name="Student").exists():
+            main_group = _("Student")
+        else:
+            main_group = _("Guest")
 
-    def is_student(self, user):
-        """Check if the user is a student."""
+        return main_group
 
-        return self.is_member(user, "Student")
+    main_group.short_description = _('Groups')
 
-    def is_professor(self, user):
-        """Check if the user is a professor."""
+    def is_member_of_promoted_group(self, user):
+        """Display if the user is member of a promoted group.
 
-        return self.is_member(user, "Professor")
+        The promoted groups are: 'Professor', 'Manager', 'Administrator'."""
 
-    def is_manager(self, user):
-        """Check if the user is a manager."""
+        return groups_utils.is_member_of_promoted_group(user)
 
-        return self.is_member(user, "Manager")
-
-    def is_admin(self, user):
-        """Check if the user is an administrator."""
-
-        return self.is_member(user, "Administrator")
-
-    # def main_group(self, user):
-    #     if self.is_manager(user):
-    #         main_group = _("Administrator")
-    #     if self.is_professor:
-    #         main_group = _("Professor")
-    #     if self.is_student(user):
-    #         main_group = _("Student")
-    #     else:
-    #         main_group = _("Guest")
-
-    #     return main_group
-
-    is_student.boolean = True
-    is_student.short_description = _('Student')
-
-    is_professor.boolean = True
-    is_professor.short_description = _('Professor')
-
-    is_manager.boolean = True
-    is_manager.short_description = _('Manager')
-
-    is_admin.boolean = True
-    is_admin.short_description = _('Administrator')
+    is_member_of_promoted_group.boolean = True
+    is_member_of_promoted_group.short_description = _('Promoted user')
 
 
 admin.site.unregister(User)
