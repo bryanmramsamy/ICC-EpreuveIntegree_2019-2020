@@ -1,6 +1,5 @@
 from datetime import date
 
-from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -24,28 +23,15 @@ from .forms import (
     RegistrationForm
 )
 from .models import UserProfile
-from .utilities import groups_utils, signals, users_utils
+from .utilities import messages_utils, groups_utils, signals_utils, users_utils
 
 
 def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
 
-    if request.user.is_authenticated:
-        messages.warning(
-            request,
-            _("You are already signed in. "
-              "Please sign out to use a different account.")
-        )
-        return redirect('home')
-    elif not request.user.is_anonymous and not request.user.is_active:
-        messages.error(
-            request,
-            _("Your account has been disabled. Contact the management team at "
-              "this address ({}) to get more information.".format(
-                  settings.MAIL_MANAGEMENT
-                  ))
-        )
+    if (messages_utils.user_is_authenticated(request)
+        or messages_utils.user_is_disabled(request)):
         return redirect('home')
     else:
         form = RegistrationForm(request.POST or None)
