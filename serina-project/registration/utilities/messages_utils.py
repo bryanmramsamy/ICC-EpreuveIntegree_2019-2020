@@ -43,8 +43,8 @@ def user_is_disabled(request):
         is_disabled = True
         messages.error(
             request,
-            _("Your account has been disabled. Contact the management team at "
-              "this address ({}) to get more information."
-              .format(settings.MAIL_MANAGEMENT))
+            _("Your account has been disabled. Contact the support team ({}) "
+              "to get more information."
+              .format(settings.CONTACT_MAILS["support"]))
         )
     return is_disabled

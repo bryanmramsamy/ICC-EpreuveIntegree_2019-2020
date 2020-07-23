@@ -165,4 +165,6 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 # Mails
 
-MAIL_MANAGEMENT = "fake@management.com"
+CONTACT_MAILS = {
+    "support": "support@serina.com",
+}

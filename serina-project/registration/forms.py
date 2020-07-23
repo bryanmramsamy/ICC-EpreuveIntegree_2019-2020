@@ -67,8 +67,9 @@ class RegistrationForm(forms.Form):
         if User.objects.filter(email=email).exists():
             raise forms.ValidationError(_(
                 "The entered mail address is already in use. Please use "
-                "another one or contact our support team {}."
-                .format(settings.MAIL_MANAGEMENT)
+                "another one or contact our support team ({})."
+                .format(settings.CONTACT_MAILS["support"])
+                # TODO: Add clickable mailto link
             ))
 
         password = cleaned_data.get("password")

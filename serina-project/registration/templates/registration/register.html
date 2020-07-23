@@ -3,23 +3,6 @@
 
 {% block title %}{% trans 'Register' %}{% endblock title %}
 
-{% block additional_messages %}
-    {% if form.errors %}
-        {% for field in form %}
-            {% for error in field.errors %}
-                <div class="alert alert-danger">
-                    <strong>{{ error|escape }}</strong>
-                </div>
-            {% endfor %}
-        {% endfor %}
-        {% for error in form.non_field_errors %}
-            <div class="alert alert-danger">
-                <strong>{{ error|escape }}</strong>
-            </div>
-        {% endfor %}
-    {% endif %}
-{% endblock additional_messages %}
-
 {% block content %}
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
@@ -48,6 +31,7 @@
         <div>
             <label for="id_confirm_password">{{ form.confirm_password.label }}: </label>
             {{ form.confirm_password }}
+        </div>
         <div>
             <label for="id_birthday">{{ form.birthday.label }}: </label>
             {{ form.birthday }}
