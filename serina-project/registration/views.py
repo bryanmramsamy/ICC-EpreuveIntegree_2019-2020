@@ -24,7 +24,7 @@ from .forms import (
     RegistrationForm
 )
 from .models import UserProfile
-from .utilities import group_management, signals
+from .utilities import groups_utils, signals, users_utils
 
 
 def register(request):
@@ -64,14 +64,17 @@ def register(request):
             dateToday = date.today()
 
             user = User.objects.create(
-                username=group_management.username_generator(latestUserPk+1, dateToday),
+                username=users_utils.username_generator(
+                    latestUserPk+1,
+                    dateToday
+                ),
                 password=password,
                 email=email,
                 first_name=first_name.title(),
                 last_name=last_name.title()
             )
 
-            group_management.promote_to_professor(user)
+            groups_utils.promote_to_professor(user)
             user.save()
 
             UserProfile.objects.create(

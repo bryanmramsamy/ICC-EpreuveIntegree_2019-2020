@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group, User
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 
-from . import group_management
+from . import groups_utils, users_utils
 
 
 @receiver(m2m_changed)
@@ -19,15 +19,15 @@ def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
     """
 
     if model == Group and action == 'post_add':
-        if group_management.is_member_of_promoted_group(instance):
+        if groups_utils.is_member_of_promoted_group(instance):
             instance.username = "{}.{}".format(
                 instance.first_name.lower(),
                 instance.last_name.lower()
             )
-            if group_management.username_exist(instance.username):
+            if users_utils.username_exist(instance.username):
                 instance.username += ".{}".format(instance.pk)
         else:
-            instance.username = group_management.username_generator(
+            instance.username = groups_utils.username_generator(
                 instance.pk,
                 instance.date_joined
             )
