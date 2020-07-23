@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth.forms import (
     AuthenticationForm,
     PasswordChangeForm,
@@ -23,6 +24,10 @@ class RegistrationForm(forms.Form):
     email = forms.EmailField(
         label=_("Email"),
         required=True,
+        error_messages={
+            'invalid': _("Mail address invalid. Check the spelling or try "
+                         "another one.")
+        }
     )
     password = forms.CharField(
         label=_("Password"),
@@ -54,6 +59,25 @@ class RegistrationForm(forms.Form):
         label=_('Locality'),
         required=True,
     )
+
+    def clean(self):
+        cleaned_data = super(RegistrationForm, self).clean()
+
+        email = cleaned_data.get("email")
+        if User.objects.filter(email=email).exists():
+            raise forms.ValidationError(_(
+                "The entered mail address is already in use. Please use "
+                "another one or contact our support team {}."
+                .format(settings.MAIL_MANAGEMENT)
+            ))
+
+        password = cleaned_data.get("password")
+        confirm_password = cleaned_data.get("confirm_password")
+        if password != confirm_password:
+            raise forms.ValidationError(_(
+                "Your password and your password confirmation does not match. "
+                "Please try again."
+            ))
 
 
 class CustomAuthenticationForm(AuthenticationForm):

@@ -126,6 +126,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # URLs
 
+LOGIN_URL = '/registration/login/'
 LOGIN_REDIRECT_URL = '/'
 
 # Internationalization
