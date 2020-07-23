@@ -51,14 +51,9 @@ def register(request):
         form = RegistrationForm(request.POST or None)
 
         if form.is_valid():
-            username = "{}.{}".format(
-                form.cleaned_data["first_name"],
-                form.cleaned_data["last_name"]
-            )
-            password = form.cleaned_data["password"]
-            email = form.cleaned_data["email"]
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
+            email = form.cleaned_data["email"]
 
             latestUserPk = User.objects.latest('pk').pk
             dateToday = date.today()
@@ -68,13 +63,13 @@ def register(request):
                     latestUserPk+1,
                     dateToday
                 ),
-                password=password,
                 email=email,
                 first_name=first_name.title(),
                 last_name=last_name.title()
             )
 
-            groups_utils.promote_to_professor(user)
+            user.set_password(form.cleaned_data["password"])
+            groups_utils.promote_to_guest(user)
             user.save()
 
             UserProfile.objects.create(
