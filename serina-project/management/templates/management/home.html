@@ -4,7 +4,7 @@
 {% block title %}{% trans 'Home' %}{% endblock title %}
 
 {% block content %}
-    <h1>Hola</h1>
+    <h1>Hola {{ user.username }}</h1>
 
     <ul>
         <li><a href="{% url 'register' %}">register</a></li>
