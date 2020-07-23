@@ -81,17 +81,6 @@ class CustomLoginView(LoginView):
     authentication_form = CustomAuthenticationForm
     redirect_authenticated_user = True
 
-    # TODO: Add message when user was already autheticated
-
-    # def get_context_data(self, **kwargs):
-    #     context = super(CustomLoginView, self).get_context_data(**kwargs)
-    #     messages.error(
-    #         self.request,
-    #         _("You are already signed in. "
-    #           "Please sign out to use a different account.")
-    #     )
-    #     return context
-
 
 def customLogout(request):
     """Logout redirection."""
