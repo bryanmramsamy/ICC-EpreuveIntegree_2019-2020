@@ -61,6 +61,13 @@ class RegistrationForm(forms.Form):
     )
 
     def clean(self):
+        """Check if the email is not already used by another user and check if
+        the password and password confirmation match together.
+
+        Raise an error with a displayed error message if one of these
+        conditions failed.
+        """
+
         cleaned_data = super(RegistrationForm, self).clean()
 
         email = cleaned_data.get("email")
