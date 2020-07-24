@@ -5,7 +5,7 @@ from django.utils.translation import ugettext as _
 from .resource import Resource
 
 
-class ModuleLevel(models.Model):
+class ModuleLevel(Resource):
     """Model definition for ModuleLevel.
 
     A ranked difficulty level assign to each module.
@@ -19,7 +19,7 @@ class ModuleLevel(models.Model):
 
         verbose_name = 'Modules level'
         verbose_name_plural = 'Modules levels'
-        ordering = ('rank',)
+        ordering = ('rank', '-date_updated', '-date_created')
 
     def __str__(self):
         """Unicode representation of ModuleLevel."""
@@ -63,7 +63,6 @@ class Module(Resource):
 
         verbose_name = 'Module'
         verbose_name_plural = 'Modules'
-        ordering = ('-date_created',)
 
     def __str__(self):
         """Unicode representation of Module."""

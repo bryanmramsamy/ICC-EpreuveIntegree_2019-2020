@@ -24,3 +24,4 @@ class Resource(models.Model):
         abstract = True
         # verbose_name = "Resource's metadata"
         # verbose_name_plural = "Resource's metadatas"
+        ordering = ('-date_updated', '-date_created')
