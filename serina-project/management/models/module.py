@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from .ressource import Ressource
+from .resource import Resource
 
 
 class ModuleLevel(models.Model):
@@ -32,7 +32,7 @@ class ModuleLevel(models.Model):
     #     return ('')
 
 
-class Module(Ressource):
+class Module(Resource):
     """Model definition for Module.
 
     A module is a course.
