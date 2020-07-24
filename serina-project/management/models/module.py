@@ -79,3 +79,4 @@ class Module(Ressource):
     # def get_absolute_url(self):
     #     """Return absolute url for Module."""
     #     return ('')
+
