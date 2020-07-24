@@ -4,7 +4,7 @@
 {% block title %}{% trans 'Password reset confirm' %}{% endblock title %}
 
 {% block content %}
-    <form action="{% url 'password_reset_confirm' %}" method="post">
+    <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="{% trans 'Reset password' %}">

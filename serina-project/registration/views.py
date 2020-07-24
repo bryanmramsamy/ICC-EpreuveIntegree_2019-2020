@@ -94,23 +94,7 @@ class CustomPasswordChangeView(PasswordChangeView):
     """Customized PasswordChangeView."""
 
     template_name = "registration/passwd_change.html"
-    # success_url = reverse('password_change_done')
     form_class = CustomPasswordChangeForm
-
-
-def customPasswordChangeDone(request):
-    """Password Change Done redirection to login.
-
-    The user must login again after a password change.
-    """
-
-    messages.success(
-        request,
-        _("Your password has been changed. You must log yourself in again.")
-    )
-    logout(request)
-
-    return redirect('home')
 
 
 class CustomPasswordResetView(PasswordResetView):
@@ -134,7 +118,6 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     """ Curtomized PasswordResetConfirmView."""
 
     template_name = "registration/passwd_reset_confirm.html"
-    post_reset_login = True
     # form_class = CustomSetPasswordForm
     success_url = reverse_lazy("password_reset_complete")
 
@@ -143,3 +126,19 @@ class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     """Customized PasswordResetCompleteView."""
 
     template_name = "registration/passwd_reset_complete.html"
+
+
+def post_password_change_logout(request):
+    """Log the user out after his/her password has been changed or reset.
+
+    Display a message to the user too.
+    """
+
+    messages.success(
+        request,
+        _("Your password has been changed. You must log yourself in again with"
+          " the new password.")
+    )
+    logout(request)
+
+    return redirect('home')
