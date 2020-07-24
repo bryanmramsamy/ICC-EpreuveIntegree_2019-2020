@@ -116,7 +116,7 @@ def customPasswordChangeDone(request):
 class CustomPasswordResetView(PasswordResetView):
     """Customized PasswordResetView."""
 
-    template_name = "registration/password_reset.html"
+    template_name = "registration/passwd_reset.html"
     form_class = CustomPasswordResetForm
     # email_template_name = "registration/password_reset_email.html"
     # subject_template_name = "registration/password_reset_subject.txt"
@@ -127,19 +127,19 @@ class CustomPasswordResetView(PasswordResetView):
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     """Customized PasswordResetDoneView."""
 
-    template_name = "registration/password_reset_done.html"
+    template_name = "registration/passwd_reset_done.html"
 
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     """ Curtomized PasswordResetConfirmView."""
 
-    template_name = "registration/password_reset_confirm.html"
+    template_name = "registration/passwd_reset_confirm.html"
     post_reset_login = True
     # form_class = CustomSetPasswordForm
-    success_url = "password_reset_complete"
+    success_url = reverse_lazy("password_reset_complete")
 
 
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     """Customized PasswordResetCompleteView."""
 
-    template_name = "registration/password_reset_complete.html"
+    template_name = "registration/passwd_reset_complete.html"
