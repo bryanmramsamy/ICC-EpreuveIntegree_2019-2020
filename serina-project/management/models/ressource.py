@@ -3,10 +3,10 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 
-class Element(models.Model):
-    """Model definition for Element.
+class Ressource(models.Model):
+    """Model definition for Ressource.
 
-    The Element contains the creation and update data.
+    The Ressource contains the creation and update data.
     This abstract model can be inherited by any model in order to avoid adding
     the same fields on each one.
     """
@@ -19,8 +19,8 @@ class Element(models.Model):
                                         verbose_name=_('Updated on'))
 
     class Meta:
-        """Meta definition for Element."""
+        """Meta definition for Ressource."""
 
         abstract = True
-        # verbose_name = "Element's metadata"
-        # verbose_name_plural = "Element's metadatas"
+        # verbose_name = "Ressource's metadata"
+        # verbose_name_plural = "Ressource's metadatas"

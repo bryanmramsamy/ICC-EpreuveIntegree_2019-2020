@@ -1,3 +1,3 @@
 from .curriculum import *
-from .element import *
 from .module import *
+from .ressource import *
