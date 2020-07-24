@@ -44,16 +44,16 @@ class Module(Resource):
     title = models.CharField(max_length=255, verbose_name=_("Title"))
     description = models.TextField(null=True, blank=True,
                                    verbose_name=_("Description"))
-    students = models.ManyToManyField(
-        User,
-        related_name='modules_followed_as_student',
-        verbose_name=_('Modules followed as a student')
-    )
-    teachers = models.ManyToManyField(
-        User,
-        related_name='modules_teached_as_teacher',
-        verbose_name=_('Modules teached as a student')
-    )
+    # students = models.ManyToManyField(
+    #     User,
+    #     related_name='modules_followed_as_student',
+    #     verbose_name=_('Modules followed as a student')
+    # )
+    # teachers = models.ManyToManyField(
+    #     User,
+    #     related_name='modules_teached_as_teacher',
+    #     verbose_name=_('Modules teached as a student')
+    # )
     is_prerequisite_for = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
@@ -62,8 +62,8 @@ class Module(Resource):
     )
     level = models.ForeignKey(ModuleLevel, on_delete=models.SET_NULL,
                               null=True, verbose_name=_('Difficulty level'))
-    date_start = models.DateField(verbose_name=_('Start date'))
-    date_end = models.DateField(verbose_name=_('End date'))
+    # date_start = models.DateField(verbose_name=_('Start date'))
+    # date_end = models.DateField(verbose_name=_('End date'))
     cost = models.FloatField(verbose_name=_('Cost'))
     fee = models.FloatField(verbose_name=_('Registration fee'))
 
