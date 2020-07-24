@@ -3,11 +3,12 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 
-class ElementMetadata(models.Model):
-    """Model definition for ElementMetadata.
+class Element(models.Model):
+    """Model definition for Element.
 
-    The ElementMetadata contains the creation and update data.
-    This abstract model can be inherited by any model in order to avoid adding the same fields on each one.
+    The Element contains the creation and update data.
+    This abstract model can be inherited by any model in order to avoid adding
+    the same fields on each one.
     """
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True,
@@ -18,7 +19,7 @@ class ElementMetadata(models.Model):
                                         verbose_name=_('Updated on'))
 
     class Meta:
-        """Meta definition for ElementMetadata."""
+        """Meta definition for Element."""
 
         abstract = True
         # verbose_name = "Element's metadata"
