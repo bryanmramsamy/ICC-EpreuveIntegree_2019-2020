@@ -49,11 +49,11 @@ class Module(Resource):
     #     related_name='modules_followed_as_student',
     #     verbose_name=_('Modules followed as a student')
     # )
-    # teachers = models.ManyToManyField(
-    #     User,
-    #     related_name='modules_teached_as_teacher',
-    #     verbose_name=_('Modules teached as a student')
-    # )
+    teachers = models.ManyToManyField(
+        User,
+        related_name='modules_teached_as_teacher',
+        verbose_name=_('Modules teached as a teacher')
+    )
     is_prerequisite_for = models.ForeignKey(
         'self',
         on_delete=models.SET_NULL,
