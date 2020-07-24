@@ -54,7 +54,7 @@ class Curriculum(Resource):
         """Meta definition for Curriculum."""
 
         verbose_name = 'Curriculum'
-        verbose_name_plural = 'Curriculums'
+        verbose_name_plural = 'Curricula'
         ordering = ('-date_updated', '-date_created', 'title')
 
     def __str__(self):

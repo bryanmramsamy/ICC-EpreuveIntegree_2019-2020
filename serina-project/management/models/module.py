@@ -17,8 +17,8 @@ class ModuleLevel(Resource):
     class Meta:
         """Meta definition for ModuleLevel."""
 
-        verbose_name = 'Modules level'
-        verbose_name_plural = 'Modules levels'
+        verbose_name = 'Module level'
+        verbose_name_plural = 'Module levels'
         ordering = ('rank', '-date_updated', '-date_created')
 
     def __str__(self):
