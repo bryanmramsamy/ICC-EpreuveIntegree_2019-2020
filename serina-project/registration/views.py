@@ -13,7 +13,7 @@ from django.contrib.auth.views import (
     PasswordResetView
 )
 from django.shortcuts import redirect, render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 
 from .forms import (
@@ -93,7 +93,7 @@ def customLogout(request):
 class CustomPasswordChangeView(PasswordChangeView):
     """Customized PasswordChangeView."""
 
-    template_name = "registration/password_change.html"
+    template_name = "registration/passwd_change.html"
     # success_url = reverse('password_change_done')
     form_class = CustomPasswordChangeForm
 
@@ -108,6 +108,8 @@ def customPasswordChangeDone(request):
         request,
         _("Your password has been changed. You must log yourself in again.")
     )
+    logout(request)
+
     return redirect('home')
 
 
@@ -118,7 +120,7 @@ class CustomPasswordResetView(PasswordResetView):
     form_class = CustomPasswordResetForm
     # email_template_name = "registration/password_reset_email.html"
     # subject_template_name = "registration/password_reset_subject.txt"
-    success_url = "password_reset_done"
+    success_url = reverse_lazy("password_reset_done")
     # from_email = "Serina@SerinaProject.com"  # DEFAULT_FROM_EMAIL = "Serina@SerinaProject.com"
 
 
