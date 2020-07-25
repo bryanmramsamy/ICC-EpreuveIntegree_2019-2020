@@ -52,7 +52,8 @@ class Module(Resource):
         related_name="module_created_by",
         verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name=_('Module'))
-    reference = models.CharField(max_length=7, blank=True, verbose_name=_('Reference'))
+    reference = models.CharField(max_length=7, blank=True, unique=True,
+                                 verbose_name=_('Reference'))
     description = models.TextField(null=True, blank=True,
                                    verbose_name=_("Description"))
     level = models.ForeignKey(
@@ -114,7 +115,7 @@ class Module(Resource):
     def save(self, *args, **kwargs):
         """Save method for Module.
 
-        Add a reference based on the module's name and pk.
+        Add a reference based on the module's title and pk.
         """
 
         self.reference = self.title[0:4].upper()
