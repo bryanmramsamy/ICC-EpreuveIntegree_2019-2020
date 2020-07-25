@@ -5,8 +5,35 @@ from django.utils.translation import ugettext as _
 from .resource import Resource
 
 
-class ModuleLevel(models.Model):
-    pass  # TODO: Create model
+class ModuleLevel(Resource):
+    """Model definition for ModuleLevel."""
+
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="level_created_by",
+        verbose_name=_('Created by')
+    )
+    rank = models.PositiveIntegerField(unique=True, verbose_name=_("Rank"))
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+
+    class Meta:
+        """Meta definition for ModuleLevel."""
+
+        verbose_name = 'Module level'
+        verbose_name_plural = 'Module levels'
+        ordering = ("rank",)
+
+    def __str__(self):
+        """Unicode representation of ModuleLevel."""
+
+        return "(Rank: {}) {}".format(self.rank, self.name)
+
+    # TODO: Define method when rooters are defined
+    # def get_absolute_url(self):
+    #     """Return absolute url for ModuleLevel."""
+    #     return ('')
 
 
 class Module(Resource):
