@@ -1,6 +1,8 @@
 # Notes
 
-## Date
+## Raw memento
+
+### datetime
 
 ```python
 import datetime
@@ -9,6 +11,8 @@ import datetime
 datetime.date.today()
 # datetime.date(2020, 7, 14)
 ```
+
+### Create object in shell
 
 Example: `UserProfile` instantiation
 
@@ -34,4 +38,30 @@ up = UserProfile(
     "666",
     "Raccoon"
 )
+```
+
+### related_name
+
+Get the first module
+
+```python
+module = Module.objects.all()[0]
+```
+
+Get all the Users from it's eligible_teachers field
+
+```python
+module.can_be_teached_by.all()
+```
+
+Result:
+
+```python
+class Module(Resource):
+    eligible_teachers = models.ManyToManyField(
+        User,
+        blank=True,
+        related_name="can_be_teached_by",
+        verbose_name=_("Eligible teachers")
+    )
 ```

@@ -73,12 +73,6 @@ class Module(Resource):
         User,
         blank=True,
         related_name="can_be_teached_by",
-        # TODO: Remove note after adding it to notes file
-        # NOTE: Use of the related_name property
-        # Get the first module 
-        #   module = Module.objects.all()[0]
-        # Get all the Users from it's eligible_teachers field
-        #   module.can_be_teached_by.all()
         verbose_name=_("Eligible teachers")
     )
     ECTS_value = models.PositiveIntegerField(null=True, blank=True,
