@@ -45,6 +45,12 @@ class Module(Resource):
     prerequisites modules are not finished yet.
     """
 
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="module_created_by",
+        verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name=_('Module'))
     reference = models.CharField(max_length=7, blank=True, verbose_name=_('Reference'))
     description = models.TextField(null=True, blank=True,

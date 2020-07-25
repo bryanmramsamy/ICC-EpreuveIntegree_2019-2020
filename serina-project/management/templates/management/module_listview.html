@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'ModuleListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>ModuleListView</h1>
+
+    {% for module in modules %}
+        <div>
+            <h2>{{ module.title }}</h2>
+            <h3>{{ module.reference }}</h3>
+            <h4>{{ module.level.name }}</h4>
+            <p>{{ module.description }}</p>
+            <p>{{ module.module_benefits }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}
