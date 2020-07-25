@@ -6,8 +6,34 @@ from .module import Module
 from .resource import Resource
 
 
-class DegreeCategory(models.Model):
-    pass
+class DegreeCategory(Resource):
+    """Model definition for DegreeCategory."""
+
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="category_created_by",
+        verbose_name=_('Created by')
+    )
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+
+    class Meta:
+        """Meta definition for DegreeCategory."""
+
+        verbose_name = 'Degree category'
+        verbose_name_plural = 'Degree categories'
+        ordering = ("name",)
+
+    def __str__(self):
+        """Unicode representation of DegreeCategory."""
+
+        return "[{}] {}".format(self.pk, self.name)
+
+    # TODO: Define method when rooters are defined
+    # def get_absolute_url(self):
+    #     """Return absolute url for DegreeCategory."""
+    #     return ('')
 
 
 class Degree(Resource):
@@ -99,5 +125,5 @@ class Degree(Resource):
 
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
-    #     """Return absolute url for Module."""
+    #     """Return absolute url for Degree."""
     #     return ('')

@@ -28,7 +28,7 @@ class ModuleLevel(Resource):
     def __str__(self):
         """Unicode representation of ModuleLevel."""
 
-        return "(Rank: {}) {}".format(self.rank, self.name)
+        return "[{}] (Rank: {}) {}".format(self.pk, self.rank, self.name)
 
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
