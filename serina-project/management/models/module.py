@@ -46,7 +46,7 @@ class Module(Resource):
     """
 
     title = models.CharField(max_length=255, verbose_name=_('Module'))
-    reference = models.CharField(max_length=5, verbose_name=_('Reference'))
+    reference = models.CharField(max_length=7, blank=True, verbose_name=_('Reference'))
     description = models.TextField(null=True, blank=True,
                                    verbose_name=_("Description"))
     level = models.ForeignKey(
@@ -58,11 +58,13 @@ class Module(Resource):
     )
     is_a_prerequisite_for = models.ManyToManyField(
         "self",
+        blank=True,
         related_name="is_a_prerequisite_for",
         verbose_name=_("Is a prerequisite for (Modules)")
     )
     eligible_teachers = models.ManyToManyField(
         User,
+        blank=True,
         related_name="can_be_teached_by",
         # TODO: Remove note after adding it to notes file
         # NOTE: Use of the related_name property
@@ -109,7 +111,9 @@ class Module(Resource):
         Add a reference based on the module's name and pk.
         """
 
-        self.reference = self.title[0:3] + str(self.pk).zfill(3)
+        self.reference = self.title[0:4].upper()
+        super().save(*args, **kwargs)
+        self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
     # TODO: Define method when rooters are defined
