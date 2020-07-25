@@ -62,7 +62,7 @@ class Degree(Resource):
     )
     modules = models.ManyToManyField(
         Module,
-        related_name="modules",
+        related_name="degrees",
         verbose_name=_("Modules")
     )
     description = models.TextField(null=True, blank=True,
@@ -86,7 +86,7 @@ class Degree(Resource):
         """Compute the total costs of the degree."""
 
         total_costs = 0
-        for module in self.modules:
+        for module in self.modules.all():
             total_costs += module.cost
 
         return total_costs
@@ -96,7 +96,7 @@ class Degree(Resource):
         """Compute the total charges price of the degree."""
 
         total_costs = 0
-        for module in self.modules:
+        for module in self.modules.all():
             total_costs += module.charge_price
 
         return total_costs
