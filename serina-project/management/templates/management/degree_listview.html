@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'DegreeListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>DegreeListView</h1>
+
+    {% for degree in degrees %}
+        <div>
+            <h2>{{ degree.title }}</h2>
+            <h3>{{ degree.reference }}</h3>
+            <h4>{{ degree.category.name }}</h4>
+            <p>{{ degree.description }}</p>
+
+            {% for module in degree.modules.all %}
+                <ul>
+                    <li><p>{{ module.title }}</p></li>
+                </ul>
+            {% endfor %}
+
+            <p>{{ degree.degree_benefits }}</p>
+            <p>{{ degree.nb_modules }}</p>
+        </div>
+    {% endfor %}
+{% endblock content %}

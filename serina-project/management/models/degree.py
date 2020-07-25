@@ -82,7 +82,7 @@ class Degree(Resource):
         return self.modules.count()
 
     @property
-    def total_costs(self):  # TODO: Doesn't work. Must be fixed.
+    def total_costs(self):
         """Compute the total costs of the degree."""
 
         total_costs = 0
@@ -92,7 +92,7 @@ class Degree(Resource):
         return total_costs
 
     @property
-    def total_charge_price(self):  # TODO: Doesn't work. Must be fixed.
+    def total_charge_price(self):
         """Compute the total charges price of the degree."""
 
         total_costs = 0
