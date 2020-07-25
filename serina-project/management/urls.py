@@ -5,4 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r"^$", views.home, name="home"),
+
+    url(r"^module/list/$", views.ModuleListView.as_view(),
+        name="module_listview"),
 ]
