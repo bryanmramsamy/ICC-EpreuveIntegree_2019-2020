@@ -6,9 +6,8 @@ from django.utils.translation import ugettext as _
 class Resource(models.Model):
     """Model definition for Resource.
 
-    The Resource contains the creation and update data.
-    This abstract model can be inherited by any model in order to avoid adding
-    the same fields on each one.
+    A ressource contains a creation and last update timestamp.
+    The Resource model is inherited by each back-office model.
     """
 
     date_created = models.DateTimeField(auto_now_add=True,
