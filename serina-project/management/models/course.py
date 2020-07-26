@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
@@ -43,6 +44,10 @@ class Course(BackOfficeResource):
                                   verbose_name=_("Start date"))
     date_end = models.DateField(null=True, blank=True,
                                 verbose_name=_("End date"))
+    nb_registrants = models.PositiveIntegerField(
+        default=0,
+        verbose_name=_("Amount of registrants")
+    )
 
     class Meta:
         """Meta definition for Course."""
@@ -60,6 +65,38 @@ class Course(BackOfficeResource):
             self.teacher.get_full_name(),
             self.room.label
         )
+
+    def clean(self):
+        """Clean method for Course.
+
+        Check if the creator of the intance is a user from an authorized group,
+        if the teacher is from the 'Teacher'-group, if the start date is set
+        before the end date and if the amount of registrants is not higher
+        than the maximum capacity of the assigned classroom.
+        """
+
+        super().clean()
+
+        # TODO: Throw error if created_by is not promoted_user
+        # TODO: Throw error if teacher is not from Teacher group
+        # NOTE: Proprety must be added on UserProfile model
+
+        if self.date_start >= self.date_end:
+            raise ValidationError(
+                _("Start date ({}) must be set before end date ({})".format(
+                    self.date_start,
+                    self.date_end
+                ))
+            )
+
+        if self.nb_registrants > self.room.max_capacity:
+            raise ValidationError(
+                _("Amount of registrants ({}) cannot be higher than the "
+                  "maximum capacity of the assigned classroom ({})".format(
+                      self.nb_registrants,
+                      self.room.max_capacity
+                  ))
+            )
 
     def save(self, *args, **kwargs):
         """Save method for Course.
