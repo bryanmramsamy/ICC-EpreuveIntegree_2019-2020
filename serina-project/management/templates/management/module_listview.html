@@ -14,5 +14,7 @@
             <p>{{ module.description }}</p>
             <p>{{ module.module_benefits }}</p>
         </div>
+
+        <h5><a href="{% url 'module_detailview' pk=module.pk %}">module_detailview/{{ module.pk }}/</a></h5>
     {% endfor %}
 {% endblock content %}

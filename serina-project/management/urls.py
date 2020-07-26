@@ -8,6 +8,8 @@ urlpatterns = [
 
     url(r"^module/list/$", views.ModuleListView.as_view(),
         name="module_listview"),
+    url(r"^module/read/(?P<pk>[0-9]+)/$", views.ModuleDetailView.as_view(),
+        name="module_detailview"),
 
     url(r"^degree/list/$", views.DegreeListView.as_view(),
         name="degree_listview"),
