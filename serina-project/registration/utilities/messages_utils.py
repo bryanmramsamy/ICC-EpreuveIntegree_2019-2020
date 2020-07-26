@@ -48,3 +48,14 @@ def user_is_disabled(request):
               .format(settings.CONTACT_MAILS["support"]))
         )
     return is_disabled
+
+
+# TODO: Not tested yet
+def username_changed(request, old_username, new_username):
+    """Warns the user that his/her username has been changed."""
+
+    messages.warning(
+        request,
+        _("Your username has been changed and is now {} (was {})."
+          .format(new_username, old_username))
+    )
