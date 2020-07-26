@@ -2,7 +2,6 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from ..utilities import member_from_promoted_group_validation
 from .module import Module
 from .resource import BackOfficeResource
 
