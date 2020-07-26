@@ -10,13 +10,6 @@ from .resource import BackOfficeResource
 class ModuleLevel(BackOfficeResource):
     """Model definition for ModuleLevel."""
 
-    created_by = models.ForeignKey(
-        User,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="created_module_levels",
-        verbose_name=_('Created by')
-    )
     rank = models.PositiveIntegerField(unique=True, verbose_name=_("Rank"))
     name = models.CharField(max_length=50, verbose_name=_("Name"))
 
@@ -35,12 +28,10 @@ class ModuleLevel(BackOfficeResource):
     def clean(self):
         """Clean method for ModuleLevel.
 
-        Check if the creator of the instance is a user from a promoted group
-        ('Professor', 'Manager' or 'Administrator').
+        Check if the creator is a promoted-group's user.
         """
 
-        # created_by is from promoted group
-        member_from_promoted_group_validation(self.created_by)
+        super().clean()
 
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
@@ -57,12 +48,6 @@ class Module(BackOfficeResource):
     prerequisites modules are not finished yet.
     """
 
-    created_by = models.ForeignKey(
-        User,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="created_modules",
-        verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name=_('Module'))
     reference = models.CharField(max_length=7, blank=True, unique=True,
                                  verbose_name=_('Reference'))
@@ -111,7 +96,6 @@ class Module(BackOfficeResource):
     def courses_benefits(self):
         """Compute the benefits margin made by all the module's courses"""
 
-        # TODO: Course model must be defined (related_name="courses")
         return self.courses.count() * self.module_benefits
 
     def __str__(self):
@@ -119,34 +103,43 @@ class Module(BackOfficeResource):
 
         return "[{}] ({}) {}".format(self.pk, self.reference, self.title)
 
-    def clean(self):
-        # TODO: Comment function
+    def clean(self):  # TODO: Fix validators
+        """Clean method for Module.
 
-        # created_by is from promoted group
-        member_from_promoted_group_validation(self.created_by)
+        Check if the creator is a promoted-group's user, if the
+        eligible_teachers are from the 'Professor'-group, if the module has
+        not itself has prerequisite and if a postrequisite has been added as
+        prerequisite as well.
+        """
+
+        # Creator must be a promoted user
+        super().clean()
 
         # eligible_teachers must be "Professor"-group members
-        for user in self.eligible_teachers.all():
-            if not user.groups.filter(name="Professor").exists():
-                raise ValidationError(
-                    _("{} cannot be added as eligible teacher. The user is not"
-                      " a 'Professor'-group member.".format(user.username))
-                )
+        # TODO: Does not work on creation, 'pk' empty before save !
+        # for user in self.eligible_teachers.all():
+        #     if not user.groups.filter(name="Professor").exists():
+        #         raise ValidationError(
+        #             _("{} cannot be added as eligible teacher. The user is not"
+        #               " a 'Professor'-group member.".format(user.username))
+        #         )
 
-        # self can not be its own prerequisite
-        if self.prerequisites.filter(pk=self.pk).exists():
-            raise ValidationError(
-                _("This module can not be its own prerequisite.")
-            )
+        # Module can not be its own prerequisite
+        # TODO: Does not work on creation, 'pk' empty before save !
+        # if self.prerequisites.filter(pk=self.pk).exists():
+        #     raise ValidationError(
+        #         _("This module can not be its own prerequisite.")
+        #     )
 
-        # prerequisite cannot be postrequisite
-        for module in self.prerequisites.all():
-            if self.postrequisites.filter(pk=module.pk).exists():
-                raise ValidationError(
-                    _("[{0}] {1} cannot be a prerequisite for this module. "
-                      "[{0}] {1}  already has this module as prerequisite."
-                      .format(module.reference, module.title))
-                )
+        # prerequisite module cannot be postrequisite too
+        # TODO: Does not work on creation, 'pk' empty before save !
+        # for module in self.prerequisites.all():
+        #     if self.postrequisites.filter(pk=module.pk).exists():
+        #         raise ValidationError(
+        #             _("[{0}] {1} cannot be a prerequisite for this module. "
+        #               "[{0}] {1}  already has this module as prerequisite."
+        #               .format(module.reference, module.title))
+        #         )
 
     def save(self, *args, **kwargs):
         """Save method for Module.
