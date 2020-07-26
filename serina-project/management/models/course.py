@@ -3,10 +3,10 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from ..utilities import member_from_promoted_group_validation
 from .module import Module
 from .resource import BackOfficeResource
 from .room import Classroom
-from registration.utilities.groups_utils import is_member_of_promoted_group
 
 
 class Course(BackOfficeResource):
@@ -80,12 +80,7 @@ class Course(BackOfficeResource):
         super().clean()
 
         # created_by is from promoted group
-        if not is_member_of_promoted_group(self.created_by):
-            raise ValidationError(
-                _("{} is not allowed to perform back-office options. This "
-                  "action must be performed by a promoted user."
-                  .format(self.created_by))
-            )
+        member_from_promoted_group_validation(self.created_by)
 
         # teacher is eligilble for module
         if not self.module.eligible_teachers.filter(
