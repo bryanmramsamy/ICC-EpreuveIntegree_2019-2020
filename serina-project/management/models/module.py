@@ -106,7 +106,7 @@ class Module(BackOfficeResource):
         """Clean method for Module.
 
         Check if the creator is a promoted-group's user, if the
-        eligible_teachers are from the 'Professor'-group, if the module has
+        eligible_teachers are from the 'Teacher'-group, if the module has
         not itself has prerequisite and if a postrequisite has been added as
         prerequisite as well.
         """
@@ -114,13 +114,13 @@ class Module(BackOfficeResource):
         # Creator must be a promoted user
         super().clean()
 
-        # eligible_teachers must be "Professor"-group members
+        # eligible_teachers must be "Teacher"-group members
         # TODO: Does not work on creation, 'pk' empty before save !
         # for user in self.eligible_teachers.all():
-        #     if not user.groups.filter(name="Professor").exists():
+        #     if not user.groups.filter(name="Teacher").exists():
         #         raise ValidationError(
         #             _("{} cannot be added as eligible teacher. The user is not"
-        #               " a 'Professor'-group member.".format(user.username))
+        #               " a 'Teacher'-group member.".format(user.username))
         #         )
 
         # Module can not be its own prerequisite

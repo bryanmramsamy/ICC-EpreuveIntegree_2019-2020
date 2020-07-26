@@ -1,16 +1,42 @@
 from django.contrib.auth.models import Group
 from django.db.models import Q
+from django.utils.translation import ugettext as _
 
 
-def is_member_of_promoted_group(user):
-    """Check if the user is a member of on of the promoted group.
+# Read utilities
 
-    The promoted groups are: 'Professor', 'Manager', 'Administrator'.
+def is_back_office_user(user):
+    """Check if the user is allowed to access the back office.
+
+    The user must be member of one of the granted groups which are
+    'Teacher', 'Manager', 'Administrator'.
     """
 
-    return user.groups.filter(Q(name="Professor") | Q(name="Manager")
+    return user.groups.filter(Q(name="Teacher") | Q(name="Manager")
                               | Q(name="Administrator")).exists()
 
+
+def main_group_i18n(user):
+    """Main group of the user in the case one has multiple groups.
+
+    The group name is given with in its i18n version.
+    """
+
+    if user.groups.filter(name="Administrator").exists():
+        main_group = _("Administrator")
+    elif user.groups.filter(name="Manager").exists():
+        main_group = _("Manager")
+    elif user.groups.filter(name="Teacher").exists():
+        main_group = _("Teacher")
+    elif user.groups.filter(name="Student").exists():
+        main_group = _("Student")
+    else:
+        main_group = _("Guest")
+
+    return main_group
+
+
+# Update utilities: Group alteration
 
 def remove_from_all_groups(user):
     """Remove a user from all its groups.
@@ -42,6 +68,8 @@ def change_group(user, group_name):
     add_to_group(user, group_name)
 
 
+# Update utilities: Group promotion
+
 def promote_to_guest(user):
     """Promote a registered user to the 'Guest'-group."""
 
@@ -54,10 +82,10 @@ def promote_to_student(user):
     change_group(user, 'Student')
 
 
-def promote_to_professor(user):
-    """Promote a registered user to the 'Professor'-group."""
+def promote_to_teacher(user):
+    """Promote a registered user to the 'Teacher'-group."""
 
-    change_group(user, 'Professor')
+    change_group(user, 'Teacher')
 
 
 def promote_to_manager(user):

@@ -31,7 +31,7 @@ def register(request):
     UserProfile."""
 
     if (messages_utils.user_is_authenticated(request)
-        or messages_utils.user_is_disabled(request)):
+            or messages_utils.user_is_disabled(request)):
         return redirect('home')
     else:
         form = RegistrationForm(request.POST or None)
@@ -41,13 +41,17 @@ def register(request):
             last_name = form.cleaned_data["last_name"]
             email = form.cleaned_data["email"]
 
-            latestUserPk = User.objects.latest('pk').pk
-            dateToday = date.today()
+            if User.objects.count() == 0:
+                latest_user_pk = 1
+            else:
+                latest_user_pk = User.objects.latest('pk').pk
+
+            date_today = date.today()
 
             user = User.objects.create(
                 username=users_utils.username_generator(
-                    latestUserPk+1,
-                    dateToday
+                    latest_user_pk+1,
+                    date_today
                 ),
                 email=email,
                 first_name=first_name.title(),

@@ -16,12 +16,14 @@ class UserProfileAdmin(admin.StackedInline):
     """
 
     # StackedInline
+
     model = UserProfile
     can_delete = False
     verbose_name = _("User profile")
     verbose_name_plural = _("Users profile")
 
     # DetailView
+
     fields = ['user', 'birthday', 'nationality', 'address', 'postalCode',
               'postalLocality']
 
@@ -35,6 +37,7 @@ class CustomUserAdmin(UserAdmin):
     inlines = (UserProfileAdmin,)
 
     # Listview
+
     list_display = (
         'username',
         'first_name',
@@ -42,7 +45,7 @@ class CustomUserAdmin(UserAdmin):
         'email',
         'date_joined',
         'main_group',
-        'is_member_of_promoted_group'
+        'is_back_office_user'
     )
 
     list_filter = ('groups', 'is_active', 'userprofile__nationality')
@@ -52,32 +55,19 @@ class CustomUserAdmin(UserAdmin):
     date_hierarchy = 'date_joined'
 
     def main_group(self, user):
-        """Display main group of the user."""
+        """Display the user's main group."""
 
-        if user.groups.filter(name="Administrator").exists():
-            main_group = _("Administrator")
-        elif user.groups.filter(name="Manager").exists():
-            main_group = _("Manager")
-        elif user.groups.filter(name="Professor").exists():
-            main_group = _("Professor")
-        elif user.groups.filter(name="Student").exists():
-            main_group = _("Student")
-        else:
-            main_group = _("Guest")
-
-        return main_group
+        return groups_utils.main_group_i18n(user)
 
     main_group.short_description = _('Groups')
 
-    def is_member_of_promoted_group(self, user):
-        """Display if the user is member of a promoted group.
+    def is_back_office_user(self, user):
+        """Display if the user is a back-office user."""
 
-        The promoted groups are: 'Professor', 'Manager', 'Administrator'."""
+        return groups_utils.is_back_office_user(user)
 
-        return groups_utils.is_member_of_promoted_group(user)
-
-    is_member_of_promoted_group.boolean = True
-    is_member_of_promoted_group.short_description = _('Promoted user')
+    is_back_office_user.boolean = True
+    is_back_office_user.short_description = _('Back-Office user')
 
 
 admin.site.unregister(User)

@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from registration.utilities.groups_utils import is_member_of_promoted_group
+from registration.utilities.groups_utils import is_back_office_user
 
 
 class BackOfficeResource(models.Model):
@@ -37,7 +37,7 @@ class BackOfficeResource(models.Model):
         The promoted groups are 'Professor', 'Manager' and 'Administrator'.
         """
 
-        if not is_member_of_promoted_group(self.created_by):
+        if not is_back_office_user(self.created_by):
             raise ValidationError(
                 _("{} is not allowed to perform back-office tasks like this. "
                   "These action must be performed by a promoted user."

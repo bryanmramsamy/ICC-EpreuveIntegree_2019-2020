@@ -9,7 +9,7 @@ from . import groups_utils, users_utils
 def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
     """Change the user's username if the user is member of a promoted group.
 
-    When a user has been promoted to a promoted group ('Professor', 'Manager'
+    When a user has been promoted to a promoted group ('Teacher', 'Manager'
     or 'Administrator'), the user's username changes from the default unique
     registration number to the 'first_name.last_name' format.
 
@@ -19,7 +19,7 @@ def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
     """
 
     if model == Group and action == 'post_add':
-        if groups_utils.is_member_of_promoted_group(instance):
+        if groups_utils.is_back_office_user(instance):
             instance.username = "{}.{}".format(
                 instance.first_name.lower(),
                 instance.last_name.lower()
