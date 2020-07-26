@@ -55,7 +55,7 @@ class Degree(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="created_degree",
+        related_name="created_degrees",
         verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name="Title")
     reference = models.CharField(max_length=7, unique=True, blank=True,

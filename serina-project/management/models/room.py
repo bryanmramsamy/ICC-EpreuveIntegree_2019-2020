@@ -16,7 +16,7 @@ class Classroom(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="room_declared_by",
+        related_name="declared_room",
         verbose_name=_('Declared by')
     )
     label = models.CharField(max_length=7, unique=True,
