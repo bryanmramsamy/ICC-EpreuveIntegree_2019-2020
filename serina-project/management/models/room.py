@@ -26,11 +26,11 @@ class Classroom(BackOfficeResource):
         blank=True,
         verbose_name=_("Description")
     )
-    max_capacity = models.PositiveIntegerField(
-        verbose_name=_("Maximum capacity")
-    )
     recommended_capacity = models.PositiveIntegerField(
         verbose_name=_("Recommended capacity")
+    )
+    max_capacity = models.PositiveIntegerField(
+        verbose_name=_("Maximum capacity")
     )
 
     class Meta:
