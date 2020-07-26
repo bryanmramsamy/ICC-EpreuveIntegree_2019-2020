@@ -12,13 +12,6 @@ from .room import Classroom
 class Course(BackOfficeResource):
     """Model definition for Course."""
 
-    created_by = models.ForeignKey(
-        User,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="created_courses",
-        verbose_name=_('Created by')
-    )
     reference = models.CharField(max_length=15, unique=True, blank=True,
                                  verbose_name=_('Reference'))
     module = models.ForeignKey(
@@ -35,7 +28,7 @@ class Course(BackOfficeResource):
         verbose_name=_('Teached by')
     )
     room = models.ForeignKey(
-        Classroom,  # TODO: Define Classroom class in different file
+        Classroom,
         null=True,
         on_delete=models.SET_NULL,
         related_name="courses",
@@ -76,15 +69,15 @@ class Course(BackOfficeResource):
         eligible to teach this module, if the start date is set before the end
         date and if the amount of registrants is not higher than the maximum
         capacity of the assigned classroom.
+
+        Check if the creator is a promoted-group's user.
         """
 
-        # date_created not after date_updated
+        # Creator must be a promoted user
         super().clean()
 
-        # created_by is from promoted group
-        member_from_promoted_group_validation(self.created_by)
-
-        # teacher is eligilble for module
+        # Teacher must be eligilble for module
+        # TODO: Not tested yet
         if not self.module.eligible_teachers.filter(
             # NOTE: Didn't understand why I must use username and not user
             username=self.teacher.username
@@ -94,7 +87,8 @@ class Course(BackOfficeResource):
                   .format(self.teacher.get_full_name()))
             )
 
-        # date_start not after date_end
+        # date_start cannot be set after date_end
+        # TODO: Not tested yet
         if self.date_start >= self.date_end:
             raise ValidationError(
                 _("Start date ({}) must be set before end date ({}).".format(
@@ -103,7 +97,8 @@ class Course(BackOfficeResource):
                 ))
             )
 
-        # nb_registrants not exceeding room.max_capacity
+        # nb_registrants must not exceed room.max_capacity
+        # TODO: Not tested yet
         if self.nb_registrants > self.room.max_capacity:
             raise ValidationError(
                 _("Amount of registrants ({}) cannot be higher than the "
