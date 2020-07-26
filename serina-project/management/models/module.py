@@ -104,7 +104,7 @@ class Module(BackOfficeResource):
     def __str__(self):
         """Unicode representation of Module."""
 
-        return "({}) {}".format(self.reference, self.title)
+        return "[{}] ({}) {}".format(self.pk, self.reference, self.title)
 
     def save(self, *args, **kwargs):
         """Save method for Module.
