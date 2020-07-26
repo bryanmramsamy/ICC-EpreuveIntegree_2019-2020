@@ -1,7 +1,9 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from ..utilities import member_from_promoted_group_validation
 from .resource import BackOfficeResource
 
 
@@ -52,11 +54,17 @@ class Classroom(BackOfficeResource):
 
     def clean(self):
         # TODO: Comment function
-        # TODO: Check if created_by is promoted user
-        # NOTE: This function will be used often and must be exported to
-        #       separate file to be called
-        # TODO: Check if max_capacity is not less than recommended_capacity
-        pass
+
+        # created_by is from promoted group
+        member_from_promoted_group_validation(self.created_by)
+
+        # recommended_capacity cannot be higher than max_capacity
+        if self.recommended_capacity > self.max_capacity:
+            raise ValidationError(
+                _("The recommended capacity ({}) cannot be higher than the "
+                  "maximum capacoty ({}).".format(self.recommended_capacity,
+                                                  self.max_capacity))
+            )
 
     def save(self, *args, **kwargs):
         """Save method for Classroom.
