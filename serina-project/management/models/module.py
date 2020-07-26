@@ -35,13 +35,9 @@ class ModuleLevel(BackOfficeResource):
     def clean(self):
         """Clean method for ModuleLevel.
 
-        Check if the creation date is not set after the last update date and if
-        the creator of the instance is a user from a promoted group
+        Check if the creator of the instance is a user from a promoted group
         ('Professor', 'Manager' or 'Administrator').
         """
-
-        # date_created not after date_updated
-        super().clean()
 
         # created_by is from promoted group
         member_from_promoted_group_validation(self.created_by)
@@ -82,6 +78,7 @@ class Module(BackOfficeResource):
     prerequisites = models.ManyToManyField(
         "self",
         blank=True,
+        symmetrical=False,
         related_name="postrequisites",
         verbose_name=_("Prerequisites")
     )
@@ -125,9 +122,6 @@ class Module(BackOfficeResource):
     def clean(self):
         # TODO: Comment function
 
-        # date_created not after date_updated
-        super().clean()
-
         # created_by is from promoted group
         member_from_promoted_group_validation(self.created_by)
 
@@ -145,9 +139,14 @@ class Module(BackOfficeResource):
                 _("This module can not be its own prerequisite.")
             )
 
-        # TODO: Prerequisite cannot be postrequisite
-
-        pass
+        # prerequisite cannot be postrequisite
+        for module in self.prerequisites.all():
+            if self.postrequisites.filter(pk=module.pk).exists():
+                raise ValidationError(
+                    _("[{0}] {1} cannot be a prerequisite for this module. "
+                      "[{0}] {1}  already has this module as prerequisite."
+                      .format(module.reference, module.title))
+                )
 
     def save(self, *args, **kwargs):
         """Save method for Module.
