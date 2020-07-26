@@ -87,13 +87,13 @@ class Module(BackOfficeResource):
 
     @property
     def module_benefits(self):
-        """Compute the benefits margin made by one instance of the module"""
+        """Compute the benefits margin made by one instance of the module."""
 
         return self.charge_price - self.cost
 
     @property
     def courses_benefits(self):
-        """Compute the benefits margin made by all the module's courses"""
+        """Compute the benefits margin made by all the module's courses."""
 
         return self.courses.count() * self.module_benefits
 

@@ -108,7 +108,7 @@ class Degree(BackOfficeResource):
 
     @property
     def total_benefits(self):
-        """Compute the benefits margin made by one instance of the module"""
+        """Compute the benefits margin made by one instance of the module."""
 
         return self.total_charge_price - self.total_costs
 

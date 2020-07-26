@@ -49,6 +49,13 @@ class Course(BackOfficeResource):
         verbose_name_plural = 'Courses'
         ordering = ('date_start', 'reference')
 
+    @property
+    def possibile_over_attendance(self):
+        """True if the amount of registrants is higher than the assigned
+        classroom recommended capacity."""
+
+        return self.nb_registrants > self.room.recommended_capacity
+
     def __str__(self):
         """Unicode representation of Course."""
 
