@@ -14,13 +14,6 @@ class Classroom(BackOfficeResource):
     specific capacity.
     """
 
-    created_by = models.ForeignKey(
-        User,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="declared_room",
-        verbose_name=_('Declared by')
-    )
     label = models.CharField(max_length=7, unique=True,
                              verbose_name=_("Label"))
     description = models.TextField(
@@ -53,12 +46,16 @@ class Classroom(BackOfficeResource):
         )
 
     def clean(self):
-        # TODO: Comment function
+        """Clean method for Classroom.
 
-        # created_by is from promoted group
-        member_from_promoted_group_validation(self.created_by)
+        Check if the creator is a promoted-group's user.
+        """
+
+        # Creator must be a promoted user
+        super().clean()
 
         # recommended_capacity cannot be higher than max_capacity
+        # TODO: Not tested yet
         if self.recommended_capacity > self.max_capacity:
             raise ValidationError(
                 _("The recommended capacity ({}) cannot be higher than the "
