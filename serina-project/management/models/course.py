@@ -16,7 +16,7 @@ class Course(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="course_created_by",
+        related_name="created_courses",
         verbose_name=_('Created by')
     )
     reference = models.CharField(max_length=15, unique=True, blank=True,
@@ -31,7 +31,7 @@ class Course(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="teached_by",
+        related_name="teaches",
         verbose_name=_('Teached by')
     )
     room = models.ForeignKey(

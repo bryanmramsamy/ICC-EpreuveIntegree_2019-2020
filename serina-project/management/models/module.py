@@ -12,7 +12,7 @@ class ModuleLevel(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="level_created_by",
+        related_name="created_module_levels",
         verbose_name=_('Created by')
     )
     rank = models.PositiveIntegerField(unique=True, verbose_name=_("Rank"))
@@ -49,7 +49,7 @@ class Module(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="module_created_by",
+        related_name="created_modules",
         verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name=_('Module'))
     reference = models.CharField(max_length=7, blank=True, unique=True,
@@ -60,19 +60,19 @@ class Module(BackOfficeResource):
         ModuleLevel,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="module",
+        related_name="modules",
         verbose_name=_("Difficultiy level")
     )
-    is_a_prerequisite_for = models.ManyToManyField(
+    prerequisite = models.ManyToManyField(
         "self",
         blank=True,
-        related_name="prerequisites",
+        related_name="postrequisites",
         verbose_name=_("Is a prerequisite for (Modules)")
     )
     eligible_teachers = models.ManyToManyField(
         User,
         blank=True,
-        related_name="is_eligible_to_teach",
+        related_name="teachable_modules",
         verbose_name=_("Eligible teachers")
     )
     ECTS_value = models.PositiveIntegerField(null=True, blank=True,

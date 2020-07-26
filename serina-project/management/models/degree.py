@@ -13,7 +13,7 @@ class DegreeCategory(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="category_created_by",
+        related_name="created_degree_categories",
         verbose_name=_('Created by')
     )
     name = models.CharField(max_length=50, verbose_name=_("Name"))
@@ -48,7 +48,7 @@ class Degree(BackOfficeResource):
         User,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="degree_created_by",
+        related_name="created_degree",
         verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name="Title")
     reference = models.CharField(max_length=7, unique=True, blank=True,
@@ -57,7 +57,7 @@ class Degree(BackOfficeResource):
         DegreeCategory,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="category",
+        related_name="degrees",
         verbose_name=_("Category")
     )
     modules = models.ManyToManyField(
