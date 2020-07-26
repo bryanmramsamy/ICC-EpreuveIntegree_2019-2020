@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
 
 
-def username_exist(username):
+def username_already_exist(user):
     """Check if a username is already taken."""
 
-    return User.objects.filter(username=username).exists()
+    return User.objects.exclude(pk=user.pk).filter(username=user.username) \
+        .exists()
 
 
 def username_generator(pk, date):

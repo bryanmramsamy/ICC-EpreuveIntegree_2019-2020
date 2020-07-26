@@ -24,10 +24,10 @@ def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
                 instance.first_name.lower(),
                 instance.last_name.lower()
             )
-            if users_utils.username_exist(instance.username):
+            if users_utils.username_already_exist(instance):
                 instance.username += ".{}".format(instance.pk)
         else:
-            instance.username = groups_utils.username_generator(
+            instance.username = users_utils.username_generator(
                 instance.pk,
                 instance.date_joined
             )
