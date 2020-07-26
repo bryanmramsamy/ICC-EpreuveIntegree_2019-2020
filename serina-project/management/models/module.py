@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
@@ -78,11 +79,11 @@ class Module(BackOfficeResource):
         related_name="modules",
         verbose_name=_("Difficultiy level")
     )
-    prerequisite = models.ManyToManyField(
+    prerequisites = models.ManyToManyField(
         "self",
         blank=True,
         related_name="postrequisites",
-        verbose_name=_("Is a prerequisite for (Modules)")
+        verbose_name=_("Prerequisites")
     )
     eligible_teachers = models.ManyToManyField(
         User,
@@ -124,10 +125,28 @@ class Module(BackOfficeResource):
     def clean(self):
         # TODO: Comment function
 
+        # date_created not after date_updated
+        super().clean()
+
         # created_by is from promoted group
         member_from_promoted_group_validation(self.created_by)
 
-        # TODO: Check if eligible_teachers's Users are from "Professor"-group
+        # eligible_teachers must be "Professor"-group members
+        for user in self.eligible_teachers.all():
+            if not user.groups.filter(name="Professor").exists():
+                raise ValidationError(
+                    _("{} cannot be added as eligible teacher. The user is not"
+                      " a 'Professor'-group member.".format(user.username))
+                )
+
+        # self can not be its own prerequisite
+        if self.prerequisites.filter(pk=self.pk).exists():
+            raise ValidationError(
+                _("This module can not be its own prerequisite.")
+            )
+
+        # TODO: Prerequisite cannot be postrequisite
+
         pass
 
     def save(self, *args, **kwargs):
