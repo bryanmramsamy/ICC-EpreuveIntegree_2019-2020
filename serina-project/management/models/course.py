@@ -4,10 +4,7 @@ from django.utils.translation import ugettext as _
 
 from .module import Module
 from .resource import BackOfficeResource
-
-
-class Classroom(BackOfficeResource):  # TODO: Must be defined in own file
-    label = models.CharField(max_length=5)
+from .room import Classroom
 
 
 class Course(BackOfficeResource):
