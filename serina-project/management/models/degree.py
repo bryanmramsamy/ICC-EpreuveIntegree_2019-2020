@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from ..utilities import member_from_promoted_group_validation
 from .module import Module
 from .resource import BackOfficeResource
 
@@ -31,11 +32,18 @@ class DegreeCategory(BackOfficeResource):
         return "[{}] {}".format(self.pk, self.name)
 
     def clean(self):
-        # TODO: Comment function
-        # TODO: Check if created_by is promoted user
-        # NOTE: This function will be used often and must be exported to
-        #       separate file to be called
-        pass
+        """Clean method for DegreeCategory.
+
+        Check if the creation date is not set after the last update date and if
+        the creator of the instance is a user from a promoted group
+        ('Professor', 'Manager' or 'Administrator').
+        """
+
+        # date_created not after date_updated
+        super().clean()
+
+        # created_by is from promoted group
+        member_from_promoted_group_validation(self.created_by)
 
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
