@@ -10,13 +10,6 @@ from .resource import BackOfficeResource
 class DegreeCategory(BackOfficeResource):
     """Model definition for DegreeCategory."""
 
-    created_by = models.ForeignKey(
-        User,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="created_degree_categories",
-        verbose_name=_('Created by')
-    )
     name = models.CharField(max_length=50, verbose_name=_("Name"))
 
     class Meta:
@@ -34,16 +27,10 @@ class DegreeCategory(BackOfficeResource):
     def clean(self):
         """Clean method for DegreeCategory.
 
-        Check if the creation date is not set after the last update date and if
-        the creator of the instance is a user from a promoted group
-        ('Professor', 'Manager' or 'Administrator').
+        Check if the creator is a promoted-group's user.
         """
 
-        # date_created not after date_updated
         super().clean()
-
-        # created_by is from promoted group
-        member_from_promoted_group_validation(self.created_by)
 
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
@@ -59,12 +46,6 @@ class Degree(BackOfficeResource):
     the degree must been passed in order to pass the degree itself.
     """
 
-    created_by = models.ForeignKey(
-        User,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name="created_degrees",
-        verbose_name=_('Created by'))
     title = models.CharField(max_length=255, verbose_name="Title")
     reference = models.CharField(max_length=7, unique=True, blank=True,
                                  verbose_name=_('Reference'))
@@ -127,7 +108,7 @@ class Degree(BackOfficeResource):
         return total_costs
 
     @property
-    def degree_benefits(self):
+    def total_benefits(self):
         """Compute the benefits margin made by one instance of the module"""
 
         return self.total_charge_price - self.total_costs
@@ -140,16 +121,10 @@ class Degree(BackOfficeResource):
     def clean(self):
         """Clean method for Degree.
 
-        Check if the creation date is not set after the last update date and if
-        the creator of the instance is a user from a promoted group
-        ('Professor', 'Manager' or 'Administrator').
+        Check if the creator is a promoted-group's user.
         """
 
-        # date_created not after date_updated
         super().clean()
-
-        # created_by is from promoted group
-        member_from_promoted_group_validation(self.created_by)
 
     def save(self, *args, **kwargs):
         """Save method for Degree.

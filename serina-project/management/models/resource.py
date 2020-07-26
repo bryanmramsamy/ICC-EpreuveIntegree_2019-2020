@@ -31,8 +31,8 @@ class BackOfficeResource(models.Model):
         abstract = True
 
     def clean(self):
-        """Check if a user is part of a promoted group and raise an error
-        otherwise.
+        """Check if a the created_by user is part of a promoted group and
+        raise an error otherwise.
 
         The promoted groups are 'Professor', 'Manager' and 'Administrator'.
         """
