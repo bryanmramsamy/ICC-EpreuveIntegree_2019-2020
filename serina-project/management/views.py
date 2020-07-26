@@ -19,6 +19,14 @@ class DegreeListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
+class DegreeDetailView(DetailView):  # TODO: Debug view
+    """DetailView for Modules"""
+
+    model = Degree
+    template_name = "management/degree_detailview.html"
+    context_object_name = "degree"
+
+
 class ModuleListView(ListView):  # TODO: Debug view
     """ListView for Modules"""
 
@@ -28,7 +36,7 @@ class ModuleListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
-class ModuleDetailView(DetailView):
+class ModuleDetailView(DetailView):  # TODO: Debug view
     """DetailView for Modules"""
 
     model = Module

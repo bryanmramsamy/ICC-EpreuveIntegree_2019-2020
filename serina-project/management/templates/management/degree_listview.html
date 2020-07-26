@@ -21,6 +21,8 @@
 
             <p>{{ degree.degree_benefits }}</p>
             <p>{{ degree.nb_modules }}</p>
+
+            <h5><a href="{% url 'degree_detailview' pk=degree.pk %}">degree_detailview/{{ degree.pk }}/</a></h5>
         </div>
     {% endfor %}
 {% endblock content %}
