@@ -60,19 +60,19 @@ class Module(BackOfficeResource):
         ModuleLevel,
         null=True,
         on_delete=models.SET_NULL,
-        related_name="level",
+        related_name="module",
         verbose_name=_("Difficultiy level")
     )
     is_a_prerequisite_for = models.ManyToManyField(
         "self",
         blank=True,
-        related_name="is_a_prerequisite_for",
+        related_name="prerequisites",
         verbose_name=_("Is a prerequisite for (Modules)")
     )
     eligible_teachers = models.ManyToManyField(
         User,
         blank=True,
-        related_name="can_be_teached_by",
+        related_name="is_eligible_to_teach",
         verbose_name=_("Eligible teachers")
     )
     ECTS_value = models.PositiveIntegerField(null=True, blank=True,

@@ -6,6 +6,7 @@ from django.utils.translation import ugettext as _
 from .module import Module
 from .resource import BackOfficeResource
 from .room import Classroom
+from registration.utilities.groups_utils import is_member_of_promoted_group
 
 
 class Course(BackOfficeResource):
@@ -69,30 +70,47 @@ class Course(BackOfficeResource):
     def clean(self):
         """Clean method for Course.
 
-        Check if the creator of the intance is a user from an authorized group,
-        if the teacher is from the 'Teacher'-group, if the start date is set
-        before the end date and if the amount of registrants is not higher
-        than the maximum capacity of the assigned classroom.
+        Check if the creator of the instance is a user from an authorized
+        group, if the teacher is eligible to teach this module, if the start
+        date is set before the end date and if the amount of registrants is
+        not higher than the maximum capacity of the assigned classroom.
         """
 
+        # date_created not after date_updated
         super().clean()
 
-        # TODO: Throw error if created_by is not promoted_user
-        # TODO: Throw error if teacher is not from Teacher group
-        # NOTE: Proprety must be added on UserProfile model
+        # created_by is from promoted group
+        if not is_member_of_promoted_group(self.created_by):
+            raise ValidationError(
+                _("{} is not allowed to perform back-office options. This "
+                  "action must be performed by a promoted user."
+                  .format(self.created_by))
+            )
 
+        # teacher is eligilble for module
+        if not self.module.eligible_teachers.filter(
+            # NOTE: Didn't understand why I must use username and not user
+            username=self.teacher.username
+        ).exists():
+            raise ValidationError(
+                _("{} is not eligible to teach this course."
+                  .format(self.teacher.get_full_name()))
+            )
+
+        # date_start not after date_end
         if self.date_start >= self.date_end:
             raise ValidationError(
-                _("Start date ({}) must be set before end date ({})".format(
+                _("Start date ({}) must be set before end date ({}).".format(
                     self.date_start,
                     self.date_end
                 ))
             )
 
+        # nb_registrants not exceeding room.max_capacity
         if self.nb_registrants > self.room.max_capacity:
             raise ValidationError(
                 _("Amount of registrants ({}) cannot be higher than the "
-                  "maximum capacity of the assigned classroom ({})".format(
+                  "maximum capacity of the assigned classroom ({}).".format(
                       self.nb_registrants,
                       self.room.max_capacity
                   ))
