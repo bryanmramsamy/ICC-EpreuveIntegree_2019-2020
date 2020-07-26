@@ -54,11 +54,10 @@ class Classroom(BackOfficeResource):
         super().clean()
 
         # recommended_capacity cannot be higher than max_capacity
-        # TODO: Not tested yet
         if self.recommended_capacity > self.max_capacity:
             raise ValidationError(
                 _("The recommended capacity ({}) cannot be higher than the "
-                  "maximum capacoty ({}).".format(self.recommended_capacity,
+                  "maximum capacity ({}).".format(self.recommended_capacity,
                                                   self.max_capacity))
             )
 

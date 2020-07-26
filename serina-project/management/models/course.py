@@ -76,9 +76,8 @@ class Course(BackOfficeResource):
         super().clean()
 
         # Teacher must be eligilble for module
-        # TODO: Not tested yet
+        # NOTE: Didn't understand why I must use username and not user
         if not self.module.eligible_teachers.filter(
-            # NOTE: Didn't understand why I must use username and not user
             username=self.teacher.username
         ).exists():
             raise ValidationError(
@@ -87,7 +86,6 @@ class Course(BackOfficeResource):
             )
 
         # date_start cannot be set after date_end
-        # TODO: Not tested yet
         if self.date_start >= self.date_end:
             raise ValidationError(
                 _("Start date ({}) must be set before end date ({}).".format(
@@ -97,7 +95,6 @@ class Course(BackOfficeResource):
             )
 
         # nb_registrants must not exceed room.max_capacity
-        # TODO: Not tested yet
         if self.nb_registrants > self.room.max_capacity:
             raise ValidationError(
                 _("Amount of registrants ({}) cannot be higher than the "
