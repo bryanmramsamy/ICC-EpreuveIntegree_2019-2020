@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from ..utilities import member_from_promoted_group_validation
 from .resource import BackOfficeResource
 
 
@@ -31,11 +32,18 @@ class ModuleLevel(BackOfficeResource):
         return "[{}] (Rank: {}) {}".format(self.pk, self.rank, self.name)
 
     def clean(self):
-        # TODO: Comment function
-        # TODO: Check if created_by is promoted user
-        # NOTE: This function will be used often and must be exported to
-        #       separate file to be called
-        pass
+        """Clean method for ModuleLevel.
+
+        Check if the creation date is not set after the last update date and if
+        the creator of the instance is a user from a promoted group
+        ('Professor', 'Manager' or 'Administrator').
+        """
+
+        # date_created not after date_updated
+        super().clean()
+
+        # created_by is from promoted group
+        member_from_promoted_group_validation(self.created_by)
 
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
@@ -115,9 +123,10 @@ class Module(BackOfficeResource):
 
     def clean(self):
         # TODO: Comment function
-        # TODO: Check if created_by is promoted user
-        # NOTE: This function will be used often and must be exported to
-        #       separate file to be called
+
+        # created_by is from promoted group
+        member_from_promoted_group_validation(self.created_by)
+
         # TODO: Check if eligible_teachers's Users are from "Professor"-group
         pass
 
