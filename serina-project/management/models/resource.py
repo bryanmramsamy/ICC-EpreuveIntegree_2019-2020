@@ -3,6 +3,8 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
+from registration.utilities.groups_utils import is_member_of_promoted_group
+
 
 class BackOfficeResource(models.Model):
     """Model definition for BackOfficeResource.
@@ -11,6 +13,13 @@ class BackOfficeResource(models.Model):
     The BackOfficeResource model is inherited by each back-office model.
     """
 
+    created_by = models.ForeignKey(
+        User,
+        null=True,
+        on_delete=models.SET_NULL,
+        related_name="created_%(class)s",
+        verbose_name=_('Created by')
+    )
     date_created = models.DateTimeField(auto_now_add=True,
                                         verbose_name=_('Created on'))
     date_updated = models.DateTimeField(auto_now=True,
@@ -22,10 +31,15 @@ class BackOfficeResource(models.Model):
         abstract = True
 
     def clean(self):
-        """Check if the created date is not set after the updated date."""
+        """Check if a user is part of a promoted group and raise an error
+        otherwise.
 
-        if self.date_created > self.date_updated:
+        The promoted groups are 'Professor', 'Manager' and 'Administrator'.
+        """
+
+        if not is_member_of_promoted_group(self.created_by):
             raise ValidationError(
-                _("Last update date ({}) cannot be set before created "
-                  " date({}).".format(self.date_updated, self.date_created))
+                _("{} is not allowed to perform back-office tasks like this. "
+                  "These action must be performed by a promoted user."
+                  .format(self.created_by.username))
             )
