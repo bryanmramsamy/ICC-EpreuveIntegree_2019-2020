@@ -2,7 +2,32 @@
 
 ## Raw memento
 
-### datetime
+### Commands
+
+```bash
+# makemigrations
+docker-compose run --rm dill python3 manage.py makemigrations
+```
+
+```bash
+# migrate
+docker-compose run --rm dill python3 manage.py migrate
+```
+
+```bash
+# undo migrate
+docker-compose run --rm dill python3 manage.py migrate <app> <migration_to_undo^1>
+```
+
+```bash
+# undo all migrates
+docker-compose run --rm dill python3 manage.py migrate <app> zero
+```
+
+
+### Syntax and semantics
+
+#### datetime
 
 ```python
 import datetime
@@ -12,7 +37,7 @@ datetime.date.today()
 # datetime.date(2020, 7, 14)
 ```
 
-### Create object in shell
+#### Create object in shell
 
 Example: `UserProfile` instantiation
 
@@ -40,7 +65,7 @@ up = UserProfile(
 )
 ```
 
-### related_name
+#### related_name
 
 Get the first module
 
