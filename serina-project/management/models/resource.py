@@ -1,4 +1,5 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
@@ -19,3 +20,12 @@ class BackOfficeResource(models.Model):
         """Meta definition for BackOfficeResource."""
 
         abstract = True
+
+    def clean(self):
+        """Check if the created date is not set after the updated date."""
+
+        if self.date_created > self.date_updated:
+            raise ValidationError(
+                _("Last update date ({}) cannot be set before created "
+                  " date({}).".format(self.date_updated, self.date_created))
+            )
