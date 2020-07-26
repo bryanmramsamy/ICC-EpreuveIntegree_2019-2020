@@ -30,6 +30,13 @@ class ModuleLevel(BackOfficeResource):
 
         return "[{}] (Rank: {}) {}".format(self.pk, self.rank, self.name)
 
+    def clean(self):
+        # TODO: Comment function
+        # TODO: Check if created_by is promoted user
+        # NOTE: This function will be used often and must be exported to
+        #       separate file to be called
+        pass
+
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
     #     """Return absolute url for ModuleLevel."""
@@ -105,6 +112,14 @@ class Module(BackOfficeResource):
         """Unicode representation of Module."""
 
         return "[{}] ({}) {}".format(self.pk, self.reference, self.title)
+
+    def clean(self):
+        # TODO: Comment function
+        # TODO: Check if created_by is promoted user
+        # NOTE: This function will be used often and must be exported to
+        #       separate file to be called
+        # TODO: Check if eligible_teachers's Users are from "Professor"-group
+        pass
 
     def save(self, *args, **kwargs):
         """Save method for Module.

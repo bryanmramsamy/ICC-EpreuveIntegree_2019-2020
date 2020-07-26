@@ -30,6 +30,13 @@ class DegreeCategory(BackOfficeResource):
 
         return "[{}] {}".format(self.pk, self.name)
 
+    def clean(self):
+        # TODO: Comment function
+        # TODO: Check if created_by is promoted user
+        # NOTE: This function will be used often and must be exported to
+        #       separate file to be called
+        pass
+
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
     #     """Return absolute url for DegreeCategory."""
@@ -121,6 +128,13 @@ class Degree(BackOfficeResource):
         """Unicode representation of Degree."""
 
         return "[{}] ({}) {}".format(self.pk, self.reference, self.title)
+
+    def clean(self):
+        # TODO: Comment function
+        # TODO: Check if created_by is promoted user
+        # NOTE: This function will be used often and must be exported to
+        #       separate file to be called
+        pass
 
     def save(self, *args, **kwargs):
         """Save method for Degree.

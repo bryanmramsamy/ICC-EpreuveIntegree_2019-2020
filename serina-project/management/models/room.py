@@ -50,6 +50,14 @@ class Classroom(BackOfficeResource):
             self.max_capacity
         )
 
+    def clean(self):
+        # TODO: Comment function
+        # TODO: Check if created_by is promoted user
+        # NOTE: This function will be used often and must be exported to
+        #       separate file to be called
+        # TODO: Check if max_capacity is not less than recommended_capacity
+        pass
+
     def save(self, *args, **kwargs):
         """Save method for Classroom.
 
