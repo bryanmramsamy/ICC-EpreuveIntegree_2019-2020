@@ -70,10 +70,12 @@ class Course(BackOfficeResource):
     def clean(self):
         """Clean method for Course.
 
-        Check if the creator of the instance is a user from an authorized
-        group, if the teacher is eligible to teach this module, if the start
-        date is set before the end date and if the amount of registrants is
-        not higher than the maximum capacity of the assigned classroom.
+        Check if the creation date is not set after the last update date, if
+        the creator of the instance is a user from a promoted group
+        ('Professor', 'Manager' or 'Administrator'), if the teacher is
+        eligible to teach this module, if the start date is set before the end
+        date and if the amount of registrants is not higher than the maximum
+        capacity of the assigned classroom.
         """
 
         # date_created not after date_updated
