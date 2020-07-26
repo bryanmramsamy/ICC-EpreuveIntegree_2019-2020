@@ -82,6 +82,16 @@ class Degree(Resource):
         return self.modules.count()
 
     @property
+    def total_ECTS_value(self):
+        """Compute the total ECTS value of the degree."""
+
+        total_ects = 0
+        for module in self.modules.all():
+            total_ects += module.ECTS_value
+
+        return total_ects
+
+    @property
     def total_costs(self):
         """Compute the total costs of the degree."""
 
