@@ -138,11 +138,18 @@ class Degree(BackOfficeResource):
         return "[{}] ({}) {}".format(self.pk, self.reference, self.title)
 
     def clean(self):
-        # TODO: Comment function
-        # TODO: Check if created_by is promoted user
-        # NOTE: This function will be used often and must be exported to
-        #       separate file to be called
-        pass
+        """Clean method for Degree.
+
+        Check if the creation date is not set after the last update date and if
+        the creator of the instance is a user from a promoted group
+        ('Professor', 'Manager' or 'Administrator').
+        """
+
+        # date_created not after date_updated
+        super().clean()
+
+        # created_by is from promoted group
+        member_from_promoted_group_validation(self.created_by)
 
     def save(self, *args, **kwargs):
         """Save method for Degree.
