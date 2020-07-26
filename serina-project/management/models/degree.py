@@ -3,10 +3,10 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 from .module import Module
-from .resource import Resource
+from .resource import BackOfficeResource
 
 
-class DegreeCategory(Resource):
+class DegreeCategory(BackOfficeResource):
     """Model definition for DegreeCategory."""
 
     created_by = models.ForeignKey(
@@ -36,7 +36,7 @@ class DegreeCategory(Resource):
     #     return ('')
 
 
-class Degree(Resource):
+class Degree(BackOfficeResource):
     """Model definition for Degree.
 
     A degree is a back-office general representation of a collection of

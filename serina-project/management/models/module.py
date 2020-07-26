@@ -2,10 +2,10 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from .resource import Resource
+from .resource import BackOfficeResource
 
 
-class ModuleLevel(Resource):
+class ModuleLevel(BackOfficeResource):
     """Model definition for ModuleLevel."""
 
     created_by = models.ForeignKey(
@@ -36,7 +36,7 @@ class ModuleLevel(Resource):
     #     return ('')
 
 
-class Module(Resource):
+class Module(BackOfficeResource):
     """Model definition for Module.
 
     A module is a back-office general representation of a given course.

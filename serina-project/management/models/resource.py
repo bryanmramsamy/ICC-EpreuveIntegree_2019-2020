@@ -3,11 +3,11 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 
-class Resource(models.Model):
-    """Model definition for Resource.
+class BackOfficeResource(models.Model):
+    """Model definition for BackOfficeResource.
 
     A ressource contains a creation and last update timestamp.
-    The Resource model is inherited by each back-office model.
+    The BackOfficeResource model is inherited by each back-office model.
     """
 
     date_created = models.DateTimeField(auto_now_add=True,
@@ -16,6 +16,6 @@ class Resource(models.Model):
                                         verbose_name=_('Updated on'))
 
     class Meta:
-        """Meta definition for Resource."""
+        """Meta definition for BackOfficeResource."""
 
         abstract = True

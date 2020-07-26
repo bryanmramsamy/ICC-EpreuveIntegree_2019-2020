@@ -3,14 +3,14 @@ from django.db import models
 from django.utils.translation import ugettext as _
 
 from .module import Module
-from .resource import Resource
+from .resource import BackOfficeResource
 
 
-class Classroom(Resource):  # TODO: Must be defined in own file
+class Classroom(BackOfficeResource):  # TODO: Must be defined in own file
     label = models.CharField(max_length=5)
 
 
-class Course(Resource):
+class Course(BackOfficeResource):
     """Model definition for Course."""
 
     created_by = models.ForeignKey(
