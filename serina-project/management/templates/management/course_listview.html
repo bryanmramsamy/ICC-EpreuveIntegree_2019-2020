@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'CourseListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>CourseListView</h1>
+
+    {% for course in courses %}
+        <div>
+            <h2>{{ course.reference }}</h2>
+            <h3>{{ course.module.title }}</h3>
+            <h4>{{ course.teacher.get_full_name }}</h4>
+            <p>{{ course.room.label }}</p>
+            <p>From {{ course.date_start }} to {{ course.date_end }}</p>
+            <p>nb_registrants: {{ course.nb_registrants }}/{{ course.room.max_capacity }} (overcapacity ? {{ course.possibile_over_attendance }}</p>
+
+            <h5><a href="{% url 'course_detailview' pk=course.pk %}">course_detailview/{{ course.pk }}/</a></h5>
+        </div>
+    {% endfor %}
+{% endblock content %}

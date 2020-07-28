@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'ClassroomListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>ClassroomListView</h1>
+
+    {% for classroom in classrooms %}
+        <div>
+            <h2>{{ classroom.name }}</h2>
+            <h3>{{ classroom.description }}</h3>
+            <h4>{{ classroom.recommended_capacity }}</h4>
+            <p>{{ classroom.max_capacity }}</p>
+
+            <h3>Courses given in this classroom:</h3>
+            {% for course in classroom.courses.all %}
+                <ul>
+                    <li><p>{{ module.title }}</p></li>
+                </ul>
+            {% endfor %}
+
+            <p>{{ classroom.classroom_benefits }}</p>
+            <p>{{ classroom.nb_modules }}</p>
+
+            <h5><a href="{% url 'classroom_detailview' pk=classroom.pk %}">classroom_detailview/{{ classroom.pk }}/</a></h5>
+        </div>
+    {% endfor %}
+{% endblock content %}

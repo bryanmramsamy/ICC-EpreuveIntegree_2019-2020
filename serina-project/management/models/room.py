@@ -73,10 +73,6 @@ class Classroom(BackOfficeResource):
         self.label += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
-    def get_absolute_url(self):
-        """Return absolute url for Classroom."""
-        return ('')
-
     # TODO: Define method when rooters are defined
     # def get_absolute_url(self):
     #     """Return absolute url for Classroom."""
