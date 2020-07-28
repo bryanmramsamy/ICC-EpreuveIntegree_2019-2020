@@ -19,3 +19,19 @@ class ModuleDetailView(DetailView):  # TODO: Debug view
     model = Module
     template_name = "management/module_detailview.html"
     context_object_name = "module"
+
+
+class ModuleLevelListView(ListView):  # TODO: Debug view
+    """ListView for ModuleLevels"""
+
+    model = ModuleLevel
+    template_name = "management/modulelevel_listview.html"
+    context_object_name = "levels"
+
+
+class ModuleLevelDetailView(DetailView):  # TODO: Debug view
+    """DetailView for ModuleLevels"""
+
+    model = ModuleLevel
+    template_name = "management/modulelevel_detailview.html"
+    context_object_name = "level"

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'ModuleLevelListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>ModuleListView</h1>
+
+    {% for level in levels %}
+        <div>
+            <a href="{% url 'modulelevel_detailview' pk=level.pk %}">
+                <h2>{{ level.rank }}</h2>
+                <h3>{{ level.name }}</h3>
+            </a>
+        </div>
+
+        <div>
+            <h4>Modules from this level: ({{ level.modules.count }})</h4>
+            <ul>
+                {% for module in level.modules.all %}
+                <li>{{ module.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    {% endfor %}
+{% endblock content %}

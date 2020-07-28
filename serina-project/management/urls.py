@@ -11,6 +11,14 @@ urlpatterns = [
     url(r"^module/read/(?P<pk>[0-9]+)/$", views.ModuleDetailView.as_view(),
         name="module_detailview"),
 
+    url(r"^module/level/list/$", views.ModuleLevelListView.as_view(),
+        name="modulelevel_listview"),
+    url(
+        r"^module/level/read/(?P<pk>[0-9]+)/$",
+        views.ModuleLevelDetailView.as_view(),
+        name="modulelevel_detailview"
+    ),
+
     url(r"^degree/list/$", views.DegreeListView.as_view(),
         name="degree_listview"),
     url(r"^degree/read/(?P<pk>[0-9]+)/$", views.DegreeDetailView.as_view(),
