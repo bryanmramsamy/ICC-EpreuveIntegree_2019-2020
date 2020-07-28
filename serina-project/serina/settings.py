@@ -44,12 +44,10 @@ INSTALLED_APPS = [
 
     # Third-parties apps
     'crispy_forms',
-    'debug_toolbar',
     'django_extensions',
+    'graphene_django',
     'import_export',
     'paypal.standard.ipn',
-    'rest_framework',
-    'url_filter',
 
     # Project apps
     'inscription',
@@ -67,9 +65,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    # Third-parties apps
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'serina.urls'
