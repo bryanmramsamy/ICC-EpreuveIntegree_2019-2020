@@ -1,6 +1,6 @@
 # SERINA-Project
 
-## **S**uperintent application for **E**ducational **R**esources, **I**nsciptions and **N**etwork **A**dministration
+## **S**uperintent application for **E**ducational **R**esources, **I**nscriptions and **N**etwork **A**dministration
 
 Épreuve intégrée de la section: Bachelier en informatique de gestion
 
