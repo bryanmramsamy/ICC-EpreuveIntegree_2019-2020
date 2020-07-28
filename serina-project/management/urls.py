@@ -6,6 +6,16 @@ from . import views
 urlpatterns = [
     url(r"^$", views.home, name="home"),
 
+    url(r"^classroom/list/$", views.ClassroomListView.as_view(),
+        name="classroom_listview"),
+    url(r"^classroom/read/(?P<pk>[0-9]+)/$", views.ClassroomDetailView.as_view(),
+        name="classroom_detailview"),
+
+    url(r"^course/list/$", views.CourseListView.as_view(),
+        name="course_listview"),
+    url(r"^course/read/(?P<pk>[0-9]+)/$", views.CourseDetailView.as_view(),
+        name="course_detailview"),
+
     url(r"^degree/list/$", views.DegreeListView.as_view(),
         name="degree_listview"),
     url(r"^degree/read/(?P<pk>[0-9]+)/$", views.DegreeDetailView.as_view(),

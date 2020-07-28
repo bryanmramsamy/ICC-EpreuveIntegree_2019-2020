@@ -22,7 +22,7 @@ class ModuleDetailView(DetailView):  # TODO: Debug view
 
 
 class ModuleLevelListView(ListView):  # TODO: Debug view
-    """ListView for ModuleLevels"""
+    """ListView for ModuleLevels."""
 
     model = ModuleLevel
     template_name = "management/modulelevel_listview.html"
@@ -30,7 +30,7 @@ class ModuleLevelListView(ListView):  # TODO: Debug view
 
 
 class ModuleLevelDetailView(DetailView):  # TODO: Debug view
-    """DetailView for ModuleLevels"""
+    """DetailView for ModuleLevels."""
 
     model = ModuleLevel
     template_name = "management/modulelevel_detailview.html"

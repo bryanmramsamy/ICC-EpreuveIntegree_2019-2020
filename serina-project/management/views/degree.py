@@ -5,7 +5,7 @@ from ..models import Degree, DegreeCategory
 
 
 class DegreeListView(ListView):  # TODO: Debug view
-    """ListView for Modules"""
+    """ListView for Degree."""
 
     model = Degree
     template_name = "management/degree_listview.html"
@@ -14,7 +14,7 @@ class DegreeListView(ListView):  # TODO: Debug view
 
 
 class DegreeDetailView(DetailView):  # TODO: Debug view
-    """DetailView for Modules"""
+    """DetailView for Degree."""
 
     model = Degree
     template_name = "management/degree_detailview.html"
@@ -22,7 +22,7 @@ class DegreeDetailView(DetailView):  # TODO: Debug view
 
 
 class DegreeCategoryListView(ListView):  # TODO: Debug view
-    """ListView for DegreeCategory"""
+    """ListView for DegreeCategory."""
 
     model = DegreeCategory
     template_name = "management/degreecategory_listview.html"
@@ -31,7 +31,7 @@ class DegreeCategoryListView(ListView):  # TODO: Debug view
 
 
 class DegreeCategoryDetailView(DetailView):  # TODO: Debug view
-    """DetailView for DegreeCategory"""
+    """DetailView for DegreeCategory."""
 
     model = DegreeCategory
     template_name = "management/degreecategory_detailview.html"
