@@ -23,7 +23,7 @@
             <p>{{ classroom.classroom_benefits }}</p>
             <p>{{ classroom.nb_modules }}</p>
 
-            <h5><a href="{% url 'classroom_detailview' pk=classroom.pk %}">classroom_detailview/{{ classroom.pk }}/</a></h5>
+            <h5><a href="{{ classroom.get_absolute_url }}">classroom_detailview/{{ classroom.pk }}/</a></h5>
         </div>
     {% endfor %}
 {% endblock content %}

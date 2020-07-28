@@ -15,7 +15,7 @@
             <p>From {{ course.date_start }} to {{ course.date_end }}</p>
             <p>nb_registrants: {{ course.nb_registrants }}/{{ course.room.max_capacity }} (overcapacity ? {{ course.possibile_over_attendance }}</p>
 
-            <h5><a href="{% url 'course_detailview' pk=course.pk %}">course_detailview/{{ course.pk }}/</a></h5>
+            <h5><a href="{{ course.get_absolute_url }}">course_detailview/{{ course.pk }}/</a></h5>
         </div>
     {% endfor %}
 {% endblock content %}

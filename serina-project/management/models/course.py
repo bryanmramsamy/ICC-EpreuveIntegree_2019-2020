@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
 from .module import Module
@@ -124,7 +125,7 @@ class Course(BackOfficeResource):
         self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
-    # TODO: Define method when rooters are defined
-    # def get_absolute_url(self):
-    #     """Return absolute url for Course."""
-    #     return ('')
+    def get_absolute_url(self):
+        """Return absolute url for Course."""
+
+        return reverse('course_detailview', kwargs={'pk': self.pk})

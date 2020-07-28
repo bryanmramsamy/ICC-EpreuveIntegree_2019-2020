@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
 from .resource import BackOfficeResource
@@ -32,11 +33,10 @@ class ModuleLevel(BackOfficeResource):
 
         super().clean()
 
-    # TODO: Define method when rooters are defined
-    # def get_absolute_url(self):
-    #     """Return absolute url for ModuleLevel."""
-    #     return ('')
+    def get_absolute_url(self):
+        """Return absolute url for ModuleLevel."""
 
+        return reverse('modulelevel_detailview', kwargs={'pk': self.pk})
 
 class Module(BackOfficeResource):
     """Model definition for Module.
@@ -151,7 +151,8 @@ class Module(BackOfficeResource):
         self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
-    # TODO: Define method when rooters are defined
-    # def get_absolute_url(self):
-    #     """Return absolute url for Module."""
-    #     return ('')
+    def get_absolute_url(self):
+        """Return absolute url for Module."""
+
+        return reverse('module_detailview', kwargs={'pk': self.pk})
+
