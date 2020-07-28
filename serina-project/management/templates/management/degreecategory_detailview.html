@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'DegreeCategoryDetailView' %}  {{ module.reference }}{% endblock title %}
+
+{% block content %}
+    <h1>DegreeCategoryDetailView</h1>
+    <div>
+        <h2>{{ degree.name }}</h2>
+    </div>
+
+    <h2>Degrees from this category</h2>
+    <ul>
+        {% for degree in category.degrees.all %}
+            <li>{{ degree.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

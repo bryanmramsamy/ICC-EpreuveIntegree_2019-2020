@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'DegreeCategoryListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>DegreeCategoryListView</h1>
+
+    {% for category in categories %}
+        <div>
+            <a href="{% url 'degreecategory_detailview' pk=category.pk %}">
+                <h2>{{ category.name }}</h2>
+            </a>
+        </div>
+
+        <div>
+            <h4>Degrees from this category: ({{ category.degrees.count }})</h4>
+            <ul>
+                {% for degree in category.degrees.all %}
+                <li>{{ degree.title }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock content %}
