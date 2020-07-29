@@ -4,6 +4,8 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
+from management.models import Degree
+
 
 class FrontOfficeResource(models.Model):
     """Model definition for FrontOfficeResource.
@@ -163,4 +165,88 @@ class StudentRegistrationReport(FrontOfficeResource):
     # TODO: Must be define and redirect to Student Report's template
     # def get_absolute_url(self):
     #     """Return absolute url for StudentRegistrationReport."""
+    #     return ('')
+
+
+# def user_directory_path(instance, filename):
+#     return "{}-{}.{}/{}".format(
+#         instance.user.username,
+#         instance.user.first_name,
+#         instance.user.last_name,
+#         filename,
+#     )
+
+# class MyModel(models.Model):
+#     upload = models.FileField(upload_to=user_directory_path)
+
+class DegreeRegistrationReport(models.Model):
+    """Model definition for DegreeRegistrationRappport."""
+
+    # TODO: Add FK on self from ModuleRegistrationReport
+    student_registration_report = models.ForeignKey(
+        StudentRegistrationReport,
+        on_delete=models.CASCADE,
+        related_name="degrees_registration_reports",
+        verbose_name=_("Student"),)
+    degree = models.ForeignKey(
+        Degree,
+        on_delete=models.CASCADE,
+        related_name="students_registrations",
+        verbose_name=_("Registration degree")
+    )
+    date_start = models.DateField(verbose_name=_("Start date"))
+    date_end = models.DateField(verbose_name=_("End date"))
+    # TODO: Add properties: avg_score, total_cost, graduated, schoolyear
+
+    class Meta:
+        """Meta definition for DegreeRegistrationReport."""
+
+        verbose_name = _('Degree Registration Report')
+        verbose_name_plural = _('Degrees Registration Reports')
+
+    @property
+    def academic_years(self):
+        """Display the academic years of the sutdent's degree."""
+
+        academic_years = self.date_start.strftime("%Y")
+
+        if self.date_end:
+            academic_years += " - {}".format(self.date_end.strftime("%Y"))
+
+        return academic_years
+
+    # TODO: Must be defined when ModuleRegistrationReport will be defined
+    # @property
+    # def student_graduated(self):
+    #     """Check if the student succeeded all the degree's modules."""
+
+    #     pass
+
+    # TODO: Must be defined when ModuleRegistrationReport will be defined
+    # @property
+    # def average_score(self):
+    #     """Compute the average score of the student."""
+
+    #     pass
+
+    # TODO: Must be defined when ModuleRegistrationReport will be defined
+    # @property
+    # def total_expenses(self):
+    #     """Compute the total expenses of the student."""
+
+    #     pass
+
+    def __str__(self):
+        """Unicode representation of DegreeRegistrationRappport."""
+
+        return "[{}] {}'s degree registration for {}".format(
+            self.pk,
+            self.student_registration_report.user.get_full_name(),
+            self.degree.title,
+        )
+
+    # TODO: Must be define and redirect to Student Degree's Report template
+    # def get_absolute_url(self):
+    #     """Return absolute url for DegreeRegistrationRappport."""
+
     #     return ('')
