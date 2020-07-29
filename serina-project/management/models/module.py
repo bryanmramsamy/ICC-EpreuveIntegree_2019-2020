@@ -114,40 +114,57 @@ class Module(BackOfficeResource):
         # Creator must be a promoted user
         super().clean()
 
-        # eligible_teachers must be "Teacher"-group members
-        # TODO: Does not work on creation, 'pk' empty before save !
-        # for user in self.eligible_teachers.all():
-        #     if not user.groups.filter(name="Teacher").exists():
-        #         raise ValidationError(
-        #             _("{} cannot be added as eligible teacher. The user is not"
-        #               " a 'Teacher'-group member.".format(user.username))
-        #         )
+        # TODO: Hide eligible_teachers and prerequisites fields on creation in admin
+        # LINK: https://books.agiliq.com/projects/django-admin-cookbook/en/latest/uneditable_existing.html
+        if self.pk:
+            # eligible_teachers must be "Teacher"-group members
+            # TODO: Filter choices in M2M box in admin panel
+            for user in self.eligible_teachers.all():
+                if not user.groups.filter(name="Teacher").exists():
+                    raise ValidationError(
+                        _("{} cannot be added as eligible teacher. The user is not"
+                        " a 'Teacher'-group member.".format(user.username))
+                    )
 
-        # Module can not be its own prerequisite
-        # TODO: Does not work on creation, 'pk' empty before save !
-        # if self.prerequisites.filter(pk=self.pk).exists():
-        #     raise ValidationError(
-        #         _("This module can not be its own prerequisite.")
-        #     )
+            # Module can not be its own prerequisite
+            # TODO: Does not work on creation, 'pk' empty before save !
+            # TODO: Filter choices in M2M box in admin panel
+            if self.prerequisites.filter(pk=self.pk).exists():
+                raise ValidationError(
+                    _("This module can not be its own prerequisite.")
+                )
 
-        # prerequisite module cannot be postrequisite too
-        # TODO: Does not work on creation, 'pk' empty before save !
-        # for module in self.prerequisites.all():
-        #     if self.postrequisites.filter(pk=module.pk).exists():
-        #         raise ValidationError(
-        #             _("[{0}] {1} cannot be a prerequisite for this module. "
-        #               "[{0}] {1}  already has this module as prerequisite."
-        #               .format(module.reference, module.title))
-        #         )
+            # prerequisite module cannot be postrequisite too
+            # TODO: Does not work on creation, 'pk' empty before save !
+            # TODO: Not OK
+            # TODO: Filter choices in M2M box in admin panel
+            for module in self.prerequisites.all():
+                if self.postrequisites.filter(pk=module.pk).exists():
+                    raise ValidationError(
+                        _("[{0}] {1} cannot be a prerequisite for this module."
+                          " [{0}] {1} already has this module as prerequisite."
+                          .format(module.reference, module.title))
+                    )
 
     def save(self, *args, **kwargs):
         """Save method for Module.
 
-        Add a reference based on the module's title and pk.
+        Prevent adding eligible_teachers and prerequisites on creation.
+        Otherwise, the validations in the clean() won't work (They need
+        self.pk which isn't defined yet on creation. These fields can be
+        populated on update. Also add a reference based on the module's title
+        and pk after generating the pk if it wasn't defined yet.
         """
 
+        if not self.pk:  # TODO: Must be removed when fitlers on admin forms are on
+            self.eligible_teachers.clear()
+            self.prerequisites.clear()
+
         self.reference = self.title[0:4].upper()
-        super().save(*args, **kwargs)
+
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
@@ -155,4 +172,3 @@ class Module(BackOfficeResource):
         """Return absolute url for Module."""
 
         return reverse('module_detailview', kwargs={'pk': self.pk})
-

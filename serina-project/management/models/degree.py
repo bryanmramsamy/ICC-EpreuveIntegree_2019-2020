@@ -133,7 +133,10 @@ class Degree(BackOfficeResource):
         """
 
         self.reference = self.title[0:4].upper()
-        super().save(*args, **kwargs)
+
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
