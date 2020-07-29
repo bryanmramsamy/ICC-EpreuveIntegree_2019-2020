@@ -235,12 +235,16 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
     #     pass
 
-    # TODO: Must be defined when ModuleRegistrationReport will be defined
-    # @property
-    # def total_expenses(self):
-    #     """Compute the total expenses of the student."""
+    @property
+    def total_expenses(self):
+        """Compute the total expenses of the student for this degree."""
 
-    #     pass
+        total_expenses = 0
+        for module_registration_report in self.modules_registration_reports\
+                                              .all():
+            total_expenses += module_registration_report.module.charge_price
+
+        return total_expenses
 
     def __str__(self):
         """Unicode representation of DegreeRegistrationRappport."""
@@ -270,7 +274,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         on_delete=models.CASCADE,
         related_name="modules_registration_reports",
         verbose_name=_("Student"),)
-    modules = models.ForeignKey(
+    module = models.ForeignKey(
         Module,
         on_delete=models.CASCADE,
         related_name="students_registrations",
