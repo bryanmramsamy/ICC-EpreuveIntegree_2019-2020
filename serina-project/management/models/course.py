@@ -121,7 +121,10 @@ class Course(BackOfficeResource):
         module_reference = self.module.reference
         date_start_reference = self.date_start.strftime("%y%m")
         self.reference = module_reference + '-' + date_start_reference
-        super().save(*args, **kwargs)
+
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 

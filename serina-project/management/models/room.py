@@ -70,7 +70,10 @@ class Classroom(BackOfficeResource):
         """
 
         self.label = self.label[0:4].upper()
-        super().save(*args, **kwargs)
+
+        if not self.pk:
+            super().save(*args, **kwargs)
+
         self.label += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
