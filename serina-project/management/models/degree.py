@@ -15,8 +15,8 @@ class DegreeCategory(BackOfficeResource):
     class Meta:
         """Meta definition for DegreeCategory."""
 
-        verbose_name = 'Degree category'
-        verbose_name_plural = 'Degree categories'
+        verbose_name = _('Degree category')
+        verbose_name_plural = _('Degree categories')
         ordering = ("name",)
 
     def __str__(self):
@@ -67,8 +67,8 @@ class Degree(BackOfficeResource):
     class Meta:
         """Meta definition for Degree."""
 
-        verbose_name = 'Degree'
-        verbose_name_plural = 'Degrees'
+        verbose_name = _('Degree')
+        verbose_name_plural = _('Degrees')
         ordering = ('title', 'reference')
 
     @property

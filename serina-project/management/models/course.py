@@ -46,8 +46,8 @@ class Course(BackOfficeResource):
     class Meta:
         """Meta definition for Course."""
 
-        verbose_name = 'Course'
-        verbose_name_plural = 'Courses'
+        verbose_name = _('Course')
+        verbose_name_plural = _('Courses')
         ordering = ('date_start', 'reference')
 
     @property

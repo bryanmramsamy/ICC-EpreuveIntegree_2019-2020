@@ -16,8 +16,8 @@ class ModuleLevel(BackOfficeResource):
     class Meta:
         """Meta definition for ModuleLevel."""
 
-        verbose_name = 'Module level'
-        verbose_name_plural = 'Module levels'
+        verbose_name = _('Module level')
+        verbose_name_plural = _('Module levels')
         ordering = ("rank",)
 
     def __str__(self):
@@ -81,8 +81,8 @@ class Module(BackOfficeResource):
     class Meta:
         """Meta definition for Module."""
 
-        verbose_name = 'Module'
-        verbose_name_plural = 'Modules'
+        verbose_name = _('Module')
+        verbose_name_plural = _('Modules')
         ordering = ('title', 'reference')
 
     @property

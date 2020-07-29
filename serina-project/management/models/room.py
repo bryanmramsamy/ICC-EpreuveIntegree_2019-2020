@@ -31,8 +31,8 @@ class Classroom(BackOfficeResource):
     class Meta:
         """Meta definition for Classroom."""
 
-        verbose_name = 'Classroom'
-        verbose_name_plural = 'Classrooms'
+        verbose_name = _('Classroom')
+        verbose_name_plural = _('Classrooms')
         ordering = ('label',)
 
     def __str__(self):
