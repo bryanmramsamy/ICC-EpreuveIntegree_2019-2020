@@ -117,19 +117,18 @@ class StudentRegistrationReport(FrontOfficeResource):
 
         return total_expenses
 
-    # TODO: Must be defined when DegreeRegistrationReport and
-    #       ModuleRegistrationReport will be defined
     @property
     def success_rate(self):
         """Compute the success rate of the student.
-    
+
         The success rate is the amount of succeeded modules divided by the total followed modules.
         """
 
         succeeded_modules = 0
         total_modules = 0
 
-        for module_registration_report in self.modules_registration_reports.all():
+        for module_registration_report in self.modules_registration_reports\
+                .all():
             total_modules += 1
 
             if module_registration_report.succeeded:
@@ -138,31 +137,60 @@ class StudentRegistrationReport(FrontOfficeResource):
         success_rate = succeeded_modules / total_modules * 100
         return "{}%".format(success_rate)
 
-    # TODO: Must be defined when DegreeRegistrationReport and
-    #       ModuleRegistrationReport will be defined
-    # @property
-    # def avg_score(self):
-    #     """Compute the average final score of the student."""
+    @property
+    def spent_ECTS(self):
+        """Compute the total amount of spent ECTS.
 
-    #     pass
+        The ECTS is the value measurment of a module.
+        When a student register to a module, (s)he must pay with his/her ECTS.
+        """
 
-    # TODO: Must be defined when DegreeRegistrationReport and
-    #       ModuleRegistrationReport will be defined
-    # @property
-    # def has_been_student(self):
-    #     """Check if the user was registered as student for at least one
-    #     module.
-    #     """
+        spent_ECTS = 0
 
-    #     pass
+        for module_registration_report in self.modules_registration_reports\
+                .all():
+            if module_registration_report.payed:
+                spent_ECTS += module_registration_report.module.ECTS_value
 
-    # TODO: Must be defined when DegreeRegistrationReport and
-    #       ModuleRegistrationReport will be defined
-    # @property
-    # def has_graduated(self):
-    #     """Check if the studend did graduated for a degree at least once."""
+        return spent_ECTS
 
-    #     pass
+    @property
+    def won_ECTS(self):
+        """Compute the total amount of won ECTS.
+
+        The ECTS is the value measurment of a module.
+        When a student succeed a module, (s)he get his/her ECTS back.
+        """
+
+        won_ECTS = 0
+
+        for module_registration_report in self.modules_registration_reports\
+                .all():
+            if (module_registration_report.succeeded
+                and module_registration_report.payed):
+                won_ECTS += module_registration_report.module.ECTS_value
+
+        return won_ECTS
+
+    @property
+    def avg_score(self):
+        """Compute the average final score of the student."""
+
+        return modules_average_score(self)
+
+    @property
+    def has_been_student(self):
+        """Check if the user was registered as student for at least one
+        module.
+        """
+
+        return self.modules_registration_reports.count() > 0
+
+    @property
+    def has_graduated(self):
+        """Check if the studend did graduate for a degree at least once."""
+
+        pass
 
     def __str__(self):
         """Unicode representation of StudentRegistrationReport."""
@@ -238,19 +266,25 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
         return academic_years
 
-    # TODO: Must be defined when ModuleRegistrationReport will be defined
-    # @property
-    # def student_graduated(self):
-    #     """Check if the student succeeded all the degree's modules."""
+    @property
+    def student_graduated(self):
+        """Check if the student succeeded all the degree's modules."""
 
-    #     pass
+        graduated = True
 
-    # TODO: Must be defined when ModuleRegistrationReport will be defined
-    # @property
-    # def average_score(self):
-    #     """Compute the average score of the student."""
+        for module_registration_report in self.modules_registration_reports\
+                .all():
+            if not module_registration_report.succeeded:
+                graduated = False
+                break
 
-    #     pass
+        return graduated
+
+    @property
+    def average_score(self):
+        """Compute the average score of the student."""
+
+        return modules_average_score(self)
 
     @property
     def total_expenses(self):
@@ -354,3 +388,23 @@ class ModuleRegistrationReport(FrontOfficeResource):
     #     """Return absolute url for DegreeRegistrationRappport."""
 
     #     return ('')
+
+
+def modules_average_score(registration_report):
+    """Compute the average score the student got for each of his/her module.
+
+    If the student didn't followed a single module, the result will be -1.
+    """
+
+    sum_score = 0
+    total_module = registration_report.modules_registration_reports\
+        .count()
+
+    if total_module > 0:
+        for module_registration_report in registration_report\
+                .modules_registration_reports.all():
+            sum_score += module_registration_report.student_final_score
+
+        return sum_score / total_module
+    else:
+        return -1
