@@ -47,8 +47,12 @@ class StudentRegistrationReport(FrontOfficeResource):
     nationality = models.CharField(max_length=50,
                                    verbose_name=_("Nationality"))
     address = models.CharField(max_length=255, verbose_name=_("Address"))
-    additional_address = models.CharField(max_length=255,
-                                          verbose_name=_("Additional address"))
+    additional_address = models.CharField(
+        max_length=255,
+        null=True,
+        blank=True,
+        verbose_name=_("Additional address"),
+    )
     postal_code = models.CharField(max_length=50,
                                    verbose_name=_("Postal code"))
     postal_locality = models.CharField(max_length=50,
@@ -102,13 +106,16 @@ class StudentRegistrationReport(FrontOfficeResource):
         verbose_name = _('Student registration report')
         verbose_name_plural = _('Student registration reports')
 
-    # TODO: Must be defined when DegreeRegistrationReport and
-    #       ModuleRegistrationReport will be defined
-    # @property
-    # def total_expenses(self):
-    #     """Compute the total registration expenses of the student."""
+    @property
+    def total_expenses(self):
+        """Compute the total registration expenses of the student."""
 
-    #     pass
+        total_expenses = 0
+        for module_registration_report in self.modules_registration_reports\
+                .all():
+            total_expenses += module_registration_report.module.charge_price
+
+        return total_expenses
 
     # TODO: Must be defined when DegreeRegistrationReport and
     #       ModuleRegistrationReport will be defined
@@ -152,7 +159,7 @@ class StudentRegistrationReport(FrontOfficeResource):
 
         return "[{}] {}'s student registration report".format(
             self.pk,
-            self.self.user.get_full_name,
+            self.user.get_full_name(),
         )
 
     # TODO: Must be defined
@@ -273,7 +280,16 @@ class ModuleRegistrationReport(FrontOfficeResource):
         StudentRegistrationReport,
         on_delete=models.CASCADE,
         related_name="modules_registration_reports",
-        verbose_name=_("Student"),)
+        verbose_name=_("Student"),
+    )
+    degree_registration_report = models.ForeignKey(
+        DegreeRegistrationReport,
+        null=True,
+        blank=True,
+        on_delete=models.CASCADE,
+        related_name="modules_registration_reports",
+        verbose_name=_("Degree Registration Report")
+    )
     module = models.ForeignKey(
         Module,
         on_delete=models.CASCADE,
@@ -285,13 +301,6 @@ class ModuleRegistrationReport(FrontOfficeResource):
         on_delete=models.CASCADE,
         related_name="students_registrations",
         verbose_name=_("Course")
-    )
-    degree_registration_report = models.ForeignKey(
-        DegreeRegistrationReport,
-        null=True,  # TODO: Confirm if blank=True is not needed
-        on_delete=models.CASCADE,
-        related_name="modules_registration_reports",
-        verbose_name=_("Degree Registration Report")
     )
     date_start = models.DateField(verbose_name=_("Start date"))
     date_end = models.DateField(verbose_name=_("End date"))
