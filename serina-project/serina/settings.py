@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
 
     # Project apps
-    'inscription',
     'management',
     'rating',
     'registration',

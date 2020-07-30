@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.db import models
 from django.utils.translation import ugettext as _
 
-from registration.utilities.groups_utils import is_back_office_user
+from registration.utils.groups_utils import is_back_office_user
 
 
 class BackOfficeResource(models.Model):

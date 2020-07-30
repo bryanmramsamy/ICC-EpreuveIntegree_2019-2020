@@ -3,9 +3,9 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
+from ..utils import models_utils
 from .resource import FrontOfficeResource
 from .student_rr import StudentRegistrationReport
-from .utils import modules_average_score
 
 from management.models import Degree
 
@@ -66,7 +66,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
     def average_score(self):
         """Compute the average score of the student."""
 
-        return modules_average_score(self)
+        return models_utils.modules_average_score(self)
 
     @property
     def total_expenses(self):

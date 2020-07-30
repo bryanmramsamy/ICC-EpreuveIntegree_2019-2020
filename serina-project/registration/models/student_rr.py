@@ -4,8 +4,8 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
+from ..utils import models_utils
 from .resource import FrontOfficeResource
-from .utils import modules_average_score
 
 
 class StudentRegistrationReport(FrontOfficeResource):
@@ -155,7 +155,7 @@ class StudentRegistrationReport(FrontOfficeResource):
     def average_score(self):
         """Compute the average final score of the student."""
 
-        return modules_average_score(self)
+        return models_utils.modules_average_score(self)
 
     @property
     def has_been_student(self):

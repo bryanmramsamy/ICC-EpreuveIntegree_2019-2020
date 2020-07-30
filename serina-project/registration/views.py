@@ -22,8 +22,7 @@ from .forms import (
     CustomPasswordResetForm,
     RegistrationForm
 )
-from .models import UserProfile
-from .utilities import messages_utils, groups_utils, signals_utils, users_utils
+from .utils import messages_utils, groups_utils, signals_utils, users_utils
 
 
 def register(request):
