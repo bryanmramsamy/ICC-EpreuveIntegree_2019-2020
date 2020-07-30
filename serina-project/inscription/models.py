@@ -119,14 +119,24 @@ class StudentRegistrationReport(FrontOfficeResource):
 
     # TODO: Must be defined when DegreeRegistrationReport and
     #       ModuleRegistrationReport will be defined
-    # @property
-    # def success_rate(self):
-    #     """Compute the success rate of the student.
-    # 
-    #     The success rate is the amount of succeeded modules divided by the total followed modules.
-    #     """
+    @property
+    def success_rate(self):
+        """Compute the success rate of the student.
+    
+        The success rate is the amount of succeeded modules divided by the total followed modules.
+        """
 
-    #     pass
+        succeeded_modules = 0
+        total_modules = 0
+
+        for module_registration_report in self.modules_registration_reports.all():
+            total_modules += 1
+
+            if module_registration_report.succeeded:
+                succeeded_modules += 1
+
+        success_rate = succeeded_modules / total_modules * 100
+        return "{}%".format(success_rate)
 
     # TODO: Must be defined when DegreeRegistrationReport and
     #       ModuleRegistrationReport will be defined
