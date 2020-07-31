@@ -16,24 +16,23 @@ from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
 from django.utils.translation import ugettext as _
 
-from .forms import (
+from ..forms import (
     CustomAuthenticationForm,
     CustomPasswordChangeForm,
     CustomPasswordResetForm,
     RegistrationForm,
 )
-from .utils import messages as messages_utils
-from .utils import groups as groups_utils
-from .utils import signals as signals_utils
-from .utils import users as users_utils
+from ..utils import messages as messages_utils
+from ..utils import groups as groups_utils
+from ..utils import signals as signals_utils
+from ..utils import users as users_utils
 
 
 def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
 
-    if (messages_utils.user_is_authenticated(request)
-            or messages_utils.user_is_disabled(request)):
+    if messages_utils.user_is_authenticated(request):
         return redirect('home')
     else:
         form = RegistrationForm(request.POST or None)

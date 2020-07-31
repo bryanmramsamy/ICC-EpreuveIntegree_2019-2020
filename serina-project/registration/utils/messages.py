@@ -34,20 +34,21 @@ def user_is_anonymous(request):
     return is_anonymous
 
 
-def user_is_disabled(request):
-    """Check if a user's account has been disabled and send message if this is
-    true."""
+# TODO: Check if function usefull
+# def user_is_disabled(request):
+#     """Check if a user's account has been disabled and send message if this is
+#     true."""
 
-    is_disabled = False
-    if not request.user.is_anonymous and not request.user.is_active:
-        is_disabled = True
-        messages.error(
-            request,
-            _("Your account has been disabled. Contact the support team ({}) "
-              "to get more information."
-              .format(settings.CONTACT_MAILS["support"]))
-        )
-    return is_disabled
+#     is_disabled = False
+#     if not request.user.is_anonymous and not request.user.is_active:
+#         is_disabled = True
+#         messages.error(
+#             request,
+#             _("Your account has been disabled. Contact the support team ({}) "
+#               "to get more information."
+#               .format(settings.CONTACT_MAILS["support"]))
+#         )
+#     return is_disabled
 
 
 # TODO: Not tested yet

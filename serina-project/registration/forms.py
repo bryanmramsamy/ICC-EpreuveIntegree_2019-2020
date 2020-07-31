@@ -63,13 +63,12 @@ class RegistrationForm(forms.Form):
 
 
 class CustomAuthenticationForm(AuthenticationForm):
-    """Custom Authentication Form supporting i18n"""
+    """Custom AuthenticationForm supporting i18n"""
 
     username = forms.CharField(
         label=_('Username'),
         widget=forms.TextInput(attrs={'autofocus': True})
     )
-
     password = forms.CharField(
         label=_('Password'),
         widget=forms.PasswordInput()
