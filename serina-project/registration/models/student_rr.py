@@ -19,7 +19,7 @@ class StudentRegistrationReport(FrontOfficeResource):
     user = models.OneToOneField(  # TODO: Add validator: guest/student
         User,
         on_delete=models.CASCADE,
-        related_name="student_registration_report",
+        related_name="student_rr",
         verbose_name=_("Student"),
     )
     birthday = models.DateField(verbose_name=_("Birthday date"))
@@ -90,9 +90,8 @@ class StudentRegistrationReport(FrontOfficeResource):
         """Compute the total registration expenses of the student."""
 
         total_expenses = 0
-        for module_registration_report in self.modules_registration_reports\
-                .all():
-            total_expenses += module_registration_report.module.charge_price
+        for module_rr in self.modules_rrs.all():
+            total_expenses += module_rr.module.charge_price
 
         return total_expenses
 
@@ -100,17 +99,17 @@ class StudentRegistrationReport(FrontOfficeResource):
     def success_rate(self):
         """Compute the success rate of the student.
 
-        The success rate is the amount of succeeded modules divided by the total followed modules.
+        The success rate is the amount of succeeded modules divided by the
+        total followed modules.
         """
 
         succeeded_modules = 0
         total_modules = 0
 
-        for module_registration_report in self.modules_registration_reports\
-                .all():
+        for module_rr in self.modules_rrs.all():
             total_modules += 1
 
-            if module_registration_report.succeeded:
+            if module_rr.succeeded:
                 succeeded_modules += 1
 
         success_rate = succeeded_modules / total_modules * 100
@@ -126,10 +125,9 @@ class StudentRegistrationReport(FrontOfficeResource):
 
         spent_ECTS = 0
 
-        for module_registration_report in self.modules_registration_reports\
-                .all():
-            if module_registration_report.payed:
-                spent_ECTS += module_registration_report.module.ECTS_value
+        for module_rr in self.modules_rrs.all():
+            if module_rr.payed:
+                spent_ECTS += module_rr.module.ECTS_value
 
         return spent_ECTS
 
@@ -143,11 +141,10 @@ class StudentRegistrationReport(FrontOfficeResource):
 
         won_ECTS = 0
 
-        for module_registration_report in self.modules_registration_reports\
-                .all():
-            if (module_registration_report.succeeded
-                and module_registration_report.payed):
-                won_ECTS += module_registration_report.module.ECTS_value
+        for module_rr in self.modules_rrs.all():
+            if (module_rr.succeeded
+                and module_rr.payed):
+                won_ECTS += module_rr.module.ECTS_value
 
         return won_ECTS
 
@@ -163,7 +160,7 @@ class StudentRegistrationReport(FrontOfficeResource):
         module.
         """
 
-        return self.modules_registration_reports.count() > 0
+        return self.modules_rrs.count() > 0
 
     @property
     def has_graduated(self):

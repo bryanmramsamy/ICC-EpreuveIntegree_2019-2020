@@ -17,10 +17,10 @@ class DegreeRegistrationReport(FrontOfficeResource):
     Contains all the related data of the student progression in the degree.
     """
 
-    student_registration_report = models.ForeignKey(
+    student_rr = models.ForeignKey(
         StudentRegistrationReport,
         on_delete=models.CASCADE,
-        related_name="degrees_registration_reports",
+        related_name="degrees_rrs",
         verbose_name=_("Student"),)
     degree = models.ForeignKey(
         Degree,
@@ -54,9 +54,9 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
         graduated = True
 
-        for module_registration_report in self.modules_registration_reports\
+        for module_rr in self.modules_rrs\
                 .all():
-            if not module_registration_report.succeeded:
+            if not module_rr.succeeded:
                 graduated = False
                 break
 
@@ -73,9 +73,9 @@ class DegreeRegistrationReport(FrontOfficeResource):
         """Compute the total expenses of the student for this degree."""
 
         total_expenses = 0
-        for module_registration_report in self.modules_registration_reports\
+        for module_rr in self.modules_rrs\
                                               .all():
-            total_expenses += module_registration_report.module.charge_price
+            total_expenses += module_rr.module.charge_price
 
         return total_expenses
 
@@ -84,7 +84,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
         return "[{}] {}'s degree registration for {}".format(
             self.pk,
-            self.student_registration_report.user.get_full_name(),
+            self.student_rr.user.get_full_name(),
             self.degree.title,
         )
 

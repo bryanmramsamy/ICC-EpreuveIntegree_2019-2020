@@ -18,18 +18,18 @@ class ModuleRegistrationReport(FrontOfficeResource):
     Contains all the related data of the student progression in the module.
     """
 
-    student_registration_report = models.ForeignKey(
+    student_rr = models.ForeignKey(
         StudentRegistrationReport,
         on_delete=models.CASCADE,
-        related_name="modules_registration_reports",
+        related_name="modules_rrs",
         verbose_name=_("Student"),
     )
-    degree_registration_report = models.ForeignKey(
+    degree_rr = models.ForeignKey(
         DegreeRegistrationReport,
         null=True,
         blank=True,
         on_delete=models.CASCADE,
-        related_name="modules_registration_reports",
+        related_name="modules_rrs",
         verbose_name=_("Degree Registration Report")
     )
     module = models.ForeignKey(
@@ -77,7 +77,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
 
         return "[{}] {}'s module registration for {}".format(
             self.pk,
-            self.student_registration_report.user.get_full_name(),
+            self.student_rr.user.get_full_name(),
             self.module.title,
         )
 

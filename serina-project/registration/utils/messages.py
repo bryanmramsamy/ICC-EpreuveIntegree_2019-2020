@@ -19,19 +19,20 @@ def user_is_authenticated(request):
     return is_authenticated
 
 
-def user_is_anonymous(request):
-    """Check if a user is anonymous (not authenticated yet) and send message
-    if this is true."""
+# TODO: Check if function usefull
+# def user_is_anonymous(request):
+#     """Check if a user is anonymous (not authenticated yet) and send message
+#     if this is true."""
 
-    is_anonymous = False
-    if request.user.is_anonymous:
-        is_anonymous = True
-        messages.warning(
-            request,
-            _("You are not signed in yet. If you don't have an account, "
-              "<a href='{}'>register now</a>.".format(reverse('register')))
-        )
-    return is_anonymous
+#     is_anonymous = False
+#     if request.user.is_anonymous:
+#         is_anonymous = True
+#         messages.warning(
+#             request,
+#             _("You are not signed in yet. If you don't have an account, "
+#               "<a href='{}'>register now</a>.".format(reverse('register')))
+#         )
+#     return is_anonymous
 
 
 # TODO: Check if function usefull
