@@ -4,7 +4,7 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
-from ..utils import models_utils
+from ..utils import models as models_utils
 from .resource import FrontOfficeResource
 
 

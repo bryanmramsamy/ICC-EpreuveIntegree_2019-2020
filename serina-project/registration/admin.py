@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .utils import models_utils
+from .utils import models as models_utils
 
 from .models import (
     DegreeRegistrationReport,

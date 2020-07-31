@@ -12,7 +12,8 @@ def is_back_office_user(user):
     'Teacher', 'Manager', 'Administrator'.
     """
 
-    return user.groups.filter(Q(name="Teacher") | Q(name="Manager")
+    return user.groups.filter(Q(name="Teacher")
+                              | Q(name="Manager")
                               | Q(name="Administrator")).exists()
 
 

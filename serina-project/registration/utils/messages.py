@@ -6,7 +6,7 @@ from django.utils.translation import ugettext as _
 
 
 def user_is_authenticated(request):
-    """Check if a user is  authenticated and send message if this is true."""
+    """Check if a user is authenticated and send message if this is true."""
 
     is_authenticated = False
     if request.user.is_authenticated:

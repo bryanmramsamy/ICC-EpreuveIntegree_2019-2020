@@ -2,7 +2,7 @@ from django.contrib.auth.models import Group, User
 from django.db.models.signals import m2m_changed, post_save
 from django.dispatch import receiver
 
-from . import groups_utils, messages_utils, users_utils
+from . import groups, messages, users
 
 
 @receiver(m2m_changed)
@@ -20,21 +20,24 @@ def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
 
     if model == Group and action == 'post_add':
         old_username = instance.username
-        if groups_utils.is_back_office_user(instance):
+        if groups.is_back_office_user(instance):
             instance.username = "{}.{}".format(
                 instance.first_name.lower(),
                 instance.last_name.lower()
             )
-            if users_utils.username_already_exist(instance):
+            if users.username_already_exist(instance):
                 instance.username += ".{}".format(instance.pk)
         else:
-            instance.username = users_utils.username_generator(
+            instance.username = users.username_generator(
                 instance.pk,
                 instance.date_joined
             )
         new_username = instance.username
 
-        if old_username != new_username:
-            messages_utils.username_changed(old_username, new_username)
+        print(old_username)
+        print(new_username)
 
-        instance.save()
+        # if old_username != new_username:
+        #     messages.username_changed(old_username, new_username)  # FIXME: TypeError: username_changed() missing 1 required positional argument: 'new_username'
+
+        # instance.save()
