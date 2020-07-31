@@ -4,8 +4,6 @@ from . import views
 
 
 urlpatterns = [
-    url(r"^$", views.home, name="home"),
-
     url(r"^classroom/list/$", views.ClassroomListView.as_view(),
         name="classroom_listview"),
     url(r"^classroom/read/(?P<pk>[0-9]+)/$", views.ClassroomDetailView.as_view(),

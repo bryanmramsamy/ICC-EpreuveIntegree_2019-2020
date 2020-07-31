@@ -6,16 +6,16 @@ from . import groups, messages, users
 
 
 @receiver(m2m_changed)
-def user_promoted_from_guest_or_student(action, instance, model, **kwargs):
-    """Change the user's username if the user is member of a promoted group.
+def username_change_if_backofficeuser(action, instance, model, **kwargs):
+    """Change the user's username if the user becomes a Back-office user.
 
-    When a user has been promoted to a promoted group ('Teacher', 'Manager'
+    When a user has been promoted to a back-office group ('Teacher', 'Manager'
     or 'Administrator'), the user's username changes from the default unique
     registration number to the 'first_name.last_name' format.
 
-    When the user is unpromoted from any promoted group, the username changes
-    back to the default unique registration number based on the user's pk and
-    the user's registration date.
+    When the user has been removed from a back-office group, the username
+    changes back to the default unique registration number based on the user's
+    pk and the user's registration date.
     """
 
     if model == Group and action == 'post_add':
