@@ -13,16 +13,8 @@ from django.utils.translation import ugettext as _
 class RegistrationForm(forms.Form):
     """Customized UserCreationForm."""
 
-    first_name = forms.CharField(
-        label=_("First name"),
-        required=True
-    )
-
-    last_name = forms.CharField(
-        label=_("Last name"),
-        required=True
-    )
-
+    first_name = forms.CharField(label=_("First name"), required=True)
+    last_name = forms.CharField(label=_("Last name"), required=True)
     email = forms.EmailField(
         label=_("Email"),
         required=True,
@@ -31,42 +23,15 @@ class RegistrationForm(forms.Form):
                          "another one.")
         }
     )
-
     password = forms.CharField(
         label=_("Password"),
         required=True,
         widget=forms.PasswordInput
     )
-
     confirm_password = forms.CharField(
         label=_("Password confirmation"),
         required=True,
         widget=forms.PasswordInput
-    )
-
-    birthday = forms.DateField(
-        label=_('Birthday date'),
-        required=True,
-    )
-
-    nationality = forms.CharField(
-        label=_('Nationality'),
-        required=True,
-    )
-
-    address = forms.CharField(
-        label=_('Address'),
-        required=True,
-    )
-
-    postalCode = forms.CharField(
-        label=_('Postal code'),
-        required=True,
-    )
-
-    postalLocality = forms.CharField(
-        label=_('Locality'),
-        required=True,
     )
 
     def clean(self):

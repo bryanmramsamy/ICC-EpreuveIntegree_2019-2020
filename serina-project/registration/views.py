@@ -10,7 +10,7 @@ from django.contrib.auth.views import (
     PasswordResetConfirmView,
     PasswordResetCompleteView,
     PasswordResetDoneView,
-    PasswordResetView
+    PasswordResetView,
 )
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
@@ -20,9 +20,12 @@ from .forms import (
     CustomAuthenticationForm,
     CustomPasswordChangeForm,
     CustomPasswordResetForm,
-    RegistrationForm
+    RegistrationForm,
 )
-from .utils import messages_utils, groups_utils, signals_utils, users_utils
+from .utils import messages as messages_utils
+from .utils import groups as groups_utils
+from .utils import signals as signals_utils
+from .utils import users as users_utils
 
 
 def register(request):
@@ -36,9 +39,14 @@ def register(request):
         form = RegistrationForm(request.POST or None)
 
         if form.is_valid():
+
+            # Clean data
+
             first_name = form.cleaned_data["first_name"]
             last_name = form.cleaned_data["last_name"]
             email = form.cleaned_data["email"]
+
+            # Generate username (unique registration number)
 
             if User.objects.count() == 0:
                 latest_user_pk = 1
@@ -47,28 +55,25 @@ def register(request):
 
             date_today = date.today()
 
+            username = users_utils.username_generator(
+                latest_user_pk+1,
+                date_today,
+            )
+
+            # User creation
+
             user = User.objects.create(
-                username=users_utils.username_generator(
-                    latest_user_pk+1,
-                    date_today
-                ),
+                username=username,
                 email=email,
                 first_name=first_name.title(),
-                last_name=last_name.title()
+                last_name=last_name.title(),
             )
 
             user.set_password(form.cleaned_data["password"])
             groups_utils.promote_to_guest(user)
             user.save()
 
-            UserProfile.objects.create(
-                user=user,
-                birthday=form.cleaned_data["birthday"],
-                nationality=form.cleaned_data["nationality"],
-                address=form.cleaned_data["address"],
-                postalCode=form.cleaned_data["postalCode"],
-                postalLocality=form.cleaned_data["postalLocality"]
-            )
+            # Authentication
 
             login(request, user)
 
