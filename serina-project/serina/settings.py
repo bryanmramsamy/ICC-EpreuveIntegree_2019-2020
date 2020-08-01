@@ -50,10 +50,10 @@ INSTALLED_APPS = [
     'paypal.standard.ipn',
 
     # Project apps
+    'api',
     'management',
     'rating',
     'registration',
-    'statistic',
 ]
 
 MIDDLEWARE = [
