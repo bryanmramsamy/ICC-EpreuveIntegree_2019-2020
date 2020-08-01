@@ -13,7 +13,7 @@ class CourseListView(ListView):  # TODO: Debug view
     """ListView for Course."""
 
     model = Course
-    template_name = "management/course_listview.html"
+    template_name = "management/course/course_listview.html"
     context_object_name = "courses"
     paginate_by = 10
 
@@ -22,5 +22,5 @@ class CourseDetailView(DetailView):  # TODO: Debug view
     """DetailView for Course."""
 
     model = Course
-    template_name = "management/course_detailview.html"
+    template_name = "management/course/course_detailview.html"
     context_object_name = "course"
