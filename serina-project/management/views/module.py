@@ -59,8 +59,7 @@ class ModuleLevelCreateView(CreateView):
     """CreateView for ModuleLevels."""
 
     model = ModuleLevel
-    fields = '__all__'
-    # form_class = ModuleLevelForm
+    form_class = ModuleLevelForm
     template_name = "management/modulelevel_createview.html"
 
     def get_initial(self):

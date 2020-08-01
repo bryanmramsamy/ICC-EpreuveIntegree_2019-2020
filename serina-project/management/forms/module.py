@@ -18,12 +18,18 @@ class ModuleForm(ResourceForm):
         model = Module
 
 
+
 # class ModuleLevelForm(ResourceForm):
     
 #     class Meta(ResourceForm.Meta):
 #         model = ModuleLevel
 
 class ModuleLevelForm(forms.ModelForm):
+
     class Meta:
         model = ModuleLevel
-        exclude = ["created_by"]
+        fields = "__all__"
+
+        widgets = {
+            'created_by': forms.HiddenInput(),
+        }
