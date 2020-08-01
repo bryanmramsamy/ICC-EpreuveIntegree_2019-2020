@@ -24,7 +24,6 @@ class ModuleForm(ResourceForm):
 #         model = ModuleLevel
 
 class ModuleLevelForm(forms.ModelForm):
-    
     class Meta:
         model = ModuleLevel
-        exclude = ["created_by", "reference"]
+        exclude = ["created_by"]
