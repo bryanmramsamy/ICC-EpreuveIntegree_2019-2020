@@ -38,7 +38,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         related_name="students_registrations",
         verbose_name=_("Registration module")
     )
-    course =  models.ForeignKey(
+    course = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
         related_name="students_registrations",
@@ -54,6 +54,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         default=-1,
         validators=[MinValueValidator(-1), MaxValueValidator(100)],
         verbose_name=_("Final score"))
+    approved = models.BooleanField(default=False, verbose_name=_("Approved"))
     payed = models.BooleanField(default=False, verbose_name=_("Payed"))
 
     class Meta:
@@ -70,7 +71,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         registration to it.
         """
 
-        return self.payed and self.student_final_score >= 50
+        return self.approved and self.payed and self.student_final_score >= 50
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""

@@ -38,6 +38,32 @@ class DegreeRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Degrees Registration Reports')
 
     @property
+    def approved(self):
+        """Check if all the related modules_rr are approved."""
+
+        modules_approved = True
+
+        for module_rr in self.modules_rrs.all():
+            if not module_rr.approved:
+                modules_approved = False
+                break
+
+        return modules_approved
+
+    @property
+    def payed(self):
+        """Check if all the related modules_rr are payed."""
+
+        modules_payed = True
+
+        for module_rr in self.modules_rrs.all():
+            if not module_rr.payed:
+                modules_payed = False
+                break
+
+        return modules_payed
+
+    @property
     def academic_years(self):
         """Display the academic years of the sutdent's degree."""
 
@@ -54,8 +80,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
         graduated = True
 
-        for module_rr in self.modules_rrs\
-                .all():
+        for module_rr in self.modules_rrs.all():
             if not module_rr.succeeded:
                 graduated = False
                 break
