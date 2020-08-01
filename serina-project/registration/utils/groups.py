@@ -87,6 +87,7 @@ def promote_to_teacher(user):
     """Promote a registered user to the 'Teacher'-group."""
 
     change_group(user, 'Teacher')
+    user.is_staff = True
 
 
 def promote_to_manager(user):
@@ -102,4 +103,5 @@ def promote_to_administrator(user):
     superuser."""
 
     change_group(user, 'Administrator')
+    user.is_staff = True
     user.is_superuser = True
