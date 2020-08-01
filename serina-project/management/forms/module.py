@@ -24,12 +24,16 @@ class ModuleForm(ResourceForm):
 #     class Meta(ResourceForm.Meta):
 #         model = ModuleLevel
 
-class ModuleLevelForm(forms.ModelForm):
+class BackOfficeResourceFormMixin(forms.ModelForm):
 
     class Meta:
-        model = ModuleLevel
         fields = "__all__"
 
         widgets = {
             'created_by': forms.HiddenInput(),
         }
+
+
+class ModuleLevelForm(BackOfficeResourceFormMixin):
+    class Meta(BackOfficeResourceFormMixin.Meta):
+        model = ModuleLevel
