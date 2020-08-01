@@ -1,11 +1,18 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+)
 
+from ..forms import ModuleForm, ModuleLevelForm
 from ..models import Module, ModuleLevel
 
 
+# Module views
+
 class ModuleListView(ListView):  # TODO: Debug view
-    """ListView for Modules"""
+    """ListView for Modules."""
 
     model = Module
     template_name = "management/module_listview.html"
@@ -14,12 +21,22 @@ class ModuleListView(ListView):  # TODO: Debug view
 
 
 class ModuleDetailView(DetailView):  # TODO: Debug view
-    """DetailView for Modules"""
+    """DetailView for Modules."""
 
     model = Module
     template_name = "management/module_detailview.html"
     context_object_name = "module"
 
+
+class ModuleCreateView(CreateView):
+    """CreateView for Modules."""
+
+    model = Module
+    form_class = ModuleForm
+    template_name = "management/module_createview.html"
+
+
+# ModuleLevel Views
 
 class ModuleLevelListView(ListView):  # TODO: Debug view
     """ListView for ModuleLevels."""
@@ -35,3 +52,18 @@ class ModuleLevelDetailView(DetailView):  # TODO: Debug view
     model = ModuleLevel
     template_name = "management/modulelevel_detailview.html"
     context_object_name = "level"
+
+
+class ModuleLevelCreateView(CreateView):
+    # FIXME: Doesn't add object to database
+    """CreateView for ModuleLevels."""
+
+    model = ModuleLevel
+    form_class = ModuleLevelForm
+    template_name = "management/module_createview.html"
+
+    # def form_valid(self, form):
+    #     model = form.save(commit=False)
+    #     model.created_by = self.request.user
+    #     model.save()
+    #     return super(ModuleLevelCreateView, self).form_valid(form)

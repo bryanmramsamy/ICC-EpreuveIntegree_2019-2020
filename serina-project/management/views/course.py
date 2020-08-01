@@ -1,11 +1,16 @@
 from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.views.generic import (
+    CreateView,
+    DetailView,
+    ListView,
+)
 
+from ..forms import *
 from ..models import Course
 
 
 class CourseListView(ListView):  # TODO: Debug view
-    """ListView for Classroom."""
+    """ListView for Course."""
 
     model = Course
     template_name = "management/course_listview.html"
@@ -14,7 +19,7 @@ class CourseListView(ListView):  # TODO: Debug view
 
 
 class CourseDetailView(DetailView):  # TODO: Debug view
-    """DetailView for Classroom."""
+    """DetailView for Course."""
 
     model = Course
     template_name = "management/course_detailview.html"

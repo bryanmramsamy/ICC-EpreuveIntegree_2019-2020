@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'ModuleCreateView' %}{% endblock title %}
+
+{% block content %}
+    <h1>ModuleCreateView</h1>
+    <form action="{% url 'module_createview' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Create new module' %}">
+    </form>
+{% endblock content %}
