@@ -24,7 +24,6 @@ from ..forms import (
 )
 from ..utils import messages as messages_utils
 from ..utils import groups as groups_utils
-from ..utils import signals as signals_utils
 from ..utils import users as users_utils
 
 
@@ -48,7 +47,7 @@ def register(request):
             # Generate username (unique registration number)
 
             if User.objects.count() == 0:
-                latest_user_pk = 1
+                latest_user_pk = 1  # TODO: Not tested yet
             else:
                 latest_user_pk = User.objects.latest('pk').pk
 
