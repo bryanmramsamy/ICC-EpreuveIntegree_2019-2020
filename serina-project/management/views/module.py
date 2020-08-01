@@ -54,11 +54,11 @@ class ModuleLevelDetailView(DetailView):  # TODO: Debug view
     context_object_name = "level"
 
 
-class ModuleLevelCreateView(CreateView):
+class BackOfficeResourceEditViewMixin(CreateView):
     # FIXME: Doesn't add object to database
     """CreateView for ModuleLevels."""
 
-    model = ModuleLevel
+    # model = ModuleLevel
     form_class = ModuleLevelForm
     template_name = "management/modulelevel_createview.html"
 
@@ -71,6 +71,13 @@ class ModuleLevelCreateView(CreateView):
         initial['created_by'] = self.request.user
 
         return initial
+
+
+class ModuleLevelCreateView(BackOfficeResourceEditViewMixin):
+    # FIXME: Doesn't add object to database
+    """CreateView for ModuleLevels."""
+
+    model = ModuleLevel
 
 
     # def form_valid(self, form):
