@@ -12,10 +12,7 @@ class ResourceForm(forms.ModelForm):
         exclude = ["created_by", "reference"]
 
 
-class ModuleForm(ResourceForm):
-    
-    class Meta(ResourceForm.Meta):
-        model = Module
+
 
 
 
@@ -37,3 +34,8 @@ class BackOfficeResourceFormMixin(forms.ModelForm):
 class ModuleLevelForm(BackOfficeResourceFormMixin):
     class Meta(BackOfficeResourceFormMixin.Meta):
         model = ModuleLevel
+
+
+class ModuleForm(BackOfficeResourceFormMixin):
+    class Meta(BackOfficeResourceFormMixin.Meta):
+        model = Module
