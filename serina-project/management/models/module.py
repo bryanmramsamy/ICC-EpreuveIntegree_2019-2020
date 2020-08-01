@@ -38,6 +38,7 @@ class ModuleLevel(BackOfficeResource):
 
         return reverse('modulelevel_detailview', kwargs={'pk': self.pk})
 
+
 class Module(BackOfficeResource):
     """Model definition for Module.
 
@@ -156,14 +157,12 @@ class Module(BackOfficeResource):
         and pk after generating the pk if it wasn't defined yet.
         """
 
-        if not self.pk:  # TODO: Must be removed when fitlers on admin forms are on
-            self.eligible_teachers.clear()
-            self.prerequisites.clear()
-
         self.reference = self.title[0:4].upper()
 
         if not self.pk:
             super().save(*args, **kwargs)
+            self.eligible_teachers.clear()
+            self.prerequisites.clear()
 
         self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)

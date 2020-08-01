@@ -11,6 +11,7 @@ class ModuleForm(BackOfficeResourceFormMixin):
         """Meta definition for ModuleLevelForm."""
 
         model = Module
+        exclude = ("reference", "prerequisites", "eligible_teachers")
 
 
 class ModuleLevelForm(BackOfficeResourceFormMixin):
