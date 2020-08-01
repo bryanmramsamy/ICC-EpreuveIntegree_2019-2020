@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import StudentRating
+
+
+admin.site.register(StudentRating)
