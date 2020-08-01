@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -39,7 +40,11 @@ class BackOfficeResource(models.Model):
 
         if not is_back_office_user(self.created_by):
             raise ValidationError(
-                _("{} is not allowed to perform back-office tasks like this. "
-                  "These action must be performed by a promoted user."
-                  .format(self.created_by.username))
+                _("{} is not allowed to perform tasks. This action must be "
+                  "performed by a back-office user. Please contact the support"
+                  " team ({}) for more information."
+                  .format(
+                      self.created_by.username,
+                      settings.CONTACT_MAILS["support"]),
+                  )
             )

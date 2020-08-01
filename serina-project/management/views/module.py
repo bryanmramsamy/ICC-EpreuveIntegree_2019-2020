@@ -59,8 +59,8 @@ class ModuleLevelCreateView(CreateView):
     """CreateView for ModuleLevels."""
 
     model = ModuleLevel
-    form_class = ModuleLevelForm
-    template_name = "management/module_createview.html"
+    fields = '__all__'
+    template_name = "management/modulelevel_createview.html"
 
     # def form_valid(self, form):
     #     model = form.save(commit=False)

@@ -63,7 +63,7 @@ class RegistrationForm(forms.Form):
 
 
 class CustomAuthenticationForm(AuthenticationForm):
-    """Custom AuthenticationForm supporting i18n"""
+    """Custom AuthenticationForm supporting i18n."""
 
     username = forms.CharField(
         label=_('Username'),
