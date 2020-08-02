@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'ClassroomUpdateView' %}{% endblock title %}
+{% block title %}{% trans 'ClassroomDeleteView' %}{% endblock title %}
 
 {% block content %}
-    <h1>ClassroomUpdateView</h1>
+    <h1>ClassroomDeleteView</h1>
     <form method="post">
         {% csrf_token %}
-        <p>Are you sure you want to delete "{{ classroom.title }}"?</p>
+        <p>Are you sure you want to delete "{{ classroom.name }}"?</p>
         <input type="submit" value="Confirm">
     </form>
 
     <h1>ClassroomDetailView</h1>
     <div>
-        <h2>{{ classroom.label }}</h2>
+        <h2>{{ classroom.name }}</h2>
         <h3>{{ classroom.reference }}</h3>
         <h4>{{ classroom.description }}</h4>
         <p>{{ classroom.recommended_capacity }}</p>

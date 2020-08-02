@@ -9,12 +9,12 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" value="{% trans 'Create new Classroom' %}">
+        <input type="submit" value="{% trans 'update Classroom' %}">
     </form>
 
     <h1>ClassroomDetailView</h1>
     <div>
-        <h2>{{ classroom.label }}</h2>
+        <h2>{{ classroom.name }}</h2>
         <h3>{{ classroom.reference }}</h3>
         <h4>{{ classroom.description }}</h4>
         <p>{{ classroom.recommended_capacity }}</p>

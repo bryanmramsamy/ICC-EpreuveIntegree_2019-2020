@@ -11,19 +11,25 @@ urlpatterns = [
         views.ClassroomDetailView.as_view(),
         name="classroom_detailview"
     ),
-    # url(r"^classroom/create/$", views.ClassroomCreateView.as_view(),
-    #     name="classroom_createview"),
-    # url(r"^classroom/update/(?P<pk>[0-9]+)/$", views.ClassroomUpdateView.as_view(),
-    #     name="classroom_updateview"),
-    # url(r"^classroom/delete/(?P<pk>[0-9]+)/$", views.ClassroomDeleteView.as_view(),
-    #     name="classroom_deleteview"),
+    url(r"^classroom/create/$", views.ClassroomCreateView.as_view(),
+        name="classroom_createview"),
+    url(
+        r"^classroom/update/(?P<pk>[0-9]+)/$",
+        views.ClassroomUpdateView.as_view(),
+        name="classroom_updateview"
+    ),
+    url(
+        r"^classroom/delete/(?P<pk>[0-9]+)/$",
+        views.ClassroomDeleteView.as_view(),
+        name="classroom_deleteview"
+    ),
 
     url(r"^course/list/$", views.CourseListView.as_view(),
         name="course_listview"),
     url(r"^course/read/(?P<pk>[0-9]+)/$", views.CourseDetailView.as_view(),
         name="course_detailview"),
-    # url(r"^course/create/$", views.CourseCreateView.as_view(),
-    #     name="course_createview"),
+    #url(r"^course/create/$", views.CourseCreateView.as_view(),
+    #    name="course_createview"),
     # url(r"^course/update/(?P<pk>[0-9]+)/$", views.CourseUpdateView.as_view(),
     #     name="course_updateview"),
     # url(r"^course/delete/(?P<pk>[0-9]+)/$", views.CourseDeleteView.as_view(),
@@ -54,8 +60,11 @@ urlpatterns = [
         views.DegreeCategoryUpdateView.as_view(),
         name="degreecategory_updateview"
     ),
-    url(r"^degree/category/delete/(?P<pk>[0-9]+)/$", views.DegreeCategoryDeleteView.as_view(),
-        name="degreecategory_deleteview"),
+    url(
+        r"^degree/category/delete/(?P<pk>[0-9]+)/$",
+        views.DegreeCategoryDeleteView.as_view(),
+        name="degreecategory_deleteview"
+),
 
     url(r"^module/list/$", views.ModuleListView.as_view(),
         name="module_listview"),

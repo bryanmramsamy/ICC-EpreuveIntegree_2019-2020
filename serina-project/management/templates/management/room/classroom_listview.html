@@ -24,6 +24,8 @@
             <p>{{ classroom.nb_modules }}</p>
 
             <h5><a href="{{ classroom.get_absolute_url }}">classroom_detailview/{{ classroom.pk }}/</a></h5>
+            <h5><a href="{% url 'classroom_updateview' pk=classroom.pk %}">classroom_updateview/{{ classroom.pk }}/</a></h5>
+            <h5><a href="{% url 'classroom_deleteview' pk=classroom.pk %}">classroom_deleteview/{{ classroom.pk }}/</a></h5>
         </div>
     {% endfor %}
 {% endblock content %}
