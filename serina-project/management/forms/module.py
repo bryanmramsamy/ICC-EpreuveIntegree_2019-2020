@@ -3,14 +3,15 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 
 from ..models import Module, ModuleLevel
-from .resource import BackOfficeResourceFormMixin
+from .resource import (
+    BackOfficeResourceFormMixin,
+    LevelChoiceField,
+    ModuleMultipleChoiceField,
+    TeacherMultipleChoiceField,
+)
 
-class LevelChoiceField(forms.ModelChoiceField):
-    """Display a formatted name for each ModuleLevel in the
-    ModelChoiceField."""
 
-    def label_from_instance(self, level):
-        return "{}".format(level.name)
+# Module forms
 
 class ModuleCreateForm(BackOfficeResourceFormMixin):
     """ModelForm for Module."""
@@ -22,20 +23,6 @@ class ModuleCreateForm(BackOfficeResourceFormMixin):
 
         model = Module
         exclude = ("reference", "prerequisites", "eligible_teachers")
-
-class ModuleMultipleChoiceField(forms.ModelMultipleChoiceField):
-    """Display the reference and the title of each module in the
-    MultipleChoiceField."""
-
-    def label_from_instance(self, module):
-        return "{} ({})".format(module.title, module.reference)
-
-
-class TeacherMultipleChoiceField(forms.ModelMultipleChoiceField):
-    """Display the full name of each teacher in the MultipleChoiceField."""
-
-    def label_from_instance(self, teacher):
-        return "{} ({})".format(teacher.get_full_name(), teacher.username)
 
 
 class ModuleUpdateForm(BackOfficeResourceFormMixin):
@@ -66,6 +53,8 @@ class ModuleUpdateForm(BackOfficeResourceFormMixin):
         model = Module
         exclude = ("reference",)
 
+
+# ModuleLevel forms
 
 class ModuleLevelForm(BackOfficeResourceFormMixin):
     """ModelForm for ModuleLevel."""

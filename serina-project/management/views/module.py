@@ -30,7 +30,7 @@ class ModuleDetailView(DetailView):  # TODO: Debug view
     context_object_name = "module"
 
 
-class ModuleCreateView(BackOfficeResourceCreateViewMixin):
+class ModuleCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for Modules."""
 
     model = Module
@@ -38,7 +38,7 @@ class ModuleCreateView(BackOfficeResourceCreateViewMixin):
     template_name = "management/module/module_createview.html"
 
 
-class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):
+class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     """CreateView for Modules."""
 
     model = Module
@@ -46,13 +46,14 @@ class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):
     template_name = "management/module/module_createview.html"
 
 
-class ModuleDeleteView(DeleteView):
-    """"""
+class ModuleDeleteView(DeleteView):  # TODO: Debug view
+    """CreateView for Modules."""
 
     model = Module
     template_name = "management/module/module_deleteview.html"
     context_object_name = "module"
     success_url = reverse_lazy('module_listview')
+
 
 # ModuleLevel Views
 
@@ -72,9 +73,26 @@ class ModuleLevelDetailView(DetailView):  # TODO: Debug view
     context_object_name = "level"
 
 
-class ModuleLevelCreateView(BackOfficeResourceCreateViewMixin):
+class ModuleLevelCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for ModuleLevels."""
 
     model = ModuleLevel
     form_class = ModuleLevelForm
     template_name = "management/module/modulelevel_createview.html"
+
+
+class ModuleLevelUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+    """CreateView for ModuleLevels."""
+
+    model = ModuleLevel
+    form_class = ModuleLevelForm
+    template_name = "management/module/modulelevel_createview.html"
+
+
+class ModuleLevelDeleteView(DeleteView):  # TODO: Debug view
+    """CreateView for ModuleLevels."""
+
+    model = ModuleLevel
+    template_name = "management/module/modulelevel_deleteview.html"
+    context_object_name = "level"
+    success_url = reverse_lazy('module_listview')
