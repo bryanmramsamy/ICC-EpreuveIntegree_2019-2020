@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'DegreeCategoryCreateView' %}{% endblock title %}
+
+{% block content %}
+    <h1>DegreeCategoryDeleteView</h1>
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ category.title }}"?</p>
+        <input type="submit" value="Confirm">
+    </form>
+
+    <h1>DegreeCategoryDetailView</h1>
+    <div>
+        <h2>{{ degree.name }}</h2>
+    </div>
+
+    <h2>Degrees from this category</h2>
+    <ul>
+        {% for degree in category.degrees.all %}
+            <li>{{ degree.title }}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'DegreeCategoryCreateView' %}{% endblock title %}
+
+{% block content %}
+    <h1>DegreeCategoryCreateView</h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Create new degree category' %}">
+    </form>
+{% endblock content %}
