@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -8,9 +9,11 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
-class ClassroomListView(ListView):  # TODO: Debug view
+class ClassroomListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                        ListView):  # TODO: Debug view
     """ListView for Classroom."""
 
     model = Classroom
@@ -19,7 +22,8 @@ class ClassroomListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
-class ClassroomDetailView(DetailView):  # TODO: Debug view
+class ClassroomDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                          DetailView):  # TODO: Debug view
     """DetailView for Classroom."""
 
     model = Classroom
@@ -27,7 +31,8 @@ class ClassroomDetailView(DetailView):  # TODO: Debug view
     context_object_name = "classroom"
 
 
-class ClassroomCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+class ClassroomCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                          BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for Classroom."""
 
     model = Classroom
@@ -35,7 +40,8 @@ class ClassroomCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug vie
     template_name = "management/room/classroom_createview.html"
 
 
-class ClassroomUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+class ClassroomUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                          BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     """UpdateView for Classroom."""
 
     model = Classroom
@@ -44,7 +50,8 @@ class ClassroomUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug vie
     template_name = "management/room/classroom_updateview.html"
 
 
-class ClassroomDeleteView(DeleteView):  # TODO: Debug view
+class ClassroomDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                          DeleteView):  # TODO: Debug view
     """DeleteView for Classroom."""
 
     model = Classroom

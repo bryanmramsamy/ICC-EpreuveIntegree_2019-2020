@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -8,9 +9,11 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
-class CourseListView(ListView):  # TODO: Debug view
+class CourseListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                     ListView):  # TODO: Debug view
     """ListView for Course."""
 
     model = Course
@@ -19,7 +22,8 @@ class CourseListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
-class CourseDetailView(DetailView):  # TODO: Debug view
+class CourseDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       DetailView):  # TODO: Debug view
     """DetailView for Course."""
 
     model = Course
@@ -27,7 +31,8 @@ class CourseDetailView(DetailView):  # TODO: Debug view
     template_name = "management/course/course_detailview.html"
 
 
-class CourseCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+class CourseCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for Course."""
 
     model = Course
@@ -35,7 +40,8 @@ class CourseCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     template_name = "management/course/course_createview.html"
 
 
-class CourseUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+class CourseUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     """UpdateView for Course."""
 
     model = Course
@@ -44,7 +50,8 @@ class CourseUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     template_name = "management/course/course_updateview.html"
 
 
-class CourseDeleteView(DeleteView):  # TODO: Debug view
+class CourseDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       DeleteView):  # TODO: Debug view
     """DeleteView for Course."""
 
     model = Course

@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -8,11 +9,13 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
 # Degree
 
-class DegreeListView(ListView):  # TODO: Debug view
+class DegreeListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                     ListView):  # TODO: Debug view
     """ListView for Degree."""
 
     model = Degree
@@ -21,7 +24,8 @@ class DegreeListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
-class DegreeDetailView(DetailView):  # TODO: Debug view
+class DegreeDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       DetailView):  # TODO: Debug view
     """DetailView for Degree."""
 
     model = Degree
@@ -29,7 +33,8 @@ class DegreeDetailView(DetailView):  # TODO: Debug view
     context_object_name = "degree"
 
 
-class DegreeCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+class DegreeCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for Degree."""
 
     model = Degree
@@ -38,7 +43,8 @@ class DegreeCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     success_url = reverse_lazy('degree_listview')
 
 
-class DegreeUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+class DegreeUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     """UpdateView for Degree."""
 
     model = Degree
@@ -51,7 +57,8 @@ class DegreeUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
         return reverse('degree_detailview', kwargs={"pk": self.object.pk})
 
 
-class DegreeDeleteView(DeleteView):  # TODO: Debug view
+class DegreeDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       DeleteView):  # TODO: Debug view
     """DeleteView for Degree."""
 
     model = Degree
@@ -62,7 +69,8 @@ class DegreeDeleteView(DeleteView):  # TODO: Debug view
 
 # DegreeCategory
 
-class DegreeCategoryListView(ListView):  # TODO: Debug view
+class DegreeCategoryListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                             ListView):  # TODO: Debug view
     """ListView for DegreeCategory."""
 
     model = DegreeCategory
@@ -71,7 +79,8 @@ class DegreeCategoryListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
-class DegreeCategoryDetailView(DetailView):  # TODO: Debug view
+class DegreeCategoryDetailView(LoginRequiredMixin,
+                               ManagerAdministratorOnlyMixin, DetailView):  # TODO: Debug view
     """DetailView for DegreeCategory."""
 
     model = DegreeCategory
@@ -79,7 +88,11 @@ class DegreeCategoryDetailView(DetailView):  # TODO: Debug view
     context_object_name = "category"
 
 
-class DegreeCategoryCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+class DegreeCategoryCreateView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    BackOfficeResourceCreateViewMixin,
+):  # TODO: Debug view
     """CreateView for DegreeCategory."""
 
     model = DegreeCategory
@@ -93,7 +106,11 @@ class DegreeCategoryCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debu
                        kwargs={"pk": self.object.pk})
 
 
-class DegreeCategoryUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+class DegreeCategoryUpdateView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    BackOfficeResourceUpdateViewMixin,
+):  # TODO: Debug view
     """UpdateView for DegreeCategory."""
 
     model = DegreeCategory
@@ -102,7 +119,8 @@ class DegreeCategoryUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debu
     template_name = "management/degree/degreecategory_updateview.html"
 
 
-class DegreeCategoryDeleteView(DeleteView):  # TODO: Debug view
+class DegreeCategoryDeleteView(LoginRequiredMixin,
+                               ManagerAdministratorOnlyMixin, DeleteView):  # TODO: Debug view
     """DeleteView for DegreeCategory."""
 
     model = DegreeCategory

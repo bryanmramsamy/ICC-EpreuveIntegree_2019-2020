@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -8,11 +9,13 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
 # Module views
 
-class ModuleListView(ListView):  # TODO: Debug view
+class ModuleListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                     ListView):  # TODO: Debug view
     """ListView for Modules."""
 
     model = Module
@@ -21,7 +24,8 @@ class ModuleListView(ListView):  # TODO: Debug view
     paginate_by = 10
 
 
-class ModuleDetailView(DetailView):  # TODO: Debug view
+class ModuleDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       DetailView):  # TODO: Debug view
     """DetailView for Modules."""
 
     model = Module
@@ -29,7 +33,8 @@ class ModuleDetailView(DetailView):  # TODO: Debug view
     template_name = "management/module/module_detailview.html"
 
 
-class ModuleCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+class ModuleCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for Modules."""
 
     model = Module
@@ -37,7 +42,8 @@ class ModuleCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     template_name = "management/module/module_createview.html"
 
 
-class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+class ModuleUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     """UpdateView for Modules."""
 
     model = Module
@@ -46,7 +52,8 @@ class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     template_name = "management/module/module_updateview.html"
 
 
-class ModuleDeleteView(DeleteView):  # TODO: Debug view
+class ModuleDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                       DeleteView):  # TODO: Debug view
     """DeleteView for Modules."""
 
     model = Module
@@ -57,7 +64,8 @@ class ModuleDeleteView(DeleteView):  # TODO: Debug view
 
 # ModuleLevel Views
 
-class ModuleLevelListView(ListView):  # TODO: Debug view
+class ModuleLevelListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                          ListView):  # TODO: Debug view
     """ListView for ModuleLevels."""
 
     model = ModuleLevel
@@ -65,7 +73,8 @@ class ModuleLevelListView(ListView):  # TODO: Debug view
     template_name = "management/module/modulelevel_listview.html"
 
 
-class ModuleLevelDetailView(DetailView):  # TODO: Debug view
+class ModuleLevelDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                            DetailView):  # TODO: Debug view
     """DetailView for ModuleLevels."""
 
     model = ModuleLevel
@@ -73,7 +82,8 @@ class ModuleLevelDetailView(DetailView):  # TODO: Debug view
     template_name = "management/module/modulelevel_detailview.html"
 
 
-class ModuleLevelCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+class ModuleLevelCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                            BackOfficeResourceCreateViewMixin):  # TODO: Debug view
     """CreateView for ModuleLevels."""
 
     model = ModuleLevel
@@ -81,7 +91,8 @@ class ModuleLevelCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug v
     template_name = "management/module/modulelevel_createview.html"
 
 
-class ModuleLevelUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+class ModuleLevelUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                            BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
     """UpdateView for ModuleLevels."""
 
     model = ModuleLevel
@@ -90,7 +101,8 @@ class ModuleLevelUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug v
     template_name = "management/module/modulelevel_updateview.html"
 
 
-class ModuleLevelDeleteView(DeleteView):  # TODO: Debug view
+class ModuleLevelDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
+                            DeleteView):  # TODO: Debug view
     """DeleteView for ModuleLevels."""
 
     model = ModuleLevel
