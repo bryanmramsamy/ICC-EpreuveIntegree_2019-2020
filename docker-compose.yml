@@ -2,12 +2,13 @@ version: '3.8'
 
 services:
     dill:  # Django container
-        container_name: serina-dill
+        container_name: SERINA_dill
         build:
             context: .
+            dockerfile: Dockerfile
         image: django:3.0.8
         networks:
-            - serina-network
+            - SERINA_network
         depends_on:
             - pumpkin
         volumes:
@@ -20,14 +21,14 @@ services:
         env_file:
             - .dev.env
 
-        command: bash scripts/runserver.sh
+        command: bash scripts/runserver_plus.sh
 
 
     pumpkin:  # Postgres container
-        container_name: serina-pumpkin
+        container_name: SERINA_pumpkin
         image: postgres:12.3
         networks:
-            - serina-network
+            - SERINA_network
         volumes:
             - type: volume
               source: pumpkin_database
@@ -45,4 +46,4 @@ volumes:
 
 
 networks:
-    serina-network:
+    SERINA_network:
