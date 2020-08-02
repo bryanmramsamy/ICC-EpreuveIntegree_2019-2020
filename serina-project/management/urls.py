@@ -50,4 +50,14 @@ urlpatterns = [
     ),
     url(r"^module/level/create/$", views.ModuleLevelCreateView.as_view(),
         name="modulelevel_createview"),
+    url(
+        r"^module/level/update/(?P<pk>[0-9]+)/$",
+        views.ModuleLevelUpdateView.as_view(),
+        name="modulelevel_updateview",
+    ),
+    url(
+        r"^module/level/delete/(?P<pk>[0-9]+)/$",
+        views.ModuleLevelDeleteView.as_view(),
+        name="modulelevel_deleteview",
+    ),
 ]

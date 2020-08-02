@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'ModuleLevelDetailView' %}  {{ module.reference }}{% endblock title %}
+{% block title %}{% trans 'ModuleLevelCreateView' %}{% endblock title %}
 
 {% block content %}
+    <h1>ModuleLevelCreateView</h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Create new module level' %}">
+    </form>
+
     <h1>ModuleDetailView</h1>
     <div>
         <h2>{{ level.rank }}</h2>
@@ -16,9 +24,4 @@
             <li>{{ module.title }}</li>
         {% endfor %}
     </ul>
-
-    <h5><a href="{% url 'modulelevel_updateview' pk=level.pk %}">level_updateview/{{ level.pk }}/</a>
-    </h5>
-    <h5><a href="{% url 'modulelevel_deleteview' pk=level.pk %}">level_deleteview/{{ level.pk }}/</a>
-    </h5>
 {% endblock content %}

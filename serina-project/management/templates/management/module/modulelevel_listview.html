@@ -23,5 +23,9 @@
             </ul>
         </div>
 
+        <h5><a href="{{ level.get_absolute_url }}">level_detailview/{{ level.pk }}/</a>
+        </h5>
+        <h5><a href="{% url 'modulelevel_deleteview' pk=level.pk %}">level_deleteview/{{ level.pk }}/</a>
+        </h5>
     {% endfor %}
 {% endblock content %}
