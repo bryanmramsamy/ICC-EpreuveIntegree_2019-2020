@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'DegreeCategoryCreateView' %}{% endblock title %}
+{% block title %}{% trans 'DegreeCategoryUpdateView' %}{% endblock title %}
 
 {% block content %}
-    <h1>DegreeCategoryCreateView</h1>
+    <h1>DegreeCategoryUpdateView</h1>
     <form action="." method="post">
         {% csrf_token %}
         {{ form.as_p }}
@@ -14,7 +14,7 @@
 
     <h1>DegreeCategoryDetailView</h1>
     <div>
-        <h2>{{ degree.name }}</h2>
+        <h2>{{ category.name }}</h2>
     </div>
 
     <h2>Degrees from this category</h2>

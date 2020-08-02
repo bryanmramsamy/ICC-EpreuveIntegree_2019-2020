@@ -7,13 +7,13 @@
     <h1>DegreeCategoryDeleteView</h1>
     <form method="post">
         {% csrf_token %}
-        <p>Are you sure you want to delete "{{ category.title }}"?</p>
+        <p>Are you sure you want to delete "{{ category.name }}"?</p>
         <input type="submit" value="Confirm">
     </form>
 
     <h1>DegreeCategoryDetailView</h1>
     <div>
-        <h2>{{ degree.name }}</h2>
+        <h2>{{ category.name }}</h2>
     </div>
 
     <h2>Degrees from this category</h2>

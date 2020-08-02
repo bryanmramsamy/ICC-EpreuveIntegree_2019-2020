@@ -21,5 +21,8 @@
                 {% endfor %}
             </ul>
         </div>
+
+        <h5><a href="{% url 'degreecategory_updateview' pk=category.pk %}">degreecategory_updateview</a></h5>
+        <h5><a href="{% url 'degreecategory_deleteview' pk=category.pk %}">degreecategory_deleteview</a></h5>
     {% endfor %}
 {% endblock content %}

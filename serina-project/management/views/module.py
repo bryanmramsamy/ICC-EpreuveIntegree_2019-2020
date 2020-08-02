@@ -1,14 +1,13 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import (
-    DeleteView,
-    DetailView,
-    ListView,
-)
+from django.views.generic import DeleteView, DetailView, ListView
 
 from ..forms import ModuleCreateForm, ModuleUpdateForm, ModuleLevelForm
 from ..models import Module, ModuleLevel
-from .resource import BackOfficeResourceCreateViewMixin, BackOfficeResourceUpdateViewMixin
+from .resource import (
+    BackOfficeResourceCreateViewMixin,
+    BackOfficeResourceUpdateViewMixin,
+)
 
 
 # Module views
@@ -39,7 +38,7 @@ class ModuleCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
 
 
 class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
-    """CreateView for Modules."""
+    """UpdateView for Modules."""
 
     model = Module
     form_class = ModuleUpdateForm
@@ -48,7 +47,7 @@ class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
 
 
 class ModuleDeleteView(DeleteView):  # TODO: Debug view
-    """CreateView for Modules."""
+    """DeleteView for Modules."""
 
     model = Module
     context_object_name = "module"
@@ -83,7 +82,7 @@ class ModuleLevelCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug v
 
 
 class ModuleLevelUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
-    """CreateView for ModuleLevels."""
+    """UpdateView for ModuleLevels."""
 
     model = ModuleLevel
     form_class = ModuleLevelForm
@@ -92,7 +91,7 @@ class ModuleLevelUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug v
 
 
 class ModuleLevelDeleteView(DeleteView):  # TODO: Debug view
-    """CreateView for ModuleLevels."""
+    """DeleteView for ModuleLevels."""
 
     model = ModuleLevel
     template_name = "management/module/modulelevel_deleteview.html"

@@ -1,6 +1,5 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.db.models import Q
 
 from ..models import Module, ModuleLevel
 from .resource import (
@@ -31,7 +30,8 @@ class ModuleUpdateForm(BackOfficeResourceFormMixin):
     Prevent the user to add the instance to its own prerequisites. Also prevent
     adding a postrequisite module to the prerequisites."""
 
-    level = LevelChoiceField(queryset=ModuleLevel.objects.all(), empty_label=None)
+    level = LevelChoiceField(queryset=ModuleLevel.objects.all(),
+                             empty_label=None)
     prerequisites = ModuleMultipleChoiceField(queryset=None, required=False)
     eligible_teachers = TeacherMultipleChoiceField(queryset=None,
                                                    required=False)
