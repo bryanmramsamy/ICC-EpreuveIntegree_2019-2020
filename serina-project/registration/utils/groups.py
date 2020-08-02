@@ -17,6 +17,14 @@ def is_back_office_user(user):
                               | Q(name="Administrator")).exists()
 
 
+def is_manager_or_administrator(user):
+    """Check if the user is member of the 'Manager'-group or the
+    'Administrator'-group."""
+
+    return user.groups.filter(Q(name="Manager")
+                              | Q(name="Administrator")).exists()
+
+
 def main_group_i18n(user):
     """Main group of the user in the case one has multiple groups.
 
