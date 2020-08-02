@@ -4,9 +4,9 @@ from django.views.generic import (
     ListView,
 )
 
-from ..forms import ModuleForm, ModuleLevelForm
+from ..forms import ModuleCreateForm, ModuleUpdateForm, ModuleLevelForm
 from ..models import Module, ModuleLevel
-from .resource import BackOfficeResourceCreateViewMixin
+from .resource import BackOfficeResourceCreateViewMixin, BackOfficeResourceUpdateViewMixin
 
 
 # Module views
@@ -32,7 +32,15 @@ class ModuleCreateView(BackOfficeResourceCreateViewMixin):
     """CreateView for Modules."""
 
     model = Module
-    form_class = ModuleForm
+    form_class = ModuleCreateForm
+    template_name = "management/module/module_createview.html"
+
+
+class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):
+    """CreateView for Modules."""
+
+    model = Module
+    form_class = ModuleUpdateForm
     template_name = "management/module/module_createview.html"
 
 

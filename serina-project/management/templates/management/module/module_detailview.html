@@ -13,6 +13,8 @@
         <p>{{ module.module_benefits }}</p>
     </div>
 
+    <a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
+
     <h2>Prerequisites</h2>
     <ul>
         {% for module in module.prerequisites.all %}

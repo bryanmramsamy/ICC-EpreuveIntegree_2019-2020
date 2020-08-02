@@ -6,8 +6,11 @@ from . import views
 urlpatterns = [
     url(r"^classroom/list/$", views.ClassroomListView.as_view(),
         name="classroom_listview"),
-    url(r"^classroom/read/(?P<pk>[0-9]+)/$", views.ClassroomDetailView.as_view(),
-        name="classroom_detailview"),
+    url(
+        r"^classroom/read/(?P<pk>[0-9]+)/$",
+        views.ClassroomDetailView.as_view(),
+        name="classroom_detailview"
+    ),
 
     url(r"^course/list/$", views.CourseListView.as_view(),
         name="course_listview"),
@@ -31,8 +34,11 @@ urlpatterns = [
         name="module_listview"),
     url(r"^module/read/(?P<pk>[0-9]+)/$", views.ModuleDetailView.as_view(),
         name="module_detailview"),
-    url(r"^module/create/$", views.ModuleCreateView.as_view(), name="module_createview"),
-    
+    url(r"^module/create/$", views.ModuleCreateView.as_view(),
+        name="module_createview"),
+    url(r"^module/update/(?P<pk>[0-9]+)/$", views.ModuleUpdateView.as_view(),
+        name="module_updateview"),
+
 
     url(r"^module/level/list/$", views.ModuleLevelListView.as_view(),
         name="modulelevel_listview"),
@@ -41,5 +47,6 @@ urlpatterns = [
         views.ModuleLevelDetailView.as_view(),
         name="modulelevel_detailview"
     ),
-    url(r"^module/level/create/$", views.ModuleLevelCreateView.as_view(), name="modulelevel_createview"),
+    url(r"^module/level/create/$", views.ModuleLevelCreateView.as_view(),
+        name="modulelevel_createview"),
 ]
