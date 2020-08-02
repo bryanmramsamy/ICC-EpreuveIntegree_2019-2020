@@ -14,8 +14,9 @@ class Classroom(BackOfficeResource):
     specific capacity.
     """
 
-    label = models.CharField(max_length=7, unique=True,
-                             verbose_name=_("Label"))
+    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    reference = models.CharField(max_length=7, blank=True, unique=True,
+                                 verbose_name=_('Reference'))
     description = models.TextField(
         null=True,
         blank=True,
@@ -33,14 +34,14 @@ class Classroom(BackOfficeResource):
 
         verbose_name = _('Classroom')
         verbose_name_plural = _('Classrooms')
-        ordering = ('label',)
+        ordering = ('name','reference')
 
     def __str__(self):
         """Unicode representation of Classroom."""
 
-        return "[{}] {} (Capacity: {}/{})".format(
-            self.pk,
-            self.label,
+        return "({}) {} (Capacity: {}/{})".format(
+            self.reference,
+            self.name,
             self.recommended_capacity,
             self.max_capacity
         )
@@ -69,12 +70,12 @@ class Classroom(BackOfficeResource):
         make it unique.
         """
 
-        self.label = self.label[0:4].upper()
+        self.reference = self.name[0:4].upper()
 
         if not self.pk:
             super().save(*args, **kwargs)
 
-        self.label += str(self.pk).zfill(3)
+        self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

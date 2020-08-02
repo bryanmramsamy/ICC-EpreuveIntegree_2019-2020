@@ -86,6 +86,33 @@ class StudentRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Student registration reports')
 
     @property
+    def all_modules_approved(self):
+        """Check if all the modules_rrs were approved."""
+
+        modules_approved = True
+
+        for module_rr in self.modules_rrs.all():
+            if not module_rr.approved:
+                modules_approved = False
+                break
+
+        return modules_approved
+
+
+    @property
+    def all_modules_payed(self):
+        """Check if all the approved modules_rrs were payed."""
+
+        modules_payed = True
+
+        for module_rr in self.modules_rrs.all():
+            if module_rr.approved and not module_rr.payed:
+                modules_payed = False
+                break
+
+        return modules_payed
+
+    @property
     def total_expenses(self):
         """Compute the total registration expenses of the student."""
 

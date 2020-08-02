@@ -57,7 +57,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
         modules_payed = True
 
         for module_rr in self.modules_rrs.all():
-            if not module_rr.payed:
+            if module_rr.approved and not module_rr.payed:
                 modules_payed = False
                 break
 
