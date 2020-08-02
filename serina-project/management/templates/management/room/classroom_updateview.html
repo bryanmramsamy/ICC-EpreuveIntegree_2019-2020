@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'ClassroomUpdateView' %}{% endblock title %}
+
+{% block content %}
+    <h1>ClassroomUpdateView</h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Create new Classroom' %}">
+    </form>
+
+    <h1>ClassroomDetailView</h1>
+    <div>
+        <h2>{{ classroom.label }}</h2>
+        <h3>{{ classroom.reference }}</h3>
+        <h4>{{ classroom.description }}</h4>
+        <p>{{ classroom.recommended_capacity }}</p>
+        <p>{{ classroom.max_capacity }}</p>
+    </div>
+
+    <h2>Courses given in this room</h2>
+    <ul>
+        {% for course in classroom.courses.all %}
+            <li>({{ course.reference }}) {{ course.module.title }} by {{ course.teacher.get_full_name }}</li>
+        {% endfor %}
+    </ul>
+{% endblock content %}
