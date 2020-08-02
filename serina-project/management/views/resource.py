@@ -4,6 +4,8 @@ from django.views.generic import (
 )
 
 
+# TODO: Find a way to merge those two mixins.
+#       Find the common mixin used by both.
 class BackOfficeResourceCreateViewMixin(CreateView):
     """BackOfficeResourceEditViewMixin that populate the 'created_by' field by
     the current user."""
