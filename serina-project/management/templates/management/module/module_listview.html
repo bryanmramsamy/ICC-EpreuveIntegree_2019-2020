@@ -15,6 +15,9 @@
             <p>{{ module.module_benefits }}</p>
         </div>
 
-        <h5><a href="{{ module.get_absolute_url }}">module_detailview/{{ module.pk }}/</a></h5>
+        <h5><a href="{{ module.get_absolute_url }}">module_detailview/{{ module.pk }}/</a>
+        </h5>
+        <h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
+        </h5>
     {% endfor %}
 {% endblock content %}

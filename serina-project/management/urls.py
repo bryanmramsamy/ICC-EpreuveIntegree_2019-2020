@@ -38,7 +38,8 @@ urlpatterns = [
         name="module_createview"),
     url(r"^module/update/(?P<pk>[0-9]+)/$", views.ModuleUpdateView.as_view(),
         name="module_updateview"),
-
+    url(r"^module/delete/(?P<pk>[0-9]+)/$", views.ModuleDeleteView.as_view(),
+        name="module_deleteview"),
 
     url(r"^module/level/list/$", views.ModuleLevelListView.as_view(),
         name="modulelevel_listview"),

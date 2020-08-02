@@ -5,16 +5,23 @@ from django.db.models import Q
 from ..models import Module, ModuleLevel
 from .resource import BackOfficeResourceFormMixin
 
+class LevelChoiceField(forms.ModelChoiceField):
+    """Display a formatted name for each ModuleLevel in the
+    ModelChoiceField."""
+
+    def label_from_instance(self, level):
+        return "{}".format(level.name)
 
 class ModuleCreateForm(BackOfficeResourceFormMixin):
     """ModelForm for Module."""
+
+    level = LevelChoiceField(queryset=ModuleLevel.objects.all(), empty_label=None)
 
     class Meta(BackOfficeResourceFormMixin.Meta):
         """Meta definition for ModuleLevelForm."""
 
         model = Module
         exclude = ("reference", "prerequisites", "eligible_teachers")
-
 
 class ModuleMultipleChoiceField(forms.ModelMultipleChoiceField):
     """Display the reference and the title of each module in the
@@ -37,6 +44,7 @@ class ModuleUpdateForm(BackOfficeResourceFormMixin):
     Prevent the user to add the instance to its own prerequisites. Also prevent
     adding a postrequisite module to the prerequisites."""
 
+    level = LevelChoiceField(queryset=ModuleLevel.objects.all(), empty_label=None)
     prerequisites = ModuleMultipleChoiceField(queryset=None, required=False)
     eligible_teachers = TeacherMultipleChoiceField(queryset=None,
                                                    required=False)

@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views.generic import (
+    DeleteView,
     DetailView,
     ListView,
 )
@@ -43,6 +45,14 @@ class ModuleUpdateView(BackOfficeResourceUpdateViewMixin):
     form_class = ModuleUpdateForm
     template_name = "management/module/module_createview.html"
 
+
+class ModuleDeleteView(DeleteView):
+    """"""
+
+    model = Module
+    template_name = "management/module/module_deleteview.html"
+    context_object_name = "module"
+    success_url = reverse_lazy('module_listview')
 
 # ModuleLevel Views
 
