@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'CourseUpdateView' %}{% endblock title %}
+
+{% block content %}
+    <h1>CourseUpdateView</h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Create new Course' %}">
+    </form>
+
+    <h1>CourseDetailView</h1>
+    <div>
+        <h2>{{ course.reference }}</h2>
+        <h3>{{ course.module.title }}</h3>
+        <h4>{{ course.teacher.get_full_name }}</h4>
+        <p>start: {{ course.date_start }}</p>
+        <p>end: {{ course.date_end }}</p>
+        <p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
+        <p>overcapacity: {{ course.possibile_over_attendance }}</p>
+    </div>
+{% endblock content %}
