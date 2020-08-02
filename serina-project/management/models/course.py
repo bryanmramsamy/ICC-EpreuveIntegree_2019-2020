@@ -55,17 +55,31 @@ class Course(BackOfficeResource):
         """True if the amount of registrants is higher than the assigned
         classroom recommended capacity."""
 
-        return self.nb_registrants > self.room.recommended_capacity
+        if self.room:
+            return self.nb_registrants > self.room.recommended_capacity
+        else:
+            return None
 
     def __str__(self):
-        """Unicode representation of Course."""
+        """Unicode representation of Course.
 
-        return "({}) {} course given by {} at {}".format(
-            self.reference,
-            self.module.title,
-            self.teacher.get_full_name(),
-            self.room.label
-        )
+        Indictate the teacher's full name if any and the classroom's name if
+        any.
+        """
+
+        str_result = _("({}) {} course".format(self.reference, self.module.title))
+    
+        if self.teacher or self.room:
+            str_result += _(" given")
+
+            if self.teacher:
+                str_result += _(" by {}".format(self.teacher.get_full_name()))
+
+            if self.room:
+                str_result += _(" at {}".format(self.room.name))
+
+        return str_result
+
 
     def clean(self):
         """Clean method for Course.
@@ -85,7 +99,7 @@ class Course(BackOfficeResource):
 
         # Teacher must be eligilble for module
         # NOTE: Didn't understand why I must use username and not user
-        if not self.module.eligible_teachers.filter(
+        if self.teacher and not self.module.eligible_teachers.filter(
             username=self.teacher.username
         ).exists():
             raise ValidationError(
@@ -103,13 +117,13 @@ class Course(BackOfficeResource):
             )
 
         # nb_registrants must not exceed room.max_capacity
-        if self.nb_registrants > self.room.max_capacity:
+        if self.room and self.nb_registrants > self.room.max_capacity:
             raise ValidationError(
                 _("Amount of registrants ({}) cannot be higher than the "
-                  "maximum capacity of the assigned classroom ({}).".format(
-                      self.nb_registrants,
-                      self.room.max_capacity
-                  ))
+                "maximum capacity of the assigned classroom ({}).".format(
+                    self.nb_registrants,
+                    self.room.max_capacity
+                ))
             )
 
     def save(self, *args, **kwargs):
