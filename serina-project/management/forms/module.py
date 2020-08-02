@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from ..models import Module, ModuleLevel
 from .resource import (
     BackOfficeResourceFormMixin,
-    LevelChoiceField,
+    CategoryLevelChoiceField,
     ModuleMultipleChoiceField,
     TeacherMultipleChoiceField,
 )
@@ -15,7 +15,8 @@ from .resource import (
 class ModuleCreateForm(BackOfficeResourceFormMixin):
     """ModelForm for Module."""
 
-    level = LevelChoiceField(queryset=ModuleLevel.objects.all(), empty_label=None)
+    level = CategoryLevelChoiceField(queryset=ModuleLevel.objects.all(),
+                                     empty_label=None)
 
     class Meta(BackOfficeResourceFormMixin.Meta):
         """Meta definition for ModuleLevelForm."""
@@ -30,14 +31,15 @@ class ModuleUpdateForm(BackOfficeResourceFormMixin):
     Prevent the user to add the instance to its own prerequisites. Also prevent
     adding a postrequisite module to the prerequisites."""
 
-    level = LevelChoiceField(queryset=ModuleLevel.objects.all(),
-                             empty_label=None)
+    level = CategoryLevelChoiceField(queryset=ModuleLevel.objects.all(),
+                                     empty_label=None)
     prerequisites = ModuleMultipleChoiceField(queryset=None, required=False)
     eligible_teachers = TeacherMultipleChoiceField(queryset=None,
                                                    required=False)
 
     def __init__(self, *args, **kwargs):
-        """Init of the 'prerequisites'-field queryset."""
+        """Init of the 'prerequisites' and the 'eligible_teacher'-fields
+        queryset."""
 
         super().__init__(*args, **kwargs)
         self.fields['prerequisites'].queryset = \

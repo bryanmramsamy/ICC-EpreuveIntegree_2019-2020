@@ -23,6 +23,8 @@
             <p>{{ degree.nb_modules }}</p>
 
             <h5><a href="{{ degree.get_absolute_url }}">degree_detailview/{{ degree.pk }}/</a></h5>
+            <h5><a href="{% url 'degree_updateview' pk=degree.pk %}">degree_updateview/{{ degree.pk }}/</a></h5>
+            <h5><a href="{% url 'degree_deleteview' pk=degree.pk %}">degree_deleteview/{{ degree.pk }}/</a></h5>
         </div>
     {% endfor %}
 {% endblock content %}

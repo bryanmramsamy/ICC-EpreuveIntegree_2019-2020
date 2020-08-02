@@ -2,13 +2,15 @@ from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
-from ..forms import DegreeCreateForm, DegreeCategoryForm
+from ..forms import DegreeCreateForm, DegreeCategoryForm, DegreeUpdateForm
 from ..models import Degree, DegreeCategory
 from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
 
+
+# Degree
 
 class DegreeListView(ListView):  # TODO: Debug view
     """ListView for Degree."""
@@ -28,17 +30,37 @@ class DegreeDetailView(DetailView):  # TODO: Debug view
 
 
 class DegreeCreateView(BackOfficeResourceCreateViewMixin):  # TODO: Debug view
-    """CreateView for Modules."""
+    """CreateView for Degree."""
 
     model = Degree
-    # fields = "__all__"
     form_class = DegreeCreateForm
     template_name = "management/degree/degree_createview.html"
     success_url = reverse_lazy('degree_listview')
 
 
+class DegreeUpdateView(BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+    """UpdateView for Degree."""
+
+    model = Degree
+    form_class = DegreeUpdateForm
+    template_name = "management/degree/degree_updateview.html"
+
+    def get_success_url(self):
+        """Redirect the user to the newly created DegreeDetailView."""
+
+        return reverse('degree_detailview', kwargs={"pk": self.object.pk})
 
 
+class DegreeDeleteView(DeleteView):  # TODO: Debug view
+    """DeleteView for Degree."""
+
+    model = Degree
+    template_name = "management/degree/degree_deleteview.html"
+    context_object_name = "degree"
+    success_url = reverse_lazy('degree_listview')
+
+
+# DegreeCategory
 
 class DegreeCategoryListView(ListView):  # TODO: Debug view
     """ListView for DegreeCategory."""

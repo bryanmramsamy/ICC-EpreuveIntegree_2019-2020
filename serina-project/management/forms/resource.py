@@ -16,12 +16,12 @@ class BackOfficeResourceFormMixin(forms.ModelForm):
 
 # ModelChoiceFields and ModelMutipleChoiceFields customization
 
-class LevelChoiceField(forms.ModelChoiceField):
-    """Display a formatted name for each ModuleLevel in the
+class CategoryLevelChoiceField(forms.ModelChoiceField):
+    """Display a formatted name for each DegreeCategory and ModuleLevel in the
     ModelChoiceField."""
 
-    def label_from_instance(self, level):
-        return "{}".format(level.name)
+    def label_from_instance(self, category_or_level):
+        return "{}".format(category_or_level.name)
 
 
 class ModuleMultipleChoiceField(forms.ModelMultipleChoiceField):

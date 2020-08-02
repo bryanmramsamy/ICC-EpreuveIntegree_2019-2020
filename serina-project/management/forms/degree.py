@@ -1,8 +1,9 @@
 from django import forms
 
-from ..models import Degree, DegreeCategory
+from ..models import Degree, DegreeCategory, Module
 from .resource import (
     BackOfficeResourceFormMixin,
+    CategoryLevelChoiceField,
     ModuleMultipleChoiceField,
     TeacherMultipleChoiceField,
 )
@@ -10,45 +11,37 @@ from .resource import (
 # Degree forms
 
 class DegreeCreateForm(BackOfficeResourceFormMixin):
-    """ModelForm for Module."""
+    """ModelForm for Degree creation."""
+
+    category = CategoryLevelChoiceField(queryset=DegreeCategory.objects.all(),
+                                        empty_label=None)
 
     class Meta(BackOfficeResourceFormMixin.Meta):
-        """Meta definition for ModuleLevelForm."""
+        """Meta definition for DegreeCreateForm."""
 
         model = Degree
         exclude = ("reference", "modules")
 
 
-# class ModuleUpdateForm(BackOfficeResourceFormMixin):
-#     """ModelForm for Module.
+class DegreeUpdateForm(BackOfficeResourceFormMixin):
+    """ModelForm for Degree update.
 
-#     Prevent the user to add the instance to its own prerequisites. Also prevent
-#     adding a postrequisite module to the prerequisites."""
+    Prevent the user to add the instance to its own prerequisites. Also prevent
+    adding a postrequisite module to the prerequisites."""
 
-#     level = LevelChoiceField(queryset=ModuleLevel.objects.all(), empty_label=None)
-#     prerequisites = ModuleMultipleChoiceField(queryset=None, required=False)
-#     eligible_teachers = TeacherMultipleChoiceField(queryset=None,
-#                                                    required=False)
+    category = CategoryLevelChoiceField(queryset=DegreeCategory.objects.all(),
+                                        empty_label=None)
+    modules = ModuleMultipleChoiceField(queryset=Module.objects.all(),
+                                        required=False)
 
-#     def __init__(self, *args, **kwargs):
-#         """Init of the 'prerequisites'-field queryset."""
+    class Meta(BackOfficeResourceFormMixin.Meta):
+        """Meta definition for ModuleLevelForm."""
 
-#         super().__init__(*args, **kwargs)
-#         self.fields['prerequisites'].queryset = \
-#             Module.objects.exclude(pk=self.instance.pk) \
-#                           .exclude(prerequisites=self.instance)
-
-#         self.fields['eligible_teachers'].queryset = \
-#             User.objects.filter(groups__name="Teacher")
-
-#     class Meta(BackOfficeResourceFormMixin.Meta):
-#         """Meta definition for ModuleLevelForm."""
-
-#         model = Module
-#         exclude = ("reference",)
+        model = Degree
+        exclude = ("reference",)
 
 
-# ModuleLevel forms
+# DegreeCategory forms
 
 class DegreeCategoryForm(BackOfficeResourceFormMixin):
     """ModelForm for DegreeCategory."""
