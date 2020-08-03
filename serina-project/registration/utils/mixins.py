@@ -1,11 +1,15 @@
+from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.views.generic import FormView
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
 from . import groups as groups_utils
 
+
+# Access restriction mixins
 
 class BackOfficeUsersOnlyMixin(UserPassesTestMixin):
     """Restrict view access to Back-Office users."""
@@ -35,3 +39,31 @@ class ManagerAdministratorOnlyMixin(BackOfficeUsersOnlyMixin):
         """Check if the user is a Manager or an Administrator."""
 
         return groups_utils.is_manager_or_administrator(self.request.user)
+
+
+# Autofill 'created_by' formfield mixins (form and view)
+
+class HideCreatedByFieldFormMixin(forms.ModelForm):
+    """Mixin for ModelForms thats hide the 'created_by' field.
+
+    The 'created_by'-field is still created and can be populated by the view
+    without an input from the user.
+    """
+
+    class Meta:
+        """Meta definition for HideCreatedByFieldFormMixin."""
+
+        widgets = {
+            'created_by': forms.HiddenInput(),
+        }
+
+
+class AutofillCreatedByRequestUser(FormView):
+    """Autofill the 'created_by'-formfield by the request.user."""
+
+    def get_initial(self):
+        """Returns the initial data to use for forms on this view."""
+
+        initial = super().get_initial()
+        initial['created_by'] = self.request.user
+        return initial
