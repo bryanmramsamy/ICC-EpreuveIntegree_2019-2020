@@ -9,6 +9,19 @@ from ..utils.mixins import (
 )
 
 
+class StudentRegistrationReportListView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    ListView
+):  # TODO: Debug view
+    """CreateView for Modules."""
+
+    model = StudentRegistrationReport
+    context_object_name = "student_rrs"
+    template_name = "registration/registration_report/student_rr_listview." \
+                    "html"
+
+
 class StudentRegistrationReportDetailView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
