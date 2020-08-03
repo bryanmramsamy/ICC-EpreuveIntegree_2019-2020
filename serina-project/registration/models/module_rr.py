@@ -60,7 +60,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         default=0,
         verbose_name=_("Student's attempt number")
     )  # TODO: Add max_attempt value from settings
-    student_final_score = models.FloatField(
+    final_score = models.FloatField(
         null=True,
         blank=True,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
@@ -82,14 +82,14 @@ class ModuleRegistrationReport(FrontOfficeResource):
         registration to it.
         """
 
-        return self.approved and self.payed and self.student_final_score >= 50
+        return self.approved and self.payed and self.final_score >= 50
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
 
         return "[{}] {}'s module registration for {}".format(
             self.pk,
-            self.student_rr.user.get_full_name(),
+            self.student_rr.created_by.get_full_name(),
             self.module.title,
         )
 
