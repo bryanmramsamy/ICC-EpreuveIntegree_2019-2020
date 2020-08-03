@@ -1,5 +1,11 @@
-from ..models import StudentRegistrationReport
-from ..utils.mixins import HideCreatedByFieldFormMixin
+from django import forms
+
+from ..models import ModuleRegistrationReport, StudentRegistrationReport
+from ..utils.mixins import (
+    HideCreatedByFieldFormMixin,
+    VerboseModuleChoiceField,
+)
+from management.models import Module
 
 
 class StudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
@@ -10,3 +16,16 @@ class StudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
 
         model = StudentRegistrationReport
         fields = "__all__"
+
+
+class ModuleRegistrationReportCreateFrom(forms.ModelForm):
+    """ModelForm for Module."""
+
+    module = VerboseModuleChoiceField(queryset=Module.objects.all(),
+                                      empty_label=None)
+
+    class Meta:
+        """Meta definition for ModuleLevelForm."""
+
+        model = ModuleRegistrationReport
+        fields = ("module",)

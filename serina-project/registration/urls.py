@@ -57,4 +57,10 @@ urlpatterns = [
         views.StudentRegistrationReportCreateView.as_view(),
         name="student_rr_createview"
     ),
+
+    url(
+        r"^report/module/create/$",
+        views.ModuleRegistrationReportCreateView.as_view(),
+        name="module_rr_createview"
+    )
 ]

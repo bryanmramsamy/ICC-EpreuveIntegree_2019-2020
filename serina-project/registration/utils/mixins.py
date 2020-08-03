@@ -67,3 +67,15 @@ class AutofillCreatedByRequestUser(FormView):
         initial = super().get_initial()
         initial['created_by'] = self.request.user
         return initial
+
+
+# FormFields mixins
+
+class VerboseModuleChoiceField(forms.ModelChoiceField):
+    """Display the reference and the title of each module in a verbose format
+    in the ChoiceField."""
+
+    def label_from_instance(self, module):
+        """Return the verbose value."""
+
+        return "{} ({})".format(module.title, module.reference)
