@@ -59,8 +59,18 @@ urlpatterns = [
     ),
 
     url(
+        r"^report/module/list/$",
+        views.ModuleRegistrationReportListView.as_view(),
+        name="module_rr_listview"
+    ),
+    url(
+        r"^report/module/read/$",
+        views.ModuleRegistrationReportDetailView.as_view(),
+        name="module_rr_detailview"
+    ),
+    url(
         r"^report/module/create/$",
         views.ModuleRegistrationReportCreateView.as_view(),
         name="module_rr_createview"
-    )
+    ),
 ]

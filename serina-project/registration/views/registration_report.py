@@ -63,6 +63,32 @@ class StudentRegistrationReportCreateView(
 
 # ModuleRegistrationReport
 
+class ModuleRegistrationReportListView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    ListView
+):  # TODO: Debug view
+    """CreateView for Modules."""
+
+    model = ModuleRegistrationReport
+    context_object_name = "modules_rrs"
+    template_name = "registration/registration_report/module_rr_listview.html"
+
+
+class ModuleRegistrationReportDetailView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    DetailView
+):  # TODO: Debug view
+    """CreateView for Modules."""
+
+    # TODO: Restrict access to student who made student_rr
+    model = ModuleRegistrationReport
+    context_object_name = "module_rr"
+    template_name = "registration/registration_report/module_rr_detailview." \
+                    "html"
+
+
 class ModuleRegistrationReportCreateView(
     LoginRequiredMixin,
     CreateView,
@@ -71,7 +97,7 @@ class ModuleRegistrationReportCreateView(
     """CreateView for ModuleRegistrationReport with
     ModuleRegistrationReportCreateFrom."""
 
-    #TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
+    # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
     model = ModuleRegistrationReport
     form_class = ModuleRegistrationReportCreateFrom
     template_name = "registration/registration_report/module_rr_createview." \
