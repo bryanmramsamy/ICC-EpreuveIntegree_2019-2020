@@ -200,7 +200,7 @@ class StudentRegistrationReport(FrontOfficeResource):
 
         return "[{}] {}'s student registration report".format(
             self.pk,
-            self.user.get_full_name(),
+            self.created_by.get_full_name(),
         )
 
     # TODO: Must be defined
@@ -213,10 +213,10 @@ class StudentRegistrationReport(FrontOfficeResource):
 
     #     pass
 
-    # TODO: Must be define and redirect to Student Report's template
-    # def get_absolute_url(self):
-    #     """Return absolute url for StudentRegistrationReport."""
-    #     return ('')
+    def get_absolute_url(self):
+        """Return absolute url for StudentRegistrationReport."""
+
+        return reverse("student_rr_detailview", kwargs={"pk": self.pk})
 
 
 # def user_directory_path(instance, filename):

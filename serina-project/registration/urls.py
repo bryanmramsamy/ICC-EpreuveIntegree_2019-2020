@@ -43,6 +43,11 @@ urlpatterns = [
     # RegistrationReports
 
     url(
+        r"^report/student/read/(?P<pk>[0-9]+)/$",
+        views.StudentRegistrationReportDetailView.as_view(),
+        name="student_rr_detailview"
+    ),
+    url(
         r"^report/student/create/$",
         views.StudentRegistrationReportCreateView.as_view(),
         name="student_rr_createview"
