@@ -22,7 +22,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         StudentRegistrationReport,
         on_delete=models.CASCADE,
         related_name="modules_rrs",
-        verbose_name=_("Student"),
+        verbose_name=_("Student Registration Report"),
     )
     degree_rr = models.ForeignKey(
         DegreeRegistrationReport,
@@ -40,19 +40,30 @@ class ModuleRegistrationReport(FrontOfficeResource):
     )
     course = models.ForeignKey(
         Course,
+        null=True,
+        blank=True,
         on_delete=models.CASCADE,
         related_name="students_registrations",
         verbose_name=_("Course")
     )
-    date_start = models.DateField(verbose_name=_("Start date"))
-    date_end = models.DateField(verbose_name=_("End date"))
+    date_start = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("Start date"),
+    )
+    date_end = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("End date"),
+    )
     student_attempt = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Student's attempt number")
     )  # TODO: Add max_attempt value from settings
     student_final_score = models.FloatField(
-        default=-1,
-        validators=[MinValueValidator(-1), MaxValueValidator(100)],
+        null=True,
+        blank=True,
+        validators=[MinValueValidator(0), MaxValueValidator(100)],
         verbose_name=_("Final score"))
     approved = models.BooleanField(default=False, verbose_name=_("Approved"))
     payed = models.BooleanField(default=False, verbose_name=_("Payed"))
