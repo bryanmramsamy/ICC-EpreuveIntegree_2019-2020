@@ -93,8 +93,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
             self.module.title,
         )
 
-    # TODO: Must be define and redirect to Student Degree's Report template
-    # def get_absolute_url(self):
-    #     """Return absolute url for DegreeRegistrationRappport."""
+    def get_absolute_url(self):
+        """Return absolute url for DegreeRegistrationRappport."""
 
-    #     return ('')
+        return reverse('module_rr_detailview', kwargs={"pk": self.pk})

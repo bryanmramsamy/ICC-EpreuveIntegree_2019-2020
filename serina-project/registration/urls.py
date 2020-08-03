@@ -64,7 +64,7 @@ urlpatterns = [
         name="module_rr_listview"
     ),
     url(
-        r"^report/module/read/$",
+        r"^report/module/read/(?P<pk>[0-9]+)/$",
         views.ModuleRegistrationReportDetailView.as_view(),
         name="module_rr_detailview"
     ),

@@ -28,4 +28,7 @@ class ModuleRegistrationReportCreateFrom(forms.ModelForm):
         """Meta definition for ModuleLevelForm."""
 
         model = ModuleRegistrationReport
-        fields = ("module",)
+        fields = ("student_rr", "module",)
+        widgets = {
+            'student_rr': forms.HiddenInput(),
+        }

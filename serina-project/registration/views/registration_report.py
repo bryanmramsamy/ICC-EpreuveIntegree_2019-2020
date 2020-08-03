@@ -14,7 +14,7 @@ from ..utils.mixins import (
     ManagerAdministratorOnlyMixin,
 )
 
-
+# TODO: Rewrite comments
 # StudentRegistrationReport
 
 class StudentRegistrationReportListView(
@@ -74,6 +74,7 @@ class ModuleRegistrationReportListView(
     context_object_name = "modules_rrs"
     template_name = "registration/registration_report/module_rr_listview.html"
 
+# TODO: Add ListView for student's modules_rrs only
 
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
@@ -99,6 +100,14 @@ class ModuleRegistrationReportCreateView(
 
     # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
     model = ModuleRegistrationReport
+    # fields = '__all__'
     form_class = ModuleRegistrationReportCreateFrom
     template_name = "registration/registration_report/module_rr_createview." \
                     "html"
+
+    def get_initial(self):
+        """Returns the initial data to use for forms on this view."""
+
+        initial = super().get_initial()
+        initial['student_rr'] = self.request.user.student_rr
+        return initial
