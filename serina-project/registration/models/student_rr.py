@@ -16,7 +16,7 @@ class StudentRegistrationReport(FrontOfficeResource):
     degree(s) and/or module(s).
     """
 
-    user = models.OneToOneField(  # TODO: Add validator: guest/student
+    created_by = models.OneToOneField(  # TODO: Add validator: guest/student
         User,
         on_delete=models.CASCADE,
         related_name="student_rr",
