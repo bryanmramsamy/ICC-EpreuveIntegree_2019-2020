@@ -77,13 +77,17 @@ def register(request):
 
             return redirect('home')
         else:
-            return render(request, "registration/register.html", locals())
+            return render(
+                request,
+                "registration/authentication/register.html",
+                locals(),
+            )
 
 
 class CustomLoginView(LoginView):
     """Customized LoginView."""
 
-    template_name = "registration/login.html"
+    template_name = "registration/authentication/login.html"
     authentication_form = CustomAuthenticationForm
     redirect_authenticated_user = True
 
@@ -99,17 +103,18 @@ def customLogout(request):
 class CustomPasswordChangeView(PasswordChangeView):
     """Customized PasswordChangeView."""
 
-    template_name = "registration/passwd_change.html"
+    template_name = "registration/authentication/passwd_change.html"
     form_class = CustomPasswordChangeForm
 
 
 class CustomPasswordResetView(PasswordResetView):
     """Customized PasswordResetView."""
 
-    template_name = "registration/passwd_reset.html"
+    # TODO: Use custom template mail + change subject and from_mail
+    template_name = "registration/authentication/passwd_reset.html"
     form_class = CustomPasswordResetForm
-    # email_template_name = "registration/password_reset_email.html"
-    # subject_template_name = "registration/password_reset_subject.txt"
+    # email_template_name = "registration/authentication/password_reset_email.html"
+    # subject_template_name = "registration/authentication/password_reset_subject.txt"
     success_url = reverse_lazy("password_reset_done")
     # from_email = "Serina@SerinaProject.com"  # DEFAULT_FROM_EMAIL = "Serina@SerinaProject.com"
 
@@ -117,13 +122,13 @@ class CustomPasswordResetView(PasswordResetView):
 class CustomPasswordResetDoneView(PasswordResetDoneView):
     """Customized PasswordResetDoneView."""
 
-    template_name = "registration/passwd_reset_done.html"
+    template_name = "registration/authentication/passwd_reset_done.html"
 
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     """ Curtomized PasswordResetConfirmView."""
 
-    template_name = "registration/passwd_reset_confirm.html"
+    template_name = "registration/authentication/passwd_reset_confirm.html"
     # form_class = CustomSetPasswordForm
     success_url = reverse_lazy("password_reset_complete")
 
@@ -131,7 +136,7 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
 class CustomPasswordResetCompleteView(PasswordResetCompleteView):
     """Customized PasswordResetCompleteView."""
 
-    template_name = "registration/passwd_reset_complete.html"
+    template_name = "registration/authentication/passwd_reset_complete.html"
 
 
 def post_password_change_logout(request):
