@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'DegreeRRDetailView' %}{% endblock title %}
+
+{% block content %}
+    <h1>DegreeRRDetailView</h1>
+
+    <p>{{ degree_rr.student_rr.student.get_full_name }}</p>
+    <ul>
+        <li>{{ degree_rr.degree_rr.degree.title }}</li>
+        <li>{{ degree_rr.module.title }}</li>
+        <li>{{ degree_rr.course.reference }}</li>
+        <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
+        <li>attempt: {{ degree_rr.student_attempt }}</li>
+        <li>{{ degree_rr.final_score }}</li>
+        <li>approved ? {{ degree_rr.approved }}</li>
+        <li>payed ? {{ degree_rr.payed }}</li>
+    </ul>
+{% endblock content %}

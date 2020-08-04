@@ -87,6 +87,8 @@ urlpatterns = [
 
     # RegistrationReports
 
+    # StudentRegistrationReport
+
     url(
         r"^report/student/l/",
         views.StudentRegistrationReportListView.as_view(),
@@ -103,6 +105,8 @@ urlpatterns = [
         name="student_rr_createview",
     ),
 
+    # ModuleRegistrationReport
+
     url(
         r"^report/module/l/$",
         views.ModuleRegistrationReportListView.as_view(),
@@ -118,4 +122,13 @@ urlpatterns = [
         views.ModuleRegistrationReportCreateView.as_view(),
         name="module_rr_createview",
     ),
+
+    # DegreeRegistrationReport
+
+    url(
+        r"^report/degree/l/$",
+        views.DegreeRegistrationReportListView.as_view(),
+        name="degree_rr_listview"
+    ),
+    
 ]

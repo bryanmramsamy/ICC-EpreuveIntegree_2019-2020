@@ -9,6 +9,7 @@ from ..forms import (
     StudentRegistrationReportCreateFrom,
 )
 from ..models import (
+    DegreeRegistrationReport,
     ModuleRegistrationReport,
     StudentRegistrationReport,
 )
@@ -157,3 +158,15 @@ class ModuleRegistrationReportCreateView(
         initial = super().get_initial()
         initial['student_rr'] = self.request.user.student_rr
         return initial
+
+
+class DegreeRegistrationReportListView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    ListView,
+):  # TODO: Debug view
+    """ListView for DegreeRegistrationReportListView."""
+
+    model = DegreeRegistrationReport
+    context_object_name = "degrees_rrs"
+    template_name = "registration/registration_report/degree_rr_listview.html"

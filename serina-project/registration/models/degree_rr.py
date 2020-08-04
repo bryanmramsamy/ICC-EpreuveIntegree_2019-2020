@@ -28,8 +28,16 @@ class DegreeRegistrationReport(FrontOfficeResource):
         related_name="students_registrations",
         verbose_name=_("Registration degree")
     )
-    date_start = models.DateField(verbose_name=_("Start date"))
-    date_end = models.DateField(verbose_name=_("End date"))
+    date_start = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("Start date"),
+    )
+    date_end = models.DateField(
+        null=True,
+        blank=True,
+        verbose_name=_("End date"),
+    )
 
     class Meta:
         """Meta definition for DegreeRegistrationReport."""
@@ -39,11 +47,16 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
     @property
     def partially_approved(self):
-        """Check if at least oneof  the related modules_rr is approved."""
+        """Check if at least one of the related modules_rr is approved.
 
-        partially_approved = False
+        Return 'None' if  there is no modules_rrs in the degree_rr.
+        """
+
+        partially_approved = None
 
         for module_rr in self.modules_rrs.all():
+            partially_approved = False
+
             if module_rr.approved:
                 partially_approved = True
                 break
@@ -52,11 +65,16 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
     @property
     def fully_approved(self):
-        """Check if all the related modules_rr are approved."""
+        """Check if all the related modules_rr are approved.
 
-        fully_approved = True
+        Return 'None' if  there is no modules_rrs in the degree_rr.
+        """
+
+        fully_approved = None
 
         for module_rr in self.modules_rrs.all():
+            fully_approved = True
+
             if not module_rr.approved:
                 fully_approved = False
                 break
@@ -64,17 +82,40 @@ class DegreeRegistrationReport(FrontOfficeResource):
         return fully_approved
 
     @property
-    def payed(self):
-        """Check if all the related modules_rr are payed."""
+    def partially_payed(self):
+        """Check if at least one of the related modules_rr is approved.
 
-        modules_payed = True
+        Return 'None' if  there is no modules_rrs in the degree_rr.
+        """
+
+        partially_payed = None
 
         for module_rr in self.modules_rrs.all():
-            if module_rr.approved and not module_rr.payed:
-                modules_payed = False
+            partially_payed = False
+
+            if module_rr.payed:
+                partially_payed = True
                 break
 
-        return modules_payed
+        return partially_payed
+
+    @property
+    def fully_payed(self):
+        """Check if all the related modules_rr are payed.
+
+        Return 'None' if  there is no modules_rrs in the degree_rr.
+        """
+
+        fully_payed = None
+
+        for module_rr in self.modules_rrs.all():
+            fully_payed = True
+
+            if not module_rr.payed:
+                fully_payed = False
+                break
+
+        return fully_payed
 
     @property
     def academic_years(self):
@@ -111,8 +152,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
         """Compute the total expenses of the student for this degree."""
 
         total_expenses = 0
-        for module_rr in self.modules_rrs\
-                                              .all():
+        for module_rr in self.modules_rrs.all():
             total_expenses += module_rr.module.charge_price
 
         return total_expenses
@@ -122,7 +162,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
 
         return "[{}] {}'s degree registration for {}".format(
             self.pk,
-            self.student_rr.user.get_full_name(),
+            self.student_rr.created_by.get_full_name(),
             self.degree.title,
         )
 
