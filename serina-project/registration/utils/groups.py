@@ -5,6 +5,12 @@ from django.utils.translation import ugettext as _
 
 # Read utilities
 
+def is_student(user):
+    """Check if the user is a registered student."""
+
+    return user.groups.filter(name="Student")
+
+
 def is_back_office_user(user):
     """Check if the user is allowed to access the back office.
 

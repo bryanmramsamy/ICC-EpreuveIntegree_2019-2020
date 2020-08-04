@@ -5,6 +5,7 @@
 
 {% block content %}
     <h1>UserProfileDetailView</h1>
+    <a href="{% url 'userprofile_updateview' pk=user.pk%}"><h4>Update Profile</h4></a>
 
     <h2>{{ user.get_full_name }}</h2>
 
