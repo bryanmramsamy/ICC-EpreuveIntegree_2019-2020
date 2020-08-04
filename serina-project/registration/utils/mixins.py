@@ -2,6 +2,7 @@ from django import forms
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.http import Http404
 from django.views.generic import FormView
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
@@ -10,6 +11,22 @@ from . import groups as groups_utils
 
 
 # Access restriction mixins
+
+class SelfStudentOnly(UserPassesTestMixin):
+    # FIXME: Redirect self_student and back_office_members to 404
+    """Restrict view access to the related student."""
+
+    def test_func(self):
+        """Check if the user's 'pk' matches with the url.GET.get('pk')
+        value."""
+
+        return self.request.user.student_rr.pk == self.kwargs["pk"]
+
+    def handle_no_permission(self):
+        """Raise a 404."""
+
+        raise Http404
+
 
 class BackOfficeUsersOnlyMixin(UserPassesTestMixin):
     """Restrict view access to Back-Office users."""
