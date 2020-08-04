@@ -14,7 +14,7 @@ from ..utils.mixins import (
     ManagerAdministratorOnlyMixin,
 )
 
-# TODO: Rewrite comments
+
 # StudentRegistrationReport
 
 class StudentRegistrationReportListView(
@@ -22,7 +22,7 @@ class StudentRegistrationReportListView(
     ManagerAdministratorOnlyMixin,
     ListView
 ):  # TODO: Debug view
-    """CreateView for Modules."""
+    """ListView for StudentRegistrationReports."""
 
     model = StudentRegistrationReport
     context_object_name = "student_rrs"
@@ -35,7 +35,7 @@ class StudentRegistrationReportDetailView(
     ManagerAdministratorOnlyMixin,
     DetailView
 ):  # TODO: Debug view
-    """CreateView for Modules."""
+    """DetailView for StudentRegistrationReport."""
 
     # TODO: Restrict access to student who made student_rr
     model = StudentRegistrationReport
@@ -49,8 +49,7 @@ class StudentRegistrationReportCreateView(
     CreateView,
     AutofillCreatedByRequestUser
 ):  # TODO: Debug view
-    """CreateView for StudentRegistrationReport with
-    StudentRegistrationReportCreateFrom."""
+    """CreateView for StudentRegistrationReport."""
 
     # TODO: Restrict access to Guest, not student
     # TODO: The user guest becomes a student when his student_rr has been submitted
@@ -68,7 +67,7 @@ class ModuleRegistrationReportListView(
     ManagerAdministratorOnlyMixin,
     ListView
 ):  # TODO: Debug view
-    """CreateView for Modules."""
+    """ListView for ModuleRegistrationReport."""
 
     model = ModuleRegistrationReport
     context_object_name = "modules_rrs"
@@ -76,12 +75,13 @@ class ModuleRegistrationReportListView(
 
 # TODO: Add ListView for student's modules_rrs only
 
+
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
     DetailView
 ):  # TODO: Debug view
-    """CreateView for Modules."""
+    """DetailView for ModuleRegistrationReport."""
 
     # TODO: Restrict access to student who made student_rr
     model = ModuleRegistrationReport
@@ -95,8 +95,7 @@ class ModuleRegistrationReportCreateView(
     CreateView,
     AutofillCreatedByRequestUser
 ):  # TODO: Debug view
-    """CreateView for ModuleRegistrationReport with
-    ModuleRegistrationReportCreateFrom."""
+    """CreateView for ModuleRegistrationReport."""
 
     # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
     model = ModuleRegistrationReport
