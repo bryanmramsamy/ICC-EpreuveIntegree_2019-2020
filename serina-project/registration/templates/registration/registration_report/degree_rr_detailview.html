@@ -8,13 +8,17 @@
 
     <p>{{ degree_rr.student_rr.student.get_full_name }}</p>
     <ul>
-        <li>{{ degree_rr.degree_rr.degree.title }}</li>
-        <li>{{ degree_rr.module.title }}</li>
-        <li>{{ degree_rr.course.reference }}</li>
+        <li>{{ degree_rr.degree.title }}</li>
+        <li>Nb modules = {{ degree_rr.modules_rrs.count }}</li>
         <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
-        <li>attempt: {{ degree_rr.student_attempt }}</li>
-        <li>{{ degree_rr.final_score }}</li>
-        <li>approved ? {{ degree_rr.approved }}</li>
-        <li>payed ? {{ degree_rr.payed }}</li>
+        <li>partially approved ? {{ degree_rr.partially_approved }}</li>
+        <li>fully approved ? {{ degree_rr.fully_approved }}</li>
+        <li>partially_payed ? {{ degree_rr.partially_payed }}</li>
+        <li>fully_payed ? {{ degree_rr.fully_payed }}</li>
+        <ul>
+            {% for module_rr in degree_rr.modules_rrs.all %}
+                <li>{{ module_rr.module.title }}</li>
+            {% endfor %}
+        </ul>
     </ul>
 {% endblock content %}

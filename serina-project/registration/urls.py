@@ -130,5 +130,9 @@ urlpatterns = [
         views.DegreeRegistrationReportListView.as_view(),
         name="degree_rr_listview"
     ),
-    
+    url(
+        r"^report/degree/r/(?P<pk>[0-9]+)/$",
+        views.DegreeRegistrationReportDetailView.as_view(),
+        name="degree_rr_detailview"
+    ),
 ]

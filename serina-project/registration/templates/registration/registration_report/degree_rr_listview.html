@@ -22,6 +22,7 @@
                 <li>{{ module_rr.module.title }}</li>
             {% endfor %}
         </ul>
+        <li><strong><a href="{% url 'degree_rr_detailview' pk=degree_rr.pk %}">degree_rr_detailview/{{ degree_rr.pk }}</a></strong></li>
     </ul>
     {% endfor %}
 

@@ -170,3 +170,16 @@ class DegreeRegistrationReportListView(
     model = DegreeRegistrationReport
     context_object_name = "degrees_rrs"
     template_name = "registration/registration_report/degree_rr_listview.html"
+
+
+class DegreeRegistrationReportDetailView(
+    LoginRequiredMixin,
+    ManagerAdministratorOnlyMixin,
+    DetailView,
+):  # TODO: Debug view
+    """DetailView for DegreeRegistrationReportListView."""
+
+    model = DegreeRegistrationReport
+    context_object_name = "degree_rr"
+    template_name = "registration/registration_report/degree_rr_detailview" \
+                    ".html"
