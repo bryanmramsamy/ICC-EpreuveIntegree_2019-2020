@@ -38,17 +38,30 @@ class DegreeRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Degrees Registration Reports')
 
     @property
-    def approved(self):
+    def partially_approved(self):
+        """Check if at least oneof  the related modules_rr is approved."""
+
+        partially_approved = False
+
+        for module_rr in self.modules_rrs.all():
+            if module_rr.approved:
+                partially_approved = True
+                break
+
+        return partially_approved
+
+    @property
+    def fully_approved(self):
         """Check if all the related modules_rr are approved."""
 
-        modules_approved = True
+        fully_approved = True
 
         for module_rr in self.modules_rrs.all():
             if not module_rr.approved:
-                modules_approved = False
+                fully_approved = False
                 break
 
-        return modules_approved
+        return fully_approved
 
     @property
     def payed(self):
