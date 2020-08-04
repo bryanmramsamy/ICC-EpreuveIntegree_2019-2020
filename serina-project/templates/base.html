@@ -18,6 +18,7 @@
 
         {% block additional_messages %}{% endblock additional_messages %}
         <a href="{% url 'home' %}"><h1>HOME</h1></a>
+        <a href="{% url 'userprofile_detailview' pk=user.pk %}">Profile</a>
     </header>
 
     <section>

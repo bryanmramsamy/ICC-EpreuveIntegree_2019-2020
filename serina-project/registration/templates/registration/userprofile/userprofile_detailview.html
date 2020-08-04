@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'UserProfileDetailView' %}{% endblock title %}
+
+{% block content %}
+    <h1>UserProfileDetailView</h1>
+
+    <h2>{{ user.get_full_name }}</h2>
+
+    <p>Matricule: {{ user.username }}</p>
+    <p>First name: {{ user.first_name }}</p>
+    <p>Last name: {{ user.last_name }}</p>
+    <p>Last login: {{ user.last_login }}</p>
+    <p>Registered: {{ user.date_joined }}</p>
+    <p>Group: {{ main_group }}</p>
+
+    <h2>Student_RR_DetailView</h2>
+    <p>{{ student_rr }}</p>
+
+    <h2>Modules_RR_Student_ListView</h2>
+    {% for module_rr in modules_rrs %}
+        <a href="{% url 'module_rr_detailview' pk=module_rr.pk %}"><h4>{{ module_rr.module.title }}</h4></a>
+        <ul>
+            <li>{{ module_rr.degree_rr.degree.title }}</li>
+            <li>{{ module_rr.course.reference }}</li>
+            <li>from: {{ module_rr.date_start }} to {{ module_rr.date_end }}</li>
+            <li>attempt: {{ module_rr.student_attempt }}</li>
+            <li>{{ module_rr.final_score }}</li>
+            <li>approved ? {{ module_rr.approved }}</li>
+            <li>payed ? {{ module_rr.payed }}</li>
+        </ul>
+    {% endfor %}
+
+    <h2>Degrees_RR_Student_ListView</h2>
+        {# Add Degree_RR_detailview #}
+        
+        {% for degree_rr in degrees_rrs %}
+            <li>{{ degree_rr.degree.title }}</li>
+            <li>from: {{ dergee_rr.date_start }} to {{ dergee_rr.date_end }}</li>
+        {% endfor %}
+
+    <h2>Course_Listview</h2>
+    
+    <ul>
+        {% for course in courses %}
+            <li>{{ course.reference }} (module: {{ course.module.title }}) from {{ course.date_start }} to {{ course.date_end }}</li>
+        {% endfor %}
+    </ul>
+
+    
+        
+{% endblock content %}

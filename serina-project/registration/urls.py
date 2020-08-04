@@ -40,6 +40,14 @@ urlpatterns = [
         name="password_reset_complete",
     ),
 
+
+    # Profile
+
+    url(r"^profile/(?P<pk>[0-9]+)/$", views.UserProfileDetailView.as_view(),
+        name="userprofile_detailview"),
+    
+
+
     # RegistrationReports
 
     url(

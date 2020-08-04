@@ -12,7 +12,7 @@ from .room import Classroom
 class Course(BackOfficeResource):
     """Model definition for Course."""
 
-    reference = models.CharField(max_length=15, unique=True, blank=True,
+    reference = models.CharField(max_length=11, unique=True, blank=True,
                                  verbose_name=_('Reference'))
     module = models.ForeignKey(
         Module,
@@ -68,7 +68,7 @@ class Course(BackOfficeResource):
         """
 
         str_result = _("({}) {} course".format(self.reference, self.module.title))
-    
+
         if self.teacher or self.room:
             str_result += _(" given")
 
@@ -108,7 +108,8 @@ class Course(BackOfficeResource):
             )
 
         # date_start cannot be set after date_end
-        if self.date_start >= self.date_end:
+        if self.date_start and self.date_end \
+           and self.date_start >= self.date_end:
             raise ValidationError(
                 _("Start date ({}) must be set before end date ({}).".format(
                     self.date_start,
@@ -133,8 +134,7 @@ class Course(BackOfficeResource):
         """
 
         module_reference = self.module.reference
-        date_start_reference = self.date_start.strftime("%y%m")
-        self.reference = module_reference + '-' + date_start_reference
+        self.reference = module_reference + "-"
 
         if not self.pk:
             super().save(*args, **kwargs)

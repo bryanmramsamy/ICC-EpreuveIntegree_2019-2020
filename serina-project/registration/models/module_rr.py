@@ -35,7 +35,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
     module = models.ForeignKey(
         Module,
         on_delete=models.CASCADE,
-        related_name="students_registrations",
+        related_name="modules_rrs",
         verbose_name=_("Registration module")
     )
     course = models.ForeignKey(
@@ -43,7 +43,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         null=True,
         blank=True,
         on_delete=models.CASCADE,
-        related_name="students_registrations",
+        related_name="modules_rrs",
         verbose_name=_("Course")
     )
     date_start = models.DateField(
