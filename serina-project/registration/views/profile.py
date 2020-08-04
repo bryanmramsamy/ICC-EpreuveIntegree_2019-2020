@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db.models import Q
-from django.views.generic import DetailView
+from django.views.generic import DetailView, FormView
 
 from ..models import(
     ModuleRegistrationReport,
@@ -39,3 +39,7 @@ class UserProfileDetailView(DetailView):
             context["courses"].append(module_rr.course)
 
         return context
+
+
+class UserProfileUpdateView(FormView):
+    pass
