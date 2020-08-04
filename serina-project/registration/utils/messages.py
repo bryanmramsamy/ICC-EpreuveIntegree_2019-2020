@@ -59,3 +59,15 @@ def username_changed(request, old_username, new_username):
         _("Your username has been changed and is now {} (was {})."
           .format(new_username, old_username))
     )
+
+
+def student_rr_created(request):
+    """Inform the user that his/her StudentRegistrationReport has correctly
+    been saved and that the user was promoted to the 'Student'-group."""
+
+    messages.success(
+        request,
+        _("Your registration report has successfully been submitted. You now "
+          "have the 'Student' status and can subscrib to any degree or any "
+          "module wanted.")
+    )

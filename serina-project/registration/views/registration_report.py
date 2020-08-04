@@ -1,4 +1,7 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.shortcuts import redirect
+from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, DetailView, ListView
 
 from ..forms import (
@@ -9,6 +12,8 @@ from ..models import (
     ModuleRegistrationReport,
     StudentRegistrationReport,
 )
+from ..utils.groups import promote_to_student
+from ..utils.messages import student_rr_created
 from ..utils.mixins import (
     AutofillCreatedByRequestUser,
     ManagerAdministratorOnlyMixin,
@@ -20,7 +25,7 @@ from ..utils.mixins import (
 class StudentRegistrationReportListView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
-    ListView
+    ListView,
 ):  # TODO: Debug view
     """ListView for StudentRegistrationReports."""
 
@@ -33,7 +38,7 @@ class StudentRegistrationReportListView(
 class StudentRegistrationReportDetailView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
-    DetailView
+    DetailView,
 ):  # TODO: Debug view
     """DetailView for StudentRegistrationReport."""
 
@@ -46,18 +51,60 @@ class StudentRegistrationReportDetailView(
 
 class StudentRegistrationReportCreateView(
     LoginRequiredMixin,
+    UserPassesTestMixin,
     CreateView,
-    AutofillCreatedByRequestUser
+    AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
-    """CreateView for StudentRegistrationReport."""
+    """CreateView for StudentRegistrationReport.
 
-    # TODO: Restrict access to Guest, not student
-    # TODO: The user guest becomes a student when his student_rr has been submitted
-    # TODO: Student can not create new student_rr
+    Only registered 'Guest'-group members can submit a
+    StudentRegistrationReport. Once done, the 'Guest'-user is automatically
+    promoted to the 'Student'-group.
+    """
+
     model = StudentRegistrationReport
     form_class = StudentRegistrationReportCreateFrom
     template_name = "registration/registration_report/student_rr_createview." \
                     "html"
+
+    def test_func(self):
+        """Check if the user is a registered guest.
+
+        Registered guest users are the only members who are allowed to submit a
+        StudentRegistrationReport. The student cannot because they already did
+        once. The other groups are not allowed to be student with the same
+        account.
+        """
+
+        return self.request.user.groups.filter(name="Guest")
+
+    def handle_no_permission(self):
+        """Send an error message and redirect the home page."""
+
+        if self.request.user.groups.filter(name="Student"):
+            messages.error(
+                self.request,
+                _("You already submitted your registration report. To change "
+                  "some of your data, please go to your profile and update "
+                  "your peronal informations. Note that the submitted "
+                  "documents and some data cannot be changed any more.")
+            )
+        else:
+            messages.error(
+                self.request,
+                _("You are not allowed to submit a registration report. Please"
+                  " create a new account.")
+            )
+
+        return redirect('home')
+
+    def form_valid(self, form):
+        """Promote the user to the 'Student'-group and notificate him/her with
+        a message."""
+
+        promote_to_student(self.request.user)
+        student_rr_created(self.request)
+        return super().form_valid(form)
 
 
 # ModuleRegistrationReport
@@ -65,7 +112,7 @@ class StudentRegistrationReportCreateView(
 class ModuleRegistrationReportListView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
-    ListView
+    ListView,
 ):  # TODO: Debug view
     """ListView for ModuleRegistrationReport."""
 
@@ -79,7 +126,7 @@ class ModuleRegistrationReportListView(
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
-    DetailView
+    DetailView,
 ):  # TODO: Debug view
     """DetailView for ModuleRegistrationReport."""
 
@@ -93,7 +140,7 @@ class ModuleRegistrationReportDetailView(
 class ModuleRegistrationReportCreateView(
     LoginRequiredMixin,
     CreateView,
-    AutofillCreatedByRequestUser
+    AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
     """CreateView for ModuleRegistrationReport."""
 
