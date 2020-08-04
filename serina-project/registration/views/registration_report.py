@@ -5,6 +5,7 @@ from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, DetailView, ListView
 
 from ..forms import (
+    DegreeRegistrationReportCreateFrom,
     ModuleRegistrationReportCreateFrom,
     StudentRegistrationReportCreateFrom,
 )
@@ -147,7 +148,6 @@ class ModuleRegistrationReportCreateView(
 
     # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
     model = ModuleRegistrationReport
-    # fields = '__all__'
     form_class = ModuleRegistrationReportCreateFrom
     template_name = "registration/registration_report/module_rr_createview." \
                     "html"
@@ -159,6 +159,8 @@ class ModuleRegistrationReportCreateView(
         initial['student_rr'] = self.request.user.student_rr
         return initial
 
+
+# DegreeRegistrationReport
 
 class DegreeRegistrationReportListView(
     LoginRequiredMixin,
@@ -183,3 +185,24 @@ class DegreeRegistrationReportDetailView(
     context_object_name = "degree_rr"
     template_name = "registration/registration_report/degree_rr_detailview" \
                     ".html"
+
+
+class DegreeRegistrationReportCreateView(
+    LoginRequiredMixin,
+    CreateView,
+    AutofillCreatedByRequestUser,
+):  # TODO: Debug view
+    """CreateView for DegreeRegistrationReport."""
+
+    # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
+    model = DegreeRegistrationReport
+    form_class = DegreeRegistrationReportCreateFrom
+    template_name = "registration/registration_report/degree_rr_createview." \
+                    "html"
+
+    def get_initial(self):
+        """Returns the initial data to use for forms on this view."""
+
+        initial = super().get_initial()
+        initial['student_rr'] = self.request.user.student_rr
+        return initial

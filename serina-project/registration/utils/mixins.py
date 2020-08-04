@@ -88,11 +88,12 @@ class AutofillCreatedByRequestUser(FormView):
 
 # FormFields mixins
 
-class VerboseModuleChoiceField(forms.ModelChoiceField):
-    """Display the reference and the title of each module in a verbose format
-    in the ChoiceField."""
+class VerboseDegreeModuleChoiceField(forms.ModelChoiceField):
+    """Display the reference and the title of each degree or module in a
+    verbose format as a ChoiceField."""
 
-    def label_from_instance(self, module):
+    def label_from_instance(self, degree_or_module):
         """Return the verbose value."""
 
-        return "{} ({})".format(module.title, module.reference)
+        return "{} ({})".format(degree_or_module.title,
+                                degree_or_module.reference)
