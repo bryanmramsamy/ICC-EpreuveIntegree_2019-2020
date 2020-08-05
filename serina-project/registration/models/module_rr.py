@@ -1,6 +1,8 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
@@ -97,3 +99,21 @@ class ModuleRegistrationReport(FrontOfficeResource):
         """Return absolute url for DegreeRegistrationRappport."""
 
         return reverse('module_rr_detailview', kwargs={"pk": self.pk})
+
+
+@receiver(post_save, sender=DegreeRegistrationReport)
+def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
+    """When a DegreeRegistrationReport is created, all the related
+    ModuleRegistrationReports of the related modules are generated too and
+    linked to the StudentRegistrationReport.
+
+    NOTE: This couldn't be done in the DegreeRegistrationReport.save() because
+    of a circular import issue.
+    """
+
+    for module in instance.degree.modules.all():
+        ModuleRegistrationReport.objects.create(
+            student_rr=instance.student_rr,
+            degree_rr=instance,
+            module=module,
+        )
