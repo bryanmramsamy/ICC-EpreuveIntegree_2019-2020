@@ -4,9 +4,11 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 
 from ..models import ModuleRegistrationReport
+from ..utils.decorators import back_office_member_only
 from management.models import Course
 
 
+# @back_office_member_only  # FIXME: Decorator not working
 def moduleValidation(request, pk):
     """Validate a ModuleRegistrationReport submitted based on its 'pk'.
     Register the student to the less populated course available for the chosen
