@@ -17,4 +17,6 @@
         <li>approved ? {{ module_rr.approved }}</li>
         <li>payed ? {{ module_rr.payed }}</li>
     </ul>
+
+    <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
 {% endblock content %}

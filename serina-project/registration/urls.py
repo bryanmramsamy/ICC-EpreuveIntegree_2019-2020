@@ -140,4 +140,13 @@ urlpatterns = [
         views.DegreeRegistrationReportCreateView.as_view(),
         name="degree_rr_createview"
     ),
+
+
+    # Back-Office functions
+
+    url(
+        r'^back_office/module_validation/(?P<pk>[0-9]+)/$',
+        views.moduleValidation,
+        name='backoffice_module_validation'
+    ),
 ]

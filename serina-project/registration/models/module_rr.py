@@ -58,7 +58,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         blank=True,
         verbose_name=_("End date"),
     )
-    student_attempt = models.PositiveIntegerField(
+    nb_attempt = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Student's attempt number")
     )  # TODO: Add max_attempt value from settings

@@ -51,9 +51,26 @@ class Course(BackOfficeResource):
         ordering = ('date_start', 'reference')
 
     @property
-    def possibile_over_attendance(self):
-        """True if the amount of registrants is higher than the assigned
-        classroom recommended capacity."""
+    def recommended_seats_available(self):
+        """Compute the amount of seats left of this course until the
+        classroom's recommended capacity is reached."""
+
+        return self.room.recommended_capacity - self.nb_registrants
+
+    @property
+    def max_seats_available(self):
+        """Compute the amount of seats left of this course until the
+        classroom's maximal capacity is reached."""
+
+        return self.room.max_capacity - self.nb_registrants
+
+    @property
+    def over_attendance(self):
+        """Check if the recommended_capacity has been reached by the expected
+        attendance.
+
+        Return None if no room was assigned to the course yet.
+        """
 
         if self.room:
             return self.nb_registrants > self.room.recommended_capacity

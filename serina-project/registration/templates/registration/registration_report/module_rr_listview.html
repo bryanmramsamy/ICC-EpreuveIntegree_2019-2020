@@ -18,5 +18,7 @@
             <li>approved ? {{ module_rr.approved }}</li>
             <li>payed ? {{ module_rr.payed }}</li>
         </ul>
+
+        <a href="{{ module_rr.get_absolute_url }}">module_rr_detailview</a>
     {% endfor %}
 {% endblock content %}
