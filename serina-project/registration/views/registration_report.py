@@ -176,7 +176,7 @@ class DegreeRegistrationReportListView(
 
 class DegreeRegistrationReportDetailView(
     LoginRequiredMixin,
-    ManagerAdministratorOnlyMixin,
+    # ManagerAdministratorOnlyMixin,  # FIXME: Self-Student should have acces too
     DetailView,
 ):  # TODO: Debug view
     """DetailView for DegreeRegistrationReportListView."""

@@ -6,6 +6,7 @@ from django.urls import reverse
 
 from ..forms import StudentProfileUpdateForm, UserProfileUpdateForm
 from ..models import(
+    DegreeRegistrationReport,
     ModuleRegistrationReport,
     StudentRegistrationReport,
 )
@@ -44,6 +45,9 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
                 created_by=self.request.user
             )
             context["modules_rrs"] = ModuleRegistrationReport.objects.filter(
+                student_rr=context["student_rr"]
+            )
+            context["degrees_rrs"] = DegreeRegistrationReport.objects.filter(
                 student_rr=context["student_rr"]
             )
             context["courses"] = []  # TODO: Find a way to express this in queryset
