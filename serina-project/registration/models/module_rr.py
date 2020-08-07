@@ -77,6 +77,13 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Modules Registration Reports')
 
     @property
+    def denied(self):
+        """Check if the module registration request was denied by a back-office
+        user."""
+
+        return self.payed and not self.approved
+
+    @property
     def succeeded(self):
         """Check if the student succeeded the module modules.
 
