@@ -7,6 +7,7 @@ from django.views.generic import FormView
 from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
+from .. import models
 from . import groups as groups_utils
 from . import messages as messages_utils
 
@@ -64,7 +65,28 @@ class SelfStudentManagerAdministratorOnlyMixin(ManagerAdministratorOnlyMixin):
 
         super_test_valid = super(SelfStudentManagerAdministratorOnlyMixin, self).test_func()
 
-        self_test_valid = self.request.user.student_rr.pk == self.get_object().pk
+        # StudentRegistrationReport
+
+        if type(self.get_object()) is models.student_rr \
+                                            .StudentRegistrationReport:
+            self_test_valid = \
+                self.request.user.student_rr.pk == self.get_object().pk
+
+        # ModuleRegistrationReport
+
+        elif type(self.get_object()) is models.module_rr \
+                                              .ModuleRegistrationReport:
+            self_test_valid = self.request.user.student_rr.modules_rrs \
+                                          .filter(pk=self.get_object().pk) \
+                                          .exists()
+
+        # DegreeRegistrationReport
+
+        elif type(self.get_object()) is models.degree_rr \
+                                              .DegreeRegistrationReport:
+            self_test_valid = self.request.user.student_rr.degrees_rrs \
+                                          .filter(pk=self.get_object().pk) \
+                                          .exists()
 
         return super_test_valid or self_test_valid
 

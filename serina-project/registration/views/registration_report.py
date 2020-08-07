@@ -116,7 +116,7 @@ class ModuleRegistrationReportListView(
 
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
-    mixins_utils.ManagerAdministratorOnlyMixin,
+    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
     DetailView,
 ):  # TODO: Debug view
     """DetailView for ModuleRegistrationReport."""
@@ -165,7 +165,7 @@ class DegreeRegistrationReportListView(
 
 class DegreeRegistrationReportDetailView(
     LoginRequiredMixin,
-    # mixins_utils.ManagerAdministratorOnlyMixin,  # FIXME: Self-Student should have acces too
+    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
     DetailView,
 ):  # TODO: Debug view
     """DetailView for DegreeRegistrationReportListView."""
