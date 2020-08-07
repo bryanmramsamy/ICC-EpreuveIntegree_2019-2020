@@ -1,26 +1,21 @@
 from django.contrib.auth.decorators import user_passes_test
 from django.db.models import Q
+from django.shortcuts import redirect
+
+from . import groups as groups_utils
+from . import messages as messages_utils
 
 
-def back_office_member_only(user):
-    """Requires user membership in at least one of the groups passed in."""
+def managers_or_administrators_only(function):
+    """Restrict a function acces to managers or administrators only."""
 
-    def in_groups(user):
-        if user.is_authenticated:
-            if bool(user.groups.filter(Q(name="Manager")
-                                       | Q(name="Administrator")).exists()):
-                return True
-        return False
+    def wrapper(request, *args, **kwargs):
+        """managers_or_administrators_only main wrapper."""
 
-    return user_passes_test(in_groups)
+        if groups_utils.is_manager_or_administrator(request.user):
+            return function(request, *args, **kwargs)
+        else:
+            messages_utils.permission_denied(request)
+            return redirect("home")
 
-# def user_is_entry_author(function):
-#     def wrap(request, *args, **kwargs):
-#         entry = Entry.objects.get(pk=kwargs['entry_id'])
-#         if entry.created_by == request.user:
-#             return function(request, *args, **kwargs)
-#         else:
-#             raise PermissionDenied
-#     wrap.__doc__ = function.__doc__
-#     wrap.__name__ = function.__name__
-#     return wrap
+    return wrapper

@@ -4,11 +4,12 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 
 from ..models import ModuleRegistrationReport
-from ..utils.decorators import back_office_member_only
+from ..utils import decorators as decorators_utils
+from ..utils import messages as messages_utils
 from management.models import Course
 
 
-# @back_office_member_only  # FIXME: Decorator not working
+@decorators_utils.managers_or_administrators_only
 def moduleValidation(request, pk):
     """Validate a ModuleRegistrationReport submitted based on its 'pk'.
     Register the student to the less populated course available for the chosen
@@ -16,35 +17,32 @@ def moduleValidation(request, pk):
     chosen module."""
 
     module_rr = get_object_or_404(ModuleRegistrationReport, pk=pk)
-    courses = Course.objects.filter(module=module_rr.module) \
-                            .order_by("nb_registrants")
-
-    if courses.count() == 0:
-        raise ValueError(_("There is no course available for the requested "
-                           "module: '({}) {}'. In order to accept any new "
-                           "registration request, a new course must be created"
-                           " for this module."))
+    if module_rr.approved:
+        messages_utils.module_rr_already_approved(request)
     else:
-        selected_course = courses[0]
-        selected_course.nb_registrants += 1
-        selected_course.save()
+        courses = Course.objects.filter(module=module_rr.module) \
+                                .order_by("nb_registrants")
 
-        module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
-            Q(student_rr=module_rr.student_rr)
-            & Q(approved=True)
-            & Q(payed=True)
-        ).count()
-        module_rr.course = selected_course
-        module_rr.approved = True
-        module_rr.save()
+        if courses.count() == 0:
+            raise ValueError(_("There is no course available for the requested "
+                            "module: '({}) {}'. In order to accept any new "
+                            "registration request, a new course must be created"
+                            " for this module."))
+        else:
+            selected_course = courses[0]
+            selected_course.nb_registrants += 1
+            selected_course.save()
 
-    # TODO: Send mail to student
+            module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
+                Q(student_rr=module_rr.student_rr)
+                & Q(approved=True)
+                & Q(payed=True)
+            ).count()
+            module_rr.course = selected_course
+            module_rr.approved = True
+            module_rr.save()
 
-    messages.success(
-        request,
-        _("The module's registration has been approved and a mail is on its "
-          "way to the student which request it.")
-    )
+        # TODO: Send mail to student
+        messages_utils.module_rr_approved(request)
 
-    return redirect("module_rr_listview")
-
+    return redirect(module_rr.get_absolute_url())
