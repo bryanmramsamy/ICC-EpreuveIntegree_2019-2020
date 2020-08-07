@@ -54,6 +54,21 @@ class ManagerAdministratorOnlyMixin(BackOfficeUsersOnlyMixin):
         return groups_utils.is_manager_or_administrator(self.request.user)
 
 
+class SelfStudentManagerAdministratorOnlyMixin(ManagerAdministratorOnlyMixin):
+    """Restrict view access to 'Manager'-group members and
+    'Administrator'-group members ans the student who created the object."""
+
+    def test_func(self):
+        """Check if the user is a Student, Manager or an Administrator. If the
+        user is a student, check if (s)he is the one who created the object."""
+
+        super_test_valid = super(SelfStudentManagerAdministratorOnlyMixin, self).test_func()
+
+        self_test_valid = self.request.user.student_rr.pk == self.get_object().pk
+
+        return super_test_valid or self_test_valid
+
+
 # Autofill 'created_by' formfield mixins (form and view)
 
 class HideCreatedByFieldFormMixin(forms.ModelForm):

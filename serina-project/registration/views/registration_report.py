@@ -37,7 +37,7 @@ class StudentRegistrationReportListView(
 
 class StudentRegistrationReportDetailView(
     LoginRequiredMixin,
-    mixins_utils.ManagerAdministratorOnlyMixin,
+    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
     DetailView,
 ):  # TODO: Debug view
     """DetailView for StudentRegistrationReport."""
