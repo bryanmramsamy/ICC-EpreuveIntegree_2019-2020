@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.utils.translation import gettext as _
 
 from . import groups as groups_utils
+from . import messages as messages_utils
 
 
 # Access restriction mixins
@@ -39,12 +40,7 @@ class BackOfficeUsersOnlyMixin(UserPassesTestMixin):
     def handle_no_permission(self):
         """Send an error message and redirect the home page."""
 
-        messages.error(
-            self.request,
-            _("You are not allowed to access the requested page or perform the"
-              " attempted action. Please contact the support team ({}) for "
-              "more information.".format(settings.CONTACT_MAILS["support"]))
-        )
+        messages_utils.permission_denied(self.request)
         return redirect('home')
 
 

@@ -146,7 +146,7 @@ urlpatterns = [
 
     url(
         r'^back_office/module_validation/(?P<pk>[0-9]+)/$',
-        views.moduleValidation,
+        views.module_validation,
         name='backoffice_module_validation'
     ),
 ]

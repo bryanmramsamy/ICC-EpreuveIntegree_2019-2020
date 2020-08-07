@@ -10,7 +10,7 @@ from management.models import Course
 
 
 @decorators_utils.managers_or_administrators_only
-def moduleValidation(request, pk):
+def module_validation(request, pk):
     """Validate a ModuleRegistrationReport submitted based on its 'pk'.
     Register the student to the less populated course available for the chosen
     module. Also save the amount of attempts done by the student for the
@@ -24,10 +24,7 @@ def moduleValidation(request, pk):
                                 .order_by("nb_registrants")
 
         if courses.count() == 0:
-            raise ValueError(_("There is no course available for the requested "
-                            "module: '({}) {}'. In order to accept any new "
-                            "registration request, a new course must be created"
-                            " for this module."))
+            messages_utils.module_rr_has_no_course(request, module_rr.module)
         else:
             selected_course = courses[0]
             selected_course.nb_registrants += 1
@@ -42,7 +39,7 @@ def moduleValidation(request, pk):
             module_rr.approved = True
             module_rr.save()
 
-        # TODO: Send mail to student
-        messages_utils.module_rr_approved(request)
+            # TODO: Send mail to student
+            messages_utils.module_rr_approved(request)
 
     return redirect(module_rr.get_absolute_url())

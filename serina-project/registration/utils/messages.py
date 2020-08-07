@@ -49,6 +49,21 @@ def student_rr_created(request):
 
 # ModuleResgitrationReport Validation
 
+def module_rr_has_no_course(request, module):
+    """Warns the user that the ModuleRegistrationReport object cannot be
+    validated because there aren't any course related to the module.
+
+    When a module doesn't have any course related to it, the students cannot be
+    assign to the course and so the module itself. An error message is prompt.
+    """
+
+    messages.error(
+        request,
+        _("There is no course available for the requested module: {} ({}). In "
+          "order to accept any new registration request, a new course must be "
+          "created for this module.".format(module.title, module.reference))
+    )
+
 
 def module_rr_approved(request):
     """Inform the user that the ModuleRegistrationReport object has
