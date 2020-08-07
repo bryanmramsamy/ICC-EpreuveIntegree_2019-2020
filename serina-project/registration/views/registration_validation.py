@@ -4,8 +4,8 @@ from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 
 from ..models import ModuleRegistrationReport
-from ..utils import decorators as decorators_utils
-from ..utils import messages as messages_utils
+from ..utils import decorators as decorators_utils, messages as messages_utils
+
 from management.models import Course
 
 

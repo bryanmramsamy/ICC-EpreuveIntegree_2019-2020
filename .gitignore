@@ -5,7 +5,7 @@
 *.pyc
 __pycache__/
 
-# Uploaded Media files  # TODO: Determine if must be removed or not
+# Uploaded Media files
 serina-project/media/*
 
 # Do not ignore any .gitkeep file

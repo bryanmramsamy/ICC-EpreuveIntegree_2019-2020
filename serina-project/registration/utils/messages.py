@@ -63,6 +63,21 @@ def student_rr_created(request):
     )
 
 
+def student_rr_already_created(request, student):
+    """Warns the user that a StudentRegistrationReport object as already been
+    linked to the selected student."""
+
+    messages.error(
+        request,
+        _("The student registration file has already been created for your "
+          "account: {} ({}). You can still change some information from your "
+          "student's profile.".format(
+              student.get_full_name(),
+              student.username,
+          ))
+    )
+
+
 # ModuleResgitrationReport Validation
 
 def module_rr_has_no_course(request, module):

@@ -1,4 +1,3 @@
-from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
@@ -14,11 +13,10 @@ from ..models import (
     ModuleRegistrationReport,
     StudentRegistrationReport,
 )
-from ..utils.groups import promote_to_student
-from ..utils.messages import student_rr_created
-from ..utils.mixins import (
-    AutofillCreatedByRequestUser,
-    ManagerAdministratorOnlyMixin,
+from ..utils import (
+    groups as groups_utils,
+    messages as messages_utils,
+    mixins as mixins_utils,
 )
 
 
@@ -26,7 +24,7 @@ from ..utils.mixins import (
 
 class StudentRegistrationReportListView(
     LoginRequiredMixin,
-    ManagerAdministratorOnlyMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
     ListView,
 ):  # TODO: Debug view
     """ListView for StudentRegistrationReports."""
@@ -39,7 +37,7 @@ class StudentRegistrationReportListView(
 
 class StudentRegistrationReportDetailView(
     LoginRequiredMixin,
-    ManagerAdministratorOnlyMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
     DetailView,
 ):  # TODO: Debug view
     """DetailView for StudentRegistrationReport."""
@@ -55,7 +53,7 @@ class StudentRegistrationReportCreateView(
     LoginRequiredMixin,
     UserPassesTestMixin,
     CreateView,
-    AutofillCreatedByRequestUser,
+    mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
     """CreateView for StudentRegistrationReport.
 
@@ -84,19 +82,10 @@ class StudentRegistrationReportCreateView(
         """Send an error message and redirect the home page."""
 
         if self.request.user.groups.filter(name="Student"):
-            messages.error(
-                self.request,
-                _("You already submitted your registration report. To change "
-                  "some of your data, please go to your profile and update "
-                  "your peronal informations. Note that the submitted "
-                  "documents and some data cannot be changed any more.")
-            )
+            messages_utils.student_rr_already_created(self.request,
+                                                      self.request.user)
         else:
-            messages.error(
-                self.request,
-                _("You are not allowed to submit a registration report. Please"
-                  " create a new account.")
-            )
+            messages_utils.permission_denied(self.request)
 
         return redirect('home')
 
@@ -104,8 +93,8 @@ class StudentRegistrationReportCreateView(
         """Promote the user to the 'Student'-group and notificate him/her with
         a message."""
 
-        promote_to_student(self.request.user)
-        student_rr_created(self.request)
+        groups_utils.promote_to_student(self.request.user)
+        messages_utils.student_rr_created(self.request)
         return super().form_valid(form)
 
 
@@ -113,7 +102,7 @@ class StudentRegistrationReportCreateView(
 
 class ModuleRegistrationReportListView(
     LoginRequiredMixin,
-    ManagerAdministratorOnlyMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
     ListView,
 ):  # TODO: Debug view
     """ListView for ModuleRegistrationReport."""
@@ -127,7 +116,7 @@ class ModuleRegistrationReportListView(
 
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
-    ManagerAdministratorOnlyMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
     DetailView,
 ):  # TODO: Debug view
     """DetailView for ModuleRegistrationReport."""
@@ -142,7 +131,7 @@ class ModuleRegistrationReportDetailView(
 class ModuleRegistrationReportCreateView(
     LoginRequiredMixin,
     CreateView,
-    AutofillCreatedByRequestUser,
+    mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
     """CreateView for ModuleRegistrationReport."""
 
@@ -164,7 +153,7 @@ class ModuleRegistrationReportCreateView(
 
 class DegreeRegistrationReportListView(
     LoginRequiredMixin,
-    ManagerAdministratorOnlyMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
     ListView,
 ):  # TODO: Debug view
     """ListView for DegreeRegistrationReportListView."""
@@ -176,7 +165,7 @@ class DegreeRegistrationReportListView(
 
 class DegreeRegistrationReportDetailView(
     LoginRequiredMixin,
-    # ManagerAdministratorOnlyMixin,  # FIXME: Self-Student should have acces too
+    # mixins_utils.ManagerAdministratorOnlyMixin,  # FIXME: Self-Student should have acces too
     DetailView,
 ):  # TODO: Debug view
     """DetailView for DegreeRegistrationReportListView."""
@@ -190,7 +179,7 @@ class DegreeRegistrationReportDetailView(
 class DegreeRegistrationReportCreateView(
     LoginRequiredMixin,
     CreateView,
-    AutofillCreatedByRequestUser,
+    mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
     """CreateView for DegreeRegistrationReport."""
 

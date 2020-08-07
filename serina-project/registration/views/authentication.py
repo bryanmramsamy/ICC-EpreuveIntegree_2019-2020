@@ -21,9 +21,11 @@ from ..forms import (
     CustomPasswordResetForm,
     RegistrationForm,
 )
-from ..utils import messages as messages_utils
-from ..utils import groups as groups_utils
-from ..utils import users as users_utils
+from ..utils import (
+    groups as groups_utils,
+    messages as messages_utils,
+    users as users_utils,
+)
 
 
 def register(request):
