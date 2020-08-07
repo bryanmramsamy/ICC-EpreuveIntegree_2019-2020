@@ -3,14 +3,13 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
-from ..utils import models as models_utils
-from .resource import FrontOfficeResource
+from . import resource
 from .student_rr import StudentRegistrationReport
 
 from management.models import Degree
 
 
-class DegreeRegistrationReport(FrontOfficeResource):
+class DegreeRegistrationReport(resource.FrontOfficeResource):
     """Model definition for DegreeRegistrationReport.
 
     Degree Registration Report of a degree to which the student registered.
@@ -21,7 +20,8 @@ class DegreeRegistrationReport(FrontOfficeResource):
         StudentRegistrationReport,
         on_delete=models.CASCADE,
         related_name="degrees_rrs",
-        verbose_name=_("Student"),)
+        verbose_name=_("Student"),
+    )
     degree = models.ForeignKey(
         Degree,
         on_delete=models.CASCADE,
@@ -145,7 +145,7 @@ class DegreeRegistrationReport(FrontOfficeResource):
     def average_score(self):
         """Compute the average score of the student."""
 
-        return models_utils.modules_average_score(self)
+        return resource.modules_average_score(self)
 
     @property
     def total_expenses(self):

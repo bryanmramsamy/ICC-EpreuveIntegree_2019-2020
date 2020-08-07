@@ -21,3 +21,25 @@ class FrontOfficeResource(models.Model):
 
         abstract = True
         ordering = ("-date_updated", "-date_created")
+
+
+def modules_average_score(student_or_degree_rr):
+    """Compute the average score the student got for each of his/her finished 
+    module.
+
+    If the student didn't followed a single module, the result will be -1.
+    """
+
+    sum_score = 0
+    total_module = student_or_degree_rr.modules_rrs \
+                                       .filter(final_score__isnull=False) \
+                                       .count()
+
+    if total_module > 0:
+        for module_student_or_degree_rr in student_or_degree_rr.modules_rrs \
+                                           .filter(final_score__isnull=False):
+            sum_score += module_student_or_degree_rr.final_score
+
+        return sum_score / total_module
+    else:
+        return -1

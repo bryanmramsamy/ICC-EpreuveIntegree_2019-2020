@@ -1,7 +1,5 @@
 from django.contrib import admin
 
-from .utils import models as models_utils
-
 from .models import (
     DegreeRegistrationReport,
     ModuleRegistrationReport,

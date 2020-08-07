@@ -4,11 +4,10 @@ from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
-from ..utils import models as models_utils
-from .resource import FrontOfficeResource
+from . import resource
 
 
-class StudentRegistrationReport(FrontOfficeResource):
+class StudentRegistrationReport(resource.FrontOfficeResource):
     """Model definition for StudentRegistrationReport.
 
     Report containing all the information related to a guest registered user
@@ -169,8 +168,7 @@ class StudentRegistrationReport(FrontOfficeResource):
         won_ECTS = 0
 
         for module_rr in self.modules_rrs.all():
-            if (module_rr.succeeded
-                and module_rr.payed):
+            if module_rr.succeeded and module_rr.payed:
                 won_ECTS += module_rr.module.ECTS_value
 
         return won_ECTS
@@ -179,7 +177,7 @@ class StudentRegistrationReport(FrontOfficeResource):
     def average_score(self):
         """Compute the average final score of the student."""
 
-        return models_utils.modules_average_score(self)
+        return resource.modules_average_score(self)
 
     @property
     def has_been_student(self):
