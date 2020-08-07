@@ -55,40 +55,71 @@ class ManagerAdministratorOnlyMixin(BackOfficeUsersOnlyMixin):
         return groups_utils.is_manager_or_administrator(self.request.user)
 
 
-class SelfStudentManagerAdministratorOnlyMixin(ManagerAdministratorOnlyMixin):
+class StudentManagerAdministratorOnlyMixin(ManagerAdministratorOnlyMixin):
+    """Restrict view access to 'Student'-group members, the 'Manager'-group
+    members and 'Administrator'-group members."""
+
+    def test_func(self):
+        """Check if the user is a Student, Manager or an Administrator."""
+
+        return super(StudentManagerAdministratorOnlyMixin, self).test_func() \
+            or groups_utils.is_student(self.request.user)
+
+
+class SelfStudentManagerAdministratorOnlyMixin(
+    StudentManagerAdministratorOnlyMixin,
+):
     """Restrict view access to 'Manager'-group members and
-    'Administrator'-group members ans the student who created the object."""
+    'Administrator'-group members and the student who created the object.
+
+    This mixins works for students, modules and degrees regitrations reports.
+    """
 
     def test_func(self):
         """Check if the user is a Student, Manager or an Administrator. If the
-        user is a student, check if (s)he is the one who created the object."""
+        user is a student, check if (s)he is the one who created the object.
 
-        super_test_valid = super(SelfStudentManagerAdministratorOnlyMixin, self).test_func()
+        The object being variable, the queryset is adapted according to the
+        object-type received.
+        """
 
-        # StudentRegistrationReport
+        super_test_valid = super(SelfStudentManagerAdministratorOnlyMixin,
+                                 self).test_func()
+        self_test_valid = False
 
-        if type(self.get_object()) is models.student_rr \
-                                            .StudentRegistrationReport:
-            self_test_valid = \
-                self.request.user.student_rr.pk == self.get_object().pk
+        # Check if user is a student
 
-        # ModuleRegistrationReport
+        if groups_utils.is_student(self.request.user):
 
-        elif type(self.get_object()) is models.module_rr \
-                                              .ModuleRegistrationReport:
-            self_test_valid = self.request.user.student_rr.modules_rrs \
-                                          .filter(pk=self.get_object().pk) \
-                                          .exists()
+            # StudentRegistrationReport
 
-        # DegreeRegistrationReport
+            if type(self.get_object()) is models.student_rr \
+                                                .StudentRegistrationReport:
+                self_test_valid = \
+                    self.request.user.student_rr.pk == self.get_object().pk
 
-        elif type(self.get_object()) is models.degree_rr \
-                                              .DegreeRegistrationReport:
-            self_test_valid = self.request.user.student_rr.degrees_rrs \
-                                          .filter(pk=self.get_object().pk) \
-                                          .exists()
+            # ModuleRegistrationReport
 
-        return super_test_valid or self_test_valid
+            elif type(self.get_object()) is models.module_rr \
+                                                  .ModuleRegistrationReport:
+                self_test_valid = self.request.user.student_rr.modules_rrs \
+                                      .filter(pk=self.get_object().pk) \
+                                      .exists()
+
+            # DegreeRegistrationReport
+
+            elif type(self.get_object()) is models.degree_rr \
+                                                  .DegreeRegistrationReport:
+                self_test_valid = self.request.user.student_rr.degrees_rrs \
+                                      .filter(pk=self.get_object().pk) \
+                                      .exists()
+
+        # Otherwise user is manager or administrator
+
+        else:
+            self_test_valid = True
+
+        return super_test_valid and self_test_valid
 
 
 # Autofill 'created_by' formfield mixins (form and view)
