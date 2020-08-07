@@ -5,7 +5,23 @@ from django.utils.translation import ugettext as _
 
 # Authentication
 
-def user_is_authenticated(request):
+def user_logged_out(request):
+    """Inform the user that (s)he has successfully been logged out."""
+
+    messages.success(request, _("You have been logged out successfully."))
+
+
+def password_changed(request):
+    """Inform the user his/her password has correctly been changed."""
+
+    messages.success(
+        request,
+        _("Your password has been changed. You must log yourself in again with"
+          " the new password.")
+    )
+
+
+def user_is_authenticated(request):  # TODO: Must be decorator
     """Check if a user is authenticated and send message if this is true."""
 
     is_authenticated = False

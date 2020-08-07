@@ -1,7 +1,7 @@
 from datetime import date
 
-from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.views import (
     LoginView,
@@ -14,7 +14,6 @@ from django.contrib.auth.views import (
 )
 from django.shortcuts import redirect, render
 from django.urls import reverse, reverse_lazy
-from django.utils.translation import ugettext as _
 
 from ..forms import (
     CustomAuthenticationForm,
@@ -92,11 +91,12 @@ class CustomLoginView(LoginView):
     redirect_authenticated_user = True
 
 
+@login_required
 def customLogout(request):
     """Logout redirection."""
 
     logout(request)
-    messages.success(request, _("You have been logged out successfully"))
+    messages_utils.user_logged_out(request)
     return redirect('home')
 
 
@@ -145,11 +145,7 @@ def post_password_change_logout(request):
     Display a message to the user too.
     """
 
-    messages.success(
-        request,
-        _("Your password has been changed. You must log yourself in again with"
-          " the new password.")
-    )
+    messages_utils.password_changed(request)
     logout(request)
 
     return redirect('home')
