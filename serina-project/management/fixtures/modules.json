@@ -1,0 +1,139 @@
+[
+{
+  "model": "management.module",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:38:38.563Z",
+    "date_updated": "2020-08-07T23:48:00.173Z",
+    "title": "Projet de d\u00e9veloppement Web",
+    "reference": "PROJ001",
+    "description": "Projet de d\u00e9veloppement Web",
+    "level": 1,
+    "ECTS_value": 25,
+    "cost": 40.0,
+    "charge_price": 50.0,
+    "prerequisites": [
+      3
+    ],
+    "eligible_teachers": [
+      3,
+      5
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:39:08.802Z",
+    "date_updated": "2020-08-07T23:47:23.573Z",
+    "title": "Projet d'int\u00e9gration developpement",
+    "reference": "PROJ002",
+    "description": "Projet d'int\u00e9gration developpement",
+    "level": 2,
+    "ECTS_value": 30,
+    "cost": 45.0,
+    "charge_price": 60.0,
+    "prerequisites": [
+      4,
+      3
+    ],
+    "eligible_teachers": [
+      4
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 3,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:40:12.972Z",
+    "date_updated": "2020-08-07T23:48:29.723Z",
+    "title": "Organisation des entreprises et \u00e9l\u00e9ments de management",
+    "reference": "ORGA003",
+    "description": "Organisation des entreprises et \u00e9l\u00e9ments de management",
+    "level": 1,
+    "ECTS_value": 20,
+    "cost": 15.0,
+    "charge_price": 20.0,
+    "prerequisites": [],
+    "eligible_teachers": [
+      10
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 4,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:40:48.839Z",
+    "date_updated": "2020-08-07T23:48:51.134Z",
+    "title": "\u00c9lements statistiques",
+    "reference": "\u00c9LEM004",
+    "description": "\u00c9lements statistiques",
+    "level": 1,
+    "ECTS_value": 20,
+    "cost": 20.0,
+    "charge_price": 30.0,
+    "prerequisites": [
+      3
+    ],
+    "eligible_teachers": [
+      3,
+      4,
+      5,
+      10
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 5,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:41:26.898Z",
+    "date_updated": "2020-08-07T23:46:35.001Z",
+    "title": "T.V.A.",
+    "reference": "T.V.005",
+    "description": "T.V.A.",
+    "level": 3,
+    "ECTS_value": 50,
+    "cost": 50.0,
+    "charge_price": 70.0,
+    "prerequisites": [
+      4,
+      3
+    ],
+    "eligible_teachers": [
+      3,
+      10
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 6,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:43:53.742Z",
+    "date_updated": "2020-08-07T23:49:16.328Z",
+    "title": "Droit commercial",
+    "reference": "DROI006",
+    "description": "Droit commercial",
+    "level": 3,
+    "ECTS_value": 35,
+    "cost": 30.0,
+    "charge_price": 60.0,
+    "prerequisites": [
+      5
+    ],
+    "eligible_teachers": [
+      5
+    ]
+  }
+}
+]
