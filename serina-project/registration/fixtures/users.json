@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$180000$s5UQkBIAMBK9$TEDBp0nufy6l0FVQgc2DUAlm8XBf2MnCOB0JUgumdrc=",
-    "last_login": "2020-08-07T23:22:46.954Z",
+    "last_login": "2020-08-08T15:21:44.360Z",
     "is_superuser": true,
     "username": "200808001",
     "first_name": "Bryan",
@@ -114,7 +114,7 @@
     "is_active": true,
     "date_joined": "2020-08-07T23:17:17.951Z",
     "groups": [
-      1
+      2
     ],
     "user_permissions": []
   }
@@ -134,7 +134,7 @@
     "is_active": true,
     "date_joined": "2020-08-07T23:17:33.570Z",
     "groups": [
-      1
+      2
     ],
     "user_permissions": []
   }
@@ -154,7 +154,7 @@
     "is_active": true,
     "date_joined": "2020-08-07T23:18:01.794Z",
     "groups": [
-      1
+      2
     ],
     "user_permissions": []
   }
@@ -174,7 +174,7 @@
     "is_active": true,
     "date_joined": "2020-08-07T23:18:19.311Z",
     "groups": [
-      1
+      2
     ],
     "user_permissions": []
   }
@@ -204,7 +204,7 @@
   "pk": 11,
   "fields": {
     "password": "pbkdf2_sha256$180000$d1IGYZw1smlq$upL63cm/3dp0ykXRoFl4nGZzoDssl4fOIxEYFaQOnZk=",
-    "last_login": "2020-08-07T23:18:59.888Z",
+    "last_login": "2020-08-08T16:21:23.224Z",
     "is_superuser": false,
     "username": "200808011",
     "first_name": "Sherry",
@@ -214,7 +214,7 @@
     "is_active": true,
     "date_joined": "2020-08-07T23:18:59.686Z",
     "groups": [
-      1
+      2
     ],
     "user_permissions": []
   }
