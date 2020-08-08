@@ -48,7 +48,7 @@ def register(request):
             # Generate username (unique registration number)
 
             if User.objects.count() == 0:
-                latest_user_pk = 1  # TODO: Not tested yet
+                latest_user_pk = 0
             else:
                 latest_user_pk = User.objects.latest('pk').pk
 

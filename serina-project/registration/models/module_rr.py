@@ -103,7 +103,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         )
 
     def get_absolute_url(self):
-        """Return absolute url for DegreeRegistrationRappport."""
+        """Return absolute url for DegreeRegistrationReport."""
 
         return reverse('module_rr_detailview', kwargs={"pk": self.pk})
 
