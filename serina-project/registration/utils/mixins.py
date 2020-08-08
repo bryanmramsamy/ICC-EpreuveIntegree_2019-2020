@@ -14,21 +14,6 @@ from . import messages as messages_utils
 
 # Access restriction mixins
 
-class SelfStudentOnly(UserPassesTestMixin):
-    # FIXME: Redirect self_student and back_office_members to 404
-    """Restrict view access to the related student."""
-
-    def test_func(self):
-        """Check if the user's 'pk' matches with the url.GET.get('pk')
-        value."""
-
-        return self.request.user.student_rr.pk == self.kwargs["pk"]
-
-    def handle_no_permission(self):
-        """Raise a 404."""
-
-        raise Http404
-
 
 class BackOfficeUsersOnlyMixin(UserPassesTestMixin):
     """Restrict view access to Back-Office users."""
