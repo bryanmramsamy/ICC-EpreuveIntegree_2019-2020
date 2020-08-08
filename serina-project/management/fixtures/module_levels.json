@@ -1,0 +1,46 @@
+[
+{
+  "model": "management.modulelevel",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:34:23.194Z",
+    "date_updated": "2020-08-07T23:34:23.194Z",
+    "rank": 10,
+    "name": "D\u00e9butant"
+  }
+},
+{
+  "model": "management.modulelevel",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:34:31.214Z",
+    "date_updated": "2020-08-07T23:34:31.214Z",
+    "rank": 20,
+    "name": "Confirm\u00e9"
+  }
+},
+{
+  "model": "management.modulelevel",
+  "pk": 3,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:34:39.019Z",
+    "date_updated": "2020-08-07T23:34:39.019Z",
+    "rank": 30,
+    "name": "Avanc\u00e9"
+  }
+},
+{
+  "model": "management.modulelevel",
+  "pk": 4,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:35:02.507Z",
+    "date_updated": "2020-08-07T23:35:02.507Z",
+    "rank": 40,
+    "name": "Expert"
+  }
+}
+]
