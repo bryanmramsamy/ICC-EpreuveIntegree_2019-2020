@@ -1,0 +1,40 @@
+[
+{
+  "model": "management.degree",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:44:19.335Z",
+    "date_updated": "2020-08-07T23:45:33.820Z",
+    "title": "Informatique de gestion",
+    "reference": "INFO001",
+    "category": 1,
+    "description": "Informatique de gestion",
+    "modules": [
+      4,
+      3,
+      1,
+      2
+    ]
+  }
+},
+{
+  "model": "management.degree",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-08-07T23:44:29.000Z",
+    "date_updated": "2020-08-07T23:45:18.795Z",
+    "title": "Comptabilit\u00e9",
+    "reference": "COMP002",
+    "category": 1,
+    "description": "Comptabilit\u00e9",
+    "modules": [
+      6,
+      4,
+      3,
+      5
+    ]
+  }
+}
+]
