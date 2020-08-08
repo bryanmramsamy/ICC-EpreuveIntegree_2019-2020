@@ -66,9 +66,22 @@ class ModuleRegistrationReport(FrontOfficeResource):
         null=True,
         blank=True,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
-        verbose_name=_("Final score"))
-    approved = models.BooleanField(default=False, verbose_name=_("Approved"))
-    payed = models.BooleanField(default=False, verbose_name=_("Payed"))
+        verbose_name=_("Final score")
+    )
+
+    MODULE_REGISTRATION_REPORT_STATUS = [
+        ("PENDING", _('Pending')),
+        ("DENIED", _('Denied')),
+        ("APPROVED", _('Approved')),
+        ("PAYED", _('Payed')),
+        ("COMPLETED", _('Completed')),
+    ]
+    status = models.CharField(
+        max_length=9,
+        choices=MODULE_REGISTRATION_REPORT_STATUS,
+        default="PENDING",
+        verbose_name=_("Status")
+    )
 
     class Meta:
         """Meta definition for ModuleRegistrationReport."""
@@ -77,11 +90,22 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Modules Registration Reports')
 
     @property
-    def denied(self):
-        """Check if the module registration request was denied by a back-office
-        user."""
+    def payed(self):
+        """Check if the module registration request has been payed.
 
-        return self.payed and not self.approved
+        A payed request is either payed or completed.
+        """
+
+        return self.status == "PAYED" or self.status == "COMPLETED"
+
+    @property
+    def approved(self):
+        """Check if the module registration request has been approved.
+
+        An approved request is either approved, payed or completed.
+        """
+
+        return self.status == "APPROVED" or self.payed
 
     @property
     def succeeded(self):
@@ -91,15 +115,16 @@ class ModuleRegistrationReport(FrontOfficeResource):
         registration to it.
         """
 
-        return self.approved and self.payed and self.final_score >= 50
+        return self.status == "COMPLETED" and self.final_score >= 50
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
 
-        return "[{}] {}'s module registration for {}".format(
+        return "[{}] {}'s module registration for {} ({})".format(
             self.pk,
             self.student_rr.created_by.get_full_name(),
             self.module.title,
+            self.status,
         )
 
     def get_absolute_url(self):
