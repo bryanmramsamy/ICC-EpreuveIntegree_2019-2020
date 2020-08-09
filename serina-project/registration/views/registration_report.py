@@ -43,7 +43,6 @@ class StudentRegistrationReportDetailView(
 ):  # TODO: Debug view
     """DetailView for StudentRegistrationReport."""
 
-    # TODO: Restrict access to student who made student_rr
     model = StudentRegistrationReport
     context_object_name = "student_rr"
     template_name = "registration/registration_report/student_rr_detailview." \
@@ -129,10 +128,13 @@ class ModuleRegistrationReportDetailView(
                     "html"
 
     def get_context_data(self, **kwargs):
-        """Add score submission form to context."""
+        """Add score submission form to context for back-office user only."""
 
         context = super().get_context_data(**kwargs)
-        context["form"] = SubmitFinalScoreForm
+
+        if groups_utils.is_back_office_user(self.request.user):
+            context["form"] = SubmitFinalScoreForm
+
         return context
 
 
