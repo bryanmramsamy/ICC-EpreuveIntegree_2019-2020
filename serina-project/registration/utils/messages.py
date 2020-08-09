@@ -115,3 +115,50 @@ def module_rr_already_approved(request):
         request,
         _("This module registration request has already been approved.")
     )
+
+
+# ModuleResgitrationReport Final Score Submission
+
+def module_rr_final_score_submitted(request):
+    """Inform the user that the final score has been successfully applied to
+    the module registration request."""
+
+    messages.success(
+        request,
+        _("The module score has been added and has now been completed.")
+    )
+
+
+def module_rr_already_completed(request):
+    """Warns the user that the module on which (s)he tries to submit a score
+    was already completed."""
+
+    messages.error(
+        request,
+        _("This module registration request is already completed. The final "
+          "score cannot be changed anymore without an adminitrator ({})"
+          .format(settings.CONTACT_MAILS["administrators"]))
+    )
+
+
+def module_rr_not_approved(request):
+    """Warns the user that the module on which (s)he tries to submit a score
+    has not been approved yet."""
+
+    messages.error(
+        request,
+        _("This module registration request has not been approved or yet and "
+          "can therefore not been rated.")
+    )
+
+
+def module_rr_not_payed(request):
+    """Warns the user that the module on which (s)he tries to submit a score
+    has not been payed yet."""
+
+    messages.warning(
+        request,
+        _("This module registration request has not been payed by the sudent "
+          "yet. The final score was saved anyway but the module cannot be "
+          "coonsidered as completed as long as the payment wasn't done.")
+    )

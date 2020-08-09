@@ -2,7 +2,7 @@ from django import forms
 from django.utils.translation import ugettext as _
 
 
-class SubmitFinalScore(forms.Form):
+class SubmitFinalScoreForm(forms.Form):
     """Form to submit a final score to a ModuleRegistrationReport instance."""
 
     score = forms.DecimalField(

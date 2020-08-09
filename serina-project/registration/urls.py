@@ -149,4 +149,10 @@ urlpatterns = [
         views.module_validation,
         name='backoffice_module_validation'
     ),
+
+    url(
+        r'^back_office/module_score_submit/(?P<pk>[0-9]+)/$',
+        views.module_score_submit,
+        name='backoffice_module_score_submit'
+    ),
 ]

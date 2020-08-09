@@ -169,6 +169,7 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # Mails
 
 CONTACT_MAILS = {
+    "administrators": "administrators@serina.com",
     "support": "support@serina.com",
 }
 

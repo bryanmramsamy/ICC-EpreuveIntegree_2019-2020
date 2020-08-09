@@ -18,4 +18,10 @@
     </ul>
 
     <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
+
+    <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit score">
+    </form>
 {% endblock content %}

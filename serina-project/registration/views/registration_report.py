@@ -7,6 +7,7 @@ from ..forms import (
     DegreeRegistrationReportCreateFrom,
     ModuleRegistrationReportCreateFrom,
     StudentRegistrationReportCreateFrom,
+    SubmitFinalScoreForm,
 )
 from ..models import (
     DegreeRegistrationReport,
@@ -126,6 +127,13 @@ class ModuleRegistrationReportDetailView(
     context_object_name = "module_rr"
     template_name = "registration/registration_report/module_rr_detailview." \
                     "html"
+
+    def get_context_data(self, **kwargs):
+        """Add score submission form to context."""
+
+        context = super().get_context_data(**kwargs)
+        context["form"] = SubmitFinalScoreForm
+        return context
 
 
 class ModuleRegistrationReportCreateView(
