@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 from .. import models
 from . import groups as groups_utils
 from . import messages as messages_utils
+from rating import models as rating_models
 
 
 # Access restriction mixins
@@ -112,6 +113,12 @@ class SelfStudentManagerAdministratorOnlyMixin(
                 self_test_valid = self.request.user.student_rr.degrees_rrs \
                                       .filter(pk=self.get_object().pk) \
                                       .exists()
+
+            # StudentRating
+
+            elif type(self.get_object()) is rating_models.StudentRating:
+                self_test_valid = self.request.user.ratings.filter(
+                    pk=self.get_object().pk).exists()
 
         # Otherwise user is manager or administrator
 

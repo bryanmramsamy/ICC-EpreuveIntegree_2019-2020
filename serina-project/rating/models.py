@@ -48,7 +48,7 @@ class StudentRating(models.Model):
 
         return "[{}] {}'s rating on {}".format(
             self.pk,
-            self.user.get_full_name(),
+            self.created_by.get_full_name(),
             self.module.title,
         )
 
