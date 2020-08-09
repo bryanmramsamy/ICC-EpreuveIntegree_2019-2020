@@ -62,9 +62,11 @@ class ModuleRegistrationReport(FrontOfficeResource):
         default=0,
         verbose_name=_("Student's attempt number")
     )  # TODO: Add max_attempt value from settings
-    final_score = models.FloatField(
+    final_score = models.DecimalField(
         null=True,
         blank=True,
+        max_digits=5,
+        decimal_places=2,
         validators=[MinValueValidator(0), MaxValueValidator(100)],
         verbose_name=_("Final score")
     )
