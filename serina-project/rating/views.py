@@ -13,7 +13,7 @@ class StudentRatingListView(
     generic.ListView,
 ):  # TODO: Debug view
     model = StudentRating
-    context_object_name = "rating"
+    context_object_name = "ratings"
     template_name = "rating/rating_listview.html"
     paginate_by = 10
 
@@ -29,7 +29,7 @@ class StudentRatingDetailView(
 
 class StudentRatingCreateView(
     LoginRequiredMixin,
-    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
+    mixins_utils.StudentOnlyMixin,
     generic.CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view

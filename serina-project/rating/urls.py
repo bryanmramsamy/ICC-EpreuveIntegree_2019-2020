@@ -5,28 +5,28 @@ from . import views
 
 urlpatterns = [
     url(
-        r"^l/^(?P<pk>\d+)/$",
+        r"l/$",
         views.StudentRatingListView.as_view(),
-        name="rating_listview.html"
+        name="rating_listview"
     ),
     url(
-        r"^r/^(?P<pk>\d+)/$",
+        r"r/(?P<pk>[0-9]+)/$",
         views.StudentRatingDetailView.as_view(),
-        name="rating_detailview.html"
+        name="rating_detailview"
     ),
     url(
-        r"^c/$",
+        r"c/$",
         views.StudentRatingCreateView.as_view(),
         name="rating_createview"
     ),
     url(
-        r"^u/^(?P<pk>\d+)/$",
+        r"u/(?P<pk>[0-9]+)/$",
         views.StudentRatingUpdateView.as_view(),
-        name="rating_updateview.html"
+        name="rating_updateview"
     ),
     url(
-        r"^d/^(?P<pk>\d+)/$",
+        r"d/(?P<pk>[0-9]+)/$",
         views.StudentRatingDeleteView.as_view(),
-        name="rating_deleteview.html"
+        name="rating_deleteview"
     ),
 ]

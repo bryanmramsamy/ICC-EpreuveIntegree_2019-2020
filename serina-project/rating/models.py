@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 
 from management.models import Module
@@ -57,8 +58,7 @@ class StudentRating(models.Model):
 
         # TODO: Prevent student from leaving multiple rates on the same module
 
-    # TODO: Must be define and redirect to Student Degree's Report template
-    # def get_absolute_url(self):
-    #     """Return absolute url for DegreeRegistrationRappport."""
+    def get_absolute_url(self):
+        """Return absolute url for StudentRating."""
 
-    #     return ('')
+        return reverse('rating_detailview', kwargs={'pk': self.pk})

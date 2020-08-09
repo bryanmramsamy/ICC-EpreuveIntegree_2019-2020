@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'StudentRatingListView' %}{% endblock title %}
+
+{% block content %}
+    <h1>StudentRatingListView</h1>
+
+    <p>Created by: {{ rating.created_by.get_full_name }}</p>
+    <p>Module: {{ rating.module.title }}</p>
+    <p>Rate: {{ rating.rate }}/5</p>
+    <p>Comment: {{ rating.comment }}</p>
+
+    <a href="{% url 'rating_updateview' pk=rating.pk %}">UPDATE</a>
+    <br>
+    <a href="{% url 'rating_deleteview' pk=rating.pk %}">DELETE</a>
+
+{% endblock content %}

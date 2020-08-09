@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'StudentRatingUpdateView' %}{% endblock title %}
+
+{% block content %}
+    <h1>StudentRatingUpdateView</h1>
+    <form action="." method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <input type="submit" value="{% trans 'Submit module rr' %}">
+    </form>
+
+    <h1>StudentRatingListView</h1>
+
+    <p>Created by: {{ rating.created_by.get_full_name }}</p>
+    <p>Module: {{ rating.module.title }}</p>
+    <p>Rate: {{ rating.rate }}/5</p>
+    <p>Comment: {{ rating.comment }}</p>
+{% endblock content %}
