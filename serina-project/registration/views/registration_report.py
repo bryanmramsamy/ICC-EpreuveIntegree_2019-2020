@@ -121,7 +121,6 @@ class ModuleRegistrationReportDetailView(
 ):  # TODO: Debug view
     """DetailView for ModuleRegistrationReport."""
 
-    # TODO: Restrict access to student who made student_rr
     model = ModuleRegistrationReport
     context_object_name = "module_rr"
     template_name = "registration/registration_report/module_rr_detailview." \
@@ -140,12 +139,12 @@ class ModuleRegistrationReportDetailView(
 
 class ModuleRegistrationReportCreateView(
     LoginRequiredMixin,
+    # mixins_utils.StudentOnlyMixin,  # TODO: Disabled for debug purposes
     CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
     """CreateView for ModuleRegistrationReport."""
 
-    # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
     model = ModuleRegistrationReport
     form_class = ModuleRegistrationReportCreateFrom
     template_name = "registration/registration_report/module_rr_createview." \
@@ -188,12 +187,12 @@ class DegreeRegistrationReportDetailView(
 
 class DegreeRegistrationReportCreateView(
     LoginRequiredMixin,
+    # mixins_utils.StudentOnlyMixin,  # TODO: Disabled for debug purposes
     CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
     """CreateView for DegreeRegistrationReport."""
 
-    # TODO: Restrict access to student (because a student is a user whom submitted his student_rr)
     model = DegreeRegistrationReport
     form_class = DegreeRegistrationReportCreateFrom
     template_name = "registration/registration_report/degree_rr_createview." \

@@ -15,13 +15,9 @@ from . import messages as messages_utils
 # Access restriction mixins
 
 
-class BackOfficeUsersOnlyMixin(UserPassesTestMixin):
-    """Restrict view access to Back-Office users."""
-
-    def test_func(self):
-        """Check if the user is a Back-Office user."""
-
-        return groups_utils.is_back_office_user(self.request.user)
+class AccessRestrictionMixin(UserPassesTestMixin):
+    """Display an error message to the user which access has been denied and
+    redirect him/her to the homepage."""
 
     def handle_no_permission(self):
         """Send an error message and redirect the home page."""
@@ -30,7 +26,25 @@ class BackOfficeUsersOnlyMixin(UserPassesTestMixin):
         return redirect('home')
 
 
-class ManagerAdministratorOnlyMixin(BackOfficeUsersOnlyMixin):
+class StudentOnlyMixin(AccessRestrictionMixin):
+    """Restrict view access to Students users."""
+
+    def test_func(self):
+        """Check if the user is a registered student user."""
+
+        return groups_utils.is_student(self.request.user)
+
+
+class BackOfficeUsersOnlyMixin(AccessRestrictionMixin):
+    """Restrict view access to Back-Office users."""
+
+    def test_func(self):
+        """Check if the user is a Back-Office user."""
+
+        return groups_utils.is_back_office_user(self.request.user)
+
+
+class ManagerAdministratorOnlyMixin(AccessRestrictionMixin):
     """Restrict view access to 'Manager'-group members and
     'Administrator'-group members."""
 
