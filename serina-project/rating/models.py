@@ -31,7 +31,6 @@ class StudentRating(models.Model):
         verbose_name=_("Module"),
     )
     rate = models.PositiveIntegerField(
-        default=0,
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         verbose_name=_("Rate"),
     )
