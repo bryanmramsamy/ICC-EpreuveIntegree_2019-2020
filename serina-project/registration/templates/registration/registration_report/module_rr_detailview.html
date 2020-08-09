@@ -14,8 +14,7 @@
         <li>from: {{ module_rr.date_start }} to {{ module_rr.date_end }}</li>
         <li>attempt: {{ module_rr.student_attempt }}</li>
         <li>{{ module_rr.final_score }}</li>
-        <li>approved ? {{ module_rr.approved }}</li>
-        <li>payed ? {{ module_rr.payed }}</li>
+        <li>status : {{ module_rr.status }}</li>
     </ul>
 
     <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
