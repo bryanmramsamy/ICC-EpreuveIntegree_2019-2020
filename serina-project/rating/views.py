@@ -12,6 +12,8 @@ class StudentRatingListView(
     LoginRequiredMixin,
     generic.ListView,
 ):  # TODO: Debug view
+    """ListView for StudentRating"""
+
     model = StudentRating
     context_object_name = "ratings"
     template_name = "rating/rating_listview.html"
@@ -22,6 +24,8 @@ class StudentRatingDetailView(
     LoginRequiredMixin,
     generic.DetailView,
 ):  # TODO: Debug view
+    """DetailView for StudentRating"""
+
     model = StudentRating
     context_object_name = "rating"
     template_name = "rating/rating_detailview.html"
@@ -33,7 +37,7 @@ class StudentRatingCreateView(
     generic.CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
-    """CreateView for Rating."""
+    """CreateView for StudentRating"""
 
     model = StudentRating
     form_class = StudentRatingForm
@@ -46,7 +50,7 @@ class StudentRatingUpdateView(
     generic.UpdateView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
-    """CreateView for Rating."""
+    """UpdateView for StudentRating"""
 
     model = StudentRating
     form_class = StudentRatingForm
@@ -60,7 +64,7 @@ class StudentRatingDeleteView(
     generic.DeleteView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):  # TODO: Debug view
-    """CreateView for Rating."""
+    """DeleteView for StudentRating"""
 
     model = StudentRating
     form_class = StudentRatingForm
