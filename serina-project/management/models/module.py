@@ -75,9 +75,18 @@ class Module(BackOfficeResource):
     )
     ECTS_value = models.PositiveIntegerField(null=True, blank=True,
                                              verbose_name=_("ECTS value"))
-    cost = models.FloatField(null=True, verbose_name=_('Cost'))
-    charge_price = models.FloatField(null=True,
-                                     verbose_name=_('Charge price'))
+    cost = models.DecimalField(
+        null=True,
+        max_digits=5,
+        decimal_places=2,
+        verbose_name=_('Cost'),
+    )
+    charge_price = models.DecimalField(
+        null=True,
+        max_digits=5,
+        decimal_places=2,
+        verbose_name=_('Charge price'),
+    )
 
     class Meta:
         """Meta definition for Module."""
