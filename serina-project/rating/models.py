@@ -14,7 +14,7 @@ class StudentRating(models.Model):
     module is been teached and evaluated.
     """
 
-    student = models.ForeignKey(
+    created_by = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name="ratings",
