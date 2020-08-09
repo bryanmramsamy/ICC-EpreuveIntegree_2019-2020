@@ -75,6 +75,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         ("APPROVED", _('Approved')),
         ("PAYED", _('Payed')),
         ("COMPLETED", _('Completed')),
+        ("EXEMPTED", _('Exempted')),
     ]
     status = models.CharField(
         max_length=9,
@@ -115,7 +116,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
         registration to it.
         """
 
-        return self.status == "COMPLETED" and self.final_score >= 50
+        return self.status == "EXEMPTED" \
+               or (self.status == "COMPLETED" and self.final_score >= 50)
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
@@ -144,6 +146,17 @@ def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
     """
 
     for module in instance.degree.modules.all():
+        for module_rr in module.modules_rrs.all():
+            if module_rr.student_rr == instance.student_rr:
+                if module_rr.status == "DENIED" or module_rr.status == "COMPLETED":
+                    pass
+
+
+
+        if module.modules_rrs.filter :
+            pass
+        else:
+            pass
         ModuleRegistrationReport.objects.create(
             student_rr=instance.student_rr,
             degree_rr=instance,
