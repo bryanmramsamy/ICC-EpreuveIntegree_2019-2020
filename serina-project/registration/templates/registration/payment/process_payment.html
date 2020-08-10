@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Login' %}{% endblock title %}
+
+{% block content %}
+  <h4>Pay with PayPal</h4>
+  {{ form.render }}
+
+  <h5>{{ module_rr }}</h5>
+  <p>{{ module_rr.module.charge_price }}</p>
+{% endblock content %}
