@@ -10,3 +10,6 @@ serina-project/media/*
 
 # Do not ignore any .gitkeep file
 !*.gitkeep
+
+# Debug ngrok tunnel
+ngrok

@@ -156,6 +156,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# Paypal settings
+
+PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_EMAIL')
+
+PAYPAL_TEST = True
+
+
 # SMTP configuration
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
