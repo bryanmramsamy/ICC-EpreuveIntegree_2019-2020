@@ -81,7 +81,7 @@ class Module(BackOfficeResource):
         decimal_places=2,
         verbose_name=_('Cost'),
     )
-    charge_price = models.DecimalField(
+    price = models.DecimalField(
         null=True,
         max_digits=5,
         decimal_places=2,
@@ -99,7 +99,7 @@ class Module(BackOfficeResource):
     def module_benefits(self):
         """Compute the benefits margin made by one instance of the module."""
 
-        return self.charge_price - self.cost
+        return self.price - self.cost
 
     @property
     def courses_benefits(self):

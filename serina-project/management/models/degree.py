@@ -98,12 +98,12 @@ class Degree(BackOfficeResource):
         return total_costs
 
     @property
-    def total_charge_price(self):
+    def total_price(self):
         """Compute the total charges price of the degree."""
 
         total_costs = 0
         for module in self.modules.all():
-            total_costs += module.charge_price
+            total_costs += module.price
 
         return total_costs
 
@@ -111,7 +111,7 @@ class Degree(BackOfficeResource):
     def total_benefits(self):
         """Compute the benefits margin made by one instance of the module."""
 
-        return self.total_charge_price - self.total_costs
+        return self.total_price - self.total_costs
 
     def __str__(self):
         """Unicode representation of Degree."""
