@@ -58,6 +58,11 @@ class ModuleRegistrationReport(FrontOfficeResource):
         blank=True,
         verbose_name=_("End date"),
     )
+    date_payed = models.DateTimeField(
+        null=True,
+        blank=True,
+        verbose_name=_("Payment date"),
+    )
     nb_attempt = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Student's attempt number")
