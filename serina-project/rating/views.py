@@ -8,10 +8,7 @@ from .models import StudentRating
 from registration.utils import mixins as mixins_utils
 
 
-class StudentRatingListView(
-    LoginRequiredMixin,
-    generic.ListView,
-):  # TODO: Debug view
+class StudentRatingListView(LoginRequiredMixin, generic.ListView,):  # TODO: Debug view
     """ListView for StudentRating"""
 
     model = StudentRating
@@ -20,10 +17,7 @@ class StudentRatingListView(
     paginate_by = 10
 
 
-class StudentRatingDetailView(
-    LoginRequiredMixin,
-    generic.DetailView,
-):  # TODO: Debug view
+class StudentRatingDetailView(LoginRequiredMixin, generic.DetailView,):  # TODO: Debug view
     """DetailView for StudentRating"""
 
     model = StudentRating
