@@ -162,3 +162,34 @@ def module_rr_not_payed(request):
           "yet. The final score was saved anyway but the module cannot be "
           "coonsidered as completed as long as the payment wasn't done.")
     )
+
+
+# ModuleRegistrationReport payment
+
+def module_payment_succeeded(request):
+    """Inform the user the payment has been successfully completed."""
+
+    messages.success(
+        request,
+        _("The module has been successfully payed.")
+    )
+
+
+def module_payment_failed(request):
+    """Warn the user the payment has failed."""
+
+    messages.error(
+        request,
+        _("The module payment has unexpectedly been aborted.")
+    )
+
+
+def module_not_payable(request):
+    """Warns the user the module request cannot be payed because it has not an
+    'APPROVED' status."""
+
+    messages.error(
+        request,
+        _("This module registration request cannot be payed. It has either "
+          "not been approved, is already payed, completed or exempted.")
+    )

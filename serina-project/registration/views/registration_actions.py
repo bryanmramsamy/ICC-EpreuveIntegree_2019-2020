@@ -32,7 +32,9 @@ def module_validation(request, pk):
             selected_course.save()
 
             module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
-                Q(student_rr=module_rr.student_rr) & Q(status="PAYED")).count()
+                Q(student_rr=module_rr.student_rr)
+                & Q(status="COMPLETED")
+            ).count()
             module_rr.course = selected_course
             module_rr.status = "APPROVED"
             module_rr.save()
@@ -44,7 +46,8 @@ def module_validation(request, pk):
 
 
 def module_score_submit(request, pk):
-    """"""
+    """Check if the module registration request has a valid status ('APPROVED',
+    'PAYED' or 'EXEMPTED') in order to submit a final score to it."""
 
     module_rr = get_object_or_404(ModuleRegistrationReport, pk=pk)
 

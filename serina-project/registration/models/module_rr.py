@@ -97,6 +97,14 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name = _('Module Registration Report')
         verbose_name_plural = _('Modules Registration Reports')
 
+    # @property  # FIXME: School years from date_start and date_end
+    # def school_year(self):
+    #     """Compute the schoolyear of the module."""
+
+    #     start = self.date_start
+    #     end = self.date_end
+    #     return start.strftime("%Y")
+
     @property
     def payed(self):
         """Check if the module registration request has been payed.

@@ -19,6 +19,11 @@
 
     <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
 
+    
+    {% if module_rr.status == "APPROVED" %}
+        <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
+    {% endif %}
+
     <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}
