@@ -38,6 +38,8 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
 
     # Student files
 
+    # TODO: Add upload_to argument
+
     id_picture = models.ImageField(verbose_name=_("ID picture"))
     # TODO: Add validators to accept pdf files only
     # https://stackoverflow.com/questions/6460848/how-to-limit-file-types-on-file-uploads-for-modelforms-with-filefields
@@ -53,7 +55,8 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     other_school_inscription_certificate = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Other schools inscription certificate"))
+        verbose_name=_("Other schools inscription certificate")
+    )
     national_register_extract = models.FileField(
         null=True,
         blank=True,
@@ -67,11 +70,13 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     archievement_certificates = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Modules archievement certificates"))
+        verbose_name=_("Modules archievement certificates")
+    )
     job_organization_certificates = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Job organizations certificates"))
+        verbose_name=_("Job organizations certificates")
+    )
     exemption_report = models.FileField(  # TODO: Add validator: only zip file
         null=True,
         blank=True,

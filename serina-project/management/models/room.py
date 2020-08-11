@@ -28,6 +28,14 @@ class Classroom(BackOfficeResource):
     max_capacity = models.PositiveIntegerField(
         verbose_name=_("Maximum capacity")
     )
+    picture = models.ImageField(
+        upload_to='management/rooms/',
+        default='management/default.jpg',
+        null=True,
+        blank=True,
+        max_length=225,
+        verbose_name=_("Picture"),
+    )
 
     class Meta:
         """Meta definition for Classroom."""

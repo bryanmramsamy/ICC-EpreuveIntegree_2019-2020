@@ -87,6 +87,14 @@ class Module(BackOfficeResource):
         decimal_places=2,
         verbose_name=_('Charge price'),
     )
+    picture = models.ImageField(
+        upload_to='management/modules/',
+        default='management/default.jpg',
+        null=True,
+        blank=True,
+        max_length=225,
+        verbose_name=_("Picture"),
+    )
 
     class Meta:
         """Meta definition for Module."""

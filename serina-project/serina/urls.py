@@ -12,7 +12,8 @@ urlpatterns = [
     url(r"^management/", include('management.urls')),
     url(r"^paypal/", include('paypal.standard.ipn.urls')),
     url(r"^rating/", include('rating.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) \
+  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 admin.site.site_header = "SERINA Back-Office"

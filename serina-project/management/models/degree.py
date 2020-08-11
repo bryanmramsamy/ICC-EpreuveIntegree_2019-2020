@@ -63,6 +63,14 @@ class Degree(BackOfficeResource):
     )
     description = models.TextField(null=True, blank=True,
                                    verbose_name=_("Description"))
+    picture = models.ImageField(
+        upload_to='management/degrees/',
+        default='management/default.jpg',
+        null=True,
+        blank=True,
+        max_length=225,
+        verbose_name=_("Picture"),
+    )
 
     class Meta:
         """Meta definition for Degree."""
