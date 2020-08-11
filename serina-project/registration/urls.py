@@ -13,6 +13,11 @@ urlpatterns = [
         views.home,
         name="home",
     ),
+    url(  # TODO: Debug root
+        r"home^$",
+        views.home_old,
+        name="home_old",
+    ),
 
 
     # Authentication
