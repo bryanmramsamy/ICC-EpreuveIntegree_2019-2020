@@ -14,7 +14,7 @@ urlpatterns = [
         name="home",
     ),
     url(  # TODO: Debug root
-        r"home^$",
+        r"^home$",
         views.home_old,
         name="home_old",
     ),

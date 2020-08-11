@@ -1,0 +1,133 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans 'Home' %}{% endblock title %}
+
+{% block content %}
+    <h1>Hola {{ user.username }}</h1>
+
+    <h2>Registration</h2>
+    <ul>
+        <li><a href="{% url 'register' %}">register</a></li>
+        <li><a href="{% url 'login' %}">login</a></li>
+        <li><a href="{% url 'logout' %}">logout</a></li>
+        <li><a href="{% url 'password_change' %}">password_change</a></li>
+        <li><a href="{% url 'password_reset' %}">password_reset</a></li>
+        <li><a href="/admin">admin</a></li>
+    </ul>
+
+    <h3>RegistrationReports</h3>
+    <ul>
+        <li><a href="{% url 'student_rr_listview' %}">student_rr_listview</a></li>
+        <li><a href="{% url 'student_rr_createview' %}">student_rr_createview</a></li>
+        <br>
+        <li><a href="{% url 'module_rr_listview' %}">module_rr_listview</a></li>
+        <li><a href="{% url 'module_rr_createview' %}">module_rr_createview</a></li>
+        <br>
+        <li><a href="{% url 'degree_rr_listview' %}">degree_rr_listview</a></li>
+        <li><a href="{% url 'degree_rr_createview' %}">degree_rr_createview</a></li>
+    </ul>
+
+
+
+    <br>
+
+    <h2>Management</h2>
+
+    <h3>Modules</h3>
+    <ul>
+        <li><a href="{% url 'module_listview' %}">module_listview</a></li>
+        <li><a href="{% url 'module_createview' %}">module_createview</a></li>
+    </ul>
+
+    <h4>Modules levels</h4>
+    <ul>
+        <li><a href="{% url 'modulelevel_listview' %}">modulelevel_listview</a></li>
+        <li><a href="{% url 'modulelevel_createview' %}">modulelevel_createview</a></li>
+    </ul>
+
+    <h3>Degrees</h3>
+    <ul>
+        <li><a href="{% url 'degree_listview' %}">degree_listview</a></li>
+        <li><a href="{% url 'degree_createview' %}">degree_createview</a></li>
+    </ul>
+
+    <h4>Degree Categories</h4>
+    <ul>
+        <li><a href="{% url 'degreecategory_listview' %}">degreecategory_listview</a></li>
+        <li><a href="{% url 'degreecategory_createview' %}">degreecategory_createview</a></li>
+    </ul>
+
+    <h3>Courses</h3>
+    <ul>
+        <li><a href="{% url 'course_listview' %}">course_listview</a></li>
+        <li><a href="{% url 'course_createview' %}">course_createview</a></li>
+    </ul>
+
+    <h3>Classrooms</h3>
+    <ul>
+        <li><a href="{% url 'classroom_listview' %}">classroom_listview</a></li>
+        <li><a href="{% url 'classroom_createview' %}">classroom_createview</a></li>
+    </ul>
+
+    <h2>Rating</h2>
+
+    <h3>StudentRating</h3>
+    <ul>
+        <li><a href="{% url 'rating_listview' %}">rating_listview</a></li>
+        <li><a href="{% url 'rating_createview' %}">rating_createview</a></li>
+    </ul>
+
+
+
+
+
+
+
+
+    
+    <section class="jumbotron text-center">
+        <div class="container">
+          <h1>Album example</h1>
+          <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+          <p>
+            <a href="#" class="btn btn-primary my-2">Main call to action</a>
+            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+          </p>
+        </div>
+      </section>
+    
+      <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+        <div class="col-md-5 p-lg-5 mx-auto my-5">
+          <h1 class="display-4 font-weight-normal">Punny headline</h1>
+          <p class="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
+          <a class="btn btn-outline-secondary" href="#">Coming soon</a>
+        </div>
+        <div class="product-device shadow-sm d-none d-md-block"></div>
+        <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
+      </div>
+    
+    
+      <div class="album py-5 bg-light">
+        <div class="container">
+    
+          <div class="row">
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+{% endblock content %}
