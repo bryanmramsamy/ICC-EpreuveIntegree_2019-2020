@@ -31,4 +31,11 @@
   footer p {
     margin-bottom: .25rem;
   }
-  
+
+
+  .responsive {
+    width: auto;
+    max-width: 800px;
+    height: auto;
+    max-height: 500px;
+  }
