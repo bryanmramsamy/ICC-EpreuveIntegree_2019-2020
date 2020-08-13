@@ -7,7 +7,7 @@ __pycache__/
 
 # Uploaded Media files
 serina-project/media/*
-!serina-project/media/management
+!serina-project/media/management/undraw_Books_l33t.png
 
 # Do not ignore any .gitkeep file
 !*.gitkeep
