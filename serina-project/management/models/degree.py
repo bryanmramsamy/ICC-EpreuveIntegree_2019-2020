@@ -65,7 +65,7 @@ class Degree(BackOfficeResource):
                                    verbose_name=_("Description"))
     picture = models.ImageField(
         upload_to='management/degrees/',
-        default='management/default.jpg',
+        default='management/undraw_Books_l33t.png',
         null=True,
         blank=True,
         max_length=225,

@@ -30,7 +30,7 @@ class Classroom(BackOfficeResource):
     )
     picture = models.ImageField(
         upload_to='management/rooms/',
-        default='management/default.jpg',
+        default='management/undraw_Books_l33t.png',
         null=True,
         blank=True,
         max_length=225,
