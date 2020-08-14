@@ -2,7 +2,7 @@
 {% load static %}
 
 <div class="row">
-    <div class="col-md-3">
+    <div class="col-md-3 d-md-none d-lg-block">
         <img src="{% static 'images/undraw_book_lover_mkck.svg' %}"  class="p-3 img-fluid" alt="" max-height=200px>
         <p class="text-right text-muted">It is never to late to learn.</p>
     </div>
@@ -17,15 +17,27 @@
             Épreuve intégrée de la section : Bachelier en informatique de gestion
         </small>
 
-        <ul class="list-unstyled text-small">
-            <li><a class="text-muted" href="#">{% trans 'Who are we ?' %}</a></li>
-            <li><a class="text-muted" href="#">{% trans 'Contact us' %}</a></li>
-            <li><a class="text-muted" href="#">{% trans 'General conditions' %}</a></li>
-            <li><a class="text-muted" href="#">{% trans 'Privacy policy' %}</a></li>
-            <li><a class="text-muted" href="#">{% trans 'Project report (Volume 1): Requirements, preDev-analysis and usage manual (FR)' %}</a></li>           
-            <li><a class="text-muted" href="#">{% trans 'Project report (Volume 2): Developpment and deployment technologies and methodologies (FR)' %}</a></li>
-            <li><a class="text-muted" href="https://gitlab.com/bryanmramsamy/ICC-EpreuveIntegree_2019-2020/">{% trans 'GitLab.com project repository' %}</a></li>
-            <li><a class="text-warning" href="{% url 'home_old' %}">home_old</a></li>
-        </ul>
+        <div class="row">
+            <div class="col-6">
+                <span class="h4">{% trans 'See more' %}</span>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="{% url 'home' %}">{% trans 'Back to the homepage' %}</a></li>
+                    <li><a class="text-muted" href="#">{% trans 'Who are we ?' %}</a></li>
+                    <li><a class="text-muted" href="#">{% trans 'Contact us' %}</a></li>
+                    <li><a class="text-muted" href="#">{% trans 'General conditions' %}</a></li>
+                    <li><a class="text-muted" href="#">{% trans 'Privacy policy' %}</a></li>
+                </ul>
+            </div>
+
+            <div class="col-6">
+                <span class="h4">{% trans 'About the project' %}</span>
+                <ul class="list-unstyled text-small">
+                    <li><a class="text-muted" href="#">{% trans 'Project report: Volume 1' %}</a></li>           
+                    <li><a class="text-muted" href="#">{% trans 'Project report: Volume 2' %}</a></li>
+                    <li><a class="text-muted" href="https://gitlab.com/bryanmramsamy/ICC-EpreuveIntegree_2019-2020/">{% trans 'GitLab.com project repository' %}</a></li>
+                    <li><a class="text-warning" href="{% url 'home_old' %}">home_old</a></li>
+                </ul>
+            </div>
+        </div>
     </div>
 </div>
