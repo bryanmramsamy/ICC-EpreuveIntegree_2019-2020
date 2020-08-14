@@ -3,6 +3,7 @@ import random
 from django.shortcuts import render
 
 from management.models import Degree, Module
+from rating.models import StudentRating
 
 
 def home(request):
@@ -12,6 +13,7 @@ def home(request):
 
     degrees = Degree.objects.order_by("?")[:3]
     modules = Module.objects.order_by("?")[:3]
+    ratings = StudentRating.objects.order_by("?")[:4]
 
     return render(
         request,
