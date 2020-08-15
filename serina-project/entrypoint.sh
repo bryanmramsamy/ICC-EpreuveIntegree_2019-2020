@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ "$DATABASE" = "pumpkin" ]
+if [ "$DATABASE" = "postgres" ]
 then
     echo "Waiting for postgres pumpkin database..."
 

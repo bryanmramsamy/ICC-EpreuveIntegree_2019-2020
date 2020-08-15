@@ -1,5 +1,5 @@
 # Imported environnement variables
-*.env
+*.env*
 
 # Python3.8 cache files and directories
 *.pyc
