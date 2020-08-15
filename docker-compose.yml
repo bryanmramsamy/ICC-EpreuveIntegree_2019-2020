@@ -4,7 +4,7 @@ services:
     dill:  # Django container
         container_name: SERINA_dill
         build:
-            context: .
+            context: ./serina-project
             dockerfile: Dockerfile
         image: django:3.0.8
         networks:
