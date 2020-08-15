@@ -1,49 +1,42 @@
 version: '3.8'
 
 services:
-    dill:  # Django container
-        container_name: SERINA_dill
+    web:
+        container_name: serina_web
         build:
             context: ./serina-project
             dockerfile: Dockerfile
         image: serina_django
         networks:
-            - SERINA_network
+            - serina_network
         depends_on:
-            - pumpkin
-        volumes:
-            - type: bind
-              source: ./serina-project
-              target: /src
-        restart: "no"
+            - db
+        restart: always
         ports:
             - 8000:8000
         env_file:
-            - .dev.env
+            - .env.prod
 
-        command: bash scripts/runserver_plus.sh
+        command: gunicorn serina.wsgi:application --bind 0.0.0.0:8000
 
 
-    pumpkin:  # Postgres container
-        container_name: SERINA_pumpkin
+    db:
+        container_name: serina_db
         image: postgres:12.3
         networks:
-            - SERINA_network
+            - serina_network
         volumes:
             - type: volume
-              source: pumpkin_database
+              source: postgres_database_prod
               target: /var/lib/postgresql/data
-        restart: unless-stopped
-
-        environment:
-            POSTGRES_DB: 'pumpkin'
-            POSTGRES_USER: 'pumpkin'
-            POSTGRES_PASSWORD: 'Pv16^6C&MzU#'
+        restart: always
+        env_file:
+            - .env.prod.db
 
 
 volumes: 
-    pumpkin_database:
+    postgres_database_prod:
 
 
 networks:
-    SERINA_network:
+    serina_network:
