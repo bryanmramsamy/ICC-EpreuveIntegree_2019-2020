@@ -11,17 +11,31 @@ ENV PYTHONUNBUFFERED 1
 
 # Create and set work directory
 
-RUN mkdir /src
-WORKDIR /src
+WORKDIR /usr/src/app
 
 
-# Install dependencies
+# Update apt and install apt dependencies
+RUN apt update -y
+RUN apt install netcat -y
+
+
+# Upgrade pip and install pip dependencies
 
 RUN pip install --upgrade pip
-COPY requirements.txt /src/
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+
+# Copy entrypoint.sh
+
+COPY ./entrypoint.sh .
 
 
 # Copy source code
 
-COPY . /src/
+COPY . .
+
+
+# Run entrypoint.sh
+
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
