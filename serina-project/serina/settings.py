@@ -26,10 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG')
+DEBUG = int(os.environ.get("DEBUG", default=0))
 
-if DEBUG:
-    ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -92,12 +92,12 @@ WSGI_APPLICATION = 'serina.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DATABASE_NAME'),
-        'USER': os.environ.get('DATABASE_USER'),
-        'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-        'HOST': os.environ.get('DATABASE_HOST'),
-        'PORT': os.environ.get('DATABASE_PORT'),
+        'ENGINE': os.environ.get('DATABASE_ENGINE', "django.db.backends.sqlite3"),
+        'NAME': os.environ.get('DATABASE_NAME', os.path.join(BASE_DIR, "db.sqlite3")),
+        'USER': os.environ.get('DATABASE_USER', "user"),
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD', "password"),
+        'HOST': os.environ.get('DATABASE_HOST', "localhost"),
+        'PORT': os.environ.get('DATABASE_PORT', "5432"),
     }
 }
 
