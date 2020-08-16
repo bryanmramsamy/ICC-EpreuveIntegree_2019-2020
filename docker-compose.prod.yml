@@ -11,6 +11,9 @@ services:
             - serina_network
         volumes:
             - type: volume
+              source: web_media_volume
+              target: /home/app/web/media
+            - type: volume
               source: web_static_volume
               target: /home/app/web/static
         depends_on:
@@ -47,6 +50,9 @@ services:
             - serina_network
         volumes:
             - type: volume
+              source: web_media_volume
+              target: /home/app/web/media
+            - type: volume
               source: web_static_volume
               target: /home/app/web/static
         depends_on:
@@ -56,6 +62,7 @@ services:
         restart: always
 
 volumes:
+    web_media_volume:
     web_static_volume:
     postgres_database_prod:
 
