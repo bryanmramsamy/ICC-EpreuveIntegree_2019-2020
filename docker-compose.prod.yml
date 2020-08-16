@@ -9,6 +9,10 @@ services:
         image: serina_django
         networks:
             - serina_network
+        volumes:
+            - type: volume
+              source: web_static_volume
+              target: /home/app/web/static
         depends_on:
             - db
         restart: always
@@ -35,18 +39,24 @@ services:
 
 
     nginx:
+        container_name: serina_nginx
         build:
             context: ./nginx
             dockerfile: Dockerfile
         networks:
             - serina_network
-        ports:
-            - 1337:80
+        volumes:
+            - type: volume
+              source: web_static_volume
+              target: /home/app/web/static
         depends_on:
             - web
+        ports:
+            - 1337:80
         restart: always
 
-volumes: 
+volumes:
+    web_static_volume:
     postgres_database_prod:
 
 
