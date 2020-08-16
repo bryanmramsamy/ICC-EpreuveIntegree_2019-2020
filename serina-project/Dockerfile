@@ -1,4 +1,4 @@
-# Pull official python alpine image
+# Pull official python image
 
 FROM python:3.8
 
@@ -15,6 +15,7 @@ WORKDIR /usr/src/app
 
 
 # Update apt and install apt dependencies
+
 RUN apt update -y
 RUN apt install netcat -y
 
