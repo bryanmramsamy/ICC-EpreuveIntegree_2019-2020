@@ -1,0 +1,72 @@
+version: '3.8'
+
+services:
+    web:
+        container_name: serina_web
+        build:
+            context: ./serina-project
+            dockerfile: Dockerfile.prod
+        image: serina_django
+        networks:
+            - serina_network
+        volumes:
+            - type: volume
+              source: web_media_volume
+              target: /home/app/web/media
+            - type: volume
+              source: web_static_volume
+              target: /home/app/web/static
+        depends_on:
+            - db
+        restart: always
+        expose:
+            - 8000
+        env_file:
+            - .env.prod
+
+        command: gunicorn serina.wsgi:application --bind 0.0.0.0:8000
+
+
+    db:
+        container_name: serina_db
+        image: postgres:12.3
+        networks:
+            - serina_network
+        volumes:
+            - type: volume
+              source: postgres_database_prod
+              target: /var/lib/postgresql/data
+        restart: always
+        env_file:
+            - .env.prod.db
+
+
+    nginx:
+        container_name: serina_nginx
+        build:
+            context: ./nginx
+            dockerfile: Dockerfile
+        networks:
+            - serina_network
+        volumes:
+            - type: volume
+              source: web_media_volume
+              target: /home/app/web/media
+            - type: volume
+              source: web_static_volume
+              target: /home/app/web/static
+        depends_on:
+            - web
+        ports:
+            - 80:80
+        restart: always
+
+
+volumes:
+    web_media_volume:
+    web_static_volume:
+    postgres_database_prod:
+
+
+networks:
+    serina_network:
