@@ -3,9 +3,7 @@ image: docker:stable
 services:
   - docker:19.03.0-dind
 
-variables:
-  SECRET_KEY: "mysupersecretkey"
-  DJANGO_ALLOWED_HOSTS: "*"
+
 
 stages:
   - build
@@ -31,6 +29,11 @@ test docker image:
   only:
     - master
     - tests
+  variables: {
+      SECRET_KEY: "mysupersecretkey",
+      DJANGO_ALLOWED_HOSTS: "*"
+  }
+
   script:
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
