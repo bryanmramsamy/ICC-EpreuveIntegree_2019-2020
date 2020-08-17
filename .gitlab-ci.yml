@@ -4,7 +4,8 @@ services:
   - docker:19.03.0-dind
 
 variables:
-  SECRET_KEY: "supersecretkey"
+  SECRET_KEY: "mysupersecretkey"
+  DJANGO_ALLOWED_HOSTS: "*"
 
 stages:
   - build
