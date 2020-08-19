@@ -14,15 +14,17 @@ stages:
 
 # build docker image:
 #   stage: build
+#   only:
+#     - master
+#     - tests
 #   script:
-  #     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
-  #     - docker pull $CI_REGISTRY_IMAGE:latest || true
-  #     - chmod +x ./serina-project/entrypoint*
-  #     - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA ./serina-project
-  #     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-  #   only:
-  #     - master
-  #     - tests
+#     - echo $DJANGO_ALLOWED_HOSTS
+#     - exit 1
+#     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
+#     - docker pull $CI_REGISTRY_IMAGE:latest || true
+#     - chmod +x ./serina-project/entrypoint*
+#     - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA ./serina-project
+#     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
 
 
 test docker image:
@@ -34,6 +36,6 @@ test docker image:
     - docker run --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA py.test ./serina-project
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
-    only:
-      - master
-      - tests
+  only:
+    - master
+    - tests
