@@ -34,7 +34,7 @@ COPY ./entrypoint.sh .
 
 # Make entrypoint executable
 
-RUN ["chmod", "+x", "/usr/src/app/docker-entrypoint.sh"]
+RUN ["chmod", "+x", "/usr/src/app/entrypoint.sh"]
 
 
 # Copy source code
