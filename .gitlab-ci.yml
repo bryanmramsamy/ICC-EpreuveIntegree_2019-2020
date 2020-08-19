@@ -4,7 +4,7 @@ services:
   - docker:19.03.0-dind
 
 variables:
-  TEST_VAR: test_variable
+  SECRET_KEY: '@b3^yn83h6jdeabxhc+&(+qz*@sfh$pe+#*a*fk)z_^57fu0(g'
 
 stages:
   - build
@@ -17,7 +17,8 @@ build docker image:
     - master
     - tests
   script:
-    - echo $TEST_VAR
+    - echo $SECRET_KEY
+    - exit 1
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - chmod +x ./serina-project/entrypoint*
