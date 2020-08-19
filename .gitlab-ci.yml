@@ -3,6 +3,9 @@ image: docker:stable
 services:
   - docker:19.03.0-dind
 
+variables:
+  TEST_VAR: test_variable
+
 stages:
   - build
   - test
@@ -14,7 +17,7 @@ build docker image:
     - master
     - tests
   script:
-    - env
+    - echo $TEST_VAR
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - chmod +x ./serina-project/entrypoint*
