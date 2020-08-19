@@ -4,7 +4,8 @@ services:
   - docker:19.03.0-dind
 
 variables:
-  SECRET_KEY: '@b3^yn83h6jdeabxhc+&(+qz*@sfh$pe+#*a*fk)z_^57fu0(g'
+  SECRET_KEY: '2(o^nzfzonpqr*5d-6-trf1-l+s4zlvq-(v1u*f)acfb&h6$#!'  # Dummy secret key for CI pipeline
+  DJANGO_ALLOWED_HOSTS: 'localhost 127.0.0.1 [::1]'
 
 stages:
   - build
@@ -17,8 +18,7 @@ build docker image:
     - master
     - tests
   script:
-    - echo $SECRET_KEY
-    - exit 1
+    - echo $DJANGO_ALLOWED_HOSTS
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:latest || true
     - chmod +x ./serina-project/entrypoint*
@@ -31,14 +31,9 @@ test docker image:
   only:
     - master
     - tests
-  variables: {
-      SECRET_KEY: "mysupersecretkey",
-      DJANGO_ALLOWED_HOSTS: "*"
-  }
   script:
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - DJANGO_ALLOWED_HOSTS="*"
     - docker run --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA py.test ./serina-project
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
