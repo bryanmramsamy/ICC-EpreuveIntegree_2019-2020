@@ -10,29 +10,30 @@ variables:
 stages:
   - build
   - test
-  - deploy
+  # - deploy
 
-build docker image:
-  stage: build
-  only:
-    - master
-    - tests
-  script:
-    - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - chmod +x ./serina-project/entrypoint*
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA ./serina-project
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+# build docker image:
+#   stage: build
+#   script:
+  #     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
+  #     - docker pull $CI_REGISTRY_IMAGE:latest || true
+  #     - chmod +x ./serina-project/entrypoint*
+  #     - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA ./serina-project
+  #     - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+  #   only:
+  #     - master
+  #     - tests
 
 
 test docker image:
   stage: test
-  only:
-    - master
-    - tests
   script:
+    - echo $DJANGO_ALLOWED_HOSTS
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
     - docker run --rm $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA py.test ./serina-project
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
+    only:
+      - master
+      - tests
