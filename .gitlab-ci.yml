@@ -5,7 +5,7 @@ services:
 
 variables:
   SECRET_KEY: '2(o^nzfzonpqr*5d-6-trf1-l+s4zlvq-(v1u*f)acfb&h6$#!'  # Dummy secret key for CI pipeline
-  DJANGO_ALLOWED_HOSTS: 'localhost 127.0.0.1 [::1]'
+  DJANGO_ALLOWED_HOSTS: '"localhost 127.0.0.1 [::1]""'
 
 stages:
   - build
