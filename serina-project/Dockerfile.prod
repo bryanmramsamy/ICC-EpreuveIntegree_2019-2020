@@ -82,6 +82,11 @@ RUN pip install --no-cache /wheels/*
 COPY ./entrypoint.prod.sh $APP_HOME
 
 
+# Make entrypoint executable
+
+RUN ["chmod", "+x", "/usr/src/app/docker-entrypoint.sh"]
+
+
 # Copy project
 
 COPY . $APP_HOME

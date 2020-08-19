@@ -32,6 +32,11 @@ RUN pip install -r requirements.txt
 COPY ./entrypoint.sh .
 
 
+# Make entrypoint executable
+
+RUN ["chmod", "+x", "/usr/src/app/docker-entrypoint.sh"]
+
+
 # Copy source code
 
 COPY . .
