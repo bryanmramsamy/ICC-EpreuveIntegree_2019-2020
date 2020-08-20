@@ -14,7 +14,7 @@ services:
         volumes:
             - type: bind
               source: ./serina-project
-              target: /src
+              target: /usr/src/app
         restart: "no"
         ports:
             - 8000:8000
