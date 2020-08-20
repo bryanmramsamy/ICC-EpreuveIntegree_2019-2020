@@ -14,8 +14,7 @@ from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 # Module views
 
-class ModuleListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                     ListView):  # TODO: Debug view
+class ModuleListView(ListView):
     """ListView for Modules."""
 
     model = Module
@@ -24,8 +23,7 @@ class ModuleListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     paginate_by = 10
 
 
-class ModuleDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       DetailView):  # TODO: Debug view
+class ModuleDetailView(DetailView):
     """DetailView for Modules."""
 
     model = Module
@@ -34,7 +32,7 @@ class ModuleDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ModuleCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+                       BackOfficeResourceCreateViewMixin):
     """CreateView for Modules."""
 
     model = Module
@@ -43,7 +41,7 @@ class ModuleCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ModuleUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+                       BackOfficeResourceUpdateViewMixin):
     """UpdateView for Modules."""
 
     model = Module
@@ -53,7 +51,7 @@ class ModuleUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ModuleDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       DeleteView):  # TODO: Debug view
+                       DeleteView):
     """DeleteView for Modules."""
 
     model = Module
@@ -64,8 +62,7 @@ class ModuleDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 # ModuleLevel Views
 
-class ModuleLevelListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                          ListView):  # TODO: Debug view
+class ModuleLevelListView(ListView):
     """ListView for ModuleLevels."""
 
     model = ModuleLevel
@@ -73,8 +70,7 @@ class ModuleLevelListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     template_name = "management/module/modulelevel_listview.html"
 
 
-class ModuleLevelDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                            DetailView):  # TODO: Debug view
+class ModuleLevelDetailView(DetailView):
     """DetailView for ModuleLevels."""
 
     model = ModuleLevel
@@ -83,7 +79,7 @@ class ModuleLevelDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ModuleLevelCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                            BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+                            BackOfficeResourceCreateViewMixin):
     """CreateView for ModuleLevels."""
 
     model = ModuleLevel
@@ -92,7 +88,7 @@ class ModuleLevelCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ModuleLevelUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                            BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+                            BackOfficeResourceUpdateViewMixin):
     """UpdateView for ModuleLevels."""
 
     model = ModuleLevel
@@ -102,7 +98,7 @@ class ModuleLevelUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ModuleLevelDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                            DeleteView):  # TODO: Debug view
+                            DeleteView):
     """DeleteView for ModuleLevels."""
 
     model = ModuleLevel
