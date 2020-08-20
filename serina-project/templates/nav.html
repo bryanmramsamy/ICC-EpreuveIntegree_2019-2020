@@ -12,7 +12,7 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item"><a class="nav-link" href="{% url 'degree_listview' %}">{% trans 'Degrees' %}</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'degree_listview' %}">{% trans 'Modules' %}</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'module_listview' %}">{% trans 'Modules' %}</a></li>
       </ul>
 
       {% if user.is_authenticated %}
