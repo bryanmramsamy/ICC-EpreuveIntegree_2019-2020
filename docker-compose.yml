@@ -1,49 +1,53 @@
 version: '3.8'
 
 services:
-    web:
-        container_name: serina_web
-        build:
-            context: ./serina-project
-            dockerfile: Dockerfile
-        image: serina_django
-        networks:
-            - serina_network
-        depends_on:
-            - db
-        volumes:
-            - type: bind
-              source: ./serina-project
-              target: /usr/src/app
-        restart: "no"
-        ports:
-            - 8000:8000
-        env_file:
-            - .env.dev
+  web:
+    container_name: serina_web
+    build:
+      context: ./serina-project
+      dockerfile: Dockerfile
+    image: serina_django
 
-        command: bash scripts/runserver_plus.sh
+    networks:
+      - serina_network
+    depends_on:
+      - db
+    restart: "no"
+    ports:
+      - 8000:8000
 
+    volumes:
+      - type: bind
+        source: ./serina-project
+        target: /usr/src/app
 
-    db:
-        container_name: serina_db
-        image: postgres:12.3-alpine
-        networks:
-            - serina_network
-        volumes:
-            - type: volume
-              source: postgres_database_dev
-              target: /var/lib/postgresql/data
-        restart: unless-stopped
+    env_file:
+      - .env.dev
 
-        environment:
-            POSTGRES_DB: 'postgres_database_dev'
-            POSTGRES_USER: 'postgres_user_dev'
-            POSTGRES_PASSWORD: 'postgres_password_dev'
+    command: bash scripts/runserver_plus.sh
 
 
-volumes: 
-    postgres_database_dev:
+  db:
+    container_name: serina_db
+    image: postgres:12.3-alpine
+    networks:
+      - serina_network
+    restart: unless-stopped
+
+    volumes:
+      - type: volume
+        source: postgres_database_dev
+        target: /var/lib/postgresql/data
+
+    environment:
+      POSTGRES_DB: 'postgres_database_dev'
+      POSTGRES_USER: 'postgres_user_dev'
+      POSTGRES_PASSWORD: 'postgres_password_dev'
 
 
 networks:
-    serina_network:
+  serina_network:
+
+
+volumes:
+  postgres_database_dev:
