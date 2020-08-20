@@ -12,9 +12,4 @@ then
 fi
 
 
-# Migrate all migrations
-
-python manage.py migrate
-
-
 exec "$@"
