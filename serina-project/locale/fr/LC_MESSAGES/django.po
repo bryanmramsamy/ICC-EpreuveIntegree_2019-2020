@@ -1,0 +1,956 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-08-20 15:33+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: management/forms/resource.py:68
+msgid "{} (Capacity: {}/{})"
+msgstr ""
+
+#: management/models/course.py:16 management/models/degree.py:51
+#: management/models/module.py:53 management/models/room.py:19
+msgid "Reference"
+msgstr ""
+
+#: management/models/course.py:21 management/models/degree.py:62
+#: management/models/module.py:103 templates/nav.html:21
+msgid "Modules"
+msgstr ""
+
+#: management/models/course.py:28
+msgid "Teached by"
+msgstr ""
+
+#: management/models/course.py:35 management/models/room.py:43
+msgid "Classroom"
+msgstr ""
+
+#: management/models/course.py:38 registration/models/degree_rr.py:34
+#: registration/models/module_rr.py:54
+msgid "Start date"
+msgstr ""
+
+#: management/models/course.py:40 registration/models/degree_rr.py:39
+#: registration/models/module_rr.py:59
+msgid "End date"
+msgstr ""
+
+#: management/models/course.py:43
+msgid "Amount of registrants"
+msgstr ""
+
+#: management/models/course.py:51 management/models/degree.py:72
+#: management/models/module.py:96 management/models/room.py:37
+msgid "Picture"
+msgstr ""
+
+#: management/models/course.py:57 registration/models/module_rr.py:49
+msgid "Course"
+msgstr ""
+
+#: management/models/course.py:58 templates/nav.html:25
+msgid "Courses"
+msgstr ""
+
+#: management/models/course.py:95
+msgid "({}) {} course"
+msgstr ""
+
+#: management/models/course.py:98
+msgid " given"
+msgstr ""
+
+#: management/models/course.py:101
+msgid " by {}"
+msgstr ""
+
+#: management/models/course.py:104
+msgid " at {}"
+msgstr ""
+
+#: management/models/course.py:131
+msgid "{} is not eligible to teach this course."
+msgstr ""
+
+#: management/models/course.py:139
+msgid "Start date ({}) must be set before end date ({})."
+msgstr ""
+
+#: management/models/course.py:148
+msgid ""
+"Amount of registrants ({}) cannot be higher than the maximum capacity of the "
+"assigned classroom ({})."
+msgstr ""
+
+#: management/models/degree.py:13 management/models/module.py:14
+#: management/models/room.py:17
+msgid "Name"
+msgstr ""
+
+#: management/models/degree.py:18
+msgid "Degree category"
+msgstr ""
+
+#: management/models/degree.py:19
+msgid "Degree categories"
+msgstr ""
+
+#: management/models/degree.py:57
+msgid "Category"
+msgstr ""
+
+#: management/models/degree.py:65 management/models/module.py:55
+#: management/models/room.py:23
+msgid "Description"
+msgstr ""
+
+#: management/models/degree.py:78
+msgid "Degree"
+msgstr ""
+
+#: management/models/degree.py:79 templates/nav.html:17
+msgid "Degrees"
+msgstr ""
+
+#: management/models/module.py:13
+msgid "Rank"
+msgstr ""
+
+#: management/models/module.py:19
+msgid "Module level"
+msgstr ""
+
+#: management/models/module.py:20
+msgid "Module levels"
+msgstr ""
+
+#: management/models/module.py:51 management/models/module.py:102
+#: rating/models.py:32
+msgid "Module"
+msgstr ""
+
+#: management/models/module.py:61
+msgid "Difficultiy level"
+msgstr ""
+
+#: management/models/module.py:68
+msgid "Prerequisites"
+msgstr ""
+
+#: management/models/module.py:74
+msgid "Eligible teachers"
+msgstr ""
+
+#: management/models/module.py:77
+msgid "ECTS value"
+msgstr ""
+
+#: management/models/module.py:82
+msgid "Cost"
+msgstr ""
+
+#: management/models/module.py:88
+msgid "Charge price"
+msgstr ""
+
+#: management/models/module.py:143
+msgid ""
+"{} cannot be added as eligible teacher. The user is not a 'Teacher'-group "
+"member."
+msgstr ""
+
+#: management/models/module.py:152
+msgid "This module can not be its own prerequisite."
+msgstr ""
+
+#: management/models/module.py:162
+#, python-brace-format
+msgid ""
+"[{0}] {1} cannot be a prerequisite for this module. [{0}] {1} already has "
+"this module as prerequisite."
+msgstr ""
+
+#: management/models/resource.py:22
+msgid "Created by"
+msgstr ""
+
+#: management/models/resource.py:25 registration/models/resource.py:13
+msgid "Created on"
+msgstr ""
+
+#: management/models/resource.py:27 registration/models/resource.py:15
+msgid "Updated on"
+msgstr ""
+
+#: management/models/resource.py:43
+msgid ""
+"{} is not allowed to perform tasks. This action must be performed by a back-"
+"office user. Please contact the support team ({}) for more information."
+msgstr ""
+
+#: management/models/room.py:26
+msgid "Recommended capacity"
+msgstr ""
+
+#: management/models/room.py:29
+msgid "Maximum capacity"
+msgstr ""
+
+#: management/models/room.py:44 templates/nav.html:29
+msgid "Classrooms"
+msgstr ""
+
+#: management/models/room.py:69
+msgid ""
+"The recommended capacity ({}) cannot be higher than the maximum capacity "
+"({})."
+msgstr ""
+
+#: management/templates/management/course/course_createview.html:4
+msgid "CourseCreateView"
+msgstr ""
+
+#: management/templates/management/course/course_createview.html:12
+#: management/templates/management/course/course_updateview.html:12
+msgid "Create new Course"
+msgstr ""
+
+#: management/templates/management/course/course_deleteview.html:4
+msgid "CourseDeleteView"
+msgstr ""
+
+#: management/templates/management/course/course_detailview.html:4
+msgid "CourseDetailView"
+msgstr ""
+
+#: management/templates/management/course/course_listview.html:4
+msgid "CourseListView"
+msgstr ""
+
+#: management/templates/management/course/course_updateview.html:4
+msgid "CourseUpdateView"
+msgstr ""
+
+#: management/templates/management/degree/degree_createview.html:4
+#: management/templates/management/degree/degree_deleteview.html:4
+#: management/templates/management/degree/degree_updateview.html:4
+msgid "DegreeCreateView"
+msgstr ""
+
+#: management/templates/management/degree/degree_createview.html:12
+#: management/templates/management/degree/degree_updateview.html:12
+msgid "Create new degree"
+msgstr ""
+
+#: management/templates/management/degree/degree_detailview.html:4
+msgid "DegreeDetailView"
+msgstr ""
+
+#: management/templates/management/degree/degree_listview.html:4
+msgid "DegreeListView"
+msgstr ""
+
+#: management/templates/management/degree/degreecategory_createview.html:4
+#: management/templates/management/degree/degreecategory_deleteview.html:4
+msgid "DegreeCategoryCreateView"
+msgstr ""
+
+#: management/templates/management/degree/degreecategory_createview.html:12
+#: management/templates/management/degree/degreecategory_updateview.html:12
+msgid "Create new degree category"
+msgstr ""
+
+#: management/templates/management/degree/degreecategory_detailview.html:4
+msgid "DegreeCategoryDetailView"
+msgstr ""
+
+#: management/templates/management/degree/degreecategory_listview.html:4
+msgid "DegreeCategoryListView"
+msgstr ""
+
+#: management/templates/management/degree/degreecategory_updateview.html:4
+msgid "DegreeCategoryUpdateView"
+msgstr ""
+
+#: management/templates/management/module/module_createview.html:4
+msgid "ModuleCreateView"
+msgstr ""
+
+#: management/templates/management/module/module_createview.html:12
+msgid "Create new module"
+msgstr ""
+
+#: management/templates/management/module/module_deleteview.html:4
+#: management/templates/management/module/module_detailview.html:4
+msgid "ModuleDetailView"
+msgstr ""
+
+#: management/templates/management/module/module_listview.html:4
+msgid "ModuleListView"
+msgstr ""
+
+#: management/templates/management/module/module_updateview.html:4
+msgid "ModuleUpdateView"
+msgstr ""
+
+#: management/templates/management/module/module_updateview.html:12
+msgid "Update module"
+msgstr ""
+
+#: management/templates/management/module/modulelevel_createview.html:4
+#: management/templates/management/module/modulelevel_updateview.html:4
+msgid "ModuleLevelCreateView"
+msgstr ""
+
+#: management/templates/management/module/modulelevel_createview.html:12
+#: management/templates/management/module/modulelevel_updateview.html:12
+msgid "Create new module level"
+msgstr ""
+
+#: management/templates/management/module/modulelevel_deleteview.html:4
+#: management/templates/management/module/modulelevel_detailview.html:4
+msgid "ModuleLevelDetailView"
+msgstr ""
+
+#: management/templates/management/module/modulelevel_listview.html:4
+msgid "ModuleLevelListView"
+msgstr ""
+
+#: management/templates/management/room/classroom_createview.html:4
+msgid "ClassroomCreateView"
+msgstr ""
+
+#: management/templates/management/room/classroom_createview.html:12
+msgid "Create new Classroom"
+msgstr ""
+
+#: management/templates/management/room/classroom_deleteview.html:4
+msgid "ClassroomDeleteView"
+msgstr ""
+
+#: management/templates/management/room/classroom_detailview.html:4
+msgid "ClassroomDetailView"
+msgstr ""
+
+#: management/templates/management/room/classroom_listview.html:4
+msgid "ClassroomListView"
+msgstr ""
+
+#: management/templates/management/room/classroom_updateview.html:4
+msgid "ClassroomUpdateView"
+msgstr ""
+
+#: management/templates/management/room/classroom_updateview.html:12
+msgid "update Classroom"
+msgstr ""
+
+#: rating/models.py:22 registration/models/degree_rr.py:23
+#: registration/models/student_rr.py:22 registration/utils/groups.py:47
+msgid "Student"
+msgstr ""
+
+#: rating/models.py:25 rating/models.py:27
+msgid "Creation date"
+msgstr ""
+
+#: rating/models.py:36
+msgid "Rate"
+msgstr ""
+
+#: rating/models.py:38
+msgid "Comment"
+msgstr ""
+
+#: rating/templates/rating/rating_createview copy.html:4
+#: rating/templates/rating/rating_createview.html:4
+msgid "StudentRatingCreateView"
+msgstr ""
+
+#: rating/templates/rating/rating_createview copy.html:12
+#: rating/templates/rating/rating_createview.html:12
+#: rating/templates/rating/rating_updateview.html:12
+#: registration/templates/registration/registration_report/degree_rr_createview.html:12
+#: registration/templates/registration/registration_report/module_rr_createview.html:12
+msgid "Submit module rr"
+msgstr ""
+
+#: rating/templates/rating/rating_deleteview.html:4
+msgid "StudentRatingDeleteView"
+msgstr ""
+
+#: rating/templates/rating/rating_detailview.html:4
+#: rating/templates/rating/rating_listview.html:4
+msgid "StudentRatingListView"
+msgstr ""
+
+#: rating/templates/rating/rating_updateview.html:4
+msgid "StudentRatingUpdateView"
+msgstr ""
+
+#: registration/forms/authentication.py:16
+msgid "First name"
+msgstr ""
+
+#: registration/forms/authentication.py:17
+msgid "Last name"
+msgstr ""
+
+#: registration/forms/authentication.py:19
+msgid "Email"
+msgstr ""
+
+#: registration/forms/authentication.py:22
+msgid "Mail address invalid. Check the spelling or try another one."
+msgstr ""
+
+#: registration/forms/authentication.py:27
+#: registration/forms/authentication.py:73
+msgid "Password"
+msgstr ""
+
+#: registration/forms/authentication.py:32
+msgid "Password confirmation"
+msgstr ""
+
+#: registration/forms/authentication.py:50
+msgid ""
+"The entered mail address is already in use. Please use another one or "
+"contact our support team ({})."
+msgstr ""
+
+#: registration/forms/authentication.py:60
+msgid ""
+"Your password and your password confirmation does not match. Please try "
+"again."
+msgstr ""
+
+#: registration/forms/authentication.py:69
+msgid "Username"
+msgstr ""
+
+#: registration/forms/authentication.py:82
+msgid "Old password"
+msgstr ""
+
+#: registration/forms/authentication.py:87
+msgid "New password"
+msgstr ""
+
+#: registration/forms/authentication.py:92
+msgid "New password confirmation"
+msgstr ""
+
+#: registration/forms/authentication.py:101
+msgid "Email address"
+msgstr ""
+
+#: registration/forms/registration_actions.py:12
+msgid "Student's module final score"
+msgstr ""
+
+#: registration/models/degree_rr.py:29
+msgid "Registration degree"
+msgstr ""
+
+#: registration/models/degree_rr.py:45 registration/models/module_rr.py:35
+msgid "Degree Registration Report"
+msgstr ""
+
+#: registration/models/degree_rr.py:46
+msgid "Degrees Registration Reports"
+msgstr ""
+
+#: registration/models/module_rr.py:27
+msgid "Student Registration Report"
+msgstr ""
+
+#: registration/models/module_rr.py:41
+msgid "Registration module"
+msgstr ""
+
+#: registration/models/module_rr.py:64
+msgid "Payment date"
+msgstr ""
+
+#: registration/models/module_rr.py:68
+msgid "Student's attempt number"
+msgstr ""
+
+#: registration/models/module_rr.py:76
+msgid "Final score"
+msgstr ""
+
+#: registration/models/module_rr.py:80
+msgid "Pending"
+msgstr ""
+
+#: registration/models/module_rr.py:81
+msgid "Denied"
+msgstr ""
+
+#: registration/models/module_rr.py:82
+msgid "Approved"
+msgstr ""
+
+#: registration/models/module_rr.py:83
+msgid "Payed"
+msgstr ""
+
+#: registration/models/module_rr.py:84
+msgid "Completed"
+msgstr ""
+
+#: registration/models/module_rr.py:85
+msgid "Exempted"
+msgstr ""
+
+#: registration/models/module_rr.py:91
+msgid "Status"
+msgstr ""
+
+#: registration/models/module_rr.py:97
+msgid "Module Registration Report"
+msgstr ""
+
+#: registration/models/module_rr.py:98
+msgid "Modules Registration Reports"
+msgstr ""
+
+#: registration/models/resource.py:17
+msgid "Additional notes"
+msgstr ""
+
+#: registration/models/student_rr.py:24
+msgid "Birthday date"
+msgstr ""
+
+#: registration/models/student_rr.py:26
+msgid "Nationality"
+msgstr ""
+
+#: registration/models/student_rr.py:27
+msgid "Address"
+msgstr ""
+
+#: registration/models/student_rr.py:32
+msgid "Additional address"
+msgstr ""
+
+#: registration/models/student_rr.py:35
+msgid "Postal code"
+msgstr ""
+
+#: registration/models/student_rr.py:37
+msgid "Locality"
+msgstr ""
+
+#: registration/models/student_rr.py:43
+msgid "ID picture"
+msgstr ""
+
+#: registration/models/student_rr.py:46
+msgid "ID card"
+msgstr ""
+
+#: registration/models/student_rr.py:48
+msgid "Secondary Education Certificate"
+msgstr ""
+
+#: registration/models/student_rr.py:53
+msgid "Annex 403"
+msgstr ""
+
+#: registration/models/student_rr.py:58
+msgid "Other schools inscription certificate"
+msgstr ""
+
+#: registration/models/student_rr.py:63
+msgid "National Register Extract"
+msgstr ""
+
+#: registration/models/student_rr.py:68
+msgid "Belgian Studies History"
+msgstr ""
+
+#: registration/models/student_rr.py:73
+msgid "Modules archievement certificates"
+msgstr ""
+
+#: registration/models/student_rr.py:78
+msgid "Job organizations certificates"
+msgstr ""
+
+#: registration/models/student_rr.py:83
+msgid "Exemption reports"
+msgstr ""
+
+#: registration/models/student_rr.py:89
+msgid "Student registration report"
+msgstr ""
+
+#: registration/models/student_rr.py:90
+msgid "Student registration reports"
+msgstr ""
+
+#: registration/templates/registration/authentication/login.html:4
+#: registration/templates/registration/payment/checkout.html:4
+msgid "Login"
+msgstr ""
+
+#: registration/templates/registration/authentication/login.html:11
+msgid "Sign in"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_change.html:4
+msgid "Password change"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_change.html:16
+msgid "Change password"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_reset.html:4
+msgid "Password reset"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_reset.html:10
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:10
+msgid "Reset password"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_reset_complete.html:4
+msgid "Password reset complete"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:4
+msgid "Password reset confirm"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_reset_done.html:4
+msgid "Password reset done"
+msgstr ""
+
+#: registration/templates/registration/authentication/register.html:4
+msgid "Register"
+msgstr ""
+
+#: registration/templates/registration/authentication/register.html:55
+msgid "Sign up"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:5
+msgid "Welcome"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:14
+msgid "Welcome on the SERINA-Project page"
+msgstr "Bienvenue sur l'application web du projet SERINA"
+
+#: registration/templates/registration/general/home.html:22
+msgid ""
+"\n"
+"                        The SERINA-Project is an app that can make your "
+"school registration easy. Look at the degree that seems interesting for you, "
+"register as a guest or use your own account if you already have one, "
+"register to the degree and once your registration got confirmed, pay "
+"directly. You can also register to isolated modules if you don't want to "
+"follow a whole degree.\n"
+"                    "
+msgstr ""
+
+#: registration/templates/registration/general/home.html:32
+msgid "See the available degrees"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:36
+msgid "See the available modules"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:50
+msgid "Come check our degrees"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:74
+#: registration/templates/registration/general/home.html:134
+msgid "See more..."
+msgstr ""
+
+#: registration/templates/registration/general/home.html:77
+msgid "modules"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:92
+msgid "It has never been so easy to subscribe to a course !"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:94
+msgid ""
+"\n"
+"                    Browse into our library of degrees or modules. Find the "
+"one(s) which seems interesing for you. Register and submit your student "
+"registration report if it's not already done. Select the desired degree and/"
+"or module. Click on the \"Submit a subscribe request\" button. Wait for a "
+"confirmation. Procceed to the payment. And the job is done.\n"
+"                "
+msgstr ""
+
+#: registration/templates/registration/general/home.html:110
+msgid "Or maybe you would prefere individual modules"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:137
+msgid "EUR"
+msgstr ""
+
+#: registration/templates/registration/general/home.html:153
+msgid "Read the latest ratings left by our students"
+msgstr ""
+
+#: registration/templates/registration/general/home_old.html:4
+msgid "Home"
+msgstr ""
+
+#: registration/templates/registration/payment/payment_cancelled.html:4
+msgid "Payment cancelled"
+msgstr ""
+
+#: registration/templates/registration/payment/payment_done.html:4
+msgid "Payment done"
+msgstr ""
+
+#: registration/templates/registration/payment/process_payment.html:4
+msgid "Payment with PayPal"
+msgstr ""
+
+#: registration/templates/registration/registration_report/degree_rr_createview.html:4
+msgid "DegreeRRCreateView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/degree_rr_detailview.html:4
+msgid "DegreeRRDetailView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/degree_rr_listview.html:4
+msgid "DegreeRRListView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/module_rr_createview.html:4
+msgid "ModuleRRCreateView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/module_rr_detailview.html:4
+msgid "ModuleRRDetailView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/module_rr_listview.html:4
+msgid "ModuleRRListView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/student_rr_createview.html:4
+msgid "StudentRRCreateView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/student_rr_createview.html:12
+msgid "Submit student rr"
+msgstr ""
+
+#: registration/templates/registration/registration_report/student_rr_detailview.html:4
+msgid "StudentRRDetailView"
+msgstr ""
+
+#: registration/templates/registration/registration_report/student_rr_listview.html:4
+msgid "StudentRRListView"
+msgstr ""
+
+#: registration/templates/registration/userprofile/userprofile_detailview.html:4
+msgid "UserProfileDetailView"
+msgstr ""
+
+#: registration/templates/registration/userprofile/userprofile_updateview.html:4
+msgid "UserProfileUpdateView"
+msgstr ""
+
+#: registration/templates/registration/userprofile/userprofile_updateview.html:12
+msgid "Update userprofile"
+msgstr ""
+
+#: registration/utils/groups.py:41
+msgid "Administrator"
+msgstr ""
+
+#: registration/utils/groups.py:43
+msgid "Manager"
+msgstr ""
+
+#: registration/utils/groups.py:45
+msgid "Teacher"
+msgstr ""
+
+#: registration/utils/groups.py:49
+msgid "Guest"
+msgstr ""
+
+#: registration/utils/messages.py:11
+msgid "You have been logged out successfully."
+msgstr ""
+
+#: registration/utils/messages.py:19
+msgid ""
+"Your password has been changed. You must log yourself in again with the new "
+"password."
+msgstr ""
+
+#: registration/utils/messages.py:32
+msgid "You are already signed in. Please sign out to use a different account."
+msgstr ""
+
+#: registration/utils/messages.py:46
+msgid ""
+"You are not allowed to perform this action. Please contact the support team "
+"({}) for more information."
+msgstr ""
+
+#: registration/utils/messages.py:60
+msgid ""
+"Your registration report has successfully been submitted. You now have the "
+"'Student' status and can subscrib to any degree or any module wanted."
+msgstr ""
+
+#: registration/utils/messages.py:72
+msgid ""
+"The student registration file has already been created for your account: {} "
+"({}). You can still change some information from your student's profile."
+msgstr ""
+
+#: registration/utils/messages.py:93
+msgid ""
+"There is no course available for the requested module: {} ({}). In order to "
+"accept any new registration request, a new course must be created for this "
+"module."
+msgstr ""
+
+#: registration/utils/messages.py:105
+msgid ""
+"The module's registration has been approved. A notification mail has been "
+"sent to the student."
+msgstr ""
+
+#: registration/utils/messages.py:116
+msgid "This module registration request has already been approved."
+msgstr ""
+
+#: registration/utils/messages.py:128
+msgid "The module score has been added and has now been completed."
+msgstr ""
+
+#: registration/utils/messages.py:138
+msgid ""
+"This module registration request is already completed. The final score "
+"cannot be changed anymore without an adminitrator ({})"
+msgstr ""
+
+#: registration/utils/messages.py:150
+msgid ""
+"This module registration request has not been approved or yet and can "
+"therefore not been rated."
+msgstr ""
+
+#: registration/utils/messages.py:161
+msgid ""
+"This module registration request has not been payed by the sudent yet. The "
+"final score was saved anyway but the module cannot be coonsidered as "
+"completed as long as the payment wasn't done."
+msgstr ""
+
+#: registration/utils/messages.py:174
+msgid "The module has been successfully payed."
+msgstr ""
+
+#: registration/utils/messages.py:183
+msgid "The module payment has unexpectedly been aborted."
+msgstr ""
+
+#: registration/utils/messages.py:193
+msgid ""
+"This module registration request cannot be payed. It has either not been "
+"approved, is already payed, completed or exempted."
+msgstr ""
+
+#: registration/views/payment.py:40
+msgid "Registration for {} to {} (From {} to {})"
+msgstr ""
+
+#: templates/footer.html:22
+msgid "See more"
+msgstr ""
+
+#: templates/footer.html:24
+msgid "Back to the homepage"
+msgstr ""
+
+#: templates/footer.html:25
+msgid "Who are we ?"
+msgstr ""
+
+#: templates/footer.html:26
+msgid "Contact us"
+msgstr ""
+
+#: templates/footer.html:27
+msgid "General conditions"
+msgstr ""
+
+#: templates/footer.html:28
+msgid "Privacy policy"
+msgstr ""
+
+#: templates/footer.html:33
+msgid "About the project"
+msgstr ""
+
+#: templates/footer.html:35
+msgid "Project report: Volume 1"
+msgstr ""
+
+#: templates/footer.html:36
+msgid "Project report: Volume 2"
+msgstr ""
+
+#: templates/footer.html:37
+msgid "GitLab.com project repository"
+msgstr ""
+
+#: templates/nav.html:37
+msgid "Admin"
+msgstr ""
+
+#: templates/nav.html:46
+msgid "Profile"
+msgstr ""
+
+#: templates/nav.html:55
+msgid "Sign out"
+msgstr ""
+
+#: templates/nav.html:64
+msgid "Sign Up"
+msgstr ""
+
+#: templates/nav.html:71
+msgid "Sign In"
+msgstr ""
