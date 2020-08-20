@@ -19,6 +19,22 @@ urlpatterns = [
         name="home_old",
     ),
 
+    url(
+        r"^general_conditions/$",
+        views.home,
+        name="general_conditions"
+    ),
+    url(
+        r"^privacy_policy/$",
+        views.home,
+        name="privacy_policy"
+    ),
+    url(
+        r"^cookies_policy/$",
+        views.home,
+        name="cookies_policy"
+    ),
+
 
     # Authentication
 

@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load static %}
+
+{% get_current_language as LANGUAGE_CODE %}
+
+<form action="{% url 'set_language' %}" method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ redirect_to }}">
+
+  <div class="input-group input-group-sm">
+    
+    <select name="language" id="language_selection" class="custom-select form-control">Dismissible popover>
+      {% get_available_languages as LANGUAGES %}
+      {% get_language_info_list for LANGUAGES as languages %}
+      {% for language in languages %}
+      <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selectd {% endif %}>{{ language.name_local }} ({{ language.code }})</option>
+      {% endfor %}
+    </select>
+
+    <div class="input-group-append" data-toggle="gdpr-popover" data-placement="top" data-content='<strong>{% trans "How is this personal data used ?" %}</strong><br>{% trans "Your language preference is stored in a cookie in order to load the correct language when you navigate through the application.<br>If you delete the cookie, an new one will be created with English as the default value.<hr>Consult our " %}<a href=\"{% url "cookies_policy" %}\">cookies policy</a>{% trans " to now more about your rights." %}'>
+      <input class="btn btn-secondary" type="submit" value="{% trans 'Change the language' %}">
+    </div>
+  </div>
+</form>

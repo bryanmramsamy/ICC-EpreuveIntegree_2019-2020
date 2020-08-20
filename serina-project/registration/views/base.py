@@ -12,10 +12,6 @@ def home(request):
 
     Add 3 random Degree and Module instances to the context."""
 
-    # user_language = "fr"
-    # translation.activate(user_language)
-    # request.session[translation.LANGUAGE_SESSION_KEY] = user_language
-
     degrees = Degree.objects.order_by("?")[:3]
     modules = Module.objects.order_by("?")[:3]
     ratings = StudentRating.objects.order_by("?")[:4]
