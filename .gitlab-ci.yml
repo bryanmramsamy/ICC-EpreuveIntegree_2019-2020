@@ -1,16 +1,15 @@
 image: docker:stable
 
+
 services:
   - docker:19.03.0-dind
 
-variables:
-  # SECRET_KEY: '2(o^nzfzonpqr*5d-6-trf1-l+s4zlvq-(v1u*f)acfb&h6$#!'  # Dummy secret key for CI pipeline
-  # DJANGO_ALLOWED_HOSTS: 'localhost 127.0.0.1 [::1]'
 
 stages:
   - build
   - test
   - deploy
+
 
 Build and push stage:
   stage: build
@@ -38,10 +37,13 @@ Test stage:
     - tests
 
 
-# Deploy stage:
-#   stage: deploy
-#   script:
-#     - chmod 600 $DEPLOY_KEY_FILE
-#     - ssh -i "$DEPLOY_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" root@195.201.3.85:ICC-Epreuve 'docker-compose pull && docker-compose up -d'
-#   only:
-#     - master
+Deploy stage:
+  stage: deploy
+  script:
+    - chmod 600 $DEPLOY_KEY_FILE
+    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 \
+      'cd ICC-EpreuveIntegree_2019-2020 && git pull \
+      && docker-compose -f docker-compose.prod.yml down \
+      && docker-compose -f docker-compose.prod.yml up -d --build'
+  only:
+    - master
