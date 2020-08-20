@@ -41,6 +41,6 @@ Deploy stage:
   stage: deploy
   script:
     - chmod 600 $DEPLOYMENT_KEY_FILE
-    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 "bash deployment.sh"
+    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 "bash ICC-EpreuveIntegree_2019-2020/serina-project/scripts/deployment.sh"
   only:
     - master
