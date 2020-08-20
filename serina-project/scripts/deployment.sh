@@ -5,7 +5,7 @@
 
 # Go to projet root
 
-cd ../..
+cd ICC-EpreuveIntegree_2019-2020
 
 
 # Pull source code from repository
