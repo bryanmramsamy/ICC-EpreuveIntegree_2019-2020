@@ -14,15 +14,17 @@
       <h1>{% trans 'Welcome on the SERINA-Project page' %}</h1>
       <br>
       <div class="row">
-        <div class="col-md-8">
-          <p class="lead text-muted">
-            {% blocktrans %}
-            The SERINA-Project is an app that can make your school registration easy. Look at the degree that seems interesting for you, register as a guest or use your own account if you already have one, register to the degree and once your registration got confirmed, pay directly. You can also register to isolated modules if you don't want to follow a whole degree.
-            {% endblocktrans %}
-          </p>
-        </div>
         <div class="col-md-4">
-          <img src="{% static 'draws/road_to_knowledge.svg' %}" class="w-250 p-3 img-fluid rounded" alt="Road to knowledge art">
+          <img src="{% static 'logo/serina.png' %}" class="w-250 p-3 img-fluid rounded" alt="SERINA-Project logo">
+        </div>
+        <div class="col-md-8">
+          <p class="lead">
+            <span class="align-middle">
+              {% blocktrans %}
+                The SERINA-Project is an app that can make your school registration easy. Look at the degree that seems interesting for you, register as a guest or use your own account if you already have one, register to the degree and once your registration got confirmed, pay directly. You can also register to isolated modules if you don't want to follow a whole degree.
+              {% endblocktrans %}
+            </span>
+          </p>
         </div>
       </div>
 
@@ -51,9 +53,9 @@
     </a>
 
     <br>
-    <div class="row">
+    <div class="row row-cols-1 row-cols-lg-3">
       {% for degree in degrees %}
-        <div class="col-md-4">
+        <div class="col">
           <div class="card mb-4 shadow-sm bg-light">
             <img src="{{ degree.picture.url }}" class="img-thumbnail rounded" alt="">
 
@@ -114,9 +116,9 @@
 
     <br>
 
-    <div class="row">
+    <div class="row row-cols-1 row-cols-lg-3">
       {% for module in modules %}
-        <div class="col-md-4">
+        <div class="col">
           <div class="card mb-4 shadow-sm bg-light">
             <img src="{{ module.picture.url }}" class="img-thumbnail rounded" alt="">
             <div class="card-body">
