@@ -70,16 +70,11 @@ WORKDIR $APP_HOME
 
 # Install dependencies
 
-RUN apt update && apt install libpq-dev netcat
+RUN apt update && apt install gettext libpq-dev netcat
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
-
-
-# Copy entrypoint-prod.sh
-
-COPY ./entrypoint.prod.sh $APP_HOME
 
 
 # Copy project
@@ -99,4 +94,4 @@ USER app
 
 # Run entrypoint.prod.sh
 
-ENTRYPOINT ["/home/app/web/entrypoint.prod.sh"]
+ENTRYPOINT ["/home/app/web/scripts/entrypoint.prod.sh"]

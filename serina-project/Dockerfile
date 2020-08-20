@@ -17,7 +17,7 @@ WORKDIR /usr/src/app
 # Update apt and install apt dependencies
 
 RUN apt update -y
-RUN apt install netcat -y
+RUN apt install gettext netcat -y
 
 
 # Upgrade pip and install pip dependencies
@@ -27,11 +27,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 
-# Copy entrypoint.sh
-
-COPY ./entrypoint.sh .
-
-
 # Copy source code
 
 COPY . .
@@ -39,4 +34,4 @@ COPY . .
 
 # Run entrypoint.sh
 
-ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/scripts/entrypoint.sh"]
