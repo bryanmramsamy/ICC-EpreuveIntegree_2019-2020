@@ -40,7 +40,7 @@ Test stage:
 Deploy stage:
   stage: deploy
   script:
-    - chmod 600 $DEPLOY_KEY_FILE
+    - chmod 600 $DEPLOYMENT_KEY_FILE
     - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 \
       'cd ICC-EpreuveIntegree_2019-2020 && git pull \
       && docker-compose -f docker-compose.prod.yml down \
