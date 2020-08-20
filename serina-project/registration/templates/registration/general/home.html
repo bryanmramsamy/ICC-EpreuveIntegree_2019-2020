@@ -7,172 +7,174 @@
 {% block content %}
 
 
-{# Presentation #}
+  {# Presentation #}
 
-<section class="jumbotron text-center">
+  <section class="jumbotron text-center">
     <div class="container">
-        <h1>{% trans 'Welcome on the SERINA-Project page' %}</h1>
-        <br>
-        <div class="row">
-            <div class="col-md-4">
-                <img src="{% static 'images/undraw_road_to_knowledge_m8s0.svg' %}" class="w-250 p-3 img-fluid rounded" alt="">
-            </div>
-            <div class="col-md-8">
-                <p class="lead text-muted">
-                    {% blocktrans %}
-                        The SERINA-Project is an app that can make your school registration easy. Look at the degree that seems interesting for you, register as a guest or use your own account if you already have one, register to the degree and once your registration got confirmed, pay directly. You can also register to isolated modules if you don't want to follow a whole degree.
-                    {% endblocktrans %}
-                </p>
-            </div>
+      <h1>{% trans 'Welcome on the SERINA-Project page' %}</h1>
+      <br>
+      <div class="row">
+        <div class="col-md-8">
+          <p class="lead text-muted">
+            {% blocktrans %}
+            The SERINA-Project is an app that can make your school registration easy. Look at the degree that seems interesting for you, register as a guest or use your own account if you already have one, register to the degree and once your registration got confirmed, pay directly. You can also register to isolated modules if you don't want to follow a whole degree.
+            {% endblocktrans %}
+          </p>
         </div>
+        <div class="col-md-4">
+          <img src="{% static 'images/undraw_road_to_knowledge_m8s0.svg' %}" class="w-250 p-3 img-fluid rounded" alt="Road to knowledge art">
+        </div>
+      </div>
 
-        <p>
-            <a href="{% url 'degree_listview' %}" class="btn btn-lg btn-outline-secondary my-2">
+      <p>
+        <a href="{% url 'degree_listview' %}" class="btn btn-lg btn-outline-secondary my-2">
+          {% include 'logo/degree.html' %}
+          {% trans 'See the available degrees' %}
+        </a>
+        <a href="{% url 'module_listview' %}" class="btn btn-lg btn-outline-secondary my-2">
+          {% include 'logo/module.html' %}
+          {% trans 'See the available modules' %}
+        </a>
+      </p>
+    </div>
+  </section>
+
+
+  {# 3 random degrees #}
+
+  <div class="bg-dark p-3">
+    <a href="{% url 'degree_listview' %}" class="btn btn-light btn-block">
+      <h4>
+        {% include 'logo/degree.html' %}
+        {% trans 'Come check our degrees' %}
+      </h4>
+    </a>
+
+    <br>
+    <div class="row">
+      {% for degree in degrees %}
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm bg-light">
+            <img src="{{ degree.picture.url }}" class="img-thumbnail rounded" alt="">
+
+            <div class="card-body">
+              <h5 class="text-right">{{ degree.title }}</h5>
+              <small class="text-muted">
                 {% include 'logo/degree.html' %}
-                {% trans 'See the available degrees' %}
-            </a>
-            <a href="{% url 'module_listview' %}" class="btn btn-lg btn-outline-secondary my-2">
-                {% include 'logo/module.html' %}
-                {% trans 'See the available modules' %}
-            </a>
-        </p>
-    </div>
-</section>
+                {{ degree.category.name }}
+              </small>
 
+              <p class="card-text">
+                {{ degree.description|linebreaks|truncatechars:100 }}
+              </p>
 
-{# 3 random degrees #}
-
-<div class="bg-dark p-3">
-
-    <a href="{% url 'degree_listview' %}" class="btn btn-light btn-block">
-        <h4>
-            {% include 'logo/degree.html' %}
-            {% trans 'Come check our degrees' %}
-        </h4>
-    </a>
-
-    <br>
-    <div class="row">
-
-    {% for degree in degrees %}
-        <div class="col-md-4">
-            <div class="card mb-4 shadow-sm bg-light">
-
-                <img src="{{ degree.picture.url }}" class="img-thumbnail rounded" alt="">
-
-                <div class="card-body">
-
-                    <h5 class="text-right">{{ degree.title }}</h5>
-                    <small class="text-muted">
-                        {% include 'logo/degree.html' %}
-                        {{ degree.category.name }}
-                    </small>
-                    <p class="card-text">{{ degree.description|linebreaks|truncatechars:100 }}</p>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <a href="{{ degree.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more...' %}</a>
-                        </div>
-
-                        <small class="text-muted">{{ degree.modules.count }} {% trans 'modules' %}</small>
-                    </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{{ degree.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more...' %}</a>
                 </div>
+
+                <small class="text-muted">
+                  {{ degree.modules.count }} {% trans 'modules' %}
+                </small>
+              </div>
             </div>
+          </div>
         </div>
-    {% endfor %}
+      {% endfor %}
     </div>
-</div>
+  </div>
 
 
-{# Advertisment card #}
+  {# Advertisment card #}
 
-<div class="p-2 p-md-2 my-md-3 text-center" style="background-image: url('{% static 'images/university_01.jpg' %}'); background-attachment: fixed;">
+  <div class="p-2 p-md-2 my-md-3 text-center" style="background-image: url('{% static 'images/university_01.jpg' %}'); background-attachment: fixed;">
     <div class="p-4 p-md-2 m-2 m-md-4 bg-light rounded" style="opacity: 0.7;">
-        <div class="col-md-10 p-lg-10 mx-auto my-5">
-            <h1 class="display-4 font-weight-normal">{% trans 'It has never been so easy to subscribe to a course !' %}</h1>
-            <p class="lead font-weight-normal">
-                {% blocktrans %}
-                    Browse into our library of degrees or modules. Find the one(s) which seems interesing for you. Register and submit your student registration report if it's not already done. Select the desired degree and/or module. Click on the "Submit a subscribe request" button. Wait for a confirmation. Procceed to the payment. And the job is done.
-                {% endblocktrans %}
-            </p>
-        </div>
+      <div class="col-md-10 p-lg-10 mx-auto my-5">
+        <h1 class="display-4 font-weight-normal">{% trans 'It has never been so easy to subscribe to a course !' %}</h1>
+
+        <p class="lead font-weight-normal">
+          {% blocktrans %}
+            Browse into our library of degrees or modules. Find the one(s) which seems interesing for you. Register and submit your student registration report if it's not already done. Select the desired degree and/or module. Click on the "Submit a subscribe request" button. Wait for a confirmation. Procceed to the payment. And the job is done.
+          {% endblocktrans %}
+        </p>
+      </div>
     </div>
-</div>
+  </div>
 
 
-{# 3 random modules #}
+  {# 3 random modules #}
 
-<div class="bg-dark p-3 my-md-3">
-
+  <div class="bg-dark p-3 my-md-3">
     <a href="{% url 'degree_listview' %}" class="btn btn-light btn-block">
-        <h4>
-            {% include 'logo/module.html' %}
-            {% trans 'Or maybe you would prefere individual modules' %}
-        </h4>
+      <h4>
+        {% include 'logo/module.html' %}
+        {% trans 'Or maybe you would prefere individual modules' %}
+      </h4>
     </a>
 
     <br>
+
     <div class="row">
-
-    {% for module in modules %}
+      {% for module in modules %}
         <div class="col-md-4">
-            <div class="card mb-4 shadow-sm bg-light">
+          <div class="card mb-4 shadow-sm bg-light">
+            <img src="{{ module.picture.url }}" class="img-thumbnail rounded" alt="">
+            <div class="card-body">
+              <h5 class="text-right">{{ module.title }}</h5>
+              <small class="text-muted">
+                {% include 'logo/module.html' %}
+                {{ module.level.name }}
+              </small>
+              <p class="card-text">
+                {{ module.description|linebreaks|truncatechars:100 }}
+              </p>
 
-                <img src="{{ module.picture.url }}" class="img-thumbnail rounded" alt="">
-
-                <div class="card-body">
-
-                    <h5 class="text-right">{{ module.title }}</h5>
-                    <small class="text-muted">
-                        {% include 'logo/module.html' %}
-                        {{ module.level.name }}
-                    </small>
-                    <p class="card-text">{{ module.description|linebreaks|truncatechars:100 }}</p>
-
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          <a href="{{ module.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more...' %}</a>
-                        </div>
-
-                        <small class="text-muted">{{ module.price }} {% trans 'EUR' %}</small>
-                    </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{{ module.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more...' %}</a>
                 </div>
+
+                <small class="text-muted">{{ module.price }} {% trans 'EUR' %}</small>
+              </div>
             </div>
+          </div>
         </div>
-    {% endfor %}
+      {% endfor %}
     </div>
-</div>
+  </div>
 
 
-{# Latest ratings left #}
+  {# Latest ratings left #}
 
-<div class="bg-light text-light p-3 my-md-3">
+  <div class="bg-light text-light p-3 my-md-3">
     <div class="p-2 text-center bg-secondary text-white mb-4 rounded">
-        <h3>
-            {% include 'logo/rating.html' %}
-            {% trans 'Read the latest ratings left by our students' %}
-        </h3>
+      <h3>
+        {% include 'logo/rating.html' %}
+        {% trans 'Read the latest ratings left by our students' %}
+      </h3>
     </div>
 
     <div class="row row-cols-1 row-cols-md-2">
-        {% for rating in ratings %}
-            <div class="col mb-4">
-                <a href="{% url 'module_detailview' pk=rating.module.pk %}" style="color: inherit; text-decoration: inherit;">
-                    <div class="card bg-secondary">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ rating.rate }}</h5>
-                            <p class="card-text">{{ rating.comment }}</p>
-                        </div>
-                        <div class="card-footer text-right">
-                            <small class="text-light">
-                                {% include 'logo/module.html' %}
-                            {{ rating.module.title }}</small>
-                        </div>
-                    </div>
-                </a>
+      {% for rating in ratings %}
+        <div class="col mb-4">
+          <a href="{% url 'module_detailview' pk=rating.module.pk %}" style="color: inherit; text-decoration: inherit;">
+            <div class="card bg-secondary">
+              <div class="card-body">
+                <h5 class="card-title">{{ rating.rate }}</h5>
+                <p class="card-text">{{ rating.comment }}</p>
+              </div>
+
+              <div class="card-footer text-right">
+                <small class="text-light">
+                  {% include 'logo/module.html' %}
+                  {{ rating.module.title }}
+                </small>
+              </div>
             </div>
-        {% endfor %}
+          </a>
+        </div>
+      {% endfor %}
     </div>
-</div>
+  </div>
 
 {% endblock content %}
