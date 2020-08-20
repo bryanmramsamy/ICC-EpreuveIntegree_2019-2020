@@ -20,6 +20,16 @@ urlpatterns = [
     ),
 
     url(
+        r"^who_are_we/$",
+        views.home,
+        name="who_are_we"
+    ),
+    url(
+        r"^contact/$",
+        views.home,
+        name="contact"
+    ),
+    url(
         r"^general_conditions/$",
         views.home,
         name="general_conditions"
