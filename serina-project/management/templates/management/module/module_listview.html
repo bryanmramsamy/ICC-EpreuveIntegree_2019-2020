@@ -1,23 +1,69 @@
 {% extends 'base.html' %}
-{% load i18n %}
 
-{% block title %}{% trans 'ModuleListView' %}{% endblock title %}
+{% load i18n %}
+{% load static %}
+
+{% block title %}{% trans 'Modules catalogue' %}{% endblock title %}
 
 {% block content %}
-    <h1>ModuleListView</h1>
-
-    {% for module in modules %}
-        <div>
-            <h2>{{ module.title }}</h2>
-            <h3>{{ module.reference }}</h3>
-            <h4>{{ module.level.name }}</h4>
-            <p>{{ module.description }}</p>
-            <p>{{ module.module_benefits }}</p>
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/puzzle_01.jpg' %}'); background-attachment: fixed;">
+    <div class="container" style="font-family: papyrus;">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+          <h1 class="display-4" style="font-style: italic;">
+            {% trans 'Modules catalog' %}
+          </h1>
+          <hr>
+          <p class="lead">
+            {% blocktrans %}
+              For the students whom wants to build their own path piece by piece, we propose a collection of modules.
+            {% endblocktrans %}
+          </p>
         </div>
 
-        <h5><a href="{{ module.get_absolute_url }}">module_detailview/{{ module.pk }}/</a>
-        </h5>
-        <h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
-        </h5>
-    {% endfor %}
+        <div class="col col-md-4">
+          <img src="{% static 'draws/bookshelves.svg' %}" alt="Modules catalog" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-white pt-2">
+      <div class="col-md-1 text-center text-md-right">
+        <h1>{% include 'logo/info.html' %}</h1>
+      </div>
+      <div class="col-md-11">
+        <p class="text-justify">
+          {% blocktrans %}
+            Some modules has prerequisites modules, which means other modules which must be completed and succeeded by the student before being able to follow the desired module.
+          {% endblocktrans %}
+          <br>
+          {% blocktrans %}
+            If you already passed one of these modules here or in another educational institution, you can request for an examption. If the insitutution approves your examption, the module will be considered as succeeded and won't be charged.
+          {% endblocktrans %}
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <h1>ModuleListView</h1>
+
+  {% for module in modules %}
+    <div>
+      <h2>{{ module.title }}</h2>
+      <h3>{{ module.reference }}</h3>
+      <h4>{{ module.level.name }}</h4>
+      <p>{{ module.description }}</p>
+      <p>{{ module.module_benefits }}</p>
+    </div>
+
+    <h5>
+      <a href="{{ module.get_absolute_url }}">module_detailview/{{ module.pk }}/</a>
+    </h5>
+
+    <h5>
+      <a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
+    </h5>
+  {% endfor %}
 {% endblock content %}
