@@ -31,7 +31,7 @@ Test stage:
   script:
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
     - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker run --rm -e SECRET_KEY='$SECRET_KEY'  -e DJANGO_ALLOWED_HOSTS='$DJANGO_ALLOWED_HOSTS' $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA pytest
+    - docker run --rm -e SECRET_KEY='$SECRET_KEY' -e DJANGO_ALLOWED_HOSTS='$DJANGO_ALLOWED_HOSTS' $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA pytest
     - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
   only:
@@ -43,7 +43,6 @@ Deploy stage:
   stage: deploy
   script:
     - chmod 600 $DEPLOYMENT_KEY_FILE
-    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" \
-        bryan@78.46.198.120 "bash ICC-EpreuveIntegree_2019-2020/serina-project/scripts/deployment.sh"
+    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 "bash ICC-EpreuveIntegree_2019-2020/serina-project/scripts/deployment.sh"
   only:
     - master
