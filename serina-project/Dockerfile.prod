@@ -70,7 +70,7 @@ WORKDIR $APP_HOME
 
 # Install dependencies
 
-RUN apt update && apt install gettext libpq-dev netcat
+RUN apt update && apt install gettext libpq-dev netcat -y
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
