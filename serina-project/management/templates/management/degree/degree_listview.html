@@ -1,30 +1,57 @@
 {% extends 'base.html' %}
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% trans 'DegreeListView' %}{% endblock title %}
 
 {% block content %}
-    <h1>DegreeListView</h1>
 
-    {% for degree in degrees %}
-        <div>
-            <h2>{{ degree.title }}</h2>
-            <h3>{{ degree.reference }}</h3>
-            <h4>{{ degree.category.name }}</h4>
-            <p>{{ degree.description }}</p>
+  {# Heading jumbotron #}
 
-            {% for module in degree.modules.all %}
-                <ul>
-                    <li><p>{{ module.title }}</p></li>
-                </ul>
-            {% endfor %}
-
-            <p>{{ degree.degree_benefits }}</p>
-            <p>{{ degree.nb_modules }}</p>
-
-            <h5><a href="{{ degree.get_absolute_url }}">degree_detailview/{{ degree.pk }}/</a></h5>
-            <h5><a href="{% url 'degree_updateview' pk=degree.pk %}">degree_updateview/{{ degree.pk }}/</a></h5>
-            <h5><a href="{% url 'degree_deleteview' pk=degree.pk %}">degree_deleteview/{{ degree.pk }}/</a></h5>
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_01.jpg' %}'); background-attachment: fixed; background-size: 1100px;">
+    <div class="container bg-light" style="font-family: papyrus; opacity: 0.7;">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+          <h1 class="display-4" style="font-style: italic;">
+            {% include 'logo/degree.html' %}
+            {% trans 'Degrees catalog' %}
+          </h1>
+          <hr>
+          <p class="lead">
+            {% blocktrans %}
+              A degree is like a stair: you start from the bottom, you must take each stair one by one on your own pace, you may find this tiring but if you keep going, you will end on the top.
+            {% endblocktrans %}
+          </p>
         </div>
-    {% endfor %}
+
+        <div class="col col-md-4">
+          <img src="{% static 'draws/graduation.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+
+<h1>DegreeListView</h1>
+
+{% for degree in degrees %}
+<div>
+<h2>{{ degree.title }}</h2>
+<h3>{{ degree.reference }}</h3>
+<h4>{{ degree.category.name }}</h4>
+<p>{{ degree.description }}</p>
+
+{% for module in degree.modules.all %}
+<ul>
+<li><p>{{ module.title }}</p></li>
+</ul>
+{% endfor %}
+
+<p>{{ degree.degree_benefits }}</p>
+<p>{{ degree.nb_modules }}</p>
+
+<h5><a href="{{ degree.get_absolute_url }}">degree_detailview/{{ degree.pk }}/</a></h5>
+<h5><a href="{% url 'degree_updateview' pk=degree.pk %}">degree_updateview/{{ degree.pk }}/</a></h5>
+<h5><a href="{% url 'degree_deleteview' pk=degree.pk %}">degree_deleteview/{{ degree.pk }}/</a></h5>
+</div>
+{% endfor %}
 {% endblock content %}
