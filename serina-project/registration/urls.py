@@ -6,7 +6,7 @@ from . import views
 urlpatterns = [
 
 
-    # Homepage
+    # General pages
 
     url(
         r"^$",
@@ -18,7 +18,6 @@ urlpatterns = [
         views.home_old,
         name="home_old",
     ),
-
     url(
         r"^who_are_we/$",
         views.home,
@@ -30,18 +29,18 @@ urlpatterns = [
         name="contact"
     ),
     url(
-        r"^general_conditions/$",
-        views.home,
-        name="general_conditions"
+        r"^terms_and_conditions/$",
+        views.terms_and_conditions,
+        name="terms_and_conditions"
     ),
     url(
         r"^privacy_policy/$",
-        views.home,
+        views.privacy_policy,
         name="privacy_policy"
     ),
     url(
         r"^cookies_policy/$",
-        views.home,
+        views.cookies_policy,
         name="cookies_policy"
     ),
 

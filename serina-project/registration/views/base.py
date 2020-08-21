@@ -23,6 +23,24 @@ def home(request):
     )
 
 
+def terms_and_conditions(request):
+    """Render the 'Terms and conditions' page."""
+
+    return render(request, "registration/general/terms_and_conditions.html")
+
+
+def privacy_policy(request):
+    """Render the 'Pricacy Policy' page."""
+
+    return render(request, "registration/general/privacy_policy.html")
+
+
+def cookies_policy(request):
+    """Render the 'Cookies policy' page."""
+
+    return render(request, "registration/general/cookies_policy.html")
+
+
 def home_old(request):  # TODO: Debug view
     """Old omepage render."""
 
