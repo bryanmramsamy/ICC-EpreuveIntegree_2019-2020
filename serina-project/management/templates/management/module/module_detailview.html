@@ -385,4 +385,19 @@
     </tbody>
   </table>
 
+  <br>
+
+  {# Back to ListView button #}
+
+  <div class="text-right">
+    <a href="{% url 'module_listview' %}" class="btn p-4 btn-outline-dark">
+      <h3>
+        {% include 'logo/back.html' %} {% trans 'Back to the module catalog' %}
+      </h3>
+    </a>
+  </div>
+  
+
+  <br>
+
 {% endblock content %}
