@@ -351,21 +351,21 @@
 
   {# Module's courses list #}
 
-  {% if module.courses.all.count > 0 %}  <!-- TODO: Only when active course -->
-    <table class="table table-stripped table-hover table-sm">
-      <thead>
-        <tr>
-          <th scope="col">{% trans 'Course' %}</th>
-          <th scope="col">{% trans 'Teacher' %}</th>
-          <th scope="col">{% trans 'Start date' %}</th>
-          <th scope="col">{% trans 'End date' %}</th>
-          <th scope="col">{% trans 'Classroom' %}</th>
-          <th scope="col">{% trans 'Free seats left' %}</th>
-        </tr>
-      </thead>
-      <tbody>
-        
-        {% for course in module.courses.all %}
+  <table class="table table-stripped table-hover table-sm">
+    <thead>
+      <tr>
+        <th scope="col">{% trans 'Course' %}</th>
+        <th scope="col">{% trans 'Teacher' %}</th>
+        <th scope="col">{% trans 'Start date' %}</th>
+        <th scope="col">{% trans 'End date' %}</th>
+        <th scope="col">{% trans 'Classroom' %}</th>
+        <th scope="col">{% trans 'Free seats left' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for course in module.courses.all %}
+        {% if course.status != 'FINISHED' %}
           <tr>
             <th scope="row">{{ course.reference }}</th>
             <td>{{ course.teacher.get_full_name }}</td>
@@ -373,18 +373,16 @@
             <td>{{ course.date_end }}</td>
             {% if course.room is not None %}
               <td>{{ course.room.name }}</td>
-              <td>
+              <td class="text-center">
                 <strong class="text-{% if course.over_attendance %}warning{% elif course.max_seats_available == 0 %}danger{% else %}success{% endif %}">
                   {{ course.max_seats_available }}
                 </strong>
               </td>
-            {% else %}
-              <td colspan="2"><strong>No classroom yet available for this course.</strong></td>
             {% endif %}
           </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-  {% endif %}
+        {% endif %}
+      {% endfor %}
+    </tbody>
+  </table>
 
 {% endblock content %}

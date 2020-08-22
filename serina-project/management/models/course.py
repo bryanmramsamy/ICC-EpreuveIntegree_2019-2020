@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -84,6 +86,28 @@ class Course(BackOfficeResource):
             return self.nb_registrants > self.room.recommended_capacity
         else:
             return None
+
+    @property
+    def status(self):
+        """Check the status of the course based on its 'date_start' and
+        'date_end' attributes.
+
+        The 'UPCOMING'-status indicates the course hasn't started yet.
+        The 'ONGOING'-status indicates the course has already started but is
+        not finished yet.
+        The 'FINISHED'-status indicates that the course is already finished.
+        """
+
+        today = date.today()
+
+        if self.date_start < today and today < self.date_end:
+            status = 'ONGOING'
+        elif self.date_end < today:
+            status = 'FINISHED'
+        else:
+            status = 'UPCOMING'
+
+        return status
 
     def __str__(self):
         """Unicode representation of Course.
