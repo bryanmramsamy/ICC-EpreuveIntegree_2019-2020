@@ -278,20 +278,30 @@
       </div>
       <hr>
       {% for prerequisite in module.prerequisites.all %}
-        <div class="row row-cols-1 row-cols-md-2">
+        <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
           <div class="col-md-8">
             <a href="{{ prerequisite.get_absolute_url }}" class="text-reset">
-              <span class="h5">{{ prerequisite.title }}</span> 
+              <span class="h5">{% include 'logo/module.html' %} {{ prerequisite.title }}</span> 
               <span class="small text-muted">{{ prerequisite.reference }}</span>
             </a>
           </div>
           <div class="col-md-4">
-            {% if request.user|module_already_validated_by_user:prerequisite %}
-              <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
-            {% elif request.user|all_prerequisites_validated_by_user:prerequisite %}
-              <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
+            {% if request.user|is_student %}
+              {% if request.user|module_already_validated_by_user:prerequisite %}
+                <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
+              {% elif request.user|all_prerequisites_validated_by_user:prerequisite %}
+                <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
+              {% else %}
+                <span class="text-danger">{% include 'logo/module_check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+              {% endif %}
             {% else %}
-              <span class="text-danger">{% include 'logo/module_check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+              <span class="text-info">{% include 'logo/module_check_info.html' %} 
+                {% blocktrans count nb_prerequisites=prerequisite.prerequisites.all.count %}
+                  This prerequisite has only one prerequisite itself.
+                {% plural %}
+                  This prerequisite has {{ nb_prerequisites }} perequisites itself.
+                {% endblocktrans %}
+              </span>
             {% endif %}
           </div>
         </div>
@@ -299,6 +309,42 @@
     </section>
   {% endif %}
 
+  <br>
+
+
+  {# Postrequisites list #}
+
+  {% if module.postrequisites.all.count > 0 %}
+    <section class="container p-1 p-md-3 border">
+      <div class="text-center">
+        <h3>{% trans 'Postrequisites for this module' %}</h3>
+      </div>
+      <hr>
+      {% for postrequisite in module.postrequisites.all %}
+        <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
+          <div class="col-md-8">
+            <a href="{{ postrequisite.get_absolute_url }}" class="text-reset">
+              <span class="h5">{% include 'logo/module.html' %} {{ postrequisite.title }}</span> 
+              <span class="small text-muted">{{ postrequisite.reference }}</span>
+            </a>
+          </div>
+          <div class="col-md-4">
+            {% if request.user|is_student and request.user|module_already_validated_by_user:postrequiste %}
+                <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
+            {% else %}
+              <span class="text-info">{% include 'logo/module_check_info.html' %} 
+                {% blocktrans count nb_postrequisitess=postrequisite.prerequisites.all.count %}
+                  This postrequisite has only one prerequisite itself.
+                {% plural %}
+                  This postrequisite has {{ nb_postrequisitess }} perequisites itself.
+                {% endblocktrans %}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
 
 <h1>ModuleDetailView</h1>
 <div>

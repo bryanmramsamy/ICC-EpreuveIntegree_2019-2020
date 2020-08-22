@@ -72,6 +72,12 @@
   </section>
 
 
+  {# Create new module button #}
+
+  {% if request.user|is_manager_or_administrator %}
+    <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">{% include 'logo/new.html' %} Create a new module</a>
+  {% endif %}
+
   {# Modules cards #}
 
   <section class="container">
