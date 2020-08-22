@@ -1,32 +1,59 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans 'DegreeDetailView' %}  {{ degree.reference }}{% endblock title %}
+{% block title %}{{ degree.title }} | {{ degree.reference }}{% endblock title %}
 
 {% block content %}
-    <h1>DegreeDetailView</h1>
-    <div>
-        <h2>{{ degree.title }}</h2>
-        <h3>{{ degree.reference }}</h3>
-        <h4>{{ degree.category.name }}</h4>
-        <p>{{ degree.description }}</p>
-        <p>{{ degree.total_benefits }}</p>
+
+
+{# Heading jumbotron #}
+
+<section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
+  <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col col-md-8">
+        <h1 class="display-4" style="font-style: italic;">
+          {% include 'logo/degree.html' %}
+          {{ degree.title }}
+        </h1>
+        <hr>
+        <p class="lead">
+          {{ degree.description|linebreaks }}
+        </p>
+      </div>
+
+      <div class="col col-md-4">
+        <img src="{% static 'draws/road_to_knowledge.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
+      </div>
     </div>
+  </div>
+</section>
 
-    <h2>Teachers</h2>
-    <ul>
-        {% for module in degree.modules.all %}
-            {% for teacher in module.eligible_teachers.all %}
-                <li>{{ teacher.get_full_name }}</li>
-            {% endfor %}
-        {% endfor %}
-    </ul>
 
-    <h2>Modules</h2>
-    <ul>
-        {% for module in degree.modules.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+
+<h1>DegreeDetailView</h1>
+<div>
+<h2>{{ degree.title }}</h2>
+<h3>{{ degree.reference }}</h3>
+<h4>{{ degree.category.name }}</h4>
+<p>{{ degree.description }}</p>
+<p>{{ degree.total_benefits }}</p>
+</div>
+
+<h2>Teachers</h2>
+<ul>
+{% for module in degree.modules.all %}
+{% for teacher in module.eligible_teachers.all %}
+<li>{{ teacher.get_full_name }}</li>
+{% endfor %}
+{% endfor %}
+</ul>
+
+<h2>Modules</h2>
+<ul>
+{% for module in degree.modules.all %}
+<li>{{ module.title }}</li>
+{% endfor %}
+</ul>
 
 {% endblock content %}

@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
-
 {% load i18n registration_extra static %}
 
-{% block title %}{% trans 'ModuleDetailView' %}  {{ module.reference }}{% endblock title %}
+{% block title %}{{ module.title }} | {{ module.reference }}{% endblock title %}
 
 {% block content %}
 
