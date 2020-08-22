@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 
-{% load i18n %}
-{% load static %}
+{% load i18n registration_extra static %}
 
 {% block title %}{% trans 'ModuleDetailView' %}  {{ module.reference }}{% endblock title %}
 
@@ -44,7 +43,7 @@
           <p class="text-justify">
             <span class="h5 font-weight-bold">
               {% blocktrans %}
-                You already have validate this module.
+                You already have validated this module.
               {% endblocktrans %}
             </span>
             <br>
@@ -59,6 +58,8 @@
         </div>
       </div>
     </section>
+
+    <br>
 
   {% else %}
     {% if all_prerequisites_validated and module.prerequisites.all.count > 0 %}
@@ -142,10 +143,76 @@
     {% endif %}
   {% endif %}
 
+  <br>
+
+  {# Presentation card #}
+
+  <section class="container p-1 p-md-3 border bg-light">
+    <div class="row rwo-cols-1 row-cols-md-2">
+      <div class="col-md-6 text-center">
+        <img src="{{ module.picture.url }}" alt="" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
+      </div>
+      <div class="col text-center">
+        <h1>{% include 'logo/module.html' %}</h1>
+        <h2>{{ module.title }}</h2>
+        <div class="row">
+          <div class="col">{{ module.reference }}</div>
+          <div class="col">{{ module.level.name }}</div>
+        </div>
+        <hr>
+        <div class="row h3">
+          <div class="col">ECTS: <strong>{{ module.ECTS_value }}</strong></div>
+          <div class="col">€ <strong>{{ module.price }}</strong></div>
+        </div>
+        <hr>
+        
+        {% if module.eligible_teachers.all.count > 0 %}
+        <p>{% trans 'Teachers of this module' %}:</p>
+        <ul class="list-unstyled">
+          {% for teacher in module.eligible_teachers.all %}
+            <li class="h5">
+              {{ teacher.get_full_name }} <a href="mailto:{{ teacher.email }}" class="badge badge-secondary">{% trans 'Contact by mail' %} {% include 'logo/mail.html' %}</a>
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p>{% trans 'There is actually no elibigle teacher for this course.' %}</p>
+        {% endif %}
+          
+      </div>
+    </div>
+    {% if request.user|is_student %}
+      <strong>ddddddddd</strong>
+    {% endif %}
+    {% if user.is_staff %}
+    sss
+      <hr>
+      <div class="row">
+        <div class="col-6">
+          <a href="{% url 'module_updateview' pk=module.pk %}"></a>
+        </div>
+        <div class="col-6">
+
+        </div>
+      </div>
+    {% endif %}
+  </section>
+
+  <br>
+
+
+  {# Prerequisites list #}
+
+  
+  {% if module.prerequisites.all.count > 0 %}
+    
+  {% endif %}
+    
+  <section>
+  </section>
 
 <h1>ModuleDetailView</h1>
 <div>
-<img src="{{ module.picture.url }}" alt=""/>
 <h2>{{ module.title }}</h2>
 <h3>{{ module.reference }}</h3>
 <h4>{{ module.level.name }}</h4>

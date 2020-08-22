@@ -14,15 +14,16 @@ def is_student(user):
     return groups_utils.is_student(user)
 
 
+@register.filter
+def is_manager_or_administrator(user):
+    """Template tags that checks if a user is is manager or administrator."""
+
+    return groups_utils.is_manager_or_administrator(user)
+
+
 # @register.filter(takes_context=True)
 # def user_is_student(context):
 #     """Template tags that checks if a user is a student or not."""
 
 #     request = context.get("request")
 #     return groups_utils.is_student(request.user)
-
-
-# @register.filter(name='has_group')
-# def has_group(user, group_name):
-#     group = Group.objects.get(name=group_name)
-#     return True if group in user.groups.all() else False
