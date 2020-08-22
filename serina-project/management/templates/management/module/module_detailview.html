@@ -176,7 +176,7 @@
           {% endfor %}
         </ul>
         {% else %}
-          <p>{% trans 'There is actually no elibigle teacher for this course.' %}</p>
+          <p>{% trans 'There is actually no eligible teacher for this course.' %}</p>
         {% endif %}
           
       </div>
@@ -195,8 +195,51 @@
           <a href="{% url 'module_deleteview' pk=module.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
         </div>
       </div>
+    {% elif user.is_authenticated %}
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  You are registered as a guest.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Register as a student now by submitting your registration report.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>
     {% else %}
-      <h4 class="text-center">{% trans 'You must be registered as student to subscribe to this module' %}</tr></h4>
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  You are not registered.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Register as a guest and then submit your registration report in order to subscribe to this module.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </section>
+
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col mb-2 mb-md-0">
           <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
@@ -213,13 +256,34 @@
 
   {# Prerequisites list #}
 
-  
   {% if module.prerequisites.all.count > 0 %}
-    
+    <section class="container p-1 p-md-3 border">
+      <div class="text-center">
+        <h3>{% trans 'Prerequisites for this module' %}</h3>
+      </div>
+      <hr>
+      {% for prerequisite in module.prerequisites.all %}
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col-md-8">
+            <a href="{{ prerequisite.get_absolute_url }}" class="text-reset">
+              <span class="h5">{{ prerequisite.title }}</span> 
+              <span class="small text-muted">{{ prerequisite.reference }}</span>
+            </a>
+          </div>
+          <div class="col-md-4">
+            {% if request.user|module_already_validated_by_user:prerequisite %}
+              <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
+            {% elif request.user|all_prerequisites_validated_by_user:prerequisite %}
+              <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites filled' %}</span>
+            {% else %}
+              <span class="text-danger">{% include 'logo/module_check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </section>
   {% endif %}
-    
-  <section>
-  </section>
+
 
 <h1>ModuleDetailView</h1>
 <div>
