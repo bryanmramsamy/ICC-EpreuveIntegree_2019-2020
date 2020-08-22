@@ -132,15 +132,15 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     def student_graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
-        graduated = True
+        student_graduated = True
 
         for module_rr in self.modules_rrs.all():
-            if not module_rr.status == 'COMPLETED' \
-               or not module_rr.status == 'EXEMPTED':
-                graduated = False
+            if not (module_rr.status == 'COMPLETED'
+                    or module_rr.status == 'EXEMPTED'):
+                student_graduated = False
                 break
 
-        return graduated
+        return student_graduated
 
     @property
     def average_score(self):
