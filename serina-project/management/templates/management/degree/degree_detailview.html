@@ -1,59 +1,170 @@
 {% extends 'base.html' %}
-{% load i18n static %}
+{% load i18n registration_extra static %}
 
 {% block title %}{{ degree.title }} | {{ degree.reference }}{% endblock title %}
 
 {% block content %}
 
 
-{# Heading jumbotron #}
+  {# Heading jumbotron #}
 
-<section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-  <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-    <div class="row row-cols-1 row-cols-md-2">
-      <div class="col col-md-8">
-        <h1 class="display-4" style="font-style: italic;">
-          {% include 'logo/degree.html' %}
-          {{ degree.title }}
-        </h1>
-        <hr>
-        <p class="lead">
-          {{ degree.description|linebreaks }}
-        </p>
-      </div>
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
+    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+          <h1 class="display-4" style="font-style: italic;">
+            {% include 'logo/degree.html' %}
+            {{ degree.title }}
+          </h1>
+          <hr>
+          <p class="lead">
+            {{ degree.description|linebreaks }}
+          </p>
+        </div>
 
-      <div class="col col-md-4">
-        <img src="{% static 'draws/road_to_knowledge.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
+        <div class="col col-md-4">
+          <img src="{% static 'draws/road_to_knowledge.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
 
+  {# Presentation card #}
 
-<h1>DegreeDetailView</h1>
-<div>
-<h2>{{ degree.title }}</h2>
-<h3>{{ degree.reference }}</h3>
-<h4>{{ degree.category.name }}</h4>
-<p>{{ degree.description }}</p>
-<p>{{ degree.total_benefits }}</p>
-</div>
+  <section class="container p-1 p-md-3 border bg-light">
+    <div class="row rwo-cols-1 row-cols-lg-2">
+      <div class="col-lg-6 text-center">
+        <img src="{{ degree.picture.url }}" alt="{{ degree.title }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
+      </div>
+      <div class="col-lg-6 text-center">
+        <h1>{% include 'logo/degree.html' %}</h1>
+        <h2>{{ degree.title }}</h2>
+        <div class="row">
+          <div class="col">{{ degree.reference }}</div>
+          <div class="col">{{ degree.category.name }}</div>
+        </div>
+        <hr>
+        <div class="row h3">
+          <div class="col">ECTS: <strong>{{ degree.total_ECTS_value }}</strong></div>
+          <div class="col">€ <strong>{{ degree.total_price }}</strong></div>
+        </div>
+      </div>
+    </div>
 
-<h2>Teachers</h2>
-<ul>
-{% for module in degree.modules.all %}
-{% for teacher in module.eligible_teachers.all %}
-<li>{{ teacher.get_full_name }}</li>
-{% endfor %}
-{% endfor %}
-</ul>
+    <hr>
 
-<h2>Modules</h2>
-<ul>
-{% for module in degree.modules.all %}
-<li>{{ module.title }}</li>
-{% endfor %}
-</ul>
+    {% if request.user|is_student %}
+      <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
+    {% elif request.user|is_manager_or_administrator %}
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-2 mb-md-0">
+          <a href="{% url 'degree_updateview' pk=degree.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+        </div>
+        <div class="col">
+          <a href="{% url 'degree_deleteview' pk=degree.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+        </div>
+      </div>
+    {% elif user.is_authenticated %}
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  You are registered as a guest.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Register as a student now by submitting your registration report.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>
+    {% else %}
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  You are not registered.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Register as a guest and then submit your registration report in order to subscribe to this module.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-2 mb-md-0">
+          <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+        </div>
+        <div class="col">
+          <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+        </div>
+      </div>
+    {% endif %}
+  </section>
+
+  <br>
+
+
+  {# Modules list #}
+
+  {% if degree.modules.all.count > 0 %}
+    <section class="container p-1 p-md-3 border">
+      <div class="text-center">
+        <h3>{% trans 'Modules of this degree' %}</h3>
+      </div>
+      <hr>
+      {% for module in degree.modules.all %}
+        <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
+          <div class="col-md-8">
+            <a href="{{ module.get_absolute_url }}" class="text-reset">
+              <span class="h5">{% include 'logo/module.html' %} {{ module.title }}</span> 
+              <span class="small text-muted">{{ module.reference }}</span>
+            </a>
+          </div>
+          <div class="col-md-4">
+            {% if request.user|is_student %}
+              {% if request.user|module_already_validated_by_user:module %}
+                <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
+              {% elif request.user|all_prerequisites_validated_by_user:module %}
+                <span class="text-warning">{% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
+              {% else %}
+                <span class="text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+              {% endif %}
+            {% else %}
+              <span class="text-info">{% include 'logo/check_info.html' %} 
+                {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
+                  This prerequisite has only one prerequisite itself.
+                {% plural %}
+                  This prerequisite has {{ nb_prerequisites }} perequisites itself.
+                {% endblocktrans %}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </section>
+  {% endif %}
+
+  <br>
+
 
 {% endblock content %}

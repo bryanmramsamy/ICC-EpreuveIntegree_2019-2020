@@ -144,12 +144,13 @@
 
   <br>
 
+
   {# Presentation card #}
 
   <section class="container p-1 p-md-3 border bg-light">
     <div class="row rwo-cols-1 row-cols-lg-2">
       <div class="col-lg-6 text-center">
-        <img src="{{ module.picture.url }}" alt="" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
+        <img src="{{ module.picture.url }}" alt="{{ module.title }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
       </div>
       <div class="col-lg-6 text-center">
         <h1>{% include 'logo/module.html' %}</h1>
