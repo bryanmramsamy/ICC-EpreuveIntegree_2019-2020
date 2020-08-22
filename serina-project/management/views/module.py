@@ -9,7 +9,9 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from registration.utils import registration
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
+
 
 
 # Module views
@@ -29,6 +31,21 @@ class ModuleDetailView(DetailView):
     model = Module
     context_object_name = "module"
     template_name = "management/module/module_detailview.html"
+
+    def get_context_data(self, **kwargs):
+        """Add 'already_validated' and 'all_prerequisites_validated' to the
+        context of each module."""
+
+        context = super().get_context_data(**kwargs)
+
+        context["already_validated"] = registration \
+            .module_already_validated_by_user(self.request.user, self.object)
+
+        context["all_prerequisites_validated"] = registration \
+            .all_prerequisites_validated_by_user(self.request.user,
+                                                 self.object)
+
+        return context
 
 
 class ModuleCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,

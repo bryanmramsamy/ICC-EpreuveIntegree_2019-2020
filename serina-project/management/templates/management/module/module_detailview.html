@@ -1,55 +1,194 @@
 {% extends 'base.html' %}
+
 {% load i18n %}
+{% load static %}
 
 {% block title %}{% trans 'ModuleDetailView' %}  {{ module.reference }}{% endblock title %}
 
 {% block content %}
-    <h1>ModuleDetailView</h1>
-    <div>
-        <img src="{{ module.picture.url }}" alt=""/>
-        <h2>{{ module.title }}</h2>
-        <h3>{{ module.reference }}</h3>
-        <h4>{{ module.level.name }}</h4>
-        <p>{{ module.description }}</p>
-        <p>{{ module.module_benefits }}</p>
+
+
+  {# Heading jumbotron #}
+
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/puzzle_02.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
+    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+          <h1 class="display-4" style="font-style: italic;">
+            {% include 'logo/module.html' %}
+            {{ module.title }}
+          </h1>
+          <hr>
+          <p class="lead">
+            {{ module.description }}
+          </p>
+        </div>
+
+        <div class="col col-md-4">
+          <img src="{% static 'draws/road_to_knowledge.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
+        </div>
+      </div>
     </div>
+  </section>
 
-    <a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
-    <h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
 
-    <h2>Prerequisites</h2>
-    <ul>
-        {% for module in module.prerequisites.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+  {# Validation restriction bubble #}
 
-    <h2>Postrequisites</h2>
-    <ul>
-        {% for module in module.postrequisites.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+  {% if already_validated %}
+    <section class="container mb-2">
+      <div class="row row-cols-1 row-cols-md-2 bg-success rounded text-light pt-2">
+        <div class="col-md-1 text-center text-md-right">
+          <h1>{% include 'logo/check.html' %}</h1>
+        </div>
+        <div class="col-md-11">
+          <p class="text-justify">
+            <span class="h5 font-weight-bold">
+              {% blocktrans %}
+                You already have validate this module.
+              {% endblocktrans %}
+            </span>
+            <br>
+            {% blocktrans %}
+              You don't have to validate this module again. If a postrequisite module is still locked, this means another of its prerequisite module hasn't been validated yet. But this is not the case of this module.
+            {% endblocktrans %}
+            <br><br>
+            {% blocktrans %}
+              You are free to subscribe once more to the module in order to get a better result. If you fail, the module will still be considered as validated. But keep in mind your request still have to be approved and you will have to pay the subscribtion fees once again.
+            {% endblocktrans %}
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <h2>Eligible teachers</h2>
-    <ul>
-        {% for teacher in module.eligible_teachers.all %}
-            <li>{{ teacher.get_full_name }}</li>
-        {% endfor %}
-    </ul>
+  {% else %}
+    {% if all_prerequisites_validated and module.prerequisites.all.count > 0 %}
+    <section class="container mb-2">
+      <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
+        <div class="col-md-1 text-center text-md-right">
+          <h1>{% include 'logo/info.html' %}</h1>
+        </div>
+        <div class="col-md-11">
+          <p class="text-justify">
+            <span class="h5 font-weight-bold">
+              {% blocktrans %}
+                This module has prerequisites you already validated.
+              {% endblocktrans %}
+            </span>
+            <br>
+            {% blocktrans %}
+              You can subscribe to this module now without any more conditions.
+            {% endblocktrans %}
+          </p>
+        </div>
+      </div>
+    </section>
 
-    <h2>Degrees</h2>
-    <ul>
-        {% for degree in module.degrees.all %}
-            <li>{{ degree.title }}</li>
-        {% endfor %}
-    </ul>
+    {% elif module.prerequisites.all.count > 0 %}
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  This module has prerequisites which must be validated in order to validate this module.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                If you didn't acquired the prerequisites yet, you can still subscribe to this module but keep in mind that it won't be considered as validated as long as the prerequisites are not validated yet.
+              {% endblocktrans %}
+              <br><br>
+              {% blocktrans %}
+                If you already acquired the prerequisites in another school, you can still go to that module page, subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
+              {% endblocktrans %}
+              <br><br>
+              {% blocktrans %}
+                Your request still have to be accepted by our staff and payed by yourself in any case.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </section>
+    {% endif %}
 
-    <h2>Courses</h2>
-    <ul>
-        {% for course in module.courses.all %}
-            <li>{{ course.reference }}</li>
-        {% endfor %}
-    </ul>
+    {% if module.postrequisites.all.count > 0 %}
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/info.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  This module has postrequisites and must be validated in order to validate these.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Some modules has this module has prerequisites, which means you cannot validate them without validate this one.
+              {% endblocktrans %}
+              <br><br>
+              {% blocktrans %}
+                If you already passed and succeed this module in another school, you can subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
+              {% endblocktrans %}
+            </p>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+  {% endif %}
+
+
+<h1>ModuleDetailView</h1>
+<div>
+<img src="{{ module.picture.url }}" alt=""/>
+<h2>{{ module.title }}</h2>
+<h3>{{ module.reference }}</h3>
+<h4>{{ module.level.name }}</h4>
+<p>{{ module.description }}</p>
+<p>{{ module.module_benefits }}</p>
+</div>
+
+<a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
+<h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
+
+<h2>Prerequisites</h2>
+<ul>
+{% for module in module.prerequisites.all %}
+<li>{{ module.title }}</li>
+{% endfor %}
+</ul>
+
+<h2>Postrequisites</h2>
+<ul>
+{% for module in module.postrequisites.all %}
+<li>{{ module.title }}</li>
+{% endfor %}
+</ul>
+
+<h2>Eligible teachers</h2>
+<ul>
+{% for teacher in module.eligible_teachers.all %}
+<li>{{ teacher.get_full_name }}</li>
+{% endfor %}
+</ul>
+
+<h2>Degrees</h2>
+<ul>
+{% for degree in module.degrees.all %}
+<li>{{ degree.title }}</li>
+{% endfor %}
+</ul>
+
+<h2>Courses</h2>
+<ul>
+{% for course in module.courses.all %}
+<li>{{ course.reference }}</li>
+{% endfor %}
+</ul>
 
 {% endblock content %}
