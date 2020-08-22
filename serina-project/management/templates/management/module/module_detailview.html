@@ -288,14 +288,14 @@
           <div class="col-md-4">
             {% if request.user|is_student %}
               {% if request.user|module_already_validated_by_user:prerequisite %}
-                <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
+                <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
               {% elif request.user|all_prerequisites_validated_by_user:prerequisite %}
-                <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
+                <span class="text-warning">{% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
               {% else %}
-                <span class="text-danger">{% include 'logo/module_check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+                <span class="text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
               {% endif %}
             {% else %}
-              <span class="text-info">{% include 'logo/module_check_info.html' %} 
+              <span class="text-info">{% include 'logo/check_info.html' %} 
                 {% blocktrans count nb_prerequisites=prerequisite.prerequisites.all.count %}
                   This prerequisite has only one prerequisite itself.
                 {% plural %}
@@ -329,10 +329,10 @@
             </a>
           </div>
           <div class="col-md-4">
-            {% if request.user|is_student and request.user|module_already_validated_by_user:postrequiste %}
-                <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
+            {% if request.user|is_student and request.user|module_already_validated_by_user:postrequisite %}
+                <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
             {% else %}
-              <span class="text-info">{% include 'logo/module_check_info.html' %} 
+              <span class="text-info">{% include 'logo/check_info.html' %} 
                 {% blocktrans count nb_postrequisitess=postrequisite.prerequisites.all.count %}
                   This postrequisite has only one prerequisite itself.
                 {% plural %}

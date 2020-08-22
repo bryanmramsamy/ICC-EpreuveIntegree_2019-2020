@@ -81,8 +81,9 @@
   {# Create new module button #}
 
   {% if request.user|is_manager_or_administrator %}
-    <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">{% include 'logo/new.html' %} Create a new module</a>
+    <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">Create a new module {% include 'logo/new.html' %}</a>
   {% endif %}
+
 
   {# Modules cards #}
 
@@ -96,10 +97,10 @@
               {% trans 'Number of eligible teacher: ' %}{{ module.eligible_teachers.count }}
             </div>
             <div class="col h5">
-              {% trans 'Regitration fee: ' %}€ {{ module.price }}
+              {% trans 'Regitration fee: ' %}<strong>€ {{ module.price }}</strong>
             </div>
             <div class="col d-none d-md-block">
-              {% trans 'Number of courses available: ' %}{{ module.courses.count }}
+              {% trans 'Number of courses available' %}: {{ module.courses.count }}
             </div>
           </div>
         </div>
@@ -117,20 +118,32 @@
                   <div>
                     {% if request.user|is_student %}
                       {% if request.user|module_already_validated_by_user:module %}
-                        <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
-                      {% elif request.user|all_prerequisites_validated_by_user:module %}
-                        <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
-                      {% else %}
-                        <span class="text-danger">{% include 'logo/module_check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+                        <span class="text-success">
+                          {% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}
+                        </span>
+                      {% elif module.prerequisites.all.count > 0 and request.user|all_prerequisites_validated_by_user:module %}
+                        <span class="text-warning">
+                          {% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}
+                        </span>
+                      {% elif module.prerequisites.all.count > 0 %}
+                        <span class="text-danger">
+                          {% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}
+                        </span>
                       {% endif %}
-                    {% else %}
-                      <span class="text-info">{% include 'logo/module_check_info.html' %} 
+                    {% elif module.prerequisites.all.count > 0 %}
+                      <span class="text-info">{% include 'logo/check_info.html' %} 
                         {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
                           This prerequisite has only one prerequisite itself.
                         {% plural %}
                           This prerequisite has {{ nb_prerequisites }} perequisites itself.
                         {% endblocktrans %}
                       </span>
+                    {% else %}
+                    <span class="text-info">{% include 'logo/check_info.html' %} 
+                      {% blocktrans  %}
+                        This module has no prerequisites.
+                      {% endblocktrans %}
+                    </span>
                     {% endif %}
                   </div>
                 </div>
