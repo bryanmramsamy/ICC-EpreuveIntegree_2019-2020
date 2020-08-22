@@ -7,6 +7,8 @@ from ..utils import groups as groups_utils, registration as registration_utils
 register = template.Library()
 
 
+# Group authorizations
+
 @register.filter
 def is_student(user):
     """Template tags that checks if a user is a student or not."""
@@ -20,6 +22,8 @@ def is_manager_or_administrator(user):
 
     return groups_utils.is_manager_or_administrator(user)
 
+
+# Module Registration Report
 
 @register.filter
 def module_already_validated_by_user(user, module):
@@ -36,11 +40,10 @@ def all_prerequisites_validated_by_user(user, module):
     return registration_utils.all_prerequisites_validated_by_user(user, module)
 
 
-# {{ request.user|module_already_validated_by_user:module }}
+# Degree Registration Report
 
-# @register.filter(takes_context=True)
-# def user_is_student(context):
-#     """Template tags that checks if a user is a student or not."""
+@register.filter
+def degree_already_validated_by_user(user, degree):
+    """Filter that checks if the user has already vaidated the given degree."""
 
-#     request = context.get("request")
-#     return groups_utils.is_student(request.user)
+    return registration_utils.degree_already_validated_by_user(user, degree)
