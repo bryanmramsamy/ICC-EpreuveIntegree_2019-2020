@@ -12,8 +12,7 @@ from .resource import (
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
-class ClassroomListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                        ListView):  # TODO: Debug view
+class ClassroomListView(ListView):
     """ListView for Classroom."""
 
     model = Classroom
@@ -22,8 +21,7 @@ class ClassroomListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     paginate_by = 10
 
 
-class ClassroomDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                          DetailView):  # TODO: Debug view
+class ClassroomDetailView(DetailView):
     """DetailView for Classroom."""
 
     model = Classroom
@@ -32,7 +30,7 @@ class ClassroomDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ClassroomCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                          BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+                          BackOfficeResourceCreateViewMixin):
     """CreateView for Classroom."""
 
     model = Classroom
@@ -41,7 +39,7 @@ class ClassroomCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ClassroomUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                          BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+                          BackOfficeResourceUpdateViewMixin):
     """UpdateView for Classroom."""
 
     model = Classroom
@@ -51,7 +49,7 @@ class ClassroomUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class ClassroomDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                          DeleteView):  # TODO: Debug view
+                          DeleteView):
     """DeleteView for Classroom."""
 
     model = Classroom

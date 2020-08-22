@@ -12,8 +12,7 @@ from .resource import (
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
-class CourseListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                     ListView):  # TODO: Debug view
+class CourseListView(ListView):
     """ListView for Course."""
 
     model = Course
@@ -22,8 +21,7 @@ class CourseListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     paginate_by = 10
 
 
-class CourseDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       DetailView):  # TODO: Debug view
+class CourseDetailView(DetailView):
     """DetailView for Course."""
 
     model = Course
@@ -32,7 +30,7 @@ class CourseDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class CourseCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+                       BackOfficeResourceCreateViewMixin):
     """CreateView for Course."""
 
     model = Course
@@ -41,7 +39,7 @@ class CourseCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class CourseUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+                       BackOfficeResourceUpdateViewMixin):
     """UpdateView for Course."""
 
     model = Course
@@ -51,7 +49,7 @@ class CourseUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class CourseDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       DeleteView):  # TODO: Debug view
+                       DeleteView):
     """DeleteView for Course."""
 
     model = Course
