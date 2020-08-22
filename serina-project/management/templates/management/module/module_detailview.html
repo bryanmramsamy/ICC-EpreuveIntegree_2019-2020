@@ -165,7 +165,23 @@
           <div class="col">€ <strong>{{ module.price }}</strong></div>
         </div>
         <hr>
-        
+
+        {% if module.degrees.all.count > 0 %}
+        <p>{% trans 'This module is part of the following degrees' %}:</p>
+        <ul class="list-unstyled">
+          {% for degree in module.degrees.all %}
+            <li class="h5">
+              <a href="{{ degree.get_absolute_url }}" class="text-reset">
+                {% include 'logo/degree.html' %} {{ degree.title }} <small class="text-muted">{{ degree.category.name }}</small>
+              </a>
+            </li>
+          {% endfor %}
+        </ul>
+        {% else %}
+          <p>{% trans 'This module does not belong to any degree.' %}</p>
+        {% endif %}
+        <hr>
+
         {% if module.eligible_teachers.all.count > 0 %}
         <p>{% trans 'Teachers of this module' %}:</p>
         <ul class="list-unstyled">
@@ -178,7 +194,6 @@
         {% else %}
           <p>{% trans 'There is actually no eligible teacher for this course.' %}</p>
         {% endif %}
-          
       </div>
     </div>
 
@@ -274,7 +289,7 @@
             {% if request.user|module_already_validated_by_user:prerequisite %}
               <span class="text-success">{% include 'logo/module_check_valid.html' %} {% trans 'Module already validated' %}</span>
             {% elif request.user|all_prerequisites_validated_by_user:prerequisite %}
-              <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites filled' %}</span>
+              <span class="text-warning">{% include 'logo/module_check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
             {% else %}
               <span class="text-danger">{% include 'logo/module_check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
             {% endif %}
