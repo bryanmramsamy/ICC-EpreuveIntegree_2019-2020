@@ -171,6 +171,21 @@
                 <div class="col">
                   <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
                 </div>
+              {% elif user.is_authenticated %}
+                <div class="col">
+                  <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                </div>
+              {% else %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+                    </div>
+                  </div>
+                </div>
               {% endif %}
             </div>
           </div>

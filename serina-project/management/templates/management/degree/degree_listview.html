@@ -36,6 +36,18 @@
 
   {# Statistical informations #}
 
+  <section class="container">
+    <div class="row text-muted">
+      <div class="col-sm">
+        {% blocktrans count nb_degrees=degrees.count %}
+          There is actually only one degree available.
+        {% plural %}
+          They are actually {{ nb_degrees }} degrees available.
+        {% endblocktrans %}
+      </div>
+    </div>
+  </section>
+
 
   {# Create new module button #}
 
@@ -53,13 +65,13 @@
         <div class="card-header text-center pt-3">
           <div class="row">
             <div class="col d-none d-md-block">
-              {% include 'logo/degree.html' %} {{ degree.category.name }}
+              XXX
             </div>
             <div class="col h5">
               {% trans 'Regitration fee: ' %}<strong>€ {{ degree.total_price }}</strong>
             </div>
             <div class="col d-none d-md-block">
-              {% trans 'Number of modules in this degree ' %}: {{ degree.modules.count }}
+              XXX
             </div>
           </div>
         </div>
@@ -77,18 +89,21 @@
                   <div>
                     {% if request.user|is_student %}
                       {% if request.user|degree_already_validated_by_user:degree %}
-                        <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Degree already validated' %}</span>
-                      {% elif request.user|all_prerequisites_validated_by_user:module %}
-                        <span class="text-warning">{% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
+                        <span class="text-success">
+                          {% include 'logo/check_valid.html' %} {% trans 'Degree already validated' %}
+                        </span>
                       {% else %}
-                        <span class="text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
+                        <span class="text-danger">
+                          {% include 'logo/check_invalid.html' %} {% trans 'Degree not validated' %}
+                        </span>
                       {% endif %}
                     {% else %}
-                      <span class="text-info">{% include 'logo/check_info.html' %} 
-                        {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
-                          This prerequisite has only one prerequisite itself.
+                      <span class="text-info">
+                        {% include 'logo/check_info.html' %} 
+                        {% blocktrans count nb_modules=degree.modules.all.count %}
+                          This degree is composed of only one module.
                         {% plural %}
-                          This prerequisite has {{ nb_prerequisites }} perequisites itself.
+                          This degree is composed of {{ nb_modules }} modules.
                         {% endblocktrans %}
                       </span>
                     {% endif %}
@@ -101,22 +116,22 @@
           <div class="card-footer text-center">
             <div class="row row-cols-1 row-cols-md-2 my-2 my-md-0">
               <div class="col mb-2 mb-md-0">
-                <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
+                <a href="{{ degree.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
               </div>
               {% if request.user|is_manager_or_administrator %}
                 <div class="col">
                   <div class="row">
                     <div class="col">
-                      <a href="{% url 'module_updateview' pk=degree.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+                      <a href="{% url 'degree_updateview' pk=degree.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
                     </div>
                     <div class="col">
-                      <a href="{% url 'module_deleteview' pk=degree.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+                      <a href="{% url 'degree_deleteview' pk=degree.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
                     </div>
                   </div>
                 </div>
               {% elif request.user|is_student %}
                 <div class="col">
-                  <a href="{% url 'module_payment' pk=degree.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                  <a href="{% url 'module_payment' pk=degree.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
                 </div>
               {% endif %}
             </div>
@@ -126,33 +141,4 @@
     </div>
   </section>
 
-
-
-
-
-
-
-<h1>DegreeListView</h1>
-
-{% for degree in degrees %}
-<div>
-<h2>{{ degree.title }}</h2>
-<h3>{{ degree.reference }}</h3>
-<h4>{{ degree.category.name }}</h4>
-<p>{{ degree.description }}</p>
-
-{% for module in degree.modules.all %}
-<ul>
-<li><p>{{ module.title }}</p></li>
-</ul>
-{% endfor %}
-
-<p>{{ degree.degree_benefits }}</p>
-<p>{{ degree.nb_modules }}</p>
-
-<h5><a href="{{ degree.get_absolute_url }}">degree_detailview/{{ degree.pk }}/</a></h5>
-<h5><a href="{% url 'degree_updateview' pk=degree.pk %}">degree_updateview/{{ degree.pk }}/</a></h5>
-<h5><a href="{% url 'degree_deleteview' pk=degree.pk %}">degree_deleteview/{{ degree.pk }}/</a></h5>
-</div>
-{% endfor %}
 {% endblock content %}
