@@ -346,51 +346,45 @@
     </section>
   {% endif %}
 
-<h1>ModuleDetailView</h1>
-<div>
-<h2>{{ module.title }}</h2>
-<h3>{{ module.reference }}</h3>
-<h4>{{ module.level.name }}</h4>
-<p>{{ module.description }}</p>
-<p>{{ module.module_benefits }}</p>
-</div>
+  <br>
 
-<a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
-<h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
 
-<h2>Prerequisites</h2>
-<ul>
-{% for module in module.prerequisites.all %}
-<li>{{ module.title }}</li>
-{% endfor %}
-</ul>
+  {# Module's courses list #}
 
-<h2>Postrequisites</h2>
-<ul>
-{% for module in module.postrequisites.all %}
-<li>{{ module.title }}</li>
-{% endfor %}
-</ul>
-
-<h2>Eligible teachers</h2>
-<ul>
-{% for teacher in module.eligible_teachers.all %}
-<li>{{ teacher.get_full_name }}</li>
-{% endfor %}
-</ul>
-
-<h2>Degrees</h2>
-<ul>
-{% for degree in module.degrees.all %}
-<li>{{ degree.title }}</li>
-{% endfor %}
-</ul>
-
-<h2>Courses</h2>
-<ul>
-{% for course in module.courses.all %}
-<li>{{ course.reference }}</li>
-{% endfor %}
-</ul>
+  {% if module.courses.all.count > 0 %}  <!-- TODO: Only when active course -->
+    <table class="table table-stripped table-hover table-sm">
+      <thead>
+        <tr>
+          <th scope="col">{% trans 'Course' %}</th>
+          <th scope="col">{% trans 'Teacher' %}</th>
+          <th scope="col">{% trans 'Start date' %}</th>
+          <th scope="col">{% trans 'End date' %}</th>
+          <th scope="col">{% trans 'Classroom' %}</th>
+          <th scope="col">{% trans 'Free seats left' %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+        {% for course in module.courses.all %}
+          <tr>
+            <th scope="row">{{ course.reference }}</th>
+            <td>{{ course.teacher.get_full_name }}</td>
+            <td>{{ course.date_start }}</td>
+            <td>{{ course.date_end }}</td>
+            {% if course.room is not None %}
+              <td>{{ course.room.name }}</td>
+              <td>
+                <strong class="text-{% if course.over_attendance %}warning{% elif course.max_seats_available == 0 %}danger{% else %}success{% endif %}">
+                  {{ course.max_seats_available }}
+                </strong>
+              </td>
+            {% else %}
+              <td colspan="2"><strong>No classroom yet available for this course.</strong></td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
 
 {% endblock content %}
