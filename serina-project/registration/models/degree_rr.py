@@ -135,7 +135,8 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         graduated = True
 
         for module_rr in self.modules_rrs.all():
-            if not module_rr.succeeded:
+            if not module_rr.status == 'COMPLETED' \
+               or not module_rr.status == 'EXEMPTED':
                 graduated = False
                 break
 
