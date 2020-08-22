@@ -192,6 +192,11 @@ CONTACT_MAILS = {
 }
 
 
+# App settings
+
+SUCCESS_SCORE_THRESHOLD = 50
+
+
 # Messages
 
 MESSAGE_TAGS = {messages.ERROR: 'danger'}
