@@ -110,7 +110,7 @@
           <div class="card-footer text-center">
             <div class="row my-2 my-md-0">
               <div class="col">
-                <a href="{{ module.get_absolute_url }}"  class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a> <!-- TODO: redirect to module_rr_createview -->
+                <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
               </div>
               {% if request.user|is_manager_or_administrator %}
                 <div class="col">
@@ -118,7 +118,7 @@
                 </div>
               {% elif request.user|is_student %}
                 <div class="col">
-                  <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Register to this module' %} {% include 'logo/puzzle.html' %}</a>
+                  <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
                 </div>
               {% endif %}
             </div>

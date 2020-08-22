@@ -195,6 +195,9 @@ urlpatterns = [
         name="module_payment"
     ),
     url(r'payment-done/', views.payment_done, name='payment_done'),
-    url(r'payment-cancelled/', views.payment_canceled, name='payment_cancelled'),
-
+    url(
+        r'payment-cancelled/',
+        views.payment_canceled,
+        name='payment_cancelled'
+    ),
 ]
