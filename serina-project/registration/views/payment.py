@@ -76,7 +76,12 @@ def payment_done(request):
     and redirect to the DetailView."""
 
     module_rr = get_module_rr_and_clean_session_pk(request)
-    module_rr.status = "PAYED"
+
+    if module_rr.final_score:
+        module_rr.status = "COMPLETED"
+    else:
+        module_rr.status = "PAYED"
+
     module_rr.save()
 
     messages_utils.module_payment_succeeded(request)
