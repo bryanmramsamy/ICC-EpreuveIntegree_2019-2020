@@ -28,15 +28,10 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         related_name="students_registrations",
         verbose_name=_("Registration degree")
     )
-    date_start = models.DateField(
+    date_payed = models.DateTimeField(
         null=True,
         blank=True,
-        verbose_name=_("Start date"),
-    )
-    date_end = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name=_("End date"),
+        verbose_name=_("Payment date"),
     )
 
     class Meta:
@@ -116,17 +111,6 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
                 break
 
         return fully_payed
-
-    @property
-    def academic_years(self):
-        """Display the academic years of the sutdent's degree."""
-
-        academic_years = self.date_start.strftime("%Y")
-
-        if self.date_end:
-            academic_years += " - {}".format(self.date_end.strftime("%Y"))
-
-        return academic_years
 
     @property
     def student_graduated(self):

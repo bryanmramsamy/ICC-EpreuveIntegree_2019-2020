@@ -42,13 +42,12 @@ class ModuleRegistrationReport(FrontOfficeResource):
     )
     course = models.ForeignKey(
         Course,
+        blank=True,
         null=True,
         on_delete=models.CASCADE,
         related_name="modules_rrs",
         verbose_name=_("Course")
     )
-    date_start = models.DateField(verbose_name=_("Start date"))
-    date_end = models.DateField(verbose_name=_("End date"))
     date_payed = models.DateTimeField(
         null=True,
         blank=True,
@@ -67,7 +66,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name=_("Final score")
     )
 
-    MODULE_REGISTRATION_REPORT_STATUS = [
+    STATUS = [
         ("PENDING", _('Pending')),
         ("DENIED", _('Denied')),
         ("APPROVED", _('Approved')),
@@ -77,7 +76,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
     ]
     status = models.CharField(
         max_length=9,
-        choices=MODULE_REGISTRATION_REPORT_STATUS,
+        choices=STATUS,
         default="PENDING",
         verbose_name=_("Status")
     )
@@ -87,14 +86,6 @@ class ModuleRegistrationReport(FrontOfficeResource):
 
         verbose_name = _('Module Registration Report')
         verbose_name_plural = _('Modules Registration Reports')
-
-    # @property  # FIXME: School years from date_start and date_end
-    # def school_year(self):
-    #     """Compute the schoolyear of the module."""
-
-    #     start = self.date_start
-    #     end = self.date_end
-    #     return start.strftime("%Y")
 
     @property
     def payed(self):
@@ -134,18 +125,6 @@ class ModuleRegistrationReport(FrontOfficeResource):
             self.module.title,
             self.status,
         )
-
-    def save(self, *args, **kwargs):
-        """Save method for ModuleRegistrationReport.
-
-        Initialize the 'date_start' and 'date_end' attributes to the 'course'
-        'date_start' and 'date_end' attributes.
-        """
-
-        self.date_start = course.date_start
-        self.date_end = course.date_end
-
-        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for DegreeRegistrationReport."""
