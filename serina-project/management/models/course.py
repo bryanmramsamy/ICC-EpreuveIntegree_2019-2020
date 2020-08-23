@@ -36,10 +36,8 @@ class Course(BackOfficeResource):
         related_name="courses",
         verbose_name=_("Classroom")
     )
-    date_start = models.DateField(null=True, blank=True,
-                                  verbose_name=_("Start date"))
-    date_end = models.DateField(null=True, blank=True,
-                                verbose_name=_("End date"))
+    date_start = models.DateField(verbose_name=_("Start date"))
+    date_end = models.DateField(verbose_name=_("End date"))
     nb_registrants = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Amount of registrants")
