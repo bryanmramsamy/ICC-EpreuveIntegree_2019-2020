@@ -43,21 +43,12 @@ class ModuleRegistrationReport(FrontOfficeResource):
     course = models.ForeignKey(
         Course,
         null=True,
-        blank=True,
         on_delete=models.CASCADE,
         related_name="modules_rrs",
         verbose_name=_("Course")
     )
-    date_start = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name=_("Start date"),
-    )
-    date_end = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name=_("End date"),
-    )
+    date_start = models.DateField(verbose_name=_("Start date"))
+    date_end = models.DateField(verbose_name=_("End date"))
     date_payed = models.DateTimeField(
         null=True,
         blank=True,
@@ -143,6 +134,18 @@ class ModuleRegistrationReport(FrontOfficeResource):
             self.module.title,
             self.status,
         )
+
+    def save(self, *args, **kwargs):
+        """Save method for ModuleRegistrationReport.
+
+        Initialize the 'date_start' and 'date_end' attributes to the 'course'
+        'date_start' and 'date_end' attributes.
+        """
+
+        self.date_start = course.date_start
+        self.date_end = course.date_end
+
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for DegreeRegistrationReport."""
