@@ -11,7 +11,7 @@
 
   <section class="jumbotron text-center">
     <div class="container">
-      <img src="{% static 'logo/serina.png' %}" class="w-500 p-3 img-fluid" alt="SERINA-Project logo">
+      <img src="{% static 'draws/book_lover.svg' %}" class="p-3 img-fluid" alt="Book lover logo" style="height: 200px;">
       <h1>{% trans 'Welcome on the SERINA-Project page' %}</h1>
 
       <p class="lead">
@@ -101,7 +101,7 @@
   {# 3 random modules #}
 
   <div class="bg-dark p-3 my-md-3">
-    <a href="{% url 'degree_listview' %}" class="btn btn-light btn-block">
+    <a href="{% url 'module_listview' %}" class="btn btn-light btn-block">
       <h4>
         {% include 'logo/module.html' %}
         {% trans 'Or maybe you would prefere individual modules' %}

@@ -14,8 +14,7 @@ from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 # Degree
 
-class DegreeListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                     ListView):  # TODO: Debug view
+class DegreeListView(ListView):
     """ListView for Degree."""
 
     model = Degree
@@ -24,8 +23,7 @@ class DegreeListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     paginate_by = 10
 
 
-class DegreeDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       DetailView):  # TODO: Debug view
+class DegreeDetailView(DetailView):
     """DetailView for Degree."""
 
     model = Degree
@@ -34,7 +32,7 @@ class DegreeDetailView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class DegreeCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       BackOfficeResourceCreateViewMixin):  # TODO: Debug view
+                       BackOfficeResourceCreateViewMixin):
     """CreateView for Degree."""
 
     model = Degree
@@ -44,7 +42,7 @@ class DegreeCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class DegreeUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       BackOfficeResourceUpdateViewMixin):  # TODO: Debug view
+                       BackOfficeResourceUpdateViewMixin):
     """UpdateView for Degree."""
 
     model = Degree
@@ -58,7 +56,7 @@ class DegreeUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 
 class DegreeDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                       DeleteView):  # TODO: Debug view
+                       DeleteView):
     """DeleteView for Degree."""
 
     model = Degree
@@ -69,8 +67,7 @@ class DegreeDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
 # DegreeCategory
 
-class DegreeCategoryListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
-                             ListView):  # TODO: Debug view
+class DegreeCategoryListView(ListView):
     """ListView for DegreeCategory."""
 
     model = DegreeCategory
@@ -79,8 +76,7 @@ class DegreeCategoryListView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     paginate_by = 10
 
 
-class DegreeCategoryDetailView(LoginRequiredMixin,
-                               ManagerAdministratorOnlyMixin, DetailView):  # TODO: Debug view
+class DegreeCategoryDetailView(DetailView):
     """DetailView for DegreeCategory."""
 
     model = DegreeCategory
@@ -92,7 +88,7 @@ class DegreeCategoryCreateView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
     BackOfficeResourceCreateViewMixin,
-):  # TODO: Debug view
+):
     """CreateView for DegreeCategory."""
 
     model = DegreeCategory
@@ -110,7 +106,7 @@ class DegreeCategoryUpdateView(
     LoginRequiredMixin,
     ManagerAdministratorOnlyMixin,
     BackOfficeResourceUpdateViewMixin,
-):  # TODO: Debug view
+):
     """UpdateView for DegreeCategory."""
 
     model = DegreeCategory
@@ -120,7 +116,7 @@ class DegreeCategoryUpdateView(
 
 
 class DegreeCategoryDeleteView(LoginRequiredMixin,
-                               ManagerAdministratorOnlyMixin, DeleteView):  # TODO: Debug view
+                               ManagerAdministratorOnlyMixin, DeleteView):
     """DeleteView for DegreeCategory."""
 
     model = DegreeCategory

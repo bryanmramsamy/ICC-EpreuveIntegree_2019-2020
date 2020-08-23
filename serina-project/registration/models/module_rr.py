@@ -42,21 +42,11 @@ class ModuleRegistrationReport(FrontOfficeResource):
     )
     course = models.ForeignKey(
         Course,
-        null=True,
         blank=True,
+        null=True,
         on_delete=models.CASCADE,
         related_name="modules_rrs",
         verbose_name=_("Course")
-    )
-    date_start = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name=_("Start date"),
-    )
-    date_end = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name=_("End date"),
     )
     date_payed = models.DateTimeField(
         null=True,
@@ -76,7 +66,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name=_("Final score")
     )
 
-    MODULE_REGISTRATION_REPORT_STATUS = [
+    STATUS = [
         ("PENDING", _('Pending')),
         ("DENIED", _('Denied')),
         ("APPROVED", _('Approved')),
@@ -86,7 +76,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
     ]
     status = models.CharField(
         max_length=9,
-        choices=MODULE_REGISTRATION_REPORT_STATUS,
+        choices=STATUS,
         default="PENDING",
         verbose_name=_("Status")
     )
@@ -96,14 +86,6 @@ class ModuleRegistrationReport(FrontOfficeResource):
 
         verbose_name = _('Module Registration Report')
         verbose_name_plural = _('Modules Registration Reports')
-
-    # @property  # FIXME: School years from date_start and date_end
-    # def school_year(self):
-    #     """Compute the schoolyear of the module."""
-
-    #     start = self.date_start
-    #     end = self.date_end
-    #     return start.strftime("%Y")
 
     @property
     def payed(self):
@@ -150,7 +132,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return reverse('module_rr_detailview', kwargs={"pk": self.pk})
 
 
-@receiver(post_save, sender=DegreeRegistrationReport)
+@receiver(post_save, sender=DegreeRegistrationReport)  # TODO: Review this
 def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
     """When a DegreeRegistrationReport is created, all the related
     ModuleRegistrationReports of the related modules are generated too and
@@ -159,6 +141,7 @@ def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
     NOTE: This couldn't be done in the DegreeRegistrationReport.save() because
     of a circular import issue.
     """
+    # FIXME: A new module_rr must be created for each module of the degree_rr, if a previous module_rr validated exists, the user should should be prompted to ignore it (default, module_rr wil be flagged as EXEMPTED and best final_score available will be taken over) or redo it.
 
     for module in instance.degree.modules.all():
         for module_rr in module.modules_rrs.all():

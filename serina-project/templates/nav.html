@@ -12,8 +12,15 @@
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item"><a class="nav-link" href="{% url 'degree_listview' %}">{% trans 'Degrees' %}</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'module_listview' %}">{% trans 'Modules' %}</a></li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_catalogue" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% trans 'Catalog' %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbar_dropdown_catalogue">
+            <a class="dropdown-item" href="{% url 'degree_listview' %}">{% include 'logo/degree.html' %} {% trans 'Degrees' %}</a>
+            <a class="dropdown-item" href="{% url 'module_listview' %}">{% include 'logo/module.html' %} {% trans 'Modules' %}</a>
+          </div>
+        </li>
       </ul>
 
       {% if user.is_authenticated %}

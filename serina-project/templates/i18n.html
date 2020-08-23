@@ -18,7 +18,7 @@
       {% endfor %}
     </select>
 
-    <div class="input-group-append" data-toggle="gdpr-popover" data-placement="top" data-content='<strong>{% trans "How is this personal data used ?" %}</strong><br>{% trans "Your language preference is stored in a cookie in order to load the correct language when you navigate through the application.<br>If you delete the cookie, an new one will be created with English as the default value.<hr>Consult our " %}<a href="{% url "cookies_policy" %}">cookies policy</a>{% trans " to now more about your rights." %}'>
+    <div class="input-group-append" data-toggle="gdpr-popover" data-placement="top" data-content='<strong>{% trans "How is this personal data used ?" %}</strong><br><p class="text-justified small">{% trans "Your language preference is stored in a cookie in order to load the correct language when you navigate through the application.<br>If you delete the cookie, an new one will be created with English as the default value." %}</p>'>
       <input class="btn btn-secondary" type="submit" value="{% trans 'Change the language' %}">
     </div>
   </div>

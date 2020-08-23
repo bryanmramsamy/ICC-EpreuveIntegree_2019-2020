@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  {% load static %}
-  {% load i18n %}
+  {% load i18n static %}
 
   <head>
     <meta charset="UTF-8">
@@ -10,9 +9,7 @@
       {% block title %}TITLE MISSING !{% endblock title %} | SERINA-Project
     </title>
     
-    <meta name="description" content="">
-    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-    <meta name="generator" content="Jekyll v4.1.1">
+    <meta name="author" content="Bryan M. Ramsamy">
     
     <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/album/">
     
@@ -80,7 +77,7 @@
           delay: {show: 0, hide: 1500},
           trigger: "hover",
           html: true,
-          title: '<div class="bg-light text-center h4"><img src="/static/logo/gdpr.png" class="img-fluid" alt="GDPR logo" max-height="100px"> {% trans 'GDPR disclaimer' %}</div>'
+          title: '<div class="bg-light text-center h4"><img src="/static/logo/gdpr.png" class="img-fluid" alt="GDPR logo" max-height="100px"> {% trans 'GDPR disclaimer' %}</div><div class="small text-justify text-muted">{% trans 'To know more about your rights, consult our ' %}<a href="{% url 'terms_and_conditions' %}">{% trans 'Terms and conditions' %}</a>{% trans ', our ' %}<a href="{% url 'privacy_policy' %}"> {% trans 'Privacy Policy' %}</a>{% trans ' and our ' %}<a href="{% url 'cookies_policy' %}">{% trans 'Cookies Policy' %}</a>.</div>',
         }); 
       })
     </script>

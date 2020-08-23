@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
@@ -28,15 +29,10 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         related_name="students_registrations",
         verbose_name=_("Registration degree")
     )
-    date_start = models.DateField(
+    date_payed = models.DateTimeField(
         null=True,
         blank=True,
-        verbose_name=_("Start date"),
-    )
-    date_end = models.DateField(
-        null=True,
-        blank=True,
-        verbose_name=_("End date"),
+        verbose_name=_("Payment date"),
     )
 
     class Meta:
@@ -118,28 +114,18 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return fully_payed
 
     @property
-    def academic_years(self):
-        """Display the academic years of the sutdent's degree."""
-
-        academic_years = self.date_start.strftime("%Y")
-
-        if self.date_end:
-            academic_years += " - {}".format(self.date_end.strftime("%Y"))
-
-        return academic_years
-
-    @property
     def student_graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
-        graduated = True
+        student_graduated = True
 
         for module_rr in self.modules_rrs.all():
-            if not module_rr.succeeded:
-                graduated = False
+            if not (module_rr.status == 'COMPLETED'
+                    or module_rr.status == 'EXEMPTED'):
+                student_graduated = False
                 break
 
-        return graduated
+        return student_graduated
 
     @property
     def average_score(self):
@@ -148,14 +134,21 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return resource.modules_average_score(self)
 
     @property
-    def total_expenses(self):
-        """Compute the total expenses of the student for this degree."""
+    def total_paid_price(self):
+        """Compute the total price of the student for this degree.
 
-        total_expenses = 0
-        for module_rr in self.modules_rrs.all():
-            total_expenses += module_rr.module.charge_price
+        The denied and exempted modules are not included into the price.
+        """
 
-        return total_expenses
+        total_paid_price = 0
+        for module_rr in self.modules_rrs.filter(
+            Q(status='APPROVED')
+            | Q(status='PAYED')
+            | Q(status='COMPLETED')
+        ):
+            total_paid_price += module_rr.module.price
+
+        return total_paid_price
 
     def __str__(self):
         """Unicode representation of DegreeRegistrationRappport."""

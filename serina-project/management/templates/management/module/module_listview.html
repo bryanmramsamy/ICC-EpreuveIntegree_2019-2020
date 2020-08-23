@@ -1,17 +1,15 @@
 {% extends 'base.html' %}
+{% load i18n registration_extra static %}
 
-{% load i18n %}
-{% load static %}
-
-{% block title %}{% trans 'Modules catalogue' %}{% endblock title %}
+{% block title %}{% trans 'Modules catalog' %}{% endblock title %}
 
 {% block content %}
 
 
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/puzzle_01.jpg' %}'); background-attachment: fixed;">
-    <div class="container" style="font-family: papyrus;">
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/puzzle_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
+    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col col-md-8">
           <h1 class="display-4" style="font-style: italic;">
@@ -43,10 +41,16 @@
       </div>
       <div class="col-md-11">
         <p class="text-justify">
+          <span class="h5 font-weight-bold">
+            {% blocktrans %}
+              Know more about the prerequisites conditions.
+            {% endblocktrans %}
+          </span>
+          <br>
           {% blocktrans %}
             Some modules has prerequisites modules, which means other modules which must be completed and succeeded by the student before being able to follow the desired module.
           {% endblocktrans %}
-          <br>
+          <br><br>
           {% blocktrans %}
             If you already passed one of these modules here or in another educational institution, you can request for an examption. If the insitutution approves your examption, the module will be considered as succeeded and won't be charged.
           {% endblocktrans %}
@@ -55,24 +59,29 @@
     </div>
   </section>
 
+  <br>
+
 
   {# Statistical informations #}
 
   <section class="container">
-    <hr>
-    <div class="container">
-      <div class="row">
-        <div class="col-sm">
-          {% blocktrans count nb_modules=modules.count %}
-            There is actually only one module available.
-          {% plural %}
-            They are actually {{ nb }} modules available.
-          {% endblocktrans %}
-        </div>
+    <div class="row text-muted">
+      <div class="col-sm">
+        {% blocktrans count nb_modules=modules.count %}
+          There is actually only one module available.
+        {% plural %}
+          They are actually {{ nb_modules }} modules available.
+        {% endblocktrans %}
       </div>
     </div>
-    <hr>
   </section>
+
+
+  {# Create new module button #}
+
+  {% if request.user|is_manager_or_administrator %}
+    <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">Create a new module {% include 'logo/new.html' %}</a>
+  {% endif %}
 
 
   {# Modules cards #}
@@ -87,10 +96,10 @@
               {% trans 'Number of eligible teacher: ' %}{{ module.eligible_teachers.count }}
             </div>
             <div class="col h5">
-              {% trans 'Regitration fee: ' %}€ {{ module.price }}
+              {% trans 'Regitration fee: ' %}<strong>€ {{ module.price }}</strong>
             </div>
             <div class="col d-none d-md-block">
-              {% trans 'Number of courses available: ' %}{{ module.courses.count }}
+              {% trans 'Number of courses available' %}: {{ module.courses.count }}
             </div>
           </div>
         </div>
@@ -105,24 +114,78 @@
                   <h5 class="card-title">{% include 'logo/module.html' %} {{ module.title }}</h5>
                   <p class="card-text"><small class="text-muted">{{ module.reference }} | {% trans 'Difficulty level: ' %}{{ module.level.name }}</small></p>
                   <p class="card-text">{{ module.description|linebreaks|truncatechars:256 }}</p>
+                  <div>
+                    {% if request.user|is_student %}
+                      {% if request.user|module_already_validated_by_user:module %}
+                        <span class="text-success">
+                          {% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}
+                        </span>
+                      {% elif module.prerequisites.all.count > 0 and request.user|all_prerequisites_validated_by_user:module %}
+                        <span class="text-warning">
+                          {% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}
+                        </span>
+                      {% elif module.prerequisites.all.count > 0 %}
+                        <span class="text-danger">
+                          {% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}
+                        </span>
+                      {% endif %}
+                    {% elif module.prerequisites.all.count > 0 %}
+                      <span class="text-info">{% include 'logo/check_info.html' %} 
+                        {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
+                          This prerequisite has only one prerequisite itself.
+                        {% plural %}
+                          This prerequisite has {{ nb_prerequisites }} perequisites itself.
+                        {% endblocktrans %}
+                      </span>
+                    {% else %}
+                    <span class="text-info">{% include 'logo/check_info.html' %} 
+                      {% blocktrans  %}
+                        This module has no prerequisites.
+                      {% endblocktrans %}
+                    </span>
+                    {% endif %}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
 
           <div class="card-footer text-center">
-            <div class="row my-2 my-md-0">
-              {% if user.is_staff %}
+            <div class="row row-cols-1 row-cols-md-2 my-2 my-md-0">
+              <div class="col mb-2 mb-md-0">
+                <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
+              </div>
+              {% if request.user|is_manager_or_administrator %}
                 <div class="col">
-                  <a href="{% url 'module_updateview' pk=module.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'module_updateview' pk=module.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'module_deleteview' pk=module.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+                    </div>
+                  </div>
+                </div>
+              {% elif request.user|is_student %}
+                <div class="col">
+                  <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                </div>
+              {% elif user.is_authenticated %}
+                <div class="col">
+                  <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                </div>
+              {% else %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+                    </div>
+                  </div>
                 </div>
               {% endif %}
-              <div class="col">
-                <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-outline-info">{% trans 'Register to this module' %} {% include 'logo/puzzle.html' %}</a>
-              </div>
-              <div class="col">
-                <a href="{{ module.get_absolute_url }}"  class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a> <!-- TODO: redirect to module_rr_createview -->
-              </div>
             </div>
           </div>
         </div>

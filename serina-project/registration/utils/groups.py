@@ -8,7 +8,8 @@ from django.utils.translation import ugettext as _
 def is_student(user):
     """Check if the user is a registered student."""
 
-    return user.groups.filter(name="Student")
+    return user.groups.filter(name="Student").exists() \
+        and user.student_rr is not None
 
 
 def is_back_office_user(user):
