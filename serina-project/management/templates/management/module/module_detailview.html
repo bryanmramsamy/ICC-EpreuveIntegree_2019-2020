@@ -279,13 +279,13 @@
       <hr>
       {% for prerequisite in module.prerequisites.all %}
         <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
-          <div class="col-md-8">
+          <div class="col-md-7">
             <a href="{{ prerequisite.get_absolute_url }}" class="text-reset">
               <span class="h5">{% include 'logo/module.html' %} {{ prerequisite.title }}</span> 
               <span class="small text-muted">{{ prerequisite.reference }}</span>
             </a>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             {% if request.user|is_student %}
               {% if request.user|module_already_validated_by_user:prerequisite %}
                 <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
@@ -322,13 +322,13 @@
       <hr>
       {% for postrequisite in module.postrequisites.all %}
         <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
-          <div class="col-md-8">
+          <div class="col-md-7">
             <a href="{{ postrequisite.get_absolute_url }}" class="text-reset">
               <span class="h5">{% include 'logo/module.html' %} {{ postrequisite.title }}</span> 
               <span class="small text-muted">{{ postrequisite.reference }}</span>
             </a>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             {% if request.user|is_student and request.user|module_already_validated_by_user:postrequisite %}
                 <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
             {% else %}

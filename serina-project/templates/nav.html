@@ -18,7 +18,10 @@
           </a>
           <div class="dropdown-menu" aria-labelledby="navbar_dropdown_catalogue">
             <a class="dropdown-item" href="{% url 'degree_listview' %}">{% include 'logo/degree.html' %} {% trans 'Degrees' %}</a>
+            <a class="dropdown-item" href="{% url 'degreecategory_listview' %}">    {% include 'logo/degree_alt.html' %} {% trans 'Degree categories' %}</a>
+            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{% url 'module_listview' %}">{% include 'logo/module.html' %} {% trans 'Modules' %}</a>
+            <a class="dropdown-item" href="{% url 'modulelevel_listview' %}">    {% include 'logo/module_alt.html' %} {% trans 'Module levels' %}</a>
           </div>
         </li>
       </ul>
