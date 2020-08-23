@@ -132,7 +132,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return reverse('module_rr_detailview', kwargs={"pk": self.pk})
 
 
-@receiver(post_save, sender=DegreeRegistrationReport)
+@receiver(post_save, sender=DegreeRegistrationReport)  # TODO: Review this
 def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
     """When a DegreeRegistrationReport is created, all the related
     ModuleRegistrationReports of the related modules are generated too and
@@ -141,6 +141,7 @@ def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
     NOTE: This couldn't be done in the DegreeRegistrationReport.save() because
     of a circular import issue.
     """
+    # FIXME: A new module_rr must be created for each module of the degree_rr, if a previous module_rr validated exists, the user should should be prompted to ignore it (default, module_rr wil be flagged as EXEMPTED and best final_score available will be taken over) or redo it.
 
     for module in instance.degree.modules.all():
         for module_rr in module.modules_rrs.all():

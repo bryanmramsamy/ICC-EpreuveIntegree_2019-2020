@@ -1,5 +1,6 @@
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
@@ -133,14 +134,21 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return resource.modules_average_score(self)
 
     @property
-    def total_expenses(self):
-        """Compute the total expenses of the student for this degree."""
+    def total_paid_price(self):
+        """Compute the total price of the student for this degree.
 
-        total_expenses = 0
-        for module_rr in self.modules_rrs.all():
-            total_expenses += module_rr.module.charge_price
+        The denied and exempted modules are not included into the price.
+        """
 
-        return total_expenses
+        total_paid_price = 0
+        for module_rr in self.modules_rrs.filter(
+            Q(status='APPROVED')
+            | Q(status='PAYED')
+            | Q(status='COMPLETED')
+        ):
+            total_paid_price += module_rr.module.price
+
+        return total_paid_price
 
     def __str__(self):
         """Unicode representation of DegreeRegistrationRappport."""

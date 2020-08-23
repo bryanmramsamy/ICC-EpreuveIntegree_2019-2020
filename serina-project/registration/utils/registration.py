@@ -8,6 +8,17 @@ from . import groups as groups_utils
 
 # Module Registration Reports
 
+def module_still_ongoing_by_user(user, module):
+    """Check if a module is still followed by the user."""
+
+    return groups_utils.is_student(user) \
+        and ModuleRegistrationReport.objects.filter(
+        Q(student_rr__created_by=user),
+        Q(module=module),
+        (Q(status="APPROVED") | Q(status="PAYED"))
+    ).exists()
+
+
 def module_already_validated_by_user(user, module):
     """Check if a module has already been validated by a user."""
 
@@ -35,6 +46,15 @@ def all_prerequisites_validated_by_user(user, module):
 
 
 # Degree Registration Reports
+
+def degree_still_ongoing_by_user(user, degree):
+    """Check if a degree is still followed by the user."""
+
+    return DegreeRegistrationReport.objects.filter(
+        Q(student_rr__created_by=user),
+        Q(degree=degree),
+    ).exists()
+
 
 def degree_already_validated_by_user(user, degree):
     """Check if a degree has already been completed by a user."""

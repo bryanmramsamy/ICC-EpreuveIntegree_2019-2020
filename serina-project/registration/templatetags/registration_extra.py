@@ -25,6 +25,14 @@ def is_manager_or_administrator(user):
 
 # Module Registration Report
 
+
+@register.filter
+def module_still_ongoing_by_user(user, module):
+    """Filter that checks if the user is still following the given module."""
+
+    return registration_utils.module_already_validated_by_user(user, module)
+
+
 @register.filter
 def module_already_validated_by_user(user, module):
     """Filter that checks if the user has already vaidated the given module."""
