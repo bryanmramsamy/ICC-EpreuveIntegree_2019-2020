@@ -1,28 +1,130 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra static %}
 
-{% block title %}{% trans 'DegreeCategoryListView' %}{% endblock title %}
+{% block title %}{% trans 'Degrees by category' %}{% endblock title %}
 
 {% block content %}
-    <h1>DegreeCategoryListView</h1>
 
-    {% for category in categories %}
-        <div>
-            <a href="{{ category.get_absolute_url }}">
-                <h2>{{ category.name }}</h2>
-            </a>
+
+  {# Heading jumbotron #}
+
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/library_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
+    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+          <h1 class="display-4" style="font-style: italic;">
+            {% include 'logo/degree_alt.html' %}
+            {% trans 'Degrees by category' %}
+          </h1>
+          <hr>
+          <p class="lead">
+            {% blocktrans %}
+              If you are looking for a specific bachelor or maybe a more advanced master, you may find it easier to order our degrees by their categories.
+            {% endblocktrans %}
+          </p>
         </div>
 
-        <div>
-            <h4>Degrees from this category: ({{ category.degrees.count }})</h4>
-            <ul>
-                {% for degree in category.degrees.all %}
-                <li>{{ degree.title }}</li>
-                {% endfor %}
-            </ul>
+        <div class="col col-md-4">
+          <img src="{% static 'draws/order_delivered.svg' %}" alt="Modules catalog" class="img-fluid rounded">
         </div>
+      </div>
+    </div>
+  </section>
 
-        <h5><a href="{% url 'degreecategory_updateview' pk=category.pk %}">degreecategory_updateview</a></h5>
-        <h5><a href="{% url 'degreecategory_deleteview' pk=category.pk %}">degreecategory_deleteview</a></h5>
-    {% endfor %}
+
+  {# Statistical informations #}
+
+  <section class="container">
+    <div class="row text-muted">
+      <div class="col-sm">
+        {% blocktrans count nb_categories=category.count %}
+          There is actually only one degree's category available.
+        {% plural %}
+          They are actually {{ nb_categories }} degree's categories available.
+        {% endblocktrans %}
+      </div>
+    </div>
+  </section>
+
+
+  {# Create new module button #}
+
+  <div class="row">
+    {% if request.user|is_manager_or_administrator %}
+      <div class="col">
+        <a href="{% url 'degreecategory_createview' %}" class="btn btn-block btn-warning">Create a new degree category {% include 'logo/new.html' %}</a>
+      </div>
+    {% endif %}
+    <div class="col">
+      <a href="{% url 'degree_listview' %}" class="btn btn-block btn-dark">Consult the degrees catalog {% include 'logo/degree.html' %}</a>
+    </div>
+  </div>
+
+  <br>
+
+  {# Level card #}
+
+
+  {% for category in categories %}
+    <div class="card">
+      <div class="card-header">
+        <div class="row row-cols-1 row-cols-md-3">
+          <div class="col col-md-6 pb-2 pb-md-0">
+            <span class="h2">{{ category.name }}</span>
+          </div>
+          {% if request.user|is_manager_or_administrator %}
+            <div class="col col-md-3 pb-2 pb-md-0">
+              <a href="{% url 'degreecategory_updateview' pk=category.pk %}" class="btn btn-block btn-warning">
+                {% trans 'Update' %} {% include 'logo/edit.html' %}
+              </a>
+            </div>
+            <div class="col col-md-3 pb-2 pb-md-0">
+              <a href="{% url 'degreecategory_deleteview' pk=category.pk %}" class="btn btn-block btn-danger">
+                {% trans 'Delete' %} {% include 'logo/delete.html' %}
+              </a>
+            </div>
+          {% endif %}
+        </div>
+        
+      </div>
+
+      <div class="card-body">
+        {% for degree in category.degrees.all %}
+          <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
+            <div class="col-md-7">
+              <a href="{{ degree.get_absolute_url }}" class="text-reset">
+                <span class="h5">{% include 'logo/degree.html' %} {{ degree.title }}</span> 
+                <span class="small text-muted">{{ degree.reference }}</span>
+              </a>
+            </div>
+            <div class="col-md-5">
+              {% if request.user|is_student %}
+                {% if request.user|degree_already_validated_by_user:degree %}
+                  <span class="text-success">
+                    {% include 'logo/check_valid.html' %} {% trans 'Degree already validated' %}
+                  </span>
+                {% else %}
+                  <span class="text-danger">
+                    {% include 'logo/check_invalid.html' %} {% trans 'Degree not validated' %}
+                  </span>
+                {% endif %}
+              {% else %}
+                <span class="text-info">
+                  {% include 'logo/check_info.html' %} 
+                  {% blocktrans count nb_modules=degree.modules.all.count %}
+                    This degree is composed of only one module.
+                  {% plural %}
+                    This degree is composed of {{ nb_modules }} modules.
+                  {% endblocktrans %}
+                </span>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  {% endfor %}
+
+  <br>
+
 {% endblock content %}
