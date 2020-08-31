@@ -1,13 +1,57 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans 'Login' %}{% endblock title %}
 
 {% block content %}
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
 
-        <input type="submit" value="{% trans 'Sign in' %}">
-    </form>
+
+  {# Formset #}
+
+  <section class="container my-5 p-2">
+    <div class="container border rounded text-center bg-light pt-2" style="max-width: 600px;">
+      <img src="{% static 'draws/login.svg' %}" alt="Sign in" class="img-fluid">
+      <span class="h1">
+        {% trans 'Sign in' %} {% include 'logo/in-left.html' %}
+      </span>
+      <hr>
+      <div class="form-group">
+        <form action="{% url 'login' %}" method="post">
+          {% csrf_token %}
+          
+          <label for="username" class="h5 text-uppercase">{% trans 'Enter your registration number' %}</label>
+          <input id="username" type="text" class="form-control form-control-lg">
+          
+          <br>
+
+          <label for="password" class="h5 text-uppercase">{% trans 'Enter your password' %}</label>
+          <input id="password" type="password" class="form-control form-control-lg">
+
+          <br>
+
+          <input type="submit" value="{% trans 'Sign in' %}" class="btn btn-block btn-dark h5 text-uppercase">
+        </form>
+      </div>
+
+      <hr>
+
+      <br>
+
+      {% trans 'Registration number or password forgotten ?' %}
+      <a href="{% url 'password_reset' %}" class="btn btn-block btn-outline-dark text-uppercase">
+        {% trans 'Reset your password' %}
+      </a>
+
+      <hr>
+
+      {% trans 'Not regitered yet ?' %}
+      <a href="{% url 'register' %}" class="btn btn-block btn-outline-dark text-uppercase">
+        {% trans 'Sign up' %}
+      </a>
+
+      <br>
+
+    </div>
+  </section>
+
 {% endblock content %}
