@@ -33,7 +33,7 @@
               <br>
               Your name is not shared to anyone outside the organisation.
               <br>
-              <span class="text-danger">This data cannot be changed once set. To change your name, please contact the support team (<a href="mailto:serina@support.com">serina@support.com</a>).</span>
+              <span class="text-danger">This data cannot be changed once set. To change your name, please contact the support team (<a href="mailto:{{ support_mail }}">{{ support_mail }}</a>).</span>
             {% endblocktrans %}
           </p>'>
             <input id="{{ form.first_name.auto_id }}" name="{{ form.first_name.html_name }}" type="text" class="form-control form-control-lg" required>
@@ -53,7 +53,7 @@
               <br>
               Your name is not shared to anyone outside the organisation.
               <br>
-              <span class="text-danger">This data cannot be changed once set. To change your name, please contact the support team (<a href="mailto:serina@support.com">serina@support.com</a>).</span>
+              <span class="text-danger">This data cannot be changed once set. To change your name, please contact the support team (<a href="mailto:{{ support_mail }}">{{ support_mail }}</a>).</span>
             {% endblocktrans %}
           </p>'>
             <input id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}" type="text" class="form-control form-control-lg" required>
@@ -119,7 +119,7 @@
                 {% url 'privacy_policy' as link_privacy %}
                 {% url 'cookies_policy' as link_cookies %}
                 {% blocktrans %}
-                  By checking this box, you confirm beeing informed about our <a href="{{ link_terms }}">Terms and conditions</a>, our <a href="{{ link_privacy }}">Privacy policy</a> and our <a href="{{ link_cookies }}">Cookies policy</a>. Checking this box also means you agrees with the terms describted in it.
+                  By checking this box, you hereby agree to our <a href="{{ link_terms }}">Terms and conditions</a>, our <a href="{{ link_privacy }}">Privacy policy</a> and our <a href="{{ link_cookies }}">Cookies policy</a>.
                 {% endblocktrans %}
               </label>
             </div>
@@ -144,11 +144,5 @@
 
     </div>
   </section>
-
-
-Your password can’t be too similar to your other personal information.
-Your password must contain at least 8 characters.
-Your password can’t be a commonly used password.
-Your password can’t be entirely numeric.
 
 {% endblock content %}
