@@ -33,7 +33,7 @@
 
           <br>
 
-          <input type="submit" value="{% trans 'Sign in' %}" class="btn btn-block btn-dark h5 text-uppercase">
+          <input type="submit" value="{% trans 'Sign in' %}" class="btn btn-block btn-lg btn-dark h5 text-uppercase">
         </form>
       </div>
 
@@ -43,14 +43,14 @@
 
       {% trans 'Registration number or password forgotten ?' %}
       <a href="{% url 'password_reset' %}" class="btn btn-block btn-outline-dark text-uppercase">
-        {% trans 'Reset your password' %}
+        {% trans 'Reset your password' %} {% include 'logo/lock.html' %}
       </a>
 
       <hr>
 
       {% trans 'Not regitered yet ?' %}
       <a href="{% url 'register' %}" class="btn btn-block btn-outline-dark text-uppercase">
-        {% trans 'Sign up' %}
+        {% trans 'Sign up' %} {% include 'logo/register.html' %}
       </a>
 
       <br>
