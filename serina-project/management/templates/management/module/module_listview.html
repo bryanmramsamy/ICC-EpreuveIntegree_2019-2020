@@ -82,11 +82,15 @@
   <div class="row">
     {% if request.user|is_manager_or_administrator %}
       <div class="col">
-        <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">Create a new module {% include 'logo/new.html' %}</a>
+        <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">
+          Create a new module {% include 'logo/new.html' %}
+        </a>
       </div>
     {% endif %}
     <div class="col">
-      <a href="{% url 'modulelevel_listview' %}" class="btn btn-block btn-dark">Consult modules by level {% include 'logo/module_alt.html' %}</a>
+      <a href="{% url 'modulelevel_listview' %}" class="btn btn-block btn-dark">
+        Consult the modules by level {% include 'logo/module_alt.html' %}
+      </a>
     </div>
   </div>
 

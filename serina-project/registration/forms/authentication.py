@@ -66,7 +66,7 @@ class CustomAuthenticationForm(AuthenticationForm):
     """Custom AuthenticationForm supporting i18n."""
 
     username = forms.CharField(
-        label=_('Username'),
+        label=_('Registration number'),
         widget=forms.TextInput(attrs={'autofocus': True})
     )
     password = forms.CharField(

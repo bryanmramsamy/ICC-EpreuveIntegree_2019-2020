@@ -37,7 +37,7 @@
   <section class="container">
     <div class="row text-muted">
       <div class="col-sm">
-        {% blocktrans count nb_categories=category.count %}
+        {% blocktrans count nb_categories=categories.count %}
           There is actually only one degree's category available.
         {% plural %}
           They are actually {{ nb_categories }} degree's categories available.
@@ -52,11 +52,15 @@
   <div class="row">
     {% if request.user|is_manager_or_administrator %}
       <div class="col">
-        <a href="{% url 'degreecategory_createview' %}" class="btn btn-block btn-warning">Create a new degree category {% include 'logo/new.html' %}</a>
+        <a href="{% url 'degreecategory_createview' %}" class="btn btn-block btn-warning">
+          Create a new degree category {% include 'logo/new.html' %}
+        </a>
       </div>
     {% endif %}
     <div class="col">
-      <a href="{% url 'degree_listview' %}" class="btn btn-block btn-dark">Consult the degrees catalog {% include 'logo/degree.html' %}</a>
+      <a href="{% url 'degree_listview' %}" class="btn btn-block btn-dark">
+        Consult the degrees catalog {% include 'logo/degree.html' %}
+      </a>
     </div>
   </div>
 
