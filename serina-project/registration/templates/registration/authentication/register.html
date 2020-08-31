@@ -22,36 +22,95 @@
           {% csrf_token %}
           
           <label for="{{ form.first_name.id_for_label }}" class="h5 text-uppercase">{{ form.first_name.label }}</label>
-          <input id="{{ form.first_name.auto_id }}" name="{{ form.first_name.html_name }}" type="text" class="form-control form-control-lg" required>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          {% blocktrans %}
+            <strong>How is this personal data used ?</strong>
+          {% endblocktrans %}
+          <br>
+          <p class="text-justify small">
+            {% blocktrans %}
+              This data is used to indentify each user. It is used to compare your name with the name given on your registration documents. Your name can also appear on the list of attendance of each course you are following, which is only visible by the teachers of the module. 
+              <br>
+              Your name is not shared to anyone outside the organisation.
+              <br>
+              <span class="text-danger">This data cannot be changed once set. To change your name, please contact the support team (<a href="mailto:serina@support.com">serina@support.com</a>).</span>
+            {% endblocktrans %}
+          </p>'>
+            <input id="{{ form.first_name.auto_id }}" name="{{ form.first_name.html_name }}" type="text" class="form-control form-control-lg" required>
+          </div>
 
           <br>
 
           <label for="{{ form.last_name.id_for_label }}" class="h5 text-uppercase">{{ form.last_name.label }}</label>
-          <input id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}" type="text" class="form-control form-control-lg" required>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          {% blocktrans %}
+            <strong>How is this personal data used ?</strong>
+          {% endblocktrans %}
+          <br>
+          <p class="text-justify small">
+            {% blocktrans %}
+              This data is used to indentify each user. It is used to compare your name with the name given on your registration documents. Your name can also appear on the list of attendance of each course you are following, which is only visible by the teachers of the module. 
+              <br>
+              Your name is not shared to anyone outside the organisation.
+              <br>
+              <span class="text-danger">This data cannot be changed once set. To change your name, please contact the support team (<a href="mailto:serina@support.com">serina@support.com</a>).</span>
+            {% endblocktrans %}
+          </p>'>
+            <input id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}" type="text" class="form-control form-control-lg" required>
+          </div>
 
           <br>
 
           <label for="{{ form.email.id_for_label }}" class="h5 text-uppercase">{{ form.email.label }}</label>
-          <input id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}" type="email" class="form-control form-control-lg" required>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          {% blocktrans %}
+            <strong>How is this personal data used ?</strong>
+          {% endblocktrans %}
+          <br>
+          <p class="text-justify small">
+            {% blocktrans %}
+              This data is used to communicate with the user. The email is used to send you notifications, alerts, password reset tokens of set at disposal of our staff to directly communicate with you.
+              <br>
+              If you are not part of the staff (guest or student), your email address is not shared to anyone outside the organisation.
+            {% endblocktrans %}
+          </p>'>
+            <input id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}" type="email" class="form-control form-control-lg" required>
+          </div>
 
           <br>
 
           <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">{{ form.password.label }}</label>
-          <input id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" type="password" class="form-control form-control-lg" required>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          {% blocktrans %}
+            <strong>How is this personal data used ?</strong>
+          {% endblocktrans %}
+          <br>
+          <p class="text-justify small">
+            {% blocktrans %}
+              This data is used as authentication security measure. You password is hashed before being stored in our database, which means it remains unreadable for everyone, our administrators included. Your previous password are not stored. You are the only one who know what the password exactly is.
+            {% endblocktrans %}
+          </p>'>
+            <input id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" type="password" class="form-control form-control-lg" required>
+          </div>
 
           <br>
 
           <label for="{{ form.confirm_password.id_for_label }}" class="h5 text-uppercase">{{ form.confirm_password.label }}</label>
           <input id="{{ form.confirm_password.auto_id }}" name="{{ form.confirm_password.html_name }}" type="password" class="form-control form-control-lg" required>
 
-          {% if form.username.errors %}
-            <div class="text-right text-danger">{% include 'logo/check_invalid.html' %}Registration number or password incorrect</div>
-          {% endif %}
-
           <br>
 
           <div class="row">
-            <div class="col-1">
+            <div class="col-1 input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+              {% blocktrans %}
+                <strong>What if the terms and/or the policies changes ?</strong>
+              {% endblocktrans %}
+              <br>
+              <p class="text-justify small">
+                {% blocktrans %}
+                  You will be immediatly informed by mail through the mail address which is currently assigned to your account.
+                {% endblocktrans %}
+              </p>'>
               <input type="checkbox" name="gdpr_consent" id="gdpr_consent" required>
             </div>
             <div class="col-11">

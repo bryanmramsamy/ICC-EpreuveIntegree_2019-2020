@@ -1,5 +1,4 @@
-{% load i18n %}
-{% load static %}
+{% load i18n static %}
 
 {% get_current_language as LANGUAGE_CODE %}
 
@@ -18,7 +17,19 @@
       {% endfor %}
     </select>
 
-    <div class="input-group-append" data-toggle="gdpr-popover" data-placement="top" data-content='<strong>{% trans "How is this personal data used ?" %}</strong><br><p class="text-justified small">{% trans "Your language preference is stored in a cookie in order to load the correct language when you navigate through the application.<br>If you delete the cookie, an new one will be created with English as the default value." %}</p>'>
+    <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+      {% blocktrans %}
+        <strong>How is this personal data used ?</strong>
+      {% endblocktrans %}
+      <br>
+      <p class="text-justify small">
+        {% blocktrans %}
+          Your language preference is stored in a cookie in order to load the correct language when you navigate through the application.
+          <br>
+          If you delete the cookie, an new one will be created with English as the default value.
+        {% endblocktrans %}
+      </p>'>
+      
       <input class="btn btn-secondary" type="submit" value="{% trans 'Change the language' %}">
     </div>
   </div>
