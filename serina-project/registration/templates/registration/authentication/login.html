@@ -19,13 +19,17 @@
         <form action="{% url 'login' %}" method="post">
           {% csrf_token %}
           
-          <label for="username" class="h5 text-uppercase">{% trans 'Enter your registration number' %}</label>
-          <input id="username" type="text" class="form-control form-control-lg">
-          
+          <label for="{{ form.username.id_for_label }}" class="h5 text-uppercase">{{ form.username.label }}</label>
+          <input id="{{ form.username.auto_id }}" name="{{ form.username.html_name }}" type="text" class="form-control form-control-lg" required>
+
           <br>
 
-          <label for="password" class="h5 text-uppercase">{% trans 'Enter your password' %}</label>
-          <input id="password" type="password" class="form-control form-control-lg">
+          <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">{{ form.password.label }}</label>
+          <input id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" type="password" class="form-control form-control-lg" required>
+
+          {% if form.username.errors %}
+            <div class="text-right text-danger">{% include 'logo/check_invalid.html' %}Registration number or password incorrect</div>
+          {% endif %}
 
           <br>
 
@@ -53,5 +57,6 @@
 
     </div>
   </section>
+
 
 {% endblock content %}

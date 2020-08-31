@@ -3,6 +3,7 @@
 {% if form.errors %}
   {% for field in form %}
     {% for error in field.errors %}
+    DEBUG:
       <div class="alert alert-danger" role="alert">
       {{ error }}
       </div>
