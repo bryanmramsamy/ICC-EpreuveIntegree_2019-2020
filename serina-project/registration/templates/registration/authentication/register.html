@@ -50,6 +50,24 @@
 
           <br>
 
+          <div class="row">
+            <div class="col-1">
+              <input type="checkbox" name="gdpr_consent" id="gdpr_consent" required>
+            </div>
+            <div class="col-11">
+              <label for="gpdr_consent">
+                {% url 'terms_and_conditions' as link_terms %}
+                {% url 'privacy_policy' as link_privacy %}
+                {% url 'cookies_policy' as link_cookies %}
+                {% blocktrans %}
+                  By checking this box, you confirm beeing informed about our <a href="{{ link_terms }}">Terms and conditions</a>, our <a href="{{ link_privacy }}">Privacy policy</a> and our <a href="{{ link_cookies }}">Cookies policy</a>. Checking this box also means you agrees with the terms describted in it.
+                {% endblocktrans %}
+              </label>
+            </div>
+          </div>
+
+          <br>
+
           <input type="submit" value="{% trans 'Sign up' %}" class="btn btn-block btn-lg btn-dark h5 text-uppercase">
         </form>
       </div>
