@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.conf import settings
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -31,6 +32,8 @@ from ..utils import (
 def register(request):
     """Register function which creates an new User and a new linked
     UserProfile."""
+
+    support_mail = settings.CONTACT_MAILS["support"]
 
     if messages_utils.user_is_authenticated(request):
         return redirect('home')
