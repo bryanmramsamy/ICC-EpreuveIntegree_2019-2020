@@ -67,6 +67,13 @@ class ClassroomType(DjangoObjectType):
         model = Classroom
 
 
+class ReferenceWhere(graphene.InputObjectType):
+    """InputObjectType definition for any management object for filtering on
+    reference."""
+
+    reference = graphene.String()
+
+
 class ManagementStatsType(graphene.ObjectType):
     """Graphene value declarations for management statistic data."""
 
@@ -84,14 +91,25 @@ class ManagementStatsType(graphene.ObjectType):
 class Query(graphene.ObjectType):
     """Root queries definitions."""
 
+    module = graphene.NonNull(ModuleType, where=ReferenceWhere())
     modules = graphene.List(ModuleType)
     module_levels = graphene.List(ModuleLevelType)
+    degree = graphene.NonNull(DegreeType, where=ReferenceWhere())
     degrees = graphene.List(DegreeType)
     degree_categories = graphene.List(DegreeCategoryType)
+    course = graphene.NonNull(CourseType, where=ReferenceWhere())
     courses = graphene.List(CourseType)
+    classroom = graphene.NonNull(ClassroomType, where=ReferenceWhere())
     classrooms = graphene.List(ClassroomType)
 
     management_statistics = graphene.Field(ManagementStatsType)
+
+    def resolve_module(self, info, where):
+        """Resolver for 'module' query"""
+
+        reference = where.get("reference")
+
+        return Module.objects.get(reference__iexact=reference)
 
     def resolve_modules(self, info):
         """Resolver for 'modules' query"""
@@ -103,6 +121,13 @@ class Query(graphene.ObjectType):
 
         return ModuleLevel.objects.all()
 
+    def resolve_degree(self, info, where):
+        """Resolver for 'degree' query"""
+
+        reference = where.get("reference")
+
+        return Degree.objects.get(reference__iexact=reference)
+
     def resolve_degrees(self, info):
         """Resolver for 'degrees' query"""
 
@@ -113,10 +138,24 @@ class Query(graphene.ObjectType):
 
         return DegreeCategory.objects.all()
 
+    def resolve_course(self, info, where):
+        """Resolver for 'course' query"""
+
+        reference = where.get("reference")
+
+        return Course.objects.get(reference__iexact=reference)
+
     def resolve_courses(self, info):
         """Resolver for 'courses' query"""
 
         return Course.objects.all()
+
+    def resolve_classroom(self, info, where):
+        """Resolver for 'classroom' query"""
+
+        reference = where.get("reference")
+
+        return Classroom.objects.get(reference__iexact=reference)
 
     def resolve_classrooms(self, info):
         """Resolver for 'classrooms' query"""
