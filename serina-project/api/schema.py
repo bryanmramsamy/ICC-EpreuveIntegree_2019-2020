@@ -1,6 +1,7 @@
 import graphene
 
-from django.db.models import Q
+from django.contrib.auth.models import User
+from django.db.models import Avg, Q
 from graphene_django import DjangoObjectType
 
 from management.models import *
@@ -10,6 +11,8 @@ from registration.utils import management as management_utils
 
 
 # Graphene types declaration
+
+## Management
 
 class ModuleType(DjangoObjectType):
     """Django Object Type definition for Module."""
@@ -86,6 +89,34 @@ class ManagementStatsType(graphene.ObjectType):
     total_classrooms = graphene.Int()
 
 
+## Registration
+
+# class ClassroomType(DjangoObjectType):
+#     """Django Object Type definition for Classroom."""
+
+#     class Meta:
+#         """Meta definition for ClassroomType."""
+
+#         model = Classroom
+
+class RegistrationStatsType(graphene.ObjectType):
+    """Graphene value declarations for registration statistic data."""
+
+    total_guests = graphene.Int()
+    total_students = graphene.Int()
+    total_teachers = graphene.Int()
+    total_module_registration_reports = graphene.Int()
+    total_module_registration_reports_without_degrees = graphene.Int()
+    total_module_registration_reports_from_degrees = graphene.Int()
+    total_degree_registration_reports = graphene.Int()
+
+
+class ScoresStatsType(graphene.ObjectType):
+    """Graphene value declarations for registration scores statistic data."""
+
+    average_score_on_all_modules = graphene.Float()
+
+
 # Root queries
 
 class Query(graphene.ObjectType):
@@ -103,6 +134,10 @@ class Query(graphene.ObjectType):
     classrooms = graphene.List(ClassroomType)
 
     management_statistics = graphene.Field(ManagementStatsType)
+
+    registration_statistics = graphene.Field(RegistrationStatsType)
+
+    scores_statistics = graphene.Field(ScoresStatsType)
 
     def resolve_module(self, info, where):
         """Resolver for 'module' query"""
@@ -173,6 +208,36 @@ class Query(graphene.ObjectType):
             total_courses=Course.objects.all().count(),
             total_active_courses=management_utils.count_active_courses(),
             total_classrooms=Classroom.objects.all().count()
+        )
+
+    def resolve_registration_statistics(self, info):
+        """Resolver for 'managementStatistics' query"""
+
+        return RegistrationStatsType(
+            total_guests=User.objects \
+                .filter(groups__name__exact="Guest").count(),
+            total_students=User.objects \
+                .filter(groups__name__exact="Student").count(),
+            total_teachers=User.objects \
+                .filter(groups__name__exact="Teacher").count(),
+            total_module_registration_reports = ModuleRegistrationReport \
+                .objects.all().count(),
+            total_module_registration_reports_without_degrees = \
+                ModuleRegistrationReport.objects \
+                .filter(degree_rr__isnull=True).count(),
+            total_module_registration_reports_from_degrees = \
+                ModuleRegistrationReport.objects \
+                .filter(degree_rr__isnull=False).count(),
+            total_degree_registration_reports = \
+                DegreeRegistrationReport.objects.all().count(),
+        )
+    
+    def resolve_scores_statistics(self, info):
+        """Resolver for 'scoresStatistics' query"""
+
+        return ScoresStatsType(
+            average_score_on_all_modules = ModuleRegistrationReport.objects. \
+                all().aggregate(Avg('final_score'))["final_score__avg"]
         )
 
 # Schema

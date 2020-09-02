@@ -26,3 +26,4 @@ admin.site.site_header = "SERINA Back-Office"
 admin.site.site_title = "Administration"
 admin.site.index_title = "Superintent application for Educational " \
                          "Resources, Inscriptions and Network Administration"
+admin.site.enable_nav_sidebar = False
