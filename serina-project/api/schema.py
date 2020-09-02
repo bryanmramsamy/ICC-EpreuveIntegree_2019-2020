@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Avg, Q
 from graphene_django import DjangoObjectType
 
+from . import stats_utils
 from management.models import *
 from rating.models import *
 from registration.models import *
@@ -115,6 +116,8 @@ class ScoresStatsType(graphene.ObjectType):
     """Graphene value declarations for registration scores statistic data."""
 
     average_score_on_all_modules = graphene.Float()
+    succeeded_modules = graphene.Int()
+    success_rate_modules = graphene.Float()
 
 
 # Root queries
@@ -222,13 +225,13 @@ class Query(graphene.ObjectType):
                 .filter(groups__name__exact="Teacher").count(),
             total_module_registration_reports = ModuleRegistrationReport \
                 .objects.all().count(),
-            total_module_registration_reports_without_degrees = \
+            total_module_registration_reports_without_degrees= \
                 ModuleRegistrationReport.objects \
                 .filter(degree_rr__isnull=True).count(),
-            total_module_registration_reports_from_degrees = \
+            total_module_registration_reports_from_degrees= \
                 ModuleRegistrationReport.objects \
                 .filter(degree_rr__isnull=False).count(),
-            total_degree_registration_reports = \
+            total_degree_registration_reports= \
                 DegreeRegistrationReport.objects.all().count(),
         )
     
@@ -236,8 +239,10 @@ class Query(graphene.ObjectType):
         """Resolver for 'scoresStatistics' query"""
 
         return ScoresStatsType(
-            average_score_on_all_modules = ModuleRegistrationReport.objects. \
-                all().aggregate(Avg('final_score'))["final_score__avg"]
+            average_score_on_all_modules=ModuleRegistrationReport.objects. \
+                all().aggregate(Avg('final_score'))["final_score__avg"],
+            succeeded_modules=stats_utils.count_succeeded_modules(),
+            success_rate_modules=stats_utils.success_rate_modules(),
         )
 
 # Schema

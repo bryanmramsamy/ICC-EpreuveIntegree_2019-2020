@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
@@ -114,7 +115,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
         """
 
         return self.status == "EXEMPTED" \
-               or (self.status == "COMPLETED" and self.final_score >= 50)
+               or (self.status == "COMPLETED" and self.final_score >= settings
+                   .SUCCESS_SCORE_THRESHOLD)
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
