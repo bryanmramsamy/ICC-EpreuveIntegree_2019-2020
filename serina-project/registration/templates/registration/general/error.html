@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load i18n static %}
+
+{% block title %}{% trans 'Cookies Policy' %}{% endblock title %}
+
+{% block content %}
+  <section class="container m-4 rounded text-center text-light bg-dark">
+    <img src="{% static '{{ image }}' %}" alt="{{ code }}-error">
+
+    <div class="h1">
+      {{ message }}
+    </div>
+
+    {# TODO: Add contact form #}
+
+    <a href="{% url 'home' %}" class="btn btn-block btn-light">{% trans 'Back to the homepage' %}</a>
+
+    <br>
+  </section>
+
+{% endblock content %}
