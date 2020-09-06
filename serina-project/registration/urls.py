@@ -200,9 +200,4 @@ urlpatterns = [
         views.payment_canceled,
         name='payment_cancelled'
     ),
-
-    url(r"^400/$", views.error_400),  # TODO: Debug
-    url(r"^403/$", views.error_403),  # TODO: Debug
-    url(r"^404/$", views.error_404),  # TODO: Debug
-    url(r"^500/$", views.error_500),  # TODO: Debug
 ]
