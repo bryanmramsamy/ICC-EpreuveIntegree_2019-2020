@@ -93,7 +93,7 @@
           {{ form.id_picture.label }}
         </label>
         <div class="custom-file">
-          <input id="{{ form.id_picture.auto_id }}" name="{{ form.id_picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
+          <input id="{{ form.id_picture.auto_id }}" name="{{ form.id_picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
           <label id="{{ form.id_picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
             No picture selected yet
           </label>
@@ -105,12 +105,71 @@
           {{ form.id_card.label }}
         </label>
         <div class="form-group custom-file">
-          <input id="{{ form.id_card.auto_id }}" name="{{ form.id_card.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
+          <input id="{{ form.id_card.auto_id }}" name="{{ form.id_card.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
           <label id="{{ form.id_card.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.id_card.id_for_label }}">
             No file selected yet
           </label>
         </div>
       </div>
+
+      <div class="form-group">
+        <label class="h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
+          {{ form.secondary_education_certificate.label }}
+        </label>
+        <div class="form-group custom-file">
+          <input id="{{secondary_education_certificate.auto_id }}" name="{{ form.secondary_education_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+          <label id="{{ form.secondary_education_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
+            No file selected yet
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
+          {{ form.notes.label }}
+        </label>
+        <textarea id="{{ form.notes.auto_id }}" name="{{ form.notes.html_name }}" class="form-control form-control-lg">
+        </textarea>
+      </div>
+
+      {# Foreign student warning bubble #}
+
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  If you are a foreign student, you fill the second part of the form.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Foreign student must provide additional information by filling the second part of the form.
+              {% endblocktrans %}
+              <br>
+              {% blocktrans %}
+                Homegrown student can submit their registration report without it.
+              {% endblocktrans %}
+            </p>
+
+            <input type="submit" class="btn btn-block btn-lg btn-outline-dark text-uppercase" value="{% trans 'Submit your registration report' %}">
+            <br>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <h4 class="text-uppercase text-center">{% trans 'Foreigner student additional information' %}</h4>
+
+      <hr>
+
+
+
 
 
 
@@ -142,10 +201,18 @@
     });
 
     $('#{{ form.id_picture.auto_id }}').on('change',function(){
-      //get the file name
       var fileName = $(this).val();
-      //replace the "Choose a file" label
       $(this).next('#{{ form.id_picture.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.id_card.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.id_card.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.secondary_education_certificate.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.secondary_education_certificate.auto_id }}_label').html(fileName);
     })
   </script>
 {% endblock scripts %}

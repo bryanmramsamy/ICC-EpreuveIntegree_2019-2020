@@ -25,6 +25,7 @@ class StudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
         labels = {
             "id_picture": _("Your ID photo"),
             "id_card": _("Scan of your ID card"),
+            "notes": _("Additional notes you would like to add")
         }
 
 
