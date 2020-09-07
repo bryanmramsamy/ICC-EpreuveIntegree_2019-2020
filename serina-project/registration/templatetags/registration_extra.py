@@ -10,6 +10,13 @@ register = template.Library()
 # Group authorizations
 
 @register.filter
+def is_guest(user):
+    """Template tags checking if the user is part of the 'Guest'-group."""
+
+    return groups_utils.is_guest(user)
+
+
+@register.filter
 def is_student(user):
     """Template tags that checks if a user is a student or not."""
 

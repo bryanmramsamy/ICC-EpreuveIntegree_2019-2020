@@ -5,6 +5,12 @@ from django.utils.translation import ugettext as _
 
 # Read utilities
 
+def is_guest(user):
+    """Check if the user is a registered guest."""
+
+    return user.groups.filter(name="Guest").exists()
+
+
 def is_student(user):
     """Check if the user is a registered student."""
 
