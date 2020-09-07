@@ -62,26 +62,26 @@
 
   {% else %}
     {% if all_prerequisites_validated and module.prerequisites.all.count > 0 %}
-    <section class="container mb-2">
-      <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
-        <div class="col-md-1 text-center text-md-right">
-          <h1>{% include 'logo/info.html' %}</h1>
-        </div>
-        <div class="col-md-11">
-          <p class="text-justify">
-            <span class="h5 font-weight-bold">
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/info.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  This module has prerequisites you already validated.
+                {% endblocktrans %}
+              </span>
+              <br>
               {% blocktrans %}
-                This module has prerequisites you already validated.
+                You can subscribe to this module now without any more conditions.
               {% endblocktrans %}
-            </span>
-            <br>
-            {% blocktrans %}
-              You can subscribe to this module now without any more conditions.
-            {% endblocktrans %}
-          </p>
+            </p>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
     {% elif module.prerequisites.all.count > 0 %}
       <section class="container mb-2">
@@ -396,7 +396,6 @@
       </h3>
     </a>
   </div>
-  
 
   <br>
 

@@ -1,14 +1,218 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
 {% block title %}{% trans 'StudentRRCreateView' %}{% endblock title %}
 
 {% block content %}
-    <h1>StudentRRCreateView</h1>
-    <form action="." method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
 
-        <input type="submit" value="{% trans 'Submit student rr' %}">
+  {# Heading jumbotron #}
+
+  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/signature_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
+    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col col-md-8">
+          <h1 class="display-4" style="font-style: italic;">
+            Register now as a student by creating your own registration report
+            {% include 'logo/register_alt.html' %}
+          </h1>
+          <hr>
+          <p class="lead">
+            {% blocktrans %}
+            Your student registration report is the proof that you are registered as a student.
+            <br>
+            It will contain all your legal data, files, as well as all your subscribtions to each of your degree and/or modules.
+            <br>
+            From your student registration report, you will be able to consult your data, track your progression along your degrees and/or modules, check if your subscribtion to a degree and/or module has been validated, proceed to a pending payment, consult your invoices or your scores and many more.
+          {% endblocktrans %}
+          </p>
+        </div>
+
+        <div class="col col-md-4">
+          <img src="{% static 'draws/fill_forms.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container pt-3 rounded bg-light">
+    <form action="." method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <h4 class="text-uppercase text-center">{% trans 'General information' %}</h4>
+
+      <hr>
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="form-group col">
+          <label for="{{ form.birthday.id_for_label }}" class="h5 text-uppercase">
+            {{ form.birthday.label }}
+          </label>
+          <input id="{{ form.birthday.auto_id }}" name="{{ form.birthday.html_name }}" type="date" class="form-control form-control-lg" required>
+        </div>
+        <div class="form-group col">
+          <label for="{{ form.nationality.id_for_label }}" class="h5 text-uppercase">
+            {{ form.nationality.label }}
+          </label>
+          <select id="{{ form.nationality.auto_id }}" name="{{ form.nationality.html_name }}" class="form-control form-control-lg" required>
+            {% include 'nationality_select.html' %}
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.address.id_for_label }}" class="h5 text-uppercase">
+          {{ form.address.label }}
+        </label>
+        <input id="{{ form.address.auto_id }}" name="{{ form.address.html_name }}" type="text" class="form-control form-control-lg" required>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.additional_address.id_for_label }}" class="h5 text-uppercase">
+          {{ form.additional_address.label }}
+        </label>
+        <input id="{{ form.additional_address.auto_id }}" name="{{ form.additional_address.html_name }}" type="text" class="form-control form-control-lg">
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="form-group col-md-4">
+          <label for="{{ form.postal_code.id_for_label }}" class="h5 text-uppercase">
+            {{ form.postal_code.label }}
+          </label>
+          <input id="{{ form.postal_code.auto_id }}" name="{{ form.postal_code.html_name }}" type="text" class="form-control form-control-lg" required>
+        </div>
+        <div class="form-group col-md-8">
+          <label for="{{ form.postal_locality.id_for_label }}" class="h5 text-uppercase">
+            {{ form.postal_locality.label }}
+          </label>
+          <input id="{{ form.postal_locality.auto_id }}" name="{{ form.postal_locality.html_name }}" type="text" class="form-control form-control-lg" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
+          {{ form.id_picture.label }}
+        </label>
+        <div class="custom-file">
+          <input id="{{ form.id_picture.auto_id }}" name="{{ form.id_picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+          <label id="{{ form.id_picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
+            No picture selected yet
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="h5 text-uppercase" for="{{ form.id_card.id_for_label }}">
+          {{ form.id_card.label }}
+        </label>
+        <div class="form-group custom-file">
+          <input id="{{ form.id_card.auto_id }}" name="{{ form.id_card.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+          <label id="{{ form.id_card.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.id_card.id_for_label }}">
+            No file selected yet
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
+          {{ form.secondary_education_certificate.label }}
+        </label>
+        <div class="form-group custom-file">
+          <input id="{{secondary_education_certificate.auto_id }}" name="{{ form.secondary_education_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+          <label id="{{ form.secondary_education_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
+            No file selected yet
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
+          {{ form.notes.label }}
+        </label>
+        <textarea id="{{ form.notes.auto_id }}" name="{{ form.notes.html_name }}" class="form-control form-control-lg">
+        </textarea>
+      </div>
+
+      {# Foreign student warning bubble #}
+
+      <section class="container mb-2">
+        <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
+          <div class="col-md-1 text-center text-md-right">
+            <h1>{% include 'logo/warning.html' %}</h1>
+          </div>
+          <div class="col-md-11">
+            <p class="text-justify">
+              <span class="h5 font-weight-bold">
+                {% blocktrans %}
+                  If you are a foreign student, you fill the second part of the form.
+                {% endblocktrans %}
+              </span>
+              <br>
+              {% blocktrans %}
+                Foreign student must provide additional information by filling the second part of the form.
+              {% endblocktrans %}
+              <br>
+              {% blocktrans %}
+                Homegrown student can submit their registration report without it.
+              {% endblocktrans %}
+            </p>
+
+            <input type="submit" class="btn btn-block btn-lg btn-outline-dark text-uppercase" value="{% trans 'Submit your registration report' %}">
+            <br>
+          </div>
+        </div>
+      </section>
+
+      <hr>
+
+      <h4 class="text-uppercase text-center">{% trans 'Foreigner student additional information' %}</h4>
+
+      <hr>
+
+
+
+
+
+
+
+
+      <hr>
+      <hr>
+      <input type="checkbox" name="gdpr_consent" id="yourCheckBoxId" required>
+      
+      
+      {{ form.as_p }}
+      <input type="submit" value="{% trans 'Submit student rr' %}">
     </form>
+  </section>
+
 {% endblock content %}
+
+
+{% block scripts %}
+  <script>
+    $(function() {
+      $("#test").datepicker();
+    });
+
+    $("#yourCheckBoxId").change(function(){
+      if($(this).attr('checked')){
+        $(".yourDivClass").show();
+      }
+    });
+
+    $('#{{ form.id_picture.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.id_picture.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.id_card.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.id_card.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.secondary_education_certificate.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.secondary_education_certificate.auto_id }}_label').html(fileName);
+    })
+  </script>
+{% endblock scripts %}

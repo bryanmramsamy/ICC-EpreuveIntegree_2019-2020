@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from ..models import (
     DegreeRegistrationReport,
@@ -11,20 +12,25 @@ from ..utils.mixins import (
 )
 from management.models import Degree, Module
 
-# TODO: Comment correctly
 
 class StudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
-    """ModelForm for Module."""
+    """StudentRegistrationReport creation form with hidden (and autofilled in
+    the views) 'created_by field."""
 
     class Meta(HideCreatedByFieldFormMixin.Meta):
-        """Meta definition for ModuleLevelForm."""
+        """Meta definition for StudentRegistrationReportCreateFrom."""
 
         model = StudentRegistrationReport
         fields = "__all__"
+        labels = {
+            "id_picture": _("Your ID photo"),
+            "id_card": _("Scan of your ID card"),
+            "notes": _("Additional notes you would like to add")
+        }
 
 
 class ModuleRegistrationReportCreateFrom(forms.ModelForm):
-    """ModelForm for Module."""
+    """ModelForm for Module."""  # TODO: Comment correctly
 
     module = VerboseDegreeModuleChoiceField(queryset=Module.objects.all(),
                                             empty_label=None)
@@ -40,7 +46,7 @@ class ModuleRegistrationReportCreateFrom(forms.ModelForm):
 
 
 class DegreeRegistrationReportCreateFrom(forms.ModelForm):
-    """ModelForm for Module."""
+    """ModelForm for Module."""  # TODO: Comment correctly
 
     degree = VerboseDegreeModuleChoiceField(queryset=Degree.objects.all(),
                                             empty_label=None)
