@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
-{% load static %}
+{% load i18n registration_extra static %}
 
 {% block title %}{% trans 'Welcome' %}{% endblock title %}
 
@@ -34,6 +33,40 @@
       </p>
     </div>
   </section>
+
+
+  {# Guest warning bubble #}
+
+  {% if request.user|is_guest %}
+    <section class="container mb-2">
+      <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
+        <div class="col-md-1 text-center text-md-right">
+          <h1>{% include 'logo/warning.html' %}</h1>
+        </div>
+        <div class="col-md-11">
+          <p class="text-justify">
+            <span class="h5 font-weight-bold">
+              {% blocktrans %}
+                You are currently register as a guest, which prevent you from subscribing to new degrees or modules.
+              {% endblocktrans %}
+            </span>
+            <br>
+            {% blocktrans %}
+              You are registered to the application as a guest. If you want to subscribe to a degree or a module, fill our Student Registration Report form. Once the form completed and sent, you will automatically be promoted as a student, making you able to subscribe to all the degrees and/or the modules of your choice.
+            {% endblocktrans %}
+            <br><br>
+            {% blocktrans %}
+              Keep in mind that each of your subscribtion to a degree or a module must be validated by our staff, before being payed by you.
+            {% endblocktrans %}
+            <br>
+            <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-outline-dark">
+              {% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}
+            </a>
+          </p>
+        </div>
+      </div>
+    </section>
+  {% endif %}
 
 
   {# 3 random degrees #}
