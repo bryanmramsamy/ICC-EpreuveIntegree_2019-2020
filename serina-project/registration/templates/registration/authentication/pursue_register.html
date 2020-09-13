@@ -16,45 +16,50 @@
 
     <div class="text-center">
       {% blocktrans with user.get_full_name as user_fullname and user.username as registration_number %}
-        <h4>
+        <h2>
           Congratulations {{ user_fullname }} !
-        </h4>
-        You are now registered to the SERINA-Project as a guest and will receive a confirmation mail in the next hour.
-        <div class="mx-5 my-2 px-6 py-3 h5 rounded text-light bg-dark">
-          Your registration number is:
-          <div class="display-3">
-            {{ registration_number }}
+        </h2>
+        You are now registered to the SERINA-Project as a guest and will receive a confirmation mail in the next hour following your registration to our application.
+        <br><br>
+        If you didn't received any mail, click here to <a href="404">send it again</a> or contact our support team (<a href="mailto:{{ support_team_mail }}">{{ support_team_mail }}</a>).
+
+        <div class="px-5">
+          <div class="mx-5 my-2 px-5 py-3 h5 rounded text-light bg-dark">
+            Your registration number is:
+            <div class="display-3">
+              {{ registration_number }}
+            </div>
+            Please, do not forget your registration number.
+            <br>
+            This one is required in order to sign in.
+            <br><br>
+            You can also find it back in your registration mail.
+            <br><br>
+            If you may forget your registration number, please contact the support team (<a href="mailto:{{ support_team_mail }}">{{ support_team_mail }}</a>).
           </div>
-          Please, do not forget your registration number.
-          <br>
-          This one is required in order to sign in.
-          <br><br>
-          You can also find it back in your registration mail.
-          <br><br>
-          If you may forget your registration number, please contact the support team (<a href="mailto:{{ support_team_mail }}">{{ support_team_mail }}</a>).
         </div>
 
         <hr>
 
-        <h4>
-          But you are not a student yet !
-        </h4>
+        <h2>
+          But you are not a student yet ! There is one more step to complete !
+        </h2>
         To become a student and being able to register to our degrees and our modules, you must finish your registration by filling the student registration report form.
-        <br>
+        <br><br>
         If you are a foreign student, you must fill additional fields and submit additional files in order to complete your registration.
         <br>
         You can also fill finish your registration later if you want to.
-        <br><br>
-        <h3>
+        <hr>
+        <h2>
           Please select one option to continue
-        </h3>
+        </h2>
       {% endblocktrans %}
 
       <a href="{% url 'student_rr_createview_homegrown' %}" class="btn btn-block btn-lg btn-dark">
-        {% trans 'I\'m a homegrown student and I want to complete my registration' %} {% include 'logo/register.html' %}
+        {% trans 'I\'m a homegrown student and I want to complete my registration' %} {% include 'logo/register_alt.html' %}
       </a>
       <a href="{% url 'student_rr_createview_foreigner' %}" class="btn btn-block btn-lg btn-dark">
-        {% trans 'I\'m a foreign student and I want to complete my registration' %} {% include 'logo/register.html' %}
+        {% trans 'I\'m a foreign student and I want to complete my registration' %} {% include 'logo/register_alt.html' %}
       </a>
       <a href="{% url 'home' %}" class="btn btn-block btn-lg btn-outline-dark">
         {% trans 'I want to complete my registration later' %} {% include 'logo/clock.html' %}
