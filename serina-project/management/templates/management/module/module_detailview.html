@@ -32,7 +32,8 @@
 
   {# Validation restriction bubble #}
 
-  {% if already_validated %}
+  {% if not request.user|is_back_office_user %}
+    {% if already_validated %}
     <section class="container mb-2">
       <div class="row row-cols-1 row-cols-md-2 bg-success rounded text-light pt-2">
         <div class="col-md-1 text-center text-md-right">
@@ -42,16 +43,16 @@
           <p class="text-justify">
             <span class="h5 font-weight-bold">
               {% blocktrans %}
-                You already have validated this module.
+              You already have validated this module.
               {% endblocktrans %}
             </span>
             <br>
             {% blocktrans %}
-              You don't have to validate this module again. If a postrequisite module is still locked, this means another of its prerequisite module hasn't been validated yet. But this is not the case of this module.
+            You don't have to validate this module again. If a postrequisite module is still locked, this means another of its prerequisite module hasn't been validated yet. But this is not the case of this module.
             {% endblocktrans %}
             <br><br>
             {% blocktrans %}
-              You are free to subscribe once more to the module in order to get a better result. If you fail, the module will still be considered as validated. But keep in mind your request still have to be approved and you will have to pay the subscribtion fees once again.
+            You are free to subscribe once more to the module in order to get a better result. If you fail, the module will still be considered as validated. But keep in mind your request still have to be approved and you will have to pay the subscribtion fees once again.
             {% endblocktrans %}
           </p>
         </div>
@@ -60,89 +61,90 @@
 
     <br>
 
-  {% else %}
-    {% if all_prerequisites_validated and module.prerequisites.all.count > 0 %}
-      <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
-          <div class="col-md-1 text-center text-md-right">
-            <h1>{% include 'logo/info.html' %}</h1>
-          </div>
-          <div class="col-md-11">
-            <p class="text-justify">
-              <span class="h5 font-weight-bold">
-                {% blocktrans %}
+    {% else %}
+      {% if all_prerequisites_validated and module.prerequisites.all.count > 0 %}
+        <section class="container mb-2">
+          <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
+            <div class="col-md-1 text-center text-md-right">
+              <h1>{% include 'logo/info.html' %}</h1>
+            </div>
+            <div class="col-md-11">
+              <p class="text-justify">
+                <span class="h5 font-weight-bold">
+                  {% blocktrans %}
                   This module has prerequisites you already validated.
-                {% endblocktrans %}
-              </span>
-              <br>
-              {% blocktrans %}
+                  {% endblocktrans %}
+                </span>
+                <br>
+                {% blocktrans %}
                 You can subscribe to this module now without any more conditions.
-              {% endblocktrans %}
-            </p>
+                {% endblocktrans %}
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
-
-    {% elif module.prerequisites.all.count > 0 %}
-      <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
-          <div class="col-md-1 text-center text-md-right">
-            <h1>{% include 'logo/warning.html' %}</h1>
-          </div>
-          <div class="col-md-11">
-            <p class="text-justify">
-              <span class="h5 font-weight-bold">
-                {% blocktrans %}
+        </section>
+      
+      {% elif module.prerequisites.all.count > 0 %}
+        <section class="container mb-2">
+          <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
+            <div class="col-md-1 text-center text-md-right">
+              <h1>{% include 'logo/warning.html' %}</h1>
+            </div>
+            <div class="col-md-11">
+              <p class="text-justify">
+                <span class="h5 font-weight-bold">
+                  {% blocktrans %}
                   This module has prerequisites which must be validated in order to validate this module.
-                {% endblocktrans %}
-              </span>
-              <br>
-              {% blocktrans %}
-                If you didn't acquired the prerequisites yet, you can still subscribe to this module but keep in mind that it won't be considered as validated as long as the prerequisites are not validated yet.
-              {% endblocktrans %}
-              <br><br>
-              {% blocktrans %}
-                If you already acquired the prerequisites in another school, you can still go to that module page, subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
-              {% endblocktrans %}
-              <br><br>
-              {% blocktrans %}
-                Your request still have to be accepted by our staff and payed by yourself in any case.
-              {% endblocktrans %}
-            </p>
-          </div>
-        </div>
-      </section>
-    {% endif %}
-
-    {% if module.postrequisites.all.count > 0 %}
-      <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
-          <div class="col-md-1 text-center text-md-right">
-            <h1>{% include 'logo/info.html' %}</h1>
-          </div>
-          <div class="col-md-11">
-            <p class="text-justify">
-              <span class="h5 font-weight-bold">
+                  {% endblocktrans %}
+                </span>
+                <br>
                 {% blocktrans %}
-                  This module has postrequisites and must be validated in order to validate these.
+                If you didn't acquired the prerequisites yet, you can still subscribe to this module but keep in mind that it won't be considered as validated as long as the prerequisites are not validated yet.
                 {% endblocktrans %}
-              </span>
-              <br>
-              {% blocktrans %}
-                Some modules has this module has prerequisites, which means you cannot validate them without validate this one.
-              {% endblocktrans %}
-              <br><br>
-              {% blocktrans %}
-                If you already passed and succeed this module in another school, you can subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
-              {% endblocktrans %}
-            </p>
+                <br><br>
+                {% blocktrans %}
+                If you already acquired the prerequisites in another school, you can still go to that module page, subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
+                {% endblocktrans %}
+                <br><br>
+                {% blocktrans %}
+                Your request still have to be accepted by our staff and payed by yourself in any case.
+                {% endblocktrans %}
+              </p>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      {% endif %}
+      
+      {% if module.postrequisites.all.count > 0 %}
+        <section class="container mb-2">
+          <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
+            <div class="col-md-1 text-center text-md-right">
+              <h1>{% include 'logo/info.html' %}</h1>
+            </div>
+            <div class="col-md-11">
+              <p class="text-justify">
+                <span class="h5 font-weight-bold">
+                  {% blocktrans %}
+                  This module has postrequisites and must be validated in order to validate these.
+                  {% endblocktrans %}
+                </span>
+                <br>
+                {% blocktrans %}
+                Some modules has this module has prerequisites, which means you cannot validate them without validate this one.
+                {% endblocktrans %}
+                <br><br>
+                {% blocktrans %}
+                If you already passed and succeed this module in another school, you can subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
+                {% endblocktrans %}
+              </p>
+            </div>
+          </div>
+        </section>
+      {% endif %}
     {% endif %}
-  {% endif %}
 
-  <br>
+    <br>
+  {% endif %}
 
 
   {# Presentation card #}
@@ -198,21 +200,26 @@
     </div>
 
     <hr>
-
-    {% if request.user|is_student %}
-      <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
-    {% elif request.user|is_manager_or_administrator %}
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-2 mb-md-0">
-          <a href="{% url 'module_updateview' pk=module.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
-        </div>
-        <div class="col">
-          <a href="{% url 'module_deleteview' pk=module.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
-        </div>
+    
+    {% if request.user|is_manager_or_administrator %}
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col mb-2 mb-md-0">
+        <a href="{% url 'module_updateview' pk=module.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
       </div>
-    {% elif user.is_authenticated %}
+      <div class="col">
+        <a href="{% url 'module_deleteview' pk=module.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+      </div>
+    </div>
+
+    {% elif request.user|is_teacher %}
+      <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+
+    {% elif request.user|is_student %}
+      <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
+
+    {% elif request.user|is_guest %}
       <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
+        <div class="row row-cols-1 row-cols-md-2 py-2 rounded text-black bg-warning">
           <div class="col-md-1 text-center text-md-right">
             <h1>{% include 'logo/warning.html' %}</h1>
           </div>
@@ -225,14 +232,19 @@
               </span>
               <br>
               {% blocktrans %}
-                Register as a student now by submitting your registration report.
+                Your are currently a registered guest. To proceed to this action, you must be registered as a student.
+              {% endblocktrans %}
+              <br>
+              {% blocktrans %}
+                To become a student, all you have to do is to complete your registration by clicking on the button bellow and following the instructions. Once your registration complete as student, come back to this page.
               {% endblocktrans %}
             </p>
           </div>
         </div>
       </section>
 
-      <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>
+      <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
+
     {% else %}
       <section class="container mb-2">
         <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
@@ -248,7 +260,11 @@
               </span>
               <br>
               {% blocktrans %}
-                Register as a guest and then submit your registration report in order to subscribe to this module.
+                To perform this action, register as a guest first. Then pursue your registration completely to become a student.
+              {% endblocktrans %}
+              <br>
+              {% blocktrans %}
+                Once registered as a student, come back to this page and try again.
               {% endblocktrans %}
             </p>
           </div>
@@ -387,12 +403,13 @@
 
   <br>
 
+
   {# Back to ListView button #}
 
   <div class="text-right">
-    <a href="{% url 'module_listview' %}" class="btn p-4 btn-outline-dark">
+    <a href="{% url 'module_listview' %}" class="btn btn-block btn-outline-dark">
       <h3>
-        {% include 'logo/back.html' %} {% trans 'Back to the module catalog' %}
+        {% include 'logo/module.html' %} {% trans 'Back to the modules catalog' %} {% include 'logo/back.html' %}
       </h3>
     </a>
   </div>

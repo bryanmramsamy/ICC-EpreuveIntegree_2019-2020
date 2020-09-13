@@ -34,32 +34,35 @@
 
   {# Information bubble #}
 
-  <section class="container">
-    <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-white pt-2">
-      <div class="col-md-1 text-center text-md-right">
-        <h1>{% include 'logo/info.html' %}</h1>
-      </div>
-      <div class="col-md-11">
-        <p class="text-justify">
-          <span class="h5 font-weight-bold">
-            {% blocktrans %}
+  
+  {% if not request.user|is_back_office_user %}
+    <section class="container">
+      <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-white pt-2">
+        <div class="col-md-1 text-center text-md-right">
+          <h1>{% include 'logo/info.html' %}</h1>
+        </div>
+        <div class="col-md-11">
+          <p class="text-justify">
+            <span class="h5 font-weight-bold">
+              {% blocktrans %}
               Know more about the prerequisites conditions.
-            {% endblocktrans %}
-          </span>
-          <br>
-          {% blocktrans %}
+              {% endblocktrans %}
+            </span>
+            <br>
+            {% blocktrans %}
             Some modules has prerequisites modules, which means other modules which must be completed and succeeded by the student before being able to follow the desired module.
-          {% endblocktrans %}
-          <br><br>
-          {% blocktrans %}
+            {% endblocktrans %}
+            <br><br>
+            {% blocktrans %}
             If you already passed one of these modules here or in another educational institution, you can request for an examption. If the insitutution approves your examption, the module will be considered as succeeded and won't be charged.
-          {% endblocktrans %}
-        </p>
+            {% endblocktrans %}
+          </p>
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <br>
+    <br>
+  {% endif %}
 
 
   {# Statistical informations #}
@@ -131,15 +134,18 @@
                         <span class="text-success">
                           {% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}
                         </span>
+
                       {% elif module.prerequisites.all.count > 0 and request.user|all_prerequisites_validated_by_user:module %}
                         <span class="text-warning">
                           {% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}
                         </span>
+
                       {% elif module.prerequisites.all.count > 0 %}
                         <span class="text-danger">
                           {% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}
                         </span>
                       {% endif %}
+
                     {% elif module.prerequisites.all.count > 0 %}
                       <span class="text-info">{% include 'logo/check_info.html' %} 
                         {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
@@ -148,12 +154,13 @@
                           This module has {{ nb_prerequisites }} perequisites itself.
                         {% endblocktrans %}
                       </span>
+
                     {% else %}
-                    <span class="text-info">{% include 'logo/check_info.html' %} 
-                      {% blocktrans  %}
-                        This module has no prerequisites.
-                      {% endblocktrans %}
-                    </span>
+                      <span class="text-info">{% include 'logo/check_info.html' %} 
+                        {% blocktrans  %}
+                          This module has no prerequisites.
+                        {% endblocktrans %}
+                      </span>
                     {% endif %}
                   </div>
                 </div>
@@ -177,14 +184,22 @@
                     </div>
                   </div>
                 </div>
+
+              {% elif request.user|is_teacher %}
+                <div class="col">
+                  <a href="#" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+                </div>
+
               {% elif request.user|is_student %}
                 <div class="col">
                   <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
                 </div>
-              {% elif user.is_authenticated %}
+
+              {% elif request.user|is_guest %}
                 <div class="col">
-                  <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
                 </div>
+
               {% else %}
                 <div class="col">
                   <div class="row">
