@@ -1,6 +1,5 @@
 from django.contrib.auth.decorators import user_passes_test
-from django.db.models import Q
-from django.shortcuts import redirect
+from django.core.exceptions import PermissionDenied
 
 from . import groups as groups_utils
 from . import messages as messages_utils
@@ -17,8 +16,7 @@ def guests_only(function):  # TODO: DRY
         if groups_utils.is_guest(request.user):
             return function(request, *args, **kwargs)
         else:
-            messages_utils.permission_denied(request)
-            return redirect("home")
+            raise PermissionDenied
 
     return wrapper
 
@@ -32,7 +30,6 @@ def managers_or_administrators_only(function):  # TODO: DRY
         if groups_utils.is_manager_or_administrator(request.user):
             return function(request, *args, **kwargs)
         else:
-            messages_utils.permission_denied(request)
-            return redirect("home")
+            raise PermissionDenied
 
     return wrapper

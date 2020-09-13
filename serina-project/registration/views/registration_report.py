@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, DetailView, ListView
@@ -84,10 +85,8 @@ class StudentRegistrationReportCreateView(
         if self.request.user.groups.filter(name="Student"):
             messages_utils.student_rr_already_created(self.request,
                                                       self.request.user)
-        else:
-            messages_utils.permission_denied(self.request)
 
-        return redirect('home')
+        raise PermissionDenied
 
     def form_valid(self, form):
         """Promote the user to the 'Student'-group and notificate him/her with
