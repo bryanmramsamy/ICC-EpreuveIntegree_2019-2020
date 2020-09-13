@@ -13,9 +13,15 @@ from ..utils.mixins import (
 from management.models import Degree, Module
 
 
-class StudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
+class ForeignStudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
     """StudentRegistrationReport creation form with hidden (and autofilled in
-    the views) 'created_by field."""
+    the views) 'created_by field.
+
+    Student Registration request form for foreign students.
+    Foreign students must fill additional fields and send additional data which
+    are not required for homegrown students.
+    This form adds those fields.
+    """
 
     class Meta(HideCreatedByFieldFormMixin.Meta):
         """Meta definition for StudentRegistrationReportCreateFrom."""
@@ -27,6 +33,29 @@ class StudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
             "id_card": _("Scan of your ID card"),
             "notes": _("Additional notes you would like to add")
         }
+
+
+class HomegrownStudentRegistrationReportCreateFrom(
+    ForeignStudentRegistrationReportCreateFrom,
+):
+    """StudentRegistrationReport creation form with hidden (and autofilled in
+    the views) 'created_by field.
+
+    Student Registration request form for homegrown students.
+    Homegrown students are exempted of filling some additional data which are
+    mandatory for foreign students.
+    This form ommit those fields."""
+
+    class Meta(ForeignStudentRegistrationReportCreateFrom.Meta):
+        """Meta definition for StudentRegistrationReportCreateFrom."""
+
+        model = StudentRegistrationReport
+        exclude = (
+            "annex_403",
+            "other_school_inscription_certificate",
+            "national_register_extract",
+            "belgian_studies_history",
+        )
 
 
 class ModuleRegistrationReportCreateFrom(forms.ModelForm):
