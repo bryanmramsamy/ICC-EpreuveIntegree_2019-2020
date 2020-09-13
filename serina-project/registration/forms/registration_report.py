@@ -33,6 +33,28 @@ class ForeignStudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
             "id_card": _("Scan of your ID card"),
             "notes": _("Additional notes you would like to add")
         }
+        help_texts = {
+            "id_picture": _("JPEG pictures only"),
+            "id_card": _("JPEG scans or PDF files only"),
+            "secondary_education_certificate": _(
+                "Secondary education completion certificate or equivalent "
+                "document."
+            ),
+            "archievement_certificates": _(
+                "If you already succeeded one or more similar modules in "
+                "another school, you can send your success certificates in a "
+                "zip file. Our staff will decide if one or some certificates "
+                "can grant you an exemption for one or some or our modules."
+            ),
+            "job_organization_certificates": _(
+                "Any job certificates from organizations such as the 'VDAB', "
+                "the 'CPAS', the 'PHARE' or any similar organization."
+            ),
+            "exemption_report": _(
+                "Any of your academic reports which could lead to a potential "
+                "exemption."
+            ),
+        }
 
 
 class HomegrownStudentRegistrationReportCreateFrom(
