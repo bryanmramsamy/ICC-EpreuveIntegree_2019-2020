@@ -14,7 +14,9 @@ def error_400(request, *args, **kwargs):
                   "been understood by our servers.")
     support_mail = settings.CONTACT_MAILS["support"]
 
-    return render(request, 'registration/general/error.html', locals())
+    return render(request, 'registration/general/error.html', locals(),
+                  status=400)
+
 
 def error_403(request, *args, **kwargs):
     """Error view when a 403 error (Access forbidden) occurs."""
@@ -27,7 +29,9 @@ def error_403(request, *args, **kwargs):
                   "account permission level does not allow you to do.")
     support_mail = settings.CONTACT_MAILS["support"]
 
-    return render(request, 'registration/general/error.html', locals())
+    return render(request, 'registration/general/error.html', locals(),
+                  status=403)
+
 
 def error_404(request, *args, **kwargs):
     """Error view when a 404 error (Not found) occurs."""
@@ -40,7 +44,9 @@ def error_404(request, *args, **kwargs):
                   "exist.")
     support_mail = settings.CONTACT_MAILS["support"]
 
-    return render(request, 'registration/general/error.html', locals())
+    return render(request, 'registration/general/error.html', locals(),
+                  status=404)
+
 
 def error_500(request, *args, **kwargs):
     """Error view when a 500 error (Server error) occurs."""
@@ -56,4 +62,5 @@ def error_500(request, *args, **kwargs):
                   "for this incovenience.")
     support_mail = settings.CONTACT_MAILS["support"]
 
-    return render(request, 'registration/general/error.html', locals())
+    return render(request, 'registration/general/error.html', locals(),
+                  status=500)
