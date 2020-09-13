@@ -8,9 +8,9 @@
 
     <h2>Registration</h2>
     <ul>
-        <li><a href="{% url 'register' %}">register</a></li>
-        <li><a href="{% url 'login' %}">login</a></li>
-        <li><a href="{% url 'logout' %}">logout</a></li>
+        <li><a href="{% url 'register' %}">register</a> <strong>OK</strong></li>
+        <li><a href="{% url 'login' %}">login</a> <strong>OK</strong></li>
+        <li><a href="{% url 'logout' %}">logout</a> <strong>OK</strong></li>
         <li><a href="{% url 'password_change' %}">password_change</a></li>
         <li><a href="{% url 'password_reset' %}">password_reset</a></li>
         <li><a href="/admin">admin</a></li>
@@ -19,7 +19,9 @@
     <h3>RegistrationReports</h3>
     <ul>
         <li><a href="{% url 'student_rr_listview' %}">student_rr_listview</a></li>
-        <li><a href="{% url 'student_rr_createview' %}">student_rr_createview</a></li>
+        <li><a href="{% url 'student_rr_createview_homegrown' %}">student_rr_createview_homegrown</a> <strong>OK</strong></li>
+        <li><a href="{% url 'student_rr_createview_foreigner' %}">student_rr_createview_foreigner</a> <strong>OK</strong></li>
+        <li><a href="{% url 'pursue_registration' %}">pursue_registration</a> <strong>OK</strong></li>
         <br>
         <li><a href="{% url 'module_rr_listview' %}">module_rr_listview</a></li>
         <li><a href="{% url 'module_rr_createview' %}">module_rr_createview</a></li>
@@ -36,25 +38,25 @@
 
     <h3>Modules</h3>
     <ul>
-        <li><a href="{% url 'module_listview' %}">module_listview</a></li>
+        <li><a href="{% url 'module_listview' %}">module_listview</a> <strong>OK</strong></li>
         <li><a href="{% url 'module_createview' %}">module_createview</a></li>
     </ul>
 
     <h4>Modules levels</h4>
     <ul>
-        <li><a href="{% url 'modulelevel_listview' %}">modulelevel_listview</a></li>
+        <li><a href="{% url 'modulelevel_listview' %}">modulelevel_listview</a> <strong>OK</strong></li>
         <li><a href="{% url 'modulelevel_createview' %}">modulelevel_createview</a></li>
     </ul>
 
     <h3>Degrees</h3>
     <ul>
-        <li><a href="{% url 'degree_listview' %}">degree_listview</a></li>
+        <li><a href="{% url 'degree_listview' %}">degree_listview</a> <strong>OK</strong></li>
         <li><a href="{% url 'degree_createview' %}">degree_createview</a></li>
     </ul>
 
     <h4>Degree Categories</h4>
     <ul>
-        <li><a href="{% url 'degreecategory_listview' %}">degreecategory_listview</a></li>
+        <li><a href="{% url 'degreecategory_listview' %}">degreecategory_listview</a> <strong>OK</strong></li>
         <li><a href="{% url 'degreecategory_createview' %}">degreecategory_createview</a></li>
     </ul>
 

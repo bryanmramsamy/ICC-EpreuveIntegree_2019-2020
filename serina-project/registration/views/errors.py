@@ -58,7 +58,7 @@ def error_500(request, *args, **kwargs):
     help_text = _("Unfortunalty, the action you tried to perform caused an "
                   "internal error on the servers side. We welcome you to "
                   "report this, by clicking on the button bellow, in order "
-                  "for us to fix this bug as soon as possible. We appologies "
+                  "for us to fix this bug as soon as possible. We apologize "
                   "for this incovenience.")
     support_mail = settings.CONTACT_MAILS["support"]
 
