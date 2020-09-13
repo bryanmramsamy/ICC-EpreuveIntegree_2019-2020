@@ -80,7 +80,7 @@ def register(request):
 
             login(request, user)
 
-            return redirect('home')
+            return redirect('pursue_registration')
         else:
             return render(
                 request,
@@ -99,7 +99,9 @@ def pursue_registration(request):
     role if the registration is completed.
     """
 
-    return render(request, "registration/authentication/pursue_register.html")
+    support_team_mail = settings.CONTACT_MAILS["support"]
+    return render(request, "registration/authentication/pursue_register.html",
+                  locals())
 
 
 class CustomLoginView(LoginView):

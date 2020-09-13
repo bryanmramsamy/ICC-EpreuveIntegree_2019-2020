@@ -136,9 +136,14 @@ urlpatterns = [
         name="student_rr_detailview",
     ),
     url(
-        r"^report/student/c/$",
+        r"^report/student/c/homegrown-student/$",
         views.StudentRegistrationReportCreateView.as_view(),
-        name="student_rr_createview",
+        name="student_rr_createview_homegrown",
+    ),
+    url(
+        r"^report/student/c/foreign-student$",
+        views.StudentRegistrationReportCreateView.as_view(),
+        name="student_rr_createview_foreigner",
     ),
 
     # ModuleRegistrationReport

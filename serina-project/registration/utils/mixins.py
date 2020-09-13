@@ -1,7 +1,7 @@
 from django import forms
 from django.conf import settings
-from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.views.generic import FormView
 from django.shortcuts import redirect
@@ -17,14 +17,12 @@ from rating import models as rating_models
 
 
 class AccessRestrictionMixin(UserPassesTestMixin):
-    """Display an error message to the user which access has been denied and
-    redirect him/her to the homepage."""
+    """Redirect to the 403 page."""
 
     def handle_no_permission(self):
-        """Send an error message and redirect the home page."""
+        """Raise the 403 error."""
 
-        messages_utils.permission_denied(self.request)
-        return redirect('home')
+        raise PermissionDenied
 
 
 class StudentOnlyMixin(AccessRestrictionMixin):

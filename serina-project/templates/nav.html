@@ -38,7 +38,10 @@
           {% endif %}
 
         <a href="{% url 'userprofile_detailview' pk=user.pk %}" class="btn btn-light mr-2">
-          {% trans 'Profile' %}
+          {% blocktrans with user.username as registration_number %}
+            Profile <strong>{{ registration_number }}</strong>
+          {% endblocktrans %}
+
           {% include 'logo/profile.html' %}
         </a>
 
