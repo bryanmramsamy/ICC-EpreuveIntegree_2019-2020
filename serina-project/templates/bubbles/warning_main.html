@@ -1,22 +1,14 @@
-{% load registration_extra %}
+{% extends 'bubbles/main.html' %}
 
-<section class="container mb-2">
-  <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
-    <div class="col-md-1 text-center text-md-right">
-      <h1>{% include 'logo/warning.html' %}</h1>
-    </div>
-    <div class="col-md-11">
-      <p class="text-justify">
-        <span class="h5 font-weight-bold">
-          {% block bubble_title %}
-            <h1>BUBBLE TITLE MISSING !</h1>
-          {% endblock bubble_title %}
-        </span>
-        <br>
-        {% block bubble_content %}
-          <h1>BUBBLE CONTENT MISSING !</h1>
-        {% endblock bubble_content %}
-      </p>
-    </div>
-  </div>
-</section>
+
+{% block bubble_background %}warning{% endblock bubble_background %}
+
+{% block bubble_icon %}{% include 'logo/warning.html' %}{% endblock bubble_icon %}
+
+{% block bubble_title %}
+  <h1>BUBBLE TITLE MISSING !</h1>
+{% endblock bubble_title %}
+
+{% block bubble_content %}
+  <h1>BUBBLE CONTENT MISSING !</h1>
+{% endblock bubble_content %}
