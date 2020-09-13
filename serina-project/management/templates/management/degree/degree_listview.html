@@ -5,6 +5,19 @@
 
 {% block content %}
 
+  {# Guest warning bubble #}
+
+  {% if request.user|is_guest %}
+    <div class="p-2 rounded bg-warning">
+      {% include 'bubbles/warning_guest.html' %}
+    
+      <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
+    </div>
+
+    <br>
+  {% endif %}
+
+
   {# Heading jumbotron #}
 
   <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_02.jpg' %}'); background-attachment: fixed; background-size: 1100px;">

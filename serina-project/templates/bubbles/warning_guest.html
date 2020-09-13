@@ -1,0 +1,26 @@
+{% load i18n registration_extra %}
+
+<section class="container mb-2">
+  <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
+    <div class="col-md-1 text-center text-md-right">
+      <h1>{% include 'logo/warning.html' %}</h1>
+    </div>
+    <div class="col-md-11">
+      <p class="text-justify">
+        <span class="h5 font-weight-bold">
+          {% blocktrans %}
+          Your registration is not completed yet
+          {% endblocktrans %}
+        </span>
+        <br>
+        {% blocktrans %}
+          Your are currently a registered guest. To proceed to this action, you must be registered as a student.
+        {% endblocktrans %}
+        <br>
+        {% blocktrans %}
+          To become a student, all you have to do is to complete your registration by clicking on the button bellow and following the instructions. Once your registration complete as student, come back to this page.
+        {% endblocktrans %}
+      </p>
+    </div>
+  </div>
+</section>
