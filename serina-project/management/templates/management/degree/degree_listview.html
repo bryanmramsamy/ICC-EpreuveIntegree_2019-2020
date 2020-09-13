@@ -129,6 +129,7 @@
               <div class="col mb-2 mb-md-0">
                 <a href="{{ degree.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
               </div>
+
               {% if request.user|is_manager_or_administrator %}
                 <div class="col">
                   <div class="row">
@@ -140,9 +141,32 @@
                     </div>
                   </div>
                 </div>
+
+              {% elif request.user|is_teacher %}
+                <div class="col">
+                  <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+                </div>
+
               {% elif request.user|is_student %}
                 <div class="col">
                   <a href="{% url 'module_payment' pk=degree.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                </div>
+
+              {% elif request.user|is_guest %}
+                <div class="col">
+                  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
+                </div>
+
+              {% else %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+                    </div>
+                  </div>
                 </div>
               {% endif %}
             </div>

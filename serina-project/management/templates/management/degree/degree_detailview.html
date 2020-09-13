@@ -54,20 +54,25 @@
 
     <hr>
 
-    {% if request.user|is_student %}
-      <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
-    {% elif request.user|is_manager_or_administrator %}
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-2 mb-md-0">
-          <a href="{% url 'degree_updateview' pk=degree.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
-        </div>
-        <div class="col">
-          <a href="{% url 'degree_deleteview' pk=degree.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
-        </div>
+    {% if request.user|is_manager_or_administrator %}
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col mb-2 mb-md-0">
+        <a href="{% url 'degree_updateview' pk=degree.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
       </div>
-    {% elif user.is_authenticated %}
+      <div class="col">
+        <a href="{% url 'degree_deleteview' pk=degree.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+      </div>
+    </div>
+
+    {% elif request.user|is_teacher %}
+      <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+  
+    {% elif request.user|is_student %}
+      <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
+
+    {% elif request.user|is_guest %}
       <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
+        <div class="row row-cols-1 row-cols-md-2 py-2 rounded text-black bg-warning">
           <div class="col-md-1 text-center text-md-right">
             <h1>{% include 'logo/warning.html' %}</h1>
           </div>
@@ -80,14 +85,19 @@
               </span>
               <br>
               {% blocktrans %}
-                Register as a student now by submitting your registration report.
+                Your are currently a registered guest. To proceed to this action, you must be registered as a student.
+              {% endblocktrans %}
+              <br>
+              {% blocktrans %}
+                To become a student, all you have to do is to complete your registration by clicking on the button bellow and following the instructions. Once your registration complete as student, come back to this page.
               {% endblocktrans %}
             </p>
           </div>
         </div>
       </section>
 
-      <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-dark">{% trans 'Submit your student registration report' %} {% include 'logo/register_alt.html' %}</a>
+      <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
+
     {% else %}
       <section class="container mb-2">
         <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
@@ -103,7 +113,11 @@
               </span>
               <br>
               {% blocktrans %}
-                Register as a guest and then submit your registration report in order to subscribe to this module.
+                To perform this action, register as a guest first. Then pursue your registration completely to become a student.
+              {% endblocktrans %}
+              <br>
+              {% blocktrans %}
+                Once registered as a student, come back to this page and try again.
               {% endblocktrans %}
             </p>
           </div>
@@ -144,11 +158,14 @@
             {% if request.user|is_student %}
               {% if request.user|module_already_validated_by_user:module %}
                 <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
+
               {% elif request.user|all_prerequisites_validated_by_user:module %}
                 <span class="text-warning">{% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
+
               {% else %}
                 <span class="text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
               {% endif %}
+
             {% else %}
               <span class="text-info">{% include 'logo/check_info.html' %} 
                 {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
@@ -166,5 +183,17 @@
 
   <br>
 
+
+  {# Back to ListView button #}
+
+  <div class="text-right">
+    <a href="{% url 'degree_listview' %}" class="btn btn-block btn-outline-dark">
+      <h3>
+        {% include 'logo/degree.html' %} {% trans 'Back to the degrees catalog' %} {% include 'logo/back.html' %}
+      </h3>
+    </a>
+  </div>
+
+  <br>
 
 {% endblock content %}
