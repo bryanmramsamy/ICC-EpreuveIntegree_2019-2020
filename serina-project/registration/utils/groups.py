@@ -30,6 +30,12 @@ def is_back_office_user(user):
                               | Q(name="Administrator")).exists()
 
 
+def is_teacher(user):
+    """Check if the user is a teacher."""
+
+    return user.groups.filter(name="Teacher").exists()
+
+
 def is_manager_or_administrator(user):
     """Check if the user is member of the 'Manager'-group or the
     'Administrator'-group."""

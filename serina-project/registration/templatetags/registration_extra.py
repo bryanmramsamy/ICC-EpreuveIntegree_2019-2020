@@ -24,6 +24,23 @@ def is_student(user):
 
 
 @register.filter
+def is_back_office_user(user):
+    """Template tags that checks if a user is a back-office user or not.
+
+    Back-Office users are users from either the 'Teacher', the 'Manager' or the
+    'Administrator' group."""
+
+    return groups_utils.is_back_office_user(user)
+
+
+@register.filter
+def is_teacher(user):
+    """Template tags that checks if a user is a teacher or not."""
+
+    return groups_utils.is_teacher(user)
+
+
+@register.filter
 def is_manager_or_administrator(user):
     """Template tags that checks if a user is is manager or administrator."""
 
