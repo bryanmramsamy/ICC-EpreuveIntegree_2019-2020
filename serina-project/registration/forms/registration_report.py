@@ -34,12 +34,16 @@ class ForeignStudentRegistrationReportCreateFrom(HideCreatedByFieldFormMixin):
             "notes": _("Additional notes you would like to add")
         }
         help_texts = {
-            "id_picture": _("JPEG pictures only"),
-            "id_card": _("JPEG scans or PDF files only"),
             "secondary_education_certificate": _(
                 "Secondary education completion certificate or equivalent "
                 "document."
             ),
+            "annex_403": _("Circular annex 403 for social promotion studies."),
+            "other_school_inscription_certificate": _(
+                "Other school registration certificate for 60 ECTS."
+            ),
+            "national_register_extract": _(""),
+            "belgian_studies_history": _(""),
             "archievement_certificates": _(
                 "If you already succeeded one or more similar modules in "
                 "another school, you can send your success certificates in a "

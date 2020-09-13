@@ -97,7 +97,7 @@
           <label id="{{ form.id_picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
             No picture selected yet
           </label>
-          <small class="text-muted">{{ form.id_picture.help_text }}</small>
+          <small class="text-danger">{% trans 'JPEG only' %}</small> <small class="text-muted">{{ form.id_picture.help_text }}</small>
         </div>
       </div>
 
@@ -111,7 +111,7 @@
             No file selected yet
           </label>
         </div>
-        <small class="text-muted">{{ form.id_card.help_text }}</small>
+        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.id_card.help_text }}</small>
       </div>
 
       <div class="form-group">
@@ -123,7 +123,7 @@
           <label id="{{ form.secondary_education_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
             No file selected yet
           </label>
-          <small class="text-muted">{{ form.secondary_education_certificate.help_text }}</small>
+          <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.secondary_education_certificate.help_text }}</small>
         </div>
       </div>
 
@@ -131,7 +131,57 @@
       {# Foreign student additional mandatory fields #}
 
       {% if foreign_form %}
-        
+        <div class="form-group">
+          <label class="h5 text-uppercase" for="{{ form.annex_403.id_for_label }}">
+            {{ form.annex_403.label }}
+          </label>
+          <div class="form-group custom-file">
+            <input id="{{ form.annex_403.auto_id }}" name="{{ form.annex_403.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <label id="{{ form.annex_403.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.annex_403.id_for_label }}">
+              No file selected yet
+            </label>
+            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.annex_403.help_text }}</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="h5 text-uppercase" for="{{ form.other_school_inscription_certificate.id_for_label }}">
+            {{ form.other_school_inscription_certificate.label }}
+          </label>
+          <div class="form-group custom-file">
+            <input id="{{ form.other_school_inscription_certificate.auto_id }}" name="{{ form.other_school_inscription_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <label id="{{ form.other_school_inscription_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.other_school_inscription_certificate.id_for_label }}">
+              No file selected yet
+            </label>
+            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.other_school_inscription_certificate.help_text }}</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="h5 text-uppercase" for="{{ form.national_register_extract.id_for_label }}">
+            {{ form.national_register_extract.label }}
+          </label>
+          <div class="form-group custom-file">
+            <input id="{{ form.national_register_extract.auto_id }}" name="{{ form.national_register_extract.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <label id="{{ form.national_register_extract.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.national_register_extract.id_for_label }}">
+              No file selected yet
+            </label>
+            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.national_register_extract.help_text }}</small>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="h5 text-uppercase" for="{{ form.belgian_studies_history.id_for_label }}">
+            {{ form.belgian_studies_history.label }}
+          </label>
+          <div class="form-group custom-file">
+            <input id="{{ form.belgian_studies_history.auto_id }}" name="{{ form.belgian_studies_history.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <label id="{{ form.belgian_studies_history.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.belgian_studies_history.id_for_label }}">
+              No file selected yet
+            </label>
+            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.belgian_studies_history.help_text }}</small>
+          </div>
+        </div>
       {% endif %}
 
       <div class="h5 text-uppercase">
@@ -155,7 +205,7 @@
             No file selected
           </label>
         </div>
-        <small class="text-muted">{{ form.archievement_certificates.help_text }}</small>
+        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.archievement_certificates.help_text }}</small>
       </div>
 
       <div class="form-group">
@@ -168,7 +218,7 @@
             No file selected
           </label>
         </div>
-        <small class="text-muted">{{ form.job_organization_certificates.help_text }}</small>
+        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.job_organization_certificates.help_text }}</small>
       </div>
 
       <div class="form-group">
@@ -181,7 +231,7 @@
             No file selected
           </label>
         </div>
-        <small class="text-muted">{{ form.exemption_report.help_text }}</small>
+        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.exemption_report.help_text }}</small>
       </div>
 
       <div class="form-group">
@@ -228,6 +278,26 @@
     $('#{{ form.secondary_education_certificate.auto_id }}').on('change',function(){
       var fileName = $(this).val();
       $(this).next('#{{ form.secondary_education_certificate.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.annex_403.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.annex_403.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.other_school_inscription_certificate.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.other_school_inscription_certificate.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.national_register_extract.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.national_register_extract.auto_id }}_label').html(fileName);
+    })
+
+    $('#{{ form.belgian_studies_history.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.belgian_studies_history.auto_id }}_label').html(fileName);
     })
 
     $('#{{ form.archievement_certificates.auto_id }}').on('change',function(){
