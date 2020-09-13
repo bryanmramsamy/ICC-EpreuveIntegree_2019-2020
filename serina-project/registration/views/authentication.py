@@ -24,6 +24,7 @@ from ..forms import (
 )
 from ..utils import (
     groups as groups_utils,
+    decorators as decorators_utils,
     messages as messages_utils,
     users as users_utils,
 )
@@ -86,6 +87,19 @@ def register(request):
                 "registration/authentication/register.html",
                 locals(),
             )
+
+
+@decorators_utils.guests_only
+def pursue_registration(request):
+    """Render a view giving the opportunity to the user to pursue his/her
+    registration.
+
+    If the user doesn't pursue the registration (s)he will hold the
+    'Registered-Guest' role. Otherwise the user will switch to the 'Student'
+    role if the registration is completed.
+    """
+
+    return render(request, "registration/authentication/pursue_register.html")
 
 
 class CustomLoginView(LoginView):

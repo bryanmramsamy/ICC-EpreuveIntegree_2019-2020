@@ -69,5 +69,5 @@ def degree_already_validated_by_user(user, degree):
         if degree_rr.student_graduated:
             student_graduated = True
             break
-    
+
     return student_graduated

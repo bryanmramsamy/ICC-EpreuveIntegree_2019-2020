@@ -62,6 +62,12 @@ urlpatterns = [
         views.register,
         name="register",
     ),
+    url(
+        r"^register/pursue/$",
+        views.pursue_registration,
+        name="pursue_registration"
+    ),
+
 
     # Password change
 
