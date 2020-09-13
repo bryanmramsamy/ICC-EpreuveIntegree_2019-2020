@@ -243,10 +243,11 @@
 
       <hr>
 
+      {% include 'bubbles/warning_student_rr_creation.html' %}
+
       <input type="submit" class="btn btn-block btn-lg btn-dark text-uppercase" value="{% trans 'Submit your registration report' %}">
 
       <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Cancel and return to previous page' %} {% include 'logo/back.html' %}</a>
-
     </form>
   </section>
 

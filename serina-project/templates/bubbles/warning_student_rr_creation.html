@@ -1,0 +1,18 @@
+{% extends 'bubbles/warning_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Check your data twice ! Once your data submitted, some of them won't be updatable anymore !
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    Most of these data won't be updatable anymore once submitted. This especially concern the files uploaded. Please check twice before submitting them.
+    <br><br>
+    If you should edit some non-updatable data afterwards, please contact the support team (<a href="mailto:{{ support_team_mail }}">{{ support_team_mail }}</a>).
+  {% endblocktrans %}
+{% endblock bubble_content %}

@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect
@@ -107,6 +108,7 @@ class HomegrownStudentRegistrationReportCreateView(
         student's additional fields to fill."""
 
         context = super().get_context_data(*args, **kwargs)
+        context["support_team_mail"] = settings.CONTACT_MAILS["support"]
         context["foreign_form"] = False
 
         return context
