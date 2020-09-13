@@ -100,30 +100,7 @@
 
           <br>
 
-          <div class="row">
-            <div class="col-1 input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
-              {% blocktrans %}
-                <strong>What if the terms and/or the policies changes ?</strong>
-              {% endblocktrans %}
-              <br>
-              <p class="text-justify small">
-                {% blocktrans %}
-                  You will be immediatly informed by mail through the mail address which is currently assigned to your account.
-                {% endblocktrans %}
-              </p>'>
-              <input type="checkbox" name="gdpr_consent" id="gdpr_consent" required>
-            </div>
-            <div class="col-11">
-              <label for="gpdr_consent">
-                {% url 'terms_and_conditions' as link_terms %}
-                {% url 'privacy_policy' as link_privacy %}
-                {% url 'cookies_policy' as link_cookies %}
-                {% blocktrans %}
-                  By checking this box, you hereby agree to our <a href="{{ link_terms }}">Terms and conditions</a>, our <a href="{{ link_privacy }}">Privacy policy</a> and our <a href="{{ link_cookies }}">Cookies policy</a>.
-                {% endblocktrans %}
-              </label>
-            </div>
-          </div>
+          {% include 'registration/authentication/gdpr_checkbox.html' %}
 
           <br>
 
