@@ -5,45 +5,48 @@
 {% block title %}{{ code }} {{ code_text }}{% endblock title %}
 
 {% block content %}
-  <section class="container m-4 rounded text-center text-light bg-dark">
-    <br>
-    <div class="m-2 rounded text-dark bg-light">
-      {% with 'draws/'|add:image|add:'.svg' as image_static %}
-        <img src="{% static image_static %}" alt="{{ code }}-error" class="p-3 img-fluid" alt="Book lover logo" style="height: 200px;">
-      {% endwith %}
-      <div>
-        <small class="text-uppercase">
-          {{ code_text }}
-        </small>
-        <br>
-        <span class="display-1">
-          {{ code }}
-        </span>
-      </div>
+  <section class="container mt-2">
+    <div class="px-4 rounded text-center text-light bg-dark">
 
-    </div>
-
-    <div>
-      <h1>{{ message }}</h1>
       <br>
-      {{ help_text }}
-
-      {% if code != 500 %}
+      <div class="my-2 rounded text-dark bg-light">
+        {% with 'draws/'|add:image|add:'.svg' as image_static %}
+        <img src="{% static image_static %}" alt="{{ code }}-error" class="p-3 img-fluid" alt="Book lover logo" style="height: 200px;">
+        {% endwith %}
+        <div>
+          <small class="text-uppercase">
+            {{ code_text }}
+          </small>
+          <br>
+          <span class="display-1">
+            {{ code }}
+          </span>
+        </div>
+        
+      </div>
+      
+      <div>
+        <h1>{{ message }}</h1>
         <br>
+        {{ help_text }}
+        
+        {% if code != 500 %}
+          <br>
 
-        {% trans 'Please try again or contact our support team by clicking on the button bellow.' %}
-      {% endif %}
+          {% trans 'Please try again or contact our support team by clicking on the button bellow.' %}
+        {% endif %}
+      </div>
+      
+      <br>
+      
+      <a href="{% url 'home' %}" class="btn btn-block btn-light">{% trans 'Back to the homepage' %} {% include 'logo/home.html' %}</a>
+      
+      <br>
+      
+      <a href="mailto:{{ support_mail }}" class="btn btn-block btn-outline-light">{% trans 'Contact our support team' %} {% include 'logo/mail.html' %}</a>
+      
+      <br>
     </div>
-
-    <br>
-
-    <a href="{% url 'home' %}" class="btn btn-block btn-light">{% trans 'Back to the homepage' %} {% include 'logo/home.html' %}</a>
-
-    <br>
-
-    <a href="mailto:{{ support_mail }}" class="btn btn-block btn-outline-light">{% trans 'Contact our support team' %} {% include 'logo/mail.html' %}</a>
-
-    <br>
   </section>
 
 {% endblock content %}
