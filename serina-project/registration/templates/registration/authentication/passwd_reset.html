@@ -5,7 +5,7 @@
 
 {% block content %}
   <section class="container">
-    <div class="container rounded text-center text-light bg-dark p-3" style="max-width: 600px;">
+    <div class="container border rounded text-center bg-light p-3" style="max-width: 600px;">
       <img src="{% static 'draws/forgot_password.svg' %}" alt="Registration number or password forgotten ?" class="img-fluid">
       <h1>{% trans 'Registration number or password forgotten ?' %} {% include 'logo/lock.html' %}</h1>
 
@@ -18,9 +18,8 @@
           If the mail address exist in our databases, a mail will be sent to it with your registration number and a link usable to reset your password if needed.
         </p>
       {% endblocktrans %}
-      
-      
-      <form action="{% url 'password_reset' %}" method="POST">
+
+      <form method="POST">
         {% csrf_token %}
 
         <div class="form-group">
@@ -30,18 +29,10 @@
           <input id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}" type="text" class="form-control form-control-lg" required>
         </div>
 
-        <input type="submit" value='{% trans "Send mail" %}' class="btn btn-block btn-lg btn-light h5 text-uppercase">
+        <input type="submit" value='{% trans "Send mail" %}' class="btn btn-block btn-lg btn-dark h5 text-uppercase">
 
-        <a href="{% url 'login' %}" class="btn btn-block btn-lg btn-outline-light">{% trans 'Login' %} {% include 'logo/in-left.html' %}</a>
+        <a href="{% url 'login' %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Login' %} {% include 'logo/in-left.html' %}</a>
       </form>
     </div>
   </section>
-
-
-
-
-
-
-
-
 {% endblock content %}

@@ -148,6 +148,13 @@ class CustomPasswordResetDoneView(mixins_utils.AnonymousOnlyMixin,
 
     template_name = "registration/authentication/passwd_reset_done.html"
 
+    def get_context_data(self, **kwargs):
+        """Add the support team mail to the context."""
+
+        context = super().get_context_data(**kwargs)
+        context["support_team_mail"] = settings.CONTACT_MAILS["support"]
+        return context
+
 
 class CustomPasswordResetConfirmView(mixins_utils.AnonymousOnlyMixin,
                                      PasswordResetConfirmView):
