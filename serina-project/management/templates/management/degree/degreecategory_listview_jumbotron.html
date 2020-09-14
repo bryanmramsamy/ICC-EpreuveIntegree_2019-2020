@@ -1,0 +1,30 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/library_01.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/degree_alt.html' %}
+  {% trans 'Degrees by category' %}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% blocktrans %}
+    If you are looking for a specific bachelor or maybe a more advanced master, you may find it easier to order our degrees by their categories.
+  {% endblocktrans %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/order_delivered.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  Degrees catalog by category
+{% endblock jumbotron_image_alt-text %}

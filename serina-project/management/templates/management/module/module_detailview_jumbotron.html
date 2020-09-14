@@ -1,0 +1,28 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/puzzle_02.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/module.html' %}
+  {{ module.title }}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {{ module.description|linebreaks }}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/road_to_knowledge.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  {{ module.title }}
+{% endblock jumbotron_image_alt-text %}

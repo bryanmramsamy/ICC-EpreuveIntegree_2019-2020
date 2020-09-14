@@ -1,0 +1,30 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/graduation_02.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/degree.html' %}
+  {% trans 'Degrees catalog' %}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% blocktrans %}
+    A degree is like a stair: you start from the bottom, you must take each stair one by one at your own pace, underway you may find this tiring but if you keep going, you will end on the top.
+  {% endblocktrans %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/graduation.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  Degrees catalog
+{% endblock jumbotron_image_alt-text %}

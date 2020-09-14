@@ -8,26 +8,7 @@
 
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            {% include 'logo/degree.html' %}
-            {{ degree.title }}
-          </h1>
-          <hr>
-          <p class="lead">
-            {{ degree.description|linebreaks }}
-          </p>
-        </div>
-
-        <div class="col col-md-4">
-          <img src="{% static 'draws/road_to_knowledge.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
+  {% include 'management/degree/degree_detailview_jumbotron.html' %}
 
 
   {# Presentation card #}

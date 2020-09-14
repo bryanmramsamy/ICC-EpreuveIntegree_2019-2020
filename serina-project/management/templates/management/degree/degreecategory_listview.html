@@ -20,28 +20,7 @@
 
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/library_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            {% include 'logo/degree_alt.html' %}
-            {% trans 'Degrees by category' %}
-          </h1>
-          <hr>
-          <p class="lead">
-            {% blocktrans %}
-              If you are looking for a specific bachelor or maybe a more advanced master, you may find it easier to order our degrees by their categories.
-            {% endblocktrans %}
-          </p>
-        </div>
-
-        <div class="col col-md-4">
-          <img src="{% static 'draws/order_delivered.svg' %}" alt="Modules catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
+  {% include 'management/degree/degreecategory_listview_jumbotron.html' %}
 
 
   {# Statistical informations #}
