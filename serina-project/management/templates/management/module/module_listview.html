@@ -20,60 +20,14 @@
 
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/puzzle_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            {% include 'logo/module.html' %}
-            {% trans 'Modules catalog' %}
-          </h1>
-          <hr>
-          <p class="lead">
-            {% blocktrans %}
-              For the students whom wants to build their own path piece by piece, we propose a collection of modules.
-            {% endblocktrans %}
-          </p>
-        </div>
-
-        <div class="col col-md-4">
-          <img src="{% static 'draws/bookshelves.svg' %}" alt="Modules catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
+  {% include 'management/module/module_listview_jumbotron.html' %}
 
 
   {# Information bubble #}
 
   
   {% if not request.user|is_back_office_user %}
-    <section class="container">
-      <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-white pt-2">
-        <div class="col-md-1 text-center text-md-right">
-          <h1>{% include 'logo/info.html' %}</h1>
-        </div>
-        <div class="col-md-11">
-          <p class="text-justify">
-            <span class="h5 font-weight-bold">
-              {% blocktrans %}
-              Know more about the prerequisites conditions.
-              {% endblocktrans %}
-            </span>
-            <br>
-            {% blocktrans %}
-            Some modules has prerequisites modules, which means other modules which must be completed and succeeded by the student before being able to follow the desired module.
-            {% endblocktrans %}
-            <br><br>
-            {% blocktrans %}
-            If you already passed one of these modules here or in another educational institution, you can request for an examption. If the insitutution approves your examption, the module will be considered as succeeded and won't be charged.
-            {% endblocktrans %}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <br>
+    {% include 'bubbles/info_more_about_prerequisites.html' %}
   {% endif %}
 
 

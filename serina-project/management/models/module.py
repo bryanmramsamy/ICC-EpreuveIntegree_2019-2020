@@ -89,7 +89,7 @@ class Module(BackOfficeResource):
     )
     picture = models.ImageField(
         upload_to='management/modules/',
-        default='management/undraw_Books_l33t.png',
+        default='management/books.png',
         null=True,
         blank=True,
         max_length=225,

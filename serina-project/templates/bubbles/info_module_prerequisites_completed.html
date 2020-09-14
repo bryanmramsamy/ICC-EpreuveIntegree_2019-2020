@@ -1,0 +1,16 @@
+{% extends 'bubbles/info_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This module has prerequisites you already completed
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    This module has not been completed yet but you can subscribe to it now without any more conditions.
+  {% endblocktrans %}
+{% endblock bubble_content %}

@@ -1,0 +1,22 @@
+{% extends 'bubbles/warning_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This module has prerequisites which must be completed beforehand
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    You didn't completed all the prerequisites of this module yet, which means you cannot complete this one yet.
+    <br><br>
+    You can still subscribe to this module but if you succeed it, it won't be considered as completed as long as the prerequisites are not completed too.
+    <br><br>
+    If you already acquired the prerequisites in another school, you can ask for an examption on the prerequisite module's page. If you request is accepted by our staff, the module will be considered as completed and you won't have to procceed to its payment.
+    <br>
+    The list of the prerequisites can be found bellow.
+  {% endblocktrans %}
+{% endblock bubble_content %}

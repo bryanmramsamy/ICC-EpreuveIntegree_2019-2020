@@ -5,146 +5,9 @@
 
 {% block content %}
 
-
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/puzzle_02.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            {% include 'logo/module.html' %}
-            {{ module.title }}
-          </h1>
-          <hr>
-          <p class="lead">
-            {{ module.description|linebreaks }}
-          </p>
-        </div>
-
-        <div class="col col-md-4">
-          <img src="{% static 'draws/road_to_knowledge.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  {# Validation restriction bubble #}
-
-  {% if not request.user|is_back_office_user %}
-    {% if already_validated %}
-    <section class="container mb-2">
-      <div class="row row-cols-1 row-cols-md-2 bg-success rounded text-light pt-2">
-        <div class="col-md-1 text-center text-md-right">
-          <h1>{% include 'logo/check.html' %}</h1>
-        </div>
-        <div class="col-md-11">
-          <p class="text-justify">
-            <span class="h5 font-weight-bold">
-              {% blocktrans %}
-              You already have validated this module.
-              {% endblocktrans %}
-            </span>
-            <br>
-            {% blocktrans %}
-            You don't have to validate this module again. If a postrequisite module is still locked, this means another of its prerequisite module hasn't been validated yet. But this is not the case of this module.
-            {% endblocktrans %}
-            <br><br>
-            {% blocktrans %}
-            You are free to subscribe once more to the module in order to get a better result. If you fail, the module will still be considered as validated. But keep in mind your request still have to be approved and you will have to pay the subscribtion fees once again.
-            {% endblocktrans %}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <br>
-
-    {% else %}
-      {% if all_prerequisites_validated and module.prerequisites.all.count > 0 %}
-        <section class="container mb-2">
-          <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
-            <div class="col-md-1 text-center text-md-right">
-              <h1>{% include 'logo/info.html' %}</h1>
-            </div>
-            <div class="col-md-11">
-              <p class="text-justify">
-                <span class="h5 font-weight-bold">
-                  {% blocktrans %}
-                  This module has prerequisites you already validated.
-                  {% endblocktrans %}
-                </span>
-                <br>
-                {% blocktrans %}
-                You can subscribe to this module now without any more conditions.
-                {% endblocktrans %}
-              </p>
-            </div>
-          </div>
-        </section>
-      
-      {% elif module.prerequisites.all.count > 0 %}
-        <section class="container mb-2">
-          <div class="row row-cols-1 row-cols-md-2 bg-warning rounded text-black pt-2">
-            <div class="col-md-1 text-center text-md-right">
-              <h1>{% include 'logo/warning.html' %}</h1>
-            </div>
-            <div class="col-md-11">
-              <p class="text-justify">
-                <span class="h5 font-weight-bold">
-                  {% blocktrans %}
-                  This module has prerequisites which must be validated in order to validate this module.
-                  {% endblocktrans %}
-                </span>
-                <br>
-                {% blocktrans %}
-                If you didn't acquired the prerequisites yet, you can still subscribe to this module but keep in mind that it won't be considered as validated as long as the prerequisites are not validated yet.
-                {% endblocktrans %}
-                <br><br>
-                {% blocktrans %}
-                If you already acquired the prerequisites in another school, you can still go to that module page, subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
-                {% endblocktrans %}
-                <br><br>
-                {% blocktrans %}
-                Your request still have to be accepted by our staff and payed by yourself in any case.
-                {% endblocktrans %}
-              </p>
-            </div>
-          </div>
-        </section>
-      {% endif %}
-      
-      {% if module.postrequisites.all.count > 0 %}
-        <section class="container mb-2">
-          <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-light pt-2">
-            <div class="col-md-1 text-center text-md-right">
-              <h1>{% include 'logo/info.html' %}</h1>
-            </div>
-            <div class="col-md-11">
-              <p class="text-justify">
-                <span class="h5 font-weight-bold">
-                  {% blocktrans %}
-                  This module has postrequisites and must be validated in order to validate these.
-                  {% endblocktrans %}
-                </span>
-                <br>
-                {% blocktrans %}
-                Some modules has this module has prerequisites, which means you cannot validate them without validate this one.
-                {% endblocktrans %}
-                <br><br>
-                {% blocktrans %}
-                If you already passed and succeed this module in another school, you can subscribe and ask for an examption. If you request is accepted, the module will be considered as validated and you won't have to procceed to its payment. Keep in mind that your request can be denied too.
-                {% endblocktrans %}
-              </p>
-            </div>
-          </div>
-        </section>
-      {% endif %}
-    {% endif %}
-
-    <br>
-  {% endif %}
+  {% include 'management/module/module_detailview_jumbotron.html' %}
 
 
   {# Presentation card #}
@@ -215,6 +78,24 @@
       <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
 
     {% elif request.user|is_student %}
+      {# Validation restriction bubble #}
+
+      {% if already_validated %}
+        {% include 'bubbles/success_module_already_completed.html' %}
+
+      {% else %}
+        {% if module.prerequisites.all.count > 0 and all_prerequisites_validated %}
+          {% include 'bubbles/info_module_prerequisites_completed.html' %}
+
+        {% elif module.prerequisites.all.count > 0 %}
+          {% include 'bubbles/warning_module_has_prerequisites.html' %}
+        {% endif %}
+
+        {% if module.postrequisites.all.count > 0 %}
+          {% include 'bubbles/info_module_has_postrequisites.html' %}
+        {% endif %}
+      {% endif %}
+
       <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
 
     {% elif request.user|is_guest %}
@@ -223,30 +104,7 @@
       <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
 
     {% else %}
-      <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
-          <div class="col-md-1 text-center text-md-right">
-            <h1>{% include 'logo/warning.html' %}</h1>
-          </div>
-          <div class="col-md-11">
-            <p class="text-justify">
-              <span class="h5 font-weight-bold">
-                {% blocktrans %}
-                  You are not registered.
-                {% endblocktrans %}
-              </span>
-              <br>
-              {% blocktrans %}
-                To perform this action, register as a guest first. Then pursue your registration completely to become a student.
-              {% endblocktrans %}
-              <br>
-              {% blocktrans %}
-                Once registered as a student, come back to this page and try again.
-              {% endblocktrans %}
-            </p>
-          </div>
-        </div>
-      </section>
+      {% include 'bubbles/warning_unregistered.html' %}
 
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col mb-2 mb-md-0">

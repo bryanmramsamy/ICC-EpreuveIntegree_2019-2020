@@ -20,28 +20,7 @@
 
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/graduation_02.jpg' %}'); background-attachment: fixed; background-size: 1100px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            {% include 'logo/degree.html' %}
-            {% trans 'Degrees catalog' %}
-          </h1>
-          <hr>
-          <p class="lead">
-            {% blocktrans %}
-              A degree is like a stair: you start from the bottom, you must take each stair one by one at your own pace, underway you may find this tiring but if you keep going, you will end on the top.
-            {% endblocktrans %}
-          </p>
-        </div>
-
-        <div class="col col-md-4">
-          <img src="{% static 'draws/graduation.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
+  {% include 'management/degree/degree_listview_jumbotron.html' %}
 
 
   {# Information bubble #}

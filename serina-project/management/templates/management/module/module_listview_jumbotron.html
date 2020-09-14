@@ -1,0 +1,30 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/puzzle_01.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/module.html' %}
+  {% trans 'Modules catalog' %}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% blocktrans %}
+    For the students whom wants to build their own path piece by piece, we propose a collection of modules.
+  {% endblocktrans %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/bookshelves.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  Modules catalog
+{% endblock jumbotron_image_alt-text %}

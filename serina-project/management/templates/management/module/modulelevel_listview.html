@@ -20,28 +20,7 @@
 
   {# Heading jumbotron #}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/stairs_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            {% include 'logo/module_alt.html' %}
-            {% trans 'Modules by level' %}
-          </h1>
-          <hr>
-          <p class="lead">
-            {% blocktrans %}
-              Before you climb a mountain, it may be better to see how tall it is before.
-            {% endblocktrans %}
-          </p>
-        </div>
-
-        <div class="col col-md-4">
-          <img src="{% static 'draws/stepping_up.svg' %}" alt="Modules catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
+  {% include 'management/module/modulelevel_listview_jumbotron.html' %}
 
 
   {# Statistical informations #}
@@ -74,8 +53,8 @@
 
   <br>
 
-  {# Level card #}
 
+  {# Level card #}
 
   {% for level in levels %}
     <div class="card">
@@ -132,8 +111,8 @@
         {% endfor %}
       </div>
     </div>
-  {% endfor %}
 
-  <br>
+    <br>
+  {% endfor %}
 
 {% endblock content %}

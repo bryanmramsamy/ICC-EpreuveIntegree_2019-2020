@@ -1,0 +1,23 @@
+<section class="jumbotron jumbotron-fluid" style="background-image: url({% block jumbotron_background %}{% endblock jumbotron_background %}); background-attachment: fixed; background-size: 1600px;">
+  <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
+    <div class="row row-cols-1 row-cols-md-2">
+      <div class="col col-md-8">
+        <h1 class="display-4" style="font-style: italic;">
+          {% block jumbotron_title %}
+            JUMBOTRON TITLE MISSING !
+          {% endblock jumbotron_title %}
+        </h1>
+        <hr>
+        <p class="lead">
+          {% block jumbotron_lead %}
+            LEAD TEXT MISSING !
+          {% endblock jumbotron_lead %}
+        </p>
+      </div>
+
+      <div class="col col-md-4">
+        <img src="{% block jumbotron_image %}{% endblock jumbotron_image %}" alt="{% block jumbotron_image_alt-text %}{% endblock jumbotron_image_alt-text %}" class="img-fluid rounded">
+      </div>
+    </div>
+  </div>
+</section>
