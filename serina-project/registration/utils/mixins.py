@@ -25,6 +25,15 @@ class AccessRestrictionMixin(UserPassesTestMixin):
         raise PermissionDenied
 
 
+class AnonymousOnlyMixin(AccessRestrictionMixin):
+    """Restrict view access to anonymous users"""
+
+    def test_func(self):
+        """Check if the user us anonymous."""
+
+        return self.request.user.is_anonymous
+
+
 class StudentOnlyMixin(AccessRestrictionMixin):
     """Restrict view access to Students users."""
 

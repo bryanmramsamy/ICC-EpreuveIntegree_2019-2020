@@ -26,6 +26,7 @@ from ..utils import (
     groups as groups_utils,
     decorators as decorators_utils,
     messages as messages_utils,
+    mixins as mixins_utils,
     users as users_utils,
 )
 
@@ -128,7 +129,8 @@ class CustomPasswordChangeView(PasswordChangeView):
     form_class = CustomPasswordChangeForm
 
 
-class CustomPasswordResetView(PasswordResetView):
+class CustomPasswordResetView(mixins_utils.AnonymousOnlyMixin,
+                              PasswordResetView):
     """Customized PasswordResetView."""
 
     # TODO: Use custom template mail + change subject and from_mail
@@ -140,13 +142,15 @@ class CustomPasswordResetView(PasswordResetView):
     # from_email = "Serina@SerinaProject.com"  # DEFAULT_FROM_EMAIL = "Serina@SerinaProject.com"
 
 
-class CustomPasswordResetDoneView(PasswordResetDoneView):
+class CustomPasswordResetDoneView(mixins_utils.AnonymousOnlyMixin,
+                                  PasswordResetDoneView):
     """Customized PasswordResetDoneView."""
 
     template_name = "registration/authentication/passwd_reset_done.html"
 
 
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+class CustomPasswordResetConfirmView(mixins_utils.AnonymousOnlyMixin,
+                                     PasswordResetConfirmView):
     """ Curtomized PasswordResetConfirmView."""
 
     template_name = "registration/authentication/passwd_reset_confirm.html"
@@ -154,7 +158,8 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     success_url = reverse_lazy("password_reset_complete")
 
 
-class CustomPasswordResetCompleteView(PasswordResetCompleteView):
+class CustomPasswordResetCompleteView(mixins_utils.AnonymousOnlyMixin,
+                                      PasswordResetCompleteView):
     """Customized PasswordResetCompleteView."""
 
     template_name = "registration/authentication/passwd_reset_complete.html"
