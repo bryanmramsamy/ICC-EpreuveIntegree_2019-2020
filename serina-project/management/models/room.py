@@ -30,7 +30,7 @@ class Classroom(BackOfficeResource):
     )
     picture = models.ImageField(
         upload_to='management/rooms/',
-        default='management/undraw_Books_l33t.png',
+        default='management/books.png',
         null=True,
         blank=True,
         max_length=225,
@@ -42,7 +42,7 @@ class Classroom(BackOfficeResource):
 
         verbose_name = _('Classroom')
         verbose_name_plural = _('Classrooms')
-        ordering = ('name','reference')
+        ordering = ('name', 'reference')
 
     def __str__(self):
         """Unicode representation of Classroom."""
