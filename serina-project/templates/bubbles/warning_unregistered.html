@@ -1,0 +1,18 @@
+{% extends 'bubbles/warning_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    You are not registered
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    To perform this action, register as a guest first. Then pursue your registration completely to become a student.
+    <br>
+    Once registered as a student, come back to this page and try again.
+  {% endblocktrans %}
+{% endblock bubble_content %}

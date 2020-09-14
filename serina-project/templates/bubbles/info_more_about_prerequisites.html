@@ -1,0 +1,18 @@
+{% extends 'bubbles/info_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Know more about the prerequisites
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    Some modules has prerequisites, which means these modules which must be completed by the student before being able to complete the desired module.
+    <br><br>
+    If you already passed one of these modules here or in another educational institution, you can request for an examption on the module's page, which will either been approved or denied by our staff. An exampted module will not be charged.
+  {% endblocktrans %}
+{% endblock bubble_content %}

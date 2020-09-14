@@ -1,0 +1,18 @@
+{% extends 'bubbles/success_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    You already have completed this module
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    You don't have to complete this module again. If a postrequisite module is still locked, this means another of its prerequisite module hasn't been completed yet.
+    <br><br>
+    You are free to subscribe once more time to the module in order to get a better result. If you fail, the module will still be considered as completed. Keep in mind your request still have to be approved and you will have to pay the subscribtion fees once again.
+  {% endblocktrans %}
+{% endblock bubble_content %}

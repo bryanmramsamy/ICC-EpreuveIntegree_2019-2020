@@ -27,32 +27,7 @@
 
   
   {% if not request.user|is_back_office_user %}
-    <section class="container">
-      <div class="row row-cols-1 row-cols-md-2 bg-info rounded text-white pt-2">
-        <div class="col-md-1 text-center text-md-right">
-          <h1>{% include 'logo/info.html' %}</h1>
-        </div>
-        <div class="col-md-11">
-          <p class="text-justify">
-            <span class="h5 font-weight-bold">
-              {% blocktrans %}
-              Know more about the prerequisites conditions.
-              {% endblocktrans %}
-            </span>
-            <br>
-            {% blocktrans %}
-            Some modules has prerequisites modules, which means other modules which must be completed and succeeded by the student before being able to follow the desired module.
-            {% endblocktrans %}
-            <br><br>
-            {% blocktrans %}
-            If you already passed one of these modules here or in another educational institution, you can request for an examption. If the insitutution approves your examption, the module will be considered as succeeded and won't be charged.
-            {% endblocktrans %}
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <br>
+    {% include 'bubbles/info_more_about_prerequisites.html' %}
   {% endif %}
 
 

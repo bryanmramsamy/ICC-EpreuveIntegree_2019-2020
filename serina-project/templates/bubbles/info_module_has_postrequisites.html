@@ -1,0 +1,20 @@
+{% extends 'bubbles/info_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This module has postrequisites and must be validated in order to validate these.
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    Some other modules has this module has prerequisites. In other words, this module has postrequisites. Therefore, these modules cannot be completed as long as this one is not.
+    <br><br>
+    If you already acquired this module in another school, you can ask for an examption. If you request is accepted by our staff, this module will be considered as completed and you won't have to procceed to its payment.
+    <br>
+    The list of the postrequisites can be found bellow.
+  {% endblocktrans %}
+{% endblock bubble_content %}
