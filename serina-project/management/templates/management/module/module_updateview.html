@@ -17,14 +17,32 @@
 
           {{ form.created_by }}
 
-          {# title #}
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-md-10">
 
-          <div class="form-group">
-            <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
-              {{ form.title.label }} <span class="badge badge-danger">{{ form.title.errors.as_text }}</span>
-            </label>
-            <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" value="{{ module.title }}" class="form-control form-control-lg" required>
-            <small class="text-muted">{{ form.title.help_text }}</small>
+              {# title #}
+
+              <div class="form-group">
+                <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.title.label }} <span class="badge badge-danger">{{ form.title.errors.as_text }}</span>
+                </label>
+                <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" value="{{ module.title }}" class="form-control form-control-lg" required>
+                <small class="text-muted">{{ form.title.help_text }}</small>
+              </div>
+            </div>
+
+            <div class="col-md-2">
+
+              {# reference #}
+
+              <div class="form-group">
+                <label for="{{ form.reference.id_for_label }}" class="h5 text-uppercase">
+                  {% trans 'Reference' %}
+                </label>
+                <input type="text" value="{{ module.reference }}" class="form-control form-control-lg" readonly>
+                <small class="text-muted">{% trans 'Automatically generated' %}</small>
+              </div>
+            </div>
           </div>
 
           <div class="row row-cols-1 row-cols-md-2">
