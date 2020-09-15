@@ -48,17 +48,27 @@ class Module(BackOfficeResource):
     prerequisites modules are not finished yet.
     """
 
-    title = models.CharField(max_length=255, verbose_name=_('Module'))
+    title = models.CharField(
+        max_length=255,
+        verbose_name=_('Module name'),
+        help_text=_("To avoid confusion, it's recommended to use different "
+                    "names for each modules.")
+    )
     reference = models.CharField(max_length=7, blank=True, unique=True,
                                  verbose_name=_('Reference'))
-    description = models.TextField(null=True, blank=True,
-                                   verbose_name=_("Description"))
+    description = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_("Should provide as much information on the module as "
+                    "possible."))
     level = models.ForeignKey(
         ModuleLevel,
         null=True,
         on_delete=models.SET_NULL,
         related_name="modules",
-        verbose_name=_("Difficultiy level")
+        verbose_name=_("Difficulty level"),
+        help_text=_("Rank the module by it's diffictuly.")
     )
     prerequisites = models.ManyToManyField(
         "self",
