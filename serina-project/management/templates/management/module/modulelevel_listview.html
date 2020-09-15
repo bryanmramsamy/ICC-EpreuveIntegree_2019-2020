@@ -48,8 +48,10 @@
 
   {# Level card #}
 
-  {% with modulelevel_actions_enabled=True %}
-    {% include 'management/module/modulelevel_card.html' %}
-  {% endwith %}
+  {% for level in levels %}
+    {% with modulelevel_actions_enabled=True %}
+      {% include 'management/module/modulelevel_card.html' %}
+    {% endwith %}
+  {% endfor %}
 
 {% endblock content %}
