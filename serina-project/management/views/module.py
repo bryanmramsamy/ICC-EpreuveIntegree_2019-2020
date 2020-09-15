@@ -62,6 +62,12 @@ class ModuleCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
         context["levels"] = ModuleLevel.objects.all()
         return context
 
+    def get_success_url(self):
+        """Redirect to the update view of the created module in order to add
+        the prerequisites and the eligible teachers."""
+
+        return reverse_lazy('module_updateview', kwargs={'pk': self.object.id})
+
 
 class ModuleUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
                        BackOfficeResourceUpdateViewMixin):
