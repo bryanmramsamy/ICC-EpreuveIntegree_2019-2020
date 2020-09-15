@@ -134,6 +134,40 @@
             <small class="text-muted">{{ form.description.help_text }}</small>
           </div>
 
+          <hr>
+
+          {# eligible_teachers #}
+
+          <div class="form-group">
+            <label for="{{ form.eligible_teachers.id_for_label }}" class="h5 text-uppercase">
+              {{ form.eligible_teachers.label }} <span class="badge badge-danger">{{ form.eligible_teachers.errors.as_text }}</span>
+            </label>
+
+            <select id="{{ form.eligible_teachers.auto_id }}" name="{{ form.eligible_teachers.html_name }}" class="form-control form-control-lg" multiple required>
+              {% for teacher in teachers %}
+                <option value="{{ teacher.pk }}" {% if False %}selected{% endif %}>{{ teacher.get_full_name }}</option>
+              {% endfor %}
+            </select>
+
+            <small class="badge badge-warning">{% trans 'To select multiple entries, hold <kbd>Ctrl</kbd> while selecting' %}</small> <small class="text-muted">{{ form.eligible_teachers.help_text }}</small>
+          </div>
+
+          {# prerequisites #}
+
+          <div class="form-group">
+            <label for="{{ form.prerequisites.id_for_label }}" class="h5 text-uppercase">
+              {{ form.prerequisites.label }} <span class="badge badge-danger">{{ form.prerequisites.errors.as_text }}</span>
+            </label>
+
+            <select id="{{ form.prerequisites.auto_id }}" name="{{ form.prerequisites.html_name }}" class="form-control form-control-lg" multiple required>
+              {% for prerequisite in prerequisites %}
+                <option value="{{ prerequisite.pk }}" {% if False %}selected{% endif %}>{{ prerequisite.reference }} | {{ prerequisite.title }}</option>
+              {% endfor %}
+            </select>
+
+            <small class="badge badge-warning">{% trans 'To select multiple entries, hold <kbd>Ctrl</kbd> while selecting' %}</small> <small class="text-muted">{{ form.prerequisites.help_text }}</small>
+          </div>
+
           {# submit #}
 
           <div class="row row-cols-1 row-cols-md-2">

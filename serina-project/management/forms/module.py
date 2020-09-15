@@ -45,14 +45,16 @@ class ModuleUpdateForm(BackOfficeResourceFormMixin):
     prerequisites = ModuleMultipleChoiceField(
         queryset=None,
         required=False,
-        label=_("Prerequisites"),
-        help_text=_("Select the prerequisite modules."),
+        label=_("Prerequisite modules"),
+        help_text=_("If a prerequisite has prerequisites itself, those becomes"
+                    " prerequisites for this module too."),
     )
     eligible_teachers = TeacherMultipleChoiceField(
         queryset=None,
         required=False,
         label=_("Eligible teachers"),
-        help_text=_("Select the teachers whom are able to teach this module."),
+        help_text=_("If no teacher is selected, the module woill be "
+                    "unteachable."),
     )
 
     def __init__(self, *args, **kwargs):
