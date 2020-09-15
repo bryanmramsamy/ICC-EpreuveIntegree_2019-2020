@@ -1,58 +1,42 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'ModuleDetailView' %}  {{ module.reference }}{% endblock title %}
+{% block title %}{% trans 'Delete the module' %}: {{ module.title }}{% endblock title %}
 
 {% block content %}
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">
+        {% trans 'Delete the module' %}: {% include 'logo/module.html' %} {{ module.title }} {% include 'logo/delete.html' %}
+      </h1>
 
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ module.title }}"?</p>
-    <input type="submit" value="Confirm">
-</form>
+      <form method="post">
+        {% csrf_token %}
 
-    <h1>ModuleDetailView</h1>
-    <div>
-        <h2>{{ module.title }}</h2>
-        <h3>{{ module.reference }}</h3>
-        <h4>{{ module.level.name }}</h4>
-        <p>{{ module.description }}</p>
-        <p>{{ module.module_benefits }}</p>
+        {% include 'bubbles/danger/confirm_deletation.html' %}
+
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-2 mb-md-0">
+            <input type="submit" class="btn btn-block btn-lg btn-danger text-uppercase" value="{% trans 'Confirm deletation' %}">
+          </div>
+
+          <div class="col">
+            <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+              {% trans 'Cancel and back to module page' %} {% include 'logo/back.html' %}
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
 
-    <h2>Prerequisites</h2>
-    <ul>
-        {% for module in module.prerequisites.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+    <br>
 
-    <h2>Postrequisites</h2>
-    <ul>
-        {% for module in module.postrequisites.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+    {# Presentation card #}
 
-    <h2>Eligible teachers</h2>
-    <ul>
-        {% for teacher in module.eligible_teachers.all %}
-            <li>{{ teacher.get_full_name }}</li>
-        {% endfor %}
-    </ul>
+    {% with module_actions_enabled=False show_description=True %}
+      {% include 'management/module/card.html' %}
+    {% endwith %}
 
-    <h2>Degrees</h2>
-    <ul>
-        {% for degree in module.degrees.all %}
-            <li>{{ degree.title }}</li>
-        {% endfor %}
-    </ul>
-
-    <h2>Courses</h2>
-    <ul>
-        {% for course in module.courses.all %}
-            <li>{{ course.reference }}</li>
-        {% endfor %}
-    </ul>
-
+  </section>
 {% endblock content %}

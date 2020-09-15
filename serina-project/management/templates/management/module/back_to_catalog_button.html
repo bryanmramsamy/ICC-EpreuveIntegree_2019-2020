@@ -1,0 +1,10 @@
+{% load i18n %}
+
+
+<div class="text-right">
+  <a href="{% url 'module_listview' %}" class="btn btn-block btn-outline-dark">
+    <h3>
+      {% include 'logo/module.html' %} {% trans 'Back to the modules catalog' %} {% include 'logo/back.html' %}
+    </h3>
+  </a>
+</div>

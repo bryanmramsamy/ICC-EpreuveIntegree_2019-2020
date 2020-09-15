@@ -1,0 +1,16 @@
+{% extends 'bubbles/danger.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This action is irreversible !
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    If you proceed, this entry will be erased from the database. It won't be possible to recover it afterwards.
+  {% endblocktrans %}
+{% endblock bubble_content %}
