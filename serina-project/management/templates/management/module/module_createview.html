@@ -21,7 +21,7 @@
 
           <div class="form-group">
             <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
-              {{ form.title.label }}
+              {{ form.title.label }} <span class="badge badge-danger">{{ form.title.errors.as_text }}</span>
             </label>
             <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" class="form-control form-control-lg" required>
             <small class="text-muted">{{ form.title.help_text }}</small>
@@ -34,7 +34,7 @@
 
               <div class="form-group">
                 <label for="{{ form.level.id_for_label }}" class="h5 text-uppercase">
-                  {{ form.level.label }}
+                  {{ form.level.label }} <span class="badge badge-danger">{{ form.level.errors.as_text }}</span>
                 </label>
 
                 <select id="{{ form.level.auto_id }}" name="{{ form.level.html_name }}" class="form-control form-control-lg" required>
@@ -50,7 +50,7 @@
 
               <div class="form-group">
                 <label for="{{ form.ECTS_value.id_for_label }}" class="h5 text-uppercase">
-                  {{ form.ECTS_value.label }}
+                  {{ form.ECTS_value.label }} <span class="badge badge-danger">{{ form.ECTS_value.errors.as_text }}</span>
                 </label>
                 <input id="{{ form.ECTS_value.auto_id }}" name="{{ form.ECTS_value.html_name }}" type="number" min="0" class="form-control form-control-lg" required>
                 <small class="text-muted">{{ form.ECTS_value.help_text }}</small>
@@ -63,7 +63,7 @@
 
               <div class="form-group">
                 <label for="{{ form.cost.id_for_label }}" class="h5 text-uppercase">
-                  {{ form.cost.label }}
+                  {{ form.cost.label }} <span class="badge badge-danger">{{ form.cost.errors.as_text }}</span>
                 </label>
                 <div class="input-group">
                   <input id="{{ form.cost.auto_id }}" name="{{ form.cost.html_name }}" type="number" min="0" step="0.01" class="form-control form-control-lg" required>
@@ -78,7 +78,7 @@
 
               <div class="form-group">
                 <label for="{{ form.price.id_for_label }}" class="h5 text-uppercase">
-                  {{ form.price.label }}
+                  {{ form.price.label }} <span class="badge badge-danger">{{ form.price.errors.as_text }}</span>
                 </label>
                 <div class="input-group">
                   <input id="{{ form.price.auto_id }}" name="{{ form.price.html_name }}" type="number" min="0" step="0.01" class="form-control form-control-lg" required>
@@ -110,7 +110,7 @@
 
           <div class="form-group">
             <label for="{{ form.description.id_for_label }}" class="h5 text-uppercase">
-              {{ form.description.label }}
+              {{ form.description.label }} <span class="badge badge-danger">{{ form.description.errors.as_text }}</span>
             </label>
             <textarea id="{{ form.description.auto_id }}" name="{{ form.description.html_name }}" class="form-control form-control-lg" required></textarea>
             <small class="text-muted">{{ form.description.help_text }}</small>
