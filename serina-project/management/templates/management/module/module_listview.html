@@ -52,7 +52,7 @@
     {% if request.user|is_manager_or_administrator %}
       <div class="col">
         <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">
-          Create a new module {% include 'logo/new.html' %}
+          Create a new module {% include 'logo/module.html' %} {% include 'logo/new.html' %}
         </a>
       </div>
     {% endif %}
