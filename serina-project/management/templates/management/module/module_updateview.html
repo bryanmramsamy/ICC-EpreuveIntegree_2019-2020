@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n management_extra %}
 
 {% block title %}{% trans 'ModuleUpdateView' %}{% endblock title %}
 
@@ -145,7 +145,7 @@
 
             <select id="{{ form.eligible_teachers.auto_id }}" name="{{ form.eligible_teachers.html_name }}" class="form-control form-control-lg" multiple required>
               {% for teacher in teachers %}
-                <option value="{{ teacher.pk }}" {% if False %}selected{% endif %}>{{ teacher.get_full_name }}</option>
+                <option value="{{ teacher.pk }}" {% if teacher|is_eligible_teacher:module %}selected{% endif %}>{{ teacher.get_full_name }}</option>
               {% endfor %}
             </select>
 
@@ -159,9 +159,9 @@
               {{ form.prerequisites.label }} <span class="badge badge-danger">{{ form.prerequisites.errors.as_text }}</span>
             </label>
 
-            <select id="{{ form.prerequisites.auto_id }}" name="{{ form.prerequisites.html_name }}" class="form-control form-control-lg" multiple required>
+            <select id="{{ form.prerequisites.auto_id }}" name="{{ form.prerequisites.html_name }}" class="form-control form-control-lg" multiple>
               {% for prerequisite in prerequisites %}
-                <option value="{{ prerequisite.pk }}" {% if False %}selected{% endif %}>{{ prerequisite.reference }} | {{ prerequisite.title }}</option>
+                <option value="{{ prerequisite.pk }}" {% if prerequisite|is_prerequisite:module %}selected{% endif %}>{{ prerequisite.reference }} | {{ prerequisite.title }}</option>
               {% endfor %}
             </select>
 
@@ -204,64 +204,6 @@
       {% endif %}
     </div>
   </section>
-
-
-
-
-<h1>ModuleUpdateView</h1>
-<form action="." method="post" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{ form.as_p }}
-
-  <input type="submit" value="{% trans 'Update module' %}">
-</form>
-
-<div>
-  <h2>{{ module.title }}</h2>
-  <h3>{{ module.reference }}</h3>
-  <h4>{{ module.level.name }}</h4>
-  <p>{{ module.description }}</p>
-  <p>{{ module.module_benefits }}</p>
-</div>
-
-<a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
-<h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
-
-  <h2>Prerequisites</h2>
-  <ul>
-    {% for module in module.prerequisites.all %}
-    <li>{{ module.title }}</li>
-    {% endfor %}
-  </ul>
-
-  <h2>Postrequisites</h2>
-  <ul>
-    {% for module in module.postrequisites.all %}
-    <li>{{ module.title }}</li>
-    {% endfor %}
-  </ul>
-
-  <h2>Eligible teachers</h2>
-  <ul>
-    {% for teacher in module.eligible_teachers.all %}
-    <li>{{ teacher.get_full_name }}</li>
-    {% endfor %}
-  </ul>
-
-  <h2>Degrees</h2>
-  <ul>
-    {% for degree in module.degrees.all %}
-    <li>{{ degree.title }}</li>
-    {% endfor %}
-  </ul>
-
-  <h2>Courses</h2>
-  <ul>
-    {% for course in module.courses.all %}
-    <li>{{ course.reference }}</li>
-    {% endfor %}
-  </ul>
-
 {% endblock content %}
 
 {% block scripts %}
