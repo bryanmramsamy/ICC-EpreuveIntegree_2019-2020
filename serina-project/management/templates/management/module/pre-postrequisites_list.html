@@ -32,8 +32,8 @@
                 {% include 'logo/check_valid.html' %} {% trans 'Module already completed' %}
               </span>
             {% elif related_module.prerequisites.all.count == 0%}
-              <span class="text-warning">
-                {% include 'logo/check_ready.html' %} {% trans 'No prerequisite needed' %}
+              <span class="text-info">
+                {% include 'logo/check_info.html' %} {% trans 'No prerequisite needed' %}
               </span>
             {% elif request.user|all_prerequisites_validated_by_user:related_module %}
               <span class="text-warning">
