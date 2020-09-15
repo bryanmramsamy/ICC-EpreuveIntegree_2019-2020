@@ -78,6 +78,13 @@ class ModuleUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     context_object_name = "module"
     template_name = "management/module/module_updateview.html"
 
+    def get_context_data(self, **kwargs):
+        """Add all ModuleLevel to context for select input."""
+
+        context = super().get_context_data(**kwargs)
+        context["levels"] = ModuleLevel.objects.all()
+        return context
+
 
 class ModuleDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
                        DeleteView):

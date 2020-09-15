@@ -4,58 +4,215 @@
 {% block title %}{% trans 'ModuleUpdateView' %}{% endblock title %}
 
 {% block content %}
-    <h1>ModuleUpdateView</h1>
-    <form action="." method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">{% trans 'Update the module' %}: {% include 'logo/module.html' %} {{ module.title }} {% include 'logo/edit.html' %}</h1>
 
-        <input type="submit" value="{% trans 'Update module' %}">
-    </form>
+      {% if levels.count > 0 %} {# FIXME: What to do when no level ? #}
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
 
-    <div>
-        <h2>{{ module.title }}</h2>
-        <h3>{{ module.reference }}</h3>
-        <h4>{{ module.level.name }}</h4>
-        <p>{{ module.description }}</p>
-        <p>{{ module.module_benefits }}</p>
+          {# title #}
+
+          <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
+              {{ form.title.label }}
+            </label>
+            <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" value="{{ module.title }}" class="form-control form-control-lg" required>
+            <small class="text-muted">{{ form.title.help_text }}</small>
+          </div>
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col-md-6">
+
+              {# level #}
+
+              <div class="form-group">
+                <label for="{{ form.level.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.level.label }}
+                </label>
+
+                <select id="{{ form.level.auto_id }}" name="{{ form.level.html_name }}" class="form-control form-control-lg" required>
+                  {% for level in levels %}
+                    <option value="{{ level.pk }}" {% if level.pk == module.level.pk %}selected{% endif %}>{{ level.name }}</option>
+                  {% endfor %}
+                </select>
+
+                <small class="text-muted">{{ form.level.help_text }}ss</small>
+              </div>
+
+              {# ECTS_value #}
+
+              <div class="form-group">
+                <label for="{{ form.ECTS_value.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.ECTS_value.label }}
+                </label>
+                <input id="{{ form.ECTS_value.auto_id }}" name="{{ form.ECTS_value.html_name }}" type="number" min="0" value="{{ module.ECTS_value }}" class="form-control form-control-lg" required>
+                <small class="text-muted">{{ form.ECTS_value.help_text }}</small>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+
+              {# cost #}
+
+              <div class="form-group">
+                <label for="{{ form.cost.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.cost.label }}
+                </label>
+                <div class="input-group">
+                  <input id="{{ form.cost.auto_id }}" name="{{ form.cost.html_name }}" type="number" min="0" step="0.01" value="{{ module.cost }}" class="form-control form-control-lg" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text text-uppercase">EUR</span>
+                  </div>
+                </div>
+                <small class="text-muted">{{ form.cost.help_text }}</small>
+              </div>
+
+              {# price #}
+
+              <div class="form-group">
+                <label for="{{ form.price.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.price.label }}
+                </label>
+                <div class="input-group">
+                  <input id="{{ form.price.auto_id }}" name="{{ form.price.html_name }}" type="number" min="0" step="0.01" value="{{ module.price }}" class="form-control form-control-lg" required>
+                  <div class="input-group-append">
+                    <span class="input-group-text text-uppercase">EUR</span>
+                  </div>
+                </div>
+                <small class="text-muted">{{ form.price.help_text }}</small>
+              </div>
+            </div>
+          </div>
+
+          {# picture #}
+
+          <div class="form-group">
+            <label class="h5 text-uppercase" for="{{ form.picture.id_for_label }}">
+              {{ form.picture.label }} <a href="{{ module.picture.url }}" class="badge badge-primary" target="_blank" rel="noopener noreferrer">See actual picture {% include 'logo/new_tab.html' %}</a> <span class="badge badge-danger">{{ form.picture.errors.as_text }}</span>
+            </label>
+            <div class="custom-file">
+              <input id="{{ form.picture.auto_id }}" name="{{ form.picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
+              <label id="{{ form.picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.picture.id_for_label }}">
+                {{ module.picture }}
+              </label>
+              <small class="badge badge-warning">{% trans 'Supported formats' %}: GIF, JPEG, PNG or WEBP</small> <small class="text-muted">{{ form.picture.help_text }}</small>
+            </div>
+          </div>
+
+          {# description #}
+
+          <div class="form-group">
+            <label for="{{ form.description.id_for_label }}" class="h5 text-uppercase">
+              {{ form.description.label }}
+            </label>
+            <textarea id="{{ form.description.auto_id }}" name="{{ form.description.html_name }}" class="form-control form-control-lg" required>{{ module.description }}</textarea>
+            <small class="text-muted">{{ form.description.help_text }}</small>
+          </div>
+
+          {# submit #}
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-2 mb-md-0">
+              <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update module' %}">
+            </div>
+
+            <div class="col">
+              <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+                {% trans 'Cancel and back to module page' %} {% include 'logo/back.html' %}
+              </a>
+            </div>
+          </div>
+        </form>
+
+      {% else %}
+        <div class="rounded bg-warning p-2">
+          {% include 'bubbles/warning/no_modulelevel.html' %}
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-2 mb-md-0">
+              <a href="{% url 'modulelevel_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
+                {% trans 'Create a new module level' %} {% include 'logo/module_alt.html' %} {% include 'logo/new.html' %}
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="{% url 'module_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+                {% trans 'Back to modules catalog' %} {% include 'logo/back.html' %}
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
+  </section>
 
-    <a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
-    <h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
 
-    <h2>Prerequisites</h2>
-    <ul>
-        {% for module in module.prerequisites.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
 
-    <h2>Postrequisites</h2>
-    <ul>
-        {% for module in module.postrequisites.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
 
-    <h2>Eligible teachers</h2>
-    <ul>
-        {% for teacher in module.eligible_teachers.all %}
-            <li>{{ teacher.get_full_name }}</li>
-        {% endfor %}
-    </ul>
+<h1>ModuleUpdateView</h1>
+<form action="." method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  {{ form.as_p }}
 
-    <h2>Degrees</h2>
-    <ul>
-        {% for degree in module.degrees.all %}
-            <li>{{ degree.title }}</li>
-        {% endfor %}
-    </ul>
+  <input type="submit" value="{% trans 'Update module' %}">
+</form>
 
-    <h2>Courses</h2>
-    <ul>
-        {% for course in module.courses.all %}
-            <li>{{ course.reference }}</li>
-        {% endfor %}
-    </ul>
+<div>
+  <h2>{{ module.title }}</h2>
+  <h3>{{ module.reference }}</h3>
+  <h4>{{ module.level.name }}</h4>
+  <p>{{ module.description }}</p>
+  <p>{{ module.module_benefits }}</p>
+</div>
+
+<a href="{% url 'module_updateview' pk=module.pk %}">module_updateview</a>
+<h5><a href="{% url 'module_deleteview' pk=module.pk %}">module_deleteview/{{ module.pk }}/</a>
+
+  <h2>Prerequisites</h2>
+  <ul>
+    {% for module in module.prerequisites.all %}
+    <li>{{ module.title }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Postrequisites</h2>
+  <ul>
+    {% for module in module.postrequisites.all %}
+    <li>{{ module.title }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Eligible teachers</h2>
+  <ul>
+    {% for teacher in module.eligible_teachers.all %}
+    <li>{{ teacher.get_full_name }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Degrees</h2>
+  <ul>
+    {% for degree in module.degrees.all %}
+    <li>{{ degree.title }}</li>
+    {% endfor %}
+  </ul>
+
+  <h2>Courses</h2>
+  <ul>
+    {% for course in module.courses.all %}
+    <li>{{ course.reference }}</li>
+    {% endfor %}
+  </ul>
 
 {% endblock content %}
+
+{% block scripts %}
+  <script>
+    $('#{{ form.picture.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.picture.auto_id }}_label').html(fileName);
+    })
+    </script>
+{% endblock scripts %}
