@@ -297,15 +297,15 @@
 
 {% block scripts %}
   <script>
-    $(function() {
-      $("#test").datepicker();
-    });
+    // $(function() {
+    //   $("#test").datepicker();
+    // });
 
-    $("#yourCheckBoxId").change(function(){
-      if($(this).attr('checked')){
-        $(".yourDivClass").show();
-      }
-    });
+    // $("#yourCheckBoxId").change(function(){
+    //   if($(this).attr('checked')){
+    //     $(".yourDivClass").show();
+    //   }
+    // });
 
     $('#{{ form.id_picture.auto_id }}').on('change',function(){
       var fileName = $(this).val();

@@ -83,19 +83,25 @@ class Module(BackOfficeResource):
         related_name="teachable_modules",
         verbose_name=_("Eligible teachers")
     )
-    ECTS_value = models.PositiveIntegerField(null=True, blank=True,
-                                             verbose_name=_("ECTS value"))
+    ECTS_value = models.PositiveIntegerField(
+        null=True,
+        blank=True,
+        verbose_name=_("ECTS value"),
+        help_text=_("Cannot be negative."),
+    )
     cost = models.DecimalField(
         null=True,
         max_digits=5,
         decimal_places=2,
-        verbose_name=_('Cost'),
+        verbose_name=_('Cost per student'),
+        help_text=_("Cannot be negative."),
     )
     price = models.DecimalField(
         null=True,
         max_digits=5,
         decimal_places=2,
-        verbose_name=_('Charge price'),
+        verbose_name=_('Student charge price'),
+        help_text=_("Cannot be negative."),
     )
     picture = models.ImageField(
         upload_to='management/modules/',
@@ -104,6 +110,8 @@ class Module(BackOfficeResource):
         blank=True,
         max_length=225,
         verbose_name=_("Picture"),
+        help_text=_("Not required. If no picture is sent, the default picture "
+                    "will be used.")
     )
 
     class Meta:

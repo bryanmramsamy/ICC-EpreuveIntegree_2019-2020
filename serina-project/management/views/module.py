@@ -13,7 +13,6 @@ from registration.utils import registration
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
-
 # Module views
 
 class ModuleListView(ListView):
@@ -55,6 +54,13 @@ class ModuleCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     model = Module
     form_class = ModuleCreateForm
     template_name = "management/module/module_createview.html"
+
+    def get_context_data(self, **kwargs):
+        """Add all ModuleLevel to context for select input."""
+
+        context = super().get_context_data(**kwargs)
+        context["levels"] = ModuleLevel.objects.all()
+        return context
 
 
 class ModuleUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
