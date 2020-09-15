@@ -1,0 +1,12 @@
+{% load i18n registration_extra %}
+
+
+{% if request.user|is_guest %}
+  <div class="p-2 rounded bg-warning">
+    {% include 'bubbles/warning/still_registered_guest_not_student.html' %}
+  
+    <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
+  </div>
+
+  <br>
+{% endif %}

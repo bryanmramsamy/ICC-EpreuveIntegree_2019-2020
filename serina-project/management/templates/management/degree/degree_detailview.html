@@ -52,7 +52,7 @@
       <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
 
     {% elif request.user|is_guest %}
-      {% include 'bubbles/warning_guest.html' %}
+      {% include 'bubbles/warning/still_registered_guest_not_student.html' %}
 
       <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
 

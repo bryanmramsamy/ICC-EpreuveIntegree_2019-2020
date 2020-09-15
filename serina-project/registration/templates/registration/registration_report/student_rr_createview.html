@@ -284,7 +284,7 @@
 
       <hr>
 
-      {% include 'bubbles/warning_student_rr_creation.html' %}
+      {% include 'bubbles/warning/student_rr_creation.html' %}
 
       <input type="submit" class="btn btn-block btn-lg btn-dark text-uppercase" value="{% trans 'Submit your registration report' %}">
 
@@ -297,16 +297,6 @@
 
 {% block scripts %}
   <script>
-    // $(function() {
-    //   $("#test").datepicker();
-    // });
-
-    // $("#yourCheckBoxId").change(function(){
-    //   if($(this).attr('checked')){
-    //     $(".yourDivClass").show();
-    //   }
-    // });
-
     $('#{{ form.id_picture.auto_id }}').on('change',function(){
       var fileName = $(this).val();
       $(this).next('#{{ form.id_picture.auto_id }}_label').html(fileName);

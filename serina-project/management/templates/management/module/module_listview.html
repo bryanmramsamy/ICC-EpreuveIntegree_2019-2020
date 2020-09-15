@@ -7,15 +7,7 @@
 
   {# Guest warning bubble #}
 
-  {% if request.user|is_guest %}
-    <div class="p-2 rounded bg-warning">
-      {% include 'bubbles/warning_guest.html' %}
-    
-      <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
-    </div>
-
-    <br>
-  {% endif %}
+  {% include 'registered_user_warning.html' %}
 
 
   {# Heading jumbotron #}
@@ -27,7 +19,7 @@
 
   
   {% if not request.user|is_back_office_user %}
-    {% include 'bubbles/info_more_about_prerequisites.html' %}
+    {% include 'bubbles/info/more_about_prerequisites.html' %}
   {% endif %}
 
 

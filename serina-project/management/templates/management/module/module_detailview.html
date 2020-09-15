@@ -81,30 +81,30 @@
       {# Validation restriction bubble #}
 
       {% if already_validated %}
-        {% include 'bubbles/success_module_already_completed.html' %}
+        {% include 'bubbles/success/module_already_completed.html' %}
 
       {% else %}
         {% if module.prerequisites.all.count > 0 and all_prerequisites_validated %}
-          {% include 'bubbles/info_module_prerequisites_completed.html' %}
+          {% include 'bubbles/info/module_prerequisites_completed.html' %}
 
         {% elif module.prerequisites.all.count > 0 %}
-          {% include 'bubbles/warning_module_has_prerequisites.html' %}
+          {% include 'bubbles/warning/module_has_prerequisites.html' %}
         {% endif %}
 
         {% if module.postrequisites.all.count > 0 %}
-          {% include 'bubbles/info_module_has_postrequisites.html' %}
+          {% include 'bubbles/info/module_has_postrequisites.html' %}
         {% endif %}
       {% endif %}
 
       <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
 
     {% elif request.user|is_guest %}
-      {% include 'bubbles/warning_guest.html' %}
+      {% include 'bubbles/warning/still_registered_guest_not_student.html' %}
 
       <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
 
     {% else %}
-      {% include 'bubbles/warning_unregistered.html' %}
+      {% include 'bubbles/warning/unregistered.html' %}
 
       <div class="row row-cols-1 row-cols-md-2">
         <div class="col mb-2 mb-md-0">
