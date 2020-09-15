@@ -1,24 +1,19 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'ModuleLevelDetailView' %}  {{ module.reference }}{% endblock title %}
+{% block title %}{% trans 'Module diffculty level' %}: {{ module.name }}{% endblock title %}
 
 {% block content %}
-    <h1>ModuleDetailView</h1>
-    <div>
-        <h2>{{ level.rank }}</h2>
-        <h3>{{ level.name }}</h3>
-    </div>
+  {% include 'management/module/modulelevel_back_to_catalog_button.html' %}
 
-    <h2>Modules from this level</h2>
-    <ul>
-        {% for module in level.modules.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+  <br>
 
-    <h5><a href="{% url 'modulelevel_updateview' pk=level.pk %}">level_updateview/{{ level.pk }}/</a>
-    </h5>
-    <h5><a href="{% url 'modulelevel_deleteview' pk=level.pk %}">level_deleteview/{{ level.pk }}/</a>
-    </h5>
+  {% with modulelevel_actions_enabled=True %}
+    {% include 'management/module/modulelevel_card.html' %}
+  {% endwith %}
+
+  <br>
+
+  {% include 'management/module/modulelevel_back_to_catalog_button.html' %}
+
 {% endblock content %}
