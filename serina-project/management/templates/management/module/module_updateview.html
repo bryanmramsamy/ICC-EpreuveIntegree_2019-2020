@@ -203,7 +203,17 @@
         </div>
       {% endif %}
     </div>
+
+    <br>
+
+
+    {# Presentation card #}
+
+    {% with module_actions_enabled=False show_description=True %}
+      {% include 'management/module/card.html' %}
+    {% endwith %}
   </section>
+
 {% endblock content %}
 
 {% block scripts %}
