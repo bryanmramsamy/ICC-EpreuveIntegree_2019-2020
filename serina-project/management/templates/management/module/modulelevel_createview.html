@@ -1,14 +1,60 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'ModuleLevelCreateView' %}{% endblock title %}
+{% block title %}{% trans 'Add a new module level' %}{% endblock title %}
 
 {% block content %}
-    <h1>ModuleLevelCreateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">
+        {% trans 'Add a new module level to the catalog' %} {% include 'logo/module_alt.html' %} {% include 'logo/new.html' %}
+      </h1>
 
-        <input type="submit" value="{% trans 'Create new module level' %}">
-    </form>
+      <form method="POST">
+        {% csrf_token %}
+
+        {# created_by (hidden) #}
+
+        {{ form.created_by }}
+
+
+        {# rank #}
+
+        <div class="form-group">
+          <label for="{{ form.rank.id_for_label }}" class="h5 text-uppercase">
+            {{ form.rank.label }} <span class="badge badge-danger">{{ form.rank.errors.as_text }}</span>
+          </label>
+          <input id="{{ form.rank.auto_id }}" name="{{ form.rank.html_name }}" type="number" min="0" class="form-control form-control-lg" required>
+          <small class="text-muted">{{ form.rank.help_text }}</small>
+        </div>
+
+        {# name #}
+
+        <div class="form-group">
+          <label for="{{ form.name.id_for_label }}" class="h5 text-uppercase">
+            {{ form.name.label }} <span class="badge badge-danger">{{ form.name.errors.as_text }}</span>
+          </label>
+          <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" class="form-control form-control-lg" required>
+          <small class="text-muted">
+            {{ form.name.help_text }}
+          </small>
+        </div>
+
+        {# submit #}
+
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-2 mb-md-0">
+            <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Create the new difficulty level' %}">
+          </div>
+
+          <div class="col">
+            <a href="{% url 'modulelevel_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+              {% trans 'Cancel and back to module levels catalog' %} {% include 'logo/back.html' %}
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
 {% endblock content %}

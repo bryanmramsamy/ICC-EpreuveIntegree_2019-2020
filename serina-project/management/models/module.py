@@ -10,8 +10,18 @@ from .resource import BackOfficeResource
 class ModuleLevel(BackOfficeResource):
     """Model definition for ModuleLevel."""
 
-    rank = models.PositiveIntegerField(unique=True, verbose_name=_("Rank"))
-    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    rank = models.PositiveIntegerField(
+        unique=True,
+        verbose_name=_("Rank"),
+        help_text=_("Each level must have a unique rank. The higer the rank, "
+                    "the harder the difficulty level.")
+    )
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_("Name"),
+        help_text=_("An explicite name is recommended, such as 'Beginner' or "
+                    "'Intermediate'."),
+    )
 
     class Meta:
         """Meta definition for ModuleLevel."""
