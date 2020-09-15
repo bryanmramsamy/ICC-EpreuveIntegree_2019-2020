@@ -28,14 +28,14 @@
           <li><a class="text-muted" href="{% url 'cookies_policy' %}">{% trans 'Cookies policy' %}</a></li>
         </ul>
       </div>
-      
+
       <div class="col-6">
         <span class="h4">{% trans 'About the project' %}</span>
         <ul class="list-unstyled text-small">
-          <li><a class="text-muted" href="{% url 'api' %}">{% trans 'Application Programming Interface' %}</a></li>
-          <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-1.pdf' %}">{% trans 'Project report: Volume 1' %}</a></li>           
-          <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-2.pdf' %}">{% trans 'Project report: Volume 2' %}</a></li>
-          <li><a class="text-muted" href="https://gitlab.com/bryanmramsamy/ICC-EpreuveIntegree_2019-2020/">{% trans 'GitLab.com project repository' %}</a></li>
+          <li><a class="text-muted" href="{% url 'api' %}" target="_blank" rel="noopener noreferrer">{% trans 'Application Programming Interface' %} {% include 'logo/new_tab.html' %}</a></li>
+          <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-1.pdf' %}" target="_blank" rel="noopener noreferrer">{% trans 'Project report: Volume 1' %} {% include 'logo/new_tab.html' %}</a></li>
+          <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-2.pdf' %}" target="_blank" rel="noopener noreferrer">{% trans 'Project report: Volume 2' %} {% include 'logo/new_tab.html' %}</a></li>
+          <li><a class="text-muted" href="https://gitlab.com/bryanmramsamy/ICC-EpreuveIntegree_2019-2020/" target="_blank" rel="noopener noreferrer">{% trans 'GitLab.com project repository' %} {% include 'logo/new_tab.html' %}</a></li>
           <li><a class="text-danger" href="{% url 'home_old' %}">home_old</a></li>
         </ul>
       </div>
