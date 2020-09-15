@@ -51,7 +51,7 @@
 
         <div class="form-group col">
           <label for="{{ form.birthday.id_for_label }}" class="h5 text-uppercase">
-            {{ form.birthday.label }}
+            {{ form.birthday.label }} <span class="badge badge-danger">{{ form.birthday.errors.as_text }}</span>
           </label>
           <input id="{{ form.birthday.auto_id }}" name="{{ form.birthday.html_name }}" type="date" class="form-control form-control-lg" required>
         </div>
@@ -60,7 +60,7 @@
 
         <div class="form-group col">
           <label for="{{ form.nationality.id_for_label }}" class="h5 text-uppercase">
-            {{ form.nationality.label }}
+            {{ form.nationality.label }} <span class="badge badge-danger">{{ form.nationality.errors.as_text }}</span>
           </label>
           <select id="{{ form.nationality.auto_id }}" name="{{ form.nationality.html_name }}" class="form-control form-control-lg" required>
             {% include 'nationality_select.html' %}
@@ -72,7 +72,7 @@
 
       <div class="form-group">
         <label for="{{ form.address.id_for_label }}" class="h5 text-uppercase">
-          {{ form.address.label }}
+          {{ form.address.label }} <span class="badge badge-danger">{{ form.address.errors.as_text }}</span>
         </label>
         <input id="{{ form.address.auto_id }}" name="{{ form.address.html_name }}" type="text" class="form-control form-control-lg" required>
       </div>
@@ -81,7 +81,7 @@
 
       <div class="form-group">
         <label for="{{ form.additional_address.id_for_label }}" class="h5 text-uppercase">
-          {{ form.additional_address.label }}
+          {{ form.additional_address.label }} <span class="badge badge-danger">{{ form.additional_address.errors.as_text }}</span>
         </label>
         <input id="{{ form.additional_address.auto_id }}" name="{{ form.additional_address.html_name }}" type="text" class="form-control form-control-lg">
       </div>
@@ -91,7 +91,7 @@
 
         <div class="form-group col-md-4">
           <label for="{{ form.postal_code.id_for_label }}" class="h5 text-uppercase">
-            {{ form.postal_code.label }}
+            {{ form.postal_code.label }} <span class="badge badge-danger">{{ form.postal_code.errors.as_text }}</span>
           </label>
           <input id="{{ form.postal_code.auto_id }}" name="{{ form.postal_code.html_name }}" type="text" class="form-control form-control-lg" required>
         </div>
@@ -100,7 +100,7 @@
 
         <div class="form-group col-md-8">
           <label for="{{ form.postal_locality.id_for_label }}" class="h5 text-uppercase">
-            {{ form.postal_locality.label }}
+            {{ form.postal_locality.label }} <span class="badge badge-danger">{{ form.postal_locality.errors.as_text }}</span>
           </label>
           <input id="{{ form.postal_locality.auto_id }}" name="{{ form.postal_locality.html_name }}" type="text" class="form-control form-control-lg" required>
         </div>
@@ -277,7 +277,7 @@
 
       <div class="form-group">
         <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
-          {{ form.notes.label }}
+          {{ form.notes.label }} <span class="badge badge-danger">{{ form.notes.errors.as_text }}</span>
         </label>
         <textarea id="{{ form.notes.auto_id }}" name="{{ form.notes.html_name }}" class="form-control form-control-lg"></textarea>
       </div>
