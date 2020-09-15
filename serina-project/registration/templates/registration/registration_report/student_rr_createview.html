@@ -35,20 +35,29 @@
   </section>
 
   <section class="container py-3 rounded bg-light">
-    <form action="." method="post" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %}
 
       <h4 class="text-uppercase text-center">{% trans 'Mandatory information' %}</h4>
 
       <br>
 
+      {# created_by (hidden) #}
+
+      {{ form.created_by }}
+
       <div class="row row-cols-1 row-cols-md-2">
+        {# birthday #}
+
         <div class="form-group col">
           <label for="{{ form.birthday.id_for_label }}" class="h5 text-uppercase">
             {{ form.birthday.label }}
           </label>
           <input id="{{ form.birthday.auto_id }}" name="{{ form.birthday.html_name }}" type="date" class="form-control form-control-lg" required>
         </div>
+
+        {# nationality #}
+
         <div class="form-group col">
           <label for="{{ form.nationality.id_for_label }}" class="h5 text-uppercase">
             {{ form.nationality.label }}
@@ -59,12 +68,16 @@
         </div>
       </div>
 
+      {# address #}
+
       <div class="form-group">
         <label for="{{ form.address.id_for_label }}" class="h5 text-uppercase">
           {{ form.address.label }}
         </label>
         <input id="{{ form.address.auto_id }}" name="{{ form.address.html_name }}" type="text" class="form-control form-control-lg" required>
       </div>
+
+      {# additional_address #}
 
       <div class="form-group">
         <label for="{{ form.additional_address.id_for_label }}" class="h5 text-uppercase">
@@ -74,12 +87,17 @@
       </div>
 
       <div class="row row-cols-1 row-cols-md-2">
+        {# postal_code #}
+
         <div class="form-group col-md-4">
           <label for="{{ form.postal_code.id_for_label }}" class="h5 text-uppercase">
             {{ form.postal_code.label }}
           </label>
           <input id="{{ form.postal_code.auto_id }}" name="{{ form.postal_code.html_name }}" type="text" class="form-control form-control-lg" required>
         </div>
+
+        {# postal_locality #}
+
         <div class="form-group col-md-8">
           <label for="{{ form.postal_locality.id_for_label }}" class="h5 text-uppercase">
             {{ form.postal_locality.label }}
@@ -88,9 +106,11 @@
         </div>
       </div>
 
+      {# id_picture #}
+
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
-          {{ form.id_picture.label }}
+          {{ form.id_picture.label }} <small class="text-danger">{{ form.id_picture.errors.as_text }}</small>
         </label>
         <div class="custom-file">
           <input id="{{ form.id_picture.auto_id }}" name="{{ form.id_picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -101,9 +121,11 @@
         </div>
       </div>
 
+      {# id_card #}
+
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.id_card.id_for_label }}">
-          {{ form.id_card.label }}
+          {{ form.id_card.label }} <small class="text-danger">{{ form.id_card.errors.as_text }}</small>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.id_card.auto_id }}" name="{{ form.id_card.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -114,9 +136,11 @@
         <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.id_card.help_text }}</small>
       </div>
 
+      {# secondary_education_certificate #}
+
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
-          {{ form.secondary_education_certificate.label }}
+          {{ form.secondary_education_certificate.label }} <small class="text-danger">{{ form.secondary_education_certificate.errors.as_text }}</small>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.secondary_education_certificate.auto_id }}" name="{{ form.secondary_education_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -131,6 +155,9 @@
       {# Foreign student additional mandatory fields #}
 
       {% if foreign_form %}
+
+        {# annex_403 #}
+
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.annex_403.id_for_label }}">
             {{ form.annex_403.label }}
@@ -144,9 +171,11 @@
           </div>
         </div>
 
+        {# other_school_inscription_certificate #}
+
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.other_school_inscription_certificate.id_for_label }}">
-            {{ form.other_school_inscription_certificate.label }}
+            {{ form.other_school_inscription_certificate.label }} <small class="text-danger">{{ form.other_school_inscription_certificate.errors.as_text }}</small>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.other_school_inscription_certificate.auto_id }}" name="{{ form.other_school_inscription_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -157,9 +186,11 @@
           </div>
         </div>
 
+        {# national_register_extract #}
+
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.national_register_extract.id_for_label }}">
-            {{ form.national_register_extract.label }}
+            {{ form.national_register_extract.label }} <small class="text-danger">{{ form.national_register_extract.errors.as_text }}</small>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.national_register_extract.auto_id }}" name="{{ form.national_register_extract.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -170,9 +201,11 @@
           </div>
         </div>
 
+        {# belgian_studies_history #}
+
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.belgian_studies_history.id_for_label }}">
-            {{ form.belgian_studies_history.label }}
+            {{ form.belgian_studies_history.label }} <small class="text-danger">{{ form.belgian_studies_history.errors.as_text }}</small>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.belgian_studies_history.auto_id }}" name="{{ form.belgian_studies_history.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -195,9 +228,11 @@
 
       <br>
 
+      {# archievement_certificates #}
+
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.archievement_certificates.id_for_label }}">
-          {{ form.archievement_certificates.label }}
+          {{ form.archievement_certificates.label }} <small class="text-danger">{{ form.archievement_certificates.errors.as_text }}</small>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.archievement_certificates.auto_id }}" name="{{ form.archievement_certificates.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
@@ -208,9 +243,11 @@
         <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.archievement_certificates.help_text }}</small>
       </div>
 
+      {# job_organization_certificates #}
+
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.job_organization_certificates.id_for_label }}">
-          {{ form.job_organization_certificates.label }}
+          {{ form.job_organization_certificates.label }} <small class="text-danger">{{ form.job_organization_certificates.errors.as_text }}</small>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.job_organization_certificates.auto_id }}" name="{{ form.job_organization_certificates.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
@@ -221,9 +258,11 @@
         <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.job_organization_certificates.help_text }}</small>
       </div>
 
+      {# exemption_report #}
+
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.exemption_report.id_for_label }}">
-          {{ form.exemption_report.label }}
+          {{ form.exemption_report.label }} <small class="text-danger">{{ form.exemption_report.errors.as_text }}</small>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.exemption_report.auto_id }}" name="{{ form.exemption_report.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
@@ -233,6 +272,8 @@
         </div>
         <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.exemption_report.help_text }}</small>
       </div>
+
+      {# notes #}
 
       <div class="form-group">
         <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
