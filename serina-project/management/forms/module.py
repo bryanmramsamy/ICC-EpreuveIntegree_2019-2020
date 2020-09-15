@@ -1,5 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 from ..models import Module, ModuleLevel
 from .resource import (
@@ -15,8 +16,12 @@ from .resource import (
 class ModuleCreateForm(BackOfficeResourceFormMixin):
     """ModelForm for Module."""
 
-    level = CategoryLevelChoiceField(queryset=ModuleLevel.objects.all(),
-                                     empty_label=None)
+    level = CategoryLevelChoiceField(
+        queryset=ModuleLevel.objects.all(),
+        empty_label=None,
+        label=_("Difficulty level"),
+        help_text=_("Rank the module by it's diffictuly."),
+    )
 
     class Meta(BackOfficeResourceFormMixin.Meta):
         """Meta definition for ModuleLevelForm."""
@@ -31,11 +36,24 @@ class ModuleUpdateForm(BackOfficeResourceFormMixin):
     Prevent the user to add the instance to its own prerequisites. Also prevent
     adding a postrequisite module to the prerequisites."""
 
-    level = CategoryLevelChoiceField(queryset=ModuleLevel.objects.all(),
-                                     empty_label=None)
-    prerequisites = ModuleMultipleChoiceField(queryset=None, required=False)
-    eligible_teachers = TeacherMultipleChoiceField(queryset=None,
-                                                   required=False)
+    level = CategoryLevelChoiceField(
+        queryset=ModuleLevel.objects.all(),
+        empty_label=None,
+        label=_("Difficulty level"),
+        help_text=_("Rank the module by it's diffictuly."),
+    )
+    prerequisites = ModuleMultipleChoiceField(
+        queryset=None,
+        required=False,
+        label=_("Prerequisites"),
+        help_text=_("Select the prerequisite modules."),
+    )
+    eligible_teachers = TeacherMultipleChoiceField(
+        queryset=None,
+        required=False,
+        label=_("Eligible teachers"),
+        help_text=_("Select the teachers whom are able to teach this module."),
+    )
 
     def __init__(self, *args, **kwargs):
         """Init of the 'prerequisites' and the 'eligible_teacher'-fields
