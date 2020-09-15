@@ -88,7 +88,7 @@
               {{ form.picture.label }} <small class="text-danger">{{ form.picture.errors.as_text }}</small>
             </label>
             <div class="custom-file">
-              <input id="{{ form.picture.auto_id }}" name="{{ form.picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+              <input id="{{ form.picture.auto_id }}" name="{{ form.picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
               <label id="{{ form.picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.picture.id_for_label }}">
                 No picture selected yet
               </label>
@@ -106,6 +106,10 @@
             <small class="text-muted">{{ form.description.help_text }}</small>
           </div>
           
+          {% include 'bubbles/info_add_prerequisites_and_eligible_teachers.html' %}
+
+          {# submit #}
+
           <div class="row row-cols-1 row-cols-md-2">
             <div class="col mb-2 mb-md-0">
               <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Create the new module' %}">

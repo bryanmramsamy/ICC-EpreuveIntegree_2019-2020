@@ -1,0 +1,18 @@
+{% extends 'bubbles/info_main.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Once the module created, you will be able to add prerequisites and flag teachers as eligible to teach this module
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    For technical reasons, these actions cannot be performed as long as the module has not been created yet.
+    <br>
+    You will be redirected to the update form, where you will be able to add prerequisite modules and teachers in the 'Eligible teachers' list, once the module created.
+  {% endblocktrans %}
+{% endblock bubble_content %}
