@@ -154,10 +154,10 @@
       {% endif %}
     </div>
   </section>
-  {% endblock content %}
+{% endblock content %}
 
 
-  {% block scripts %}
+{% block scripts %}
   <script>
     $('#{{ form.picture.auto_id }}').on('change',function(){
       var fileName = $(this).val();

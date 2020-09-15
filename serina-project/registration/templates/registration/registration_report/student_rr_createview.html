@@ -110,14 +110,14 @@
 
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
-          {{ form.id_picture.label }} <small class="text-danger">{{ form.id_picture.errors.as_text }}</small>
+          {{ form.id_picture.label }} <span class="badge badge-danger">{{ form.id_picture.errors.as_text }}</span>
         </label>
         <div class="custom-file">
           <input id="{{ form.id_picture.auto_id }}" name="{{ form.id_picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
           <label id="{{ form.id_picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.id_picture.id_for_label }}">
             No picture selected yet
           </label>
-          <small class="text-danger">{% trans 'JPEG only' %}</small> <small class="text-muted">{{ form.id_picture.help_text }}</small>
+          <small class="badge badge-warning">{% trans 'Supported formats' %}: JPEG or PNG</small> <small class="text-muted">{{ form.id_picture.help_text }}</small>
         </div>
       </div>
 
@@ -125,7 +125,7 @@
 
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.id_card.id_for_label }}">
-          {{ form.id_card.label }} <small class="text-danger">{{ form.id_card.errors.as_text }}</small>
+          {{ form.id_card.label }} <span class="badge badge-danger">{{ form.id_card.errors.as_text }}</span>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.id_card.auto_id }}" name="{{ form.id_card.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
@@ -133,21 +133,21 @@
             No file selected yet
           </label>
         </div>
-        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.id_card.help_text }}</small>
+        <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.id_card.help_text }}</small>
       </div>
 
       {# secondary_education_certificate #}
 
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
-          {{ form.secondary_education_certificate.label }} <small class="text-danger">{{ form.secondary_education_certificate.errors.as_text }}</small>
+          {{ form.secondary_education_certificate.label }} <span class="badge badge-danger">{{ form.secondary_education_certificate.errors.as_text }}</span>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.secondary_education_certificate.auto_id }}" name="{{ form.secondary_education_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
           <label id="{{ form.secondary_education_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.secondary_education_certificate.id_for_label }}">
             No file selected yet
           </label>
-          <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.secondary_education_certificate.help_text }}</small>
+          <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.secondary_education_certificate.help_text }}</small>
         </div>
       </div>
 
@@ -160,14 +160,14 @@
 
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.annex_403.id_for_label }}">
-            {{ form.annex_403.label }}
+            {{ form.annex_403.label }} <span class="badge badge-danger">{{ form.annex_403.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.annex_403.auto_id }}" name="{{ form.annex_403.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
             <label id="{{ form.annex_403.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.annex_403.id_for_label }}">
               No file selected yet
             </label>
-            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.annex_403.help_text }}</small>
+            <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.annex_403.help_text }}</small>
           </div>
         </div>
 
@@ -175,14 +175,14 @@
 
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.other_school_inscription_certificate.id_for_label }}">
-            {{ form.other_school_inscription_certificate.label }} <small class="text-danger">{{ form.other_school_inscription_certificate.errors.as_text }}</small>
+            {{ form.other_school_inscription_certificate.label }} <span class="badge badge-danger">{{ form.other_school_inscription_certificate.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.other_school_inscription_certificate.auto_id }}" name="{{ form.other_school_inscription_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
             <label id="{{ form.other_school_inscription_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.other_school_inscription_certificate.id_for_label }}">
               No file selected yet
             </label>
-            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.other_school_inscription_certificate.help_text }}</small>
+            <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.other_school_inscription_certificate.help_text }}</small>
           </div>
         </div>
 
@@ -190,14 +190,14 @@
 
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.national_register_extract.id_for_label }}">
-            {{ form.national_register_extract.label }} <small class="text-danger">{{ form.national_register_extract.errors.as_text }}</small>
+            {{ form.national_register_extract.label }} <span class="badge badge-danger">{{ form.national_register_extract.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.national_register_extract.auto_id }}" name="{{ form.national_register_extract.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
             <label id="{{ form.national_register_extract.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.national_register_extract.id_for_label }}">
               No file selected yet
             </label>
-            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.national_register_extract.help_text }}</small>
+            <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.national_register_extract.help_text }}</small>
           </div>
         </div>
 
@@ -205,14 +205,14 @@
 
         <div class="form-group">
           <label class="h5 text-uppercase" for="{{ form.belgian_studies_history.id_for_label }}">
-            {{ form.belgian_studies_history.label }} <small class="text-danger">{{ form.belgian_studies_history.errors.as_text }}</small>
+            {{ form.belgian_studies_history.label }} <span class="badge badge-danger">{{ form.belgian_studies_history.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
             <input id="{{ form.belgian_studies_history.auto_id }}" name="{{ form.belgian_studies_history.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
             <label id="{{ form.belgian_studies_history.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.belgian_studies_history.id_for_label }}">
               No file selected yet
             </label>
-            <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.belgian_studies_history.help_text }}</small>
+            <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.belgian_studies_history.help_text }}</small>
           </div>
         </div>
       {% endif %}
@@ -232,7 +232,7 @@
 
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.archievement_certificates.id_for_label }}">
-          {{ form.archievement_certificates.label }} <small class="text-danger">{{ form.archievement_certificates.errors.as_text }}</small>
+          {{ form.archievement_certificates.label }} <span class="badge badge-danger">{{ form.archievement_certificates.errors.as_text }}</span>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.archievement_certificates.auto_id }}" name="{{ form.archievement_certificates.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
@@ -240,14 +240,14 @@
             No file selected
           </label>
         </div>
-        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.archievement_certificates.help_text }}</small>
+        <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.archievement_certificates.help_text }}</small>
       </div>
 
       {# job_organization_certificates #}
 
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.job_organization_certificates.id_for_label }}">
-          {{ form.job_organization_certificates.label }} <small class="text-danger">{{ form.job_organization_certificates.errors.as_text }}</small>
+          {{ form.job_organization_certificates.label }} <span class="badge badge-danger">{{ form.job_organization_certificates.errors.as_text }}</span>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.job_organization_certificates.auto_id }}" name="{{ form.job_organization_certificates.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
@@ -255,14 +255,14 @@
             No file selected
           </label>
         </div>
-        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.job_organization_certificates.help_text }}</small>
+        <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.job_organization_certificates.help_text }}</small>
       </div>
 
       {# exemption_report #}
 
       <div class="form-group">
         <label class="h5 text-uppercase" for="{{ form.exemption_report.id_for_label }}">
-          {{ form.exemption_report.label }} <small class="text-danger">{{ form.exemption_report.errors.as_text }}</small>
+          {{ form.exemption_report.label }} <span class="badge badge-danger">{{ form.exemption_report.errors.as_text }}</span>
         </label>
         <div class="form-group custom-file">
           <input id="{{ form.exemption_report.auto_id }}" name="{{ form.exemption_report.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
@@ -270,7 +270,7 @@
             No file selected
           </label>
         </div>
-        <small class="text-danger">{% trans 'JPEG or PDF only' %}</small> <small class="text-muted">{{ form.exemption_report.help_text }}</small>
+        <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.exemption_report.help_text }}</small>
       </div>
 
       {# notes #}
