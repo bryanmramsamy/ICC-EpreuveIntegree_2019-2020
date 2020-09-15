@@ -71,7 +71,7 @@
   <h3 class="text-center">Prerequisites</h3>
 
   {% with module_list_queryset=module.prerequisites.all %}
-    {% include 'management/module/pre-postrequisites_list.html' %}
+    {% include 'management/module/related_modules_list.html' %}
   {% endwith %}
 
   <hr>
@@ -79,7 +79,7 @@
   <h3 class="text-center">Postrequisites</h3>
 
   {% with module_list_queryset=module.postrequisites.all %}
-    {% include 'management/module/pre-postrequisites_list.html' %}
+    {% include 'management/module/related_modules_list.html' %}
   {% endwith %}
 
 </section>

@@ -1,0 +1,34 @@
+{% load i18n registration_extra %}
+
+
+{% for level in levels %}
+  <div class="card">
+    <div class="card-header">
+      <div class="row row-cols-1 row-cols-md-3">
+        <div class="col col-md-6 pb-2 pb-md-0">
+          <span class="h2">{{ level.name }}</span> <small class="text-muted">{{ level.rank }}</small>
+        </div>
+        {% if modulelevel_actions_enabled and request.user|is_manager_or_administrator %}
+          <div class="col col-md-3 pb-2 pb-md-0">
+            <a href="{% url 'modulelevel_updateview' pk=level.pk %}" class="btn btn-block btn-warning">
+              {% trans 'Update' %} {% include 'logo/edit.html' %}
+            </a>
+          </div>
+          <div class="col col-md-3 pb-2 pb-md-0">
+            <a href="{% url 'modulelevel_deleteview' pk=level.pk %}" class="btn btn-block btn-danger">
+              {% trans 'Delete' %} {% include 'logo/delete.html' %}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-body">
+      {% with module_list_queryset=level.modules.all %}
+        {% include 'management/module/related_modules_list.html' %}
+      {% endwith %}
+    </div>
+  </div>
+
+  <br>
+{% endfor %}
