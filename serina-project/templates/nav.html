@@ -1,7 +1,7 @@
-{% load i18n %}
-{% load static %}
+{% load i18n registration_extra static %}
 
-<nav class="navbar navbar-expand-md navbar-dark sticky-top bg-dark">
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top bg-dark">
   <div class="container">
     <a class="navbar-brand" href="{% url 'home' %}"><img src="{% static 'logo/serina_logo.png' %}" alt="SERINA-Project" width="25"> SERINA-Project</a>
 
@@ -13,54 +13,101 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
+
+      {# Navbar options #}
+
       <ul class="navbar-nav mr-auto">
+
+        {# Catalog dropdown #}
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_catalogue" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {% trans 'Catalog' %}
+            {% include 'logo/puzzle.html' %} {% trans 'Catalog' %}
           </a>
           <div class="dropdown-menu" aria-labelledby="navbar_dropdown_catalogue">
-            <a class="dropdown-item" href="{% url 'degree_listview' %}">{% include 'logo/degree.html' %} {% trans 'Degrees' %}</a>
-            <a class="dropdown-item" href="{% url 'degreecategory_listview' %}">    {% include 'logo/degree_alt.html' %} {% trans 'Degree categories' %}</a>
+            <a class="dropdown-item" href="{% url 'degree_listview' %}">
+              {% include 'logo/degree.html' %} {% trans 'Degrees' %}
+            </a>
+            <a class="dropdown-item" href="{% url 'degreecategory_listview' %}">
+              {% include 'logo/degree_alt.html' %} {% trans 'Degree categories' %}
+            </a>
+
             <div class="dropdown-divider"></div>
+
             <a class="dropdown-item" href="{% url 'module_listview' %}">{% include 'logo/module.html' %} {% trans 'Modules' %}</a>
-            <a class="dropdown-item" href="{% url 'modulelevel_listview' %}">    {% include 'logo/module_alt.html' %} {% trans 'Module levels' %}</a>
+            <a class="dropdown-item" href="{% url 'modulelevel_listview' %}">{% include 'logo/module_alt.html' %} {% trans 'Module levels' %}</a>
           </div>
         </li>
+
+
+        {# Courses dropdown #}
+
+
+        {% if request.user|is_back_office_user or request.user|is_student %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_catalogue" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% include 'logo/box.html' %} {% trans 'Resources' %}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbar_dropdown_catalogue">
+              <a class="dropdown-item" href="{% url 'course_listview' %}">
+                {% include 'logo/course.html' %} {% trans 'All courses' %}
+              </a>
+
+              {% if request.user|is_student %}
+                <a class="dropdown-item" href="404">
+                  {% include 'logo/course_alt.html' %} {% trans 'My courses' %}
+                </a>
+              {% endif %}
+
+              <div class="dropdown-divider"></div>
+
+              <a class="dropdown-item" href="{% url 'course_listview' %}">
+                {% include 'logo/room.html' %} {% trans 'Classrooms' %}
+              </a>
+            </div>
+          </li>
+
+        {% else %}
+          <li class="nav-item active">
+            <a class="nav-link" href="{% url 'course_listview' %}">{% include 'logo/course.html' %} {% trans 'Courses' %}</a>
+          </li>
+        {% endif %}
+
       </ul>
 
-      {% if user.is_authenticated %}
 
-          {% if user.is_staff %}
+      {# Nav buttons #}
+
+      <div class="text-right">
+        {% if user.is_authenticated %}
+          {% if request.user|is_manager_or_administrator %}
             <a href="{% url 'admin:index' %}" class="btn btn-outline-warning mr-2">
-              {% trans 'Admin' %}
-              {% include 'logo/gear.html' %}
+              {% trans 'Admin' %} {% include 'logo/gear.html' %}
             </a>
           {% endif %}
 
-        <a href="{% url 'userprofile_detailview' pk=user.pk %}" class="btn btn-light mr-2">
-          {% blocktrans with user.username as registration_number %}
-            Profile <strong>{{ registration_number }}</strong>
-          {% endblocktrans %}
+          <a href="{% url 'userprofile_detailview' pk=user.pk %}" class="btn btn-light mr-2">
+            {% trans 'Profile' %} <strong>{{ user.username }}</strong>
+            {% include 'logo/profile.html' %}
+          </a>
 
-          {% include 'logo/profile.html' %}
-        </a>
+          <a href="{% url 'logout' %}" class="btn btn-outline-light">
+            {% trans 'Sign out' %}
+            {% include 'logo/out-right.html' %}
+          </a>
 
-        <a href="{% url 'logout' %}" class="btn btn-outline-light">
-          {% trans 'Sign out' %}
-          {% include 'logo/out-right.html' %}
-        </a>
+        {% else %}
+          <a href="{% url 'register' %}" class="btn btn-light mr-2">
+            {% trans 'Sign Up' %}
+            {% include 'logo/register.html' %}
+          </a>
 
-      {% else %}
-        <a href="{% url 'register' %}" class="btn btn-light mr-2">
-          {% trans 'Sign Up' %}
-          {% include 'logo/register.html' %}
-        </a>
-
-        <a href="{% url 'login' %}" class="btn btn-outline-light">
-          {% trans 'Sign In' %}
-          {% include 'logo/in-left.html' %}
-      </a>
-      {% endif %}
+          <a href="{% url 'login' %}" class="btn btn-outline-light">
+            {% trans 'Sign In' %}
+            {% include 'logo/in-left.html' %}
+          </a>
+        {% endif %}
+      </div>
     </div>
   </div>
 </nav>
