@@ -2,13 +2,26 @@
 {% load i18n registration_extra %}
 
 
-{% block title %}{% trans 'ClassroomListView' %}{% endblock title %}
+{% block title %}{% trans 'All our classroom' %}{% endblock title %}
 
 
 {% block content %}
   {# Heading jumbotron #}
 
   {% include 'management/room/classroom_listview_jumbotron.html' %}
+
+
+  {# Create new classroom button #}
+
+  <div class="row">
+    {% if request.user|is_manager_or_administrator %}
+      <div class="col">
+        <a href="{% url 'classroom_createview' %}" class="btn btn-block btn-warning">
+          Register a new classroom {% include 'logo/room.html' %} {% include 'logo/new.html' %}
+        </a>
+      </div>
+    {% endif %}
+  </div>
 
 
   {# Classroom cards #}
