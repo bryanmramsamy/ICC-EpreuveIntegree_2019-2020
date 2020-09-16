@@ -46,7 +46,12 @@ class Degree(BackOfficeResource):
     the degree must been passed in order to pass the degree itself.
     """
 
-    title = models.CharField(max_length=255, verbose_name="Title")
+    title = models.CharField(
+        max_length=255,
+        verbose_name=_("Degree name"),
+        help_text=_("To avoid confusion, it's recommended to use different "
+                    "names for each degree."),
+    )
     reference = models.CharField(max_length=7, unique=True, blank=True,
                                  verbose_name=_('Reference'))
     category = models.ForeignKey(
@@ -54,15 +59,20 @@ class Degree(BackOfficeResource):
         null=True,
         on_delete=models.SET_NULL,
         related_name="degrees",
-        verbose_name=_("Category")
+        verbose_name=_("Degree category")
     )
     modules = models.ManyToManyField(
         Module,
         related_name="degrees",
         verbose_name=_("Modules")
     )
-    description = models.TextField(null=True, blank=True,
-                                   verbose_name=_("Description"))
+    description = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_("Description"),
+        help_text=_("Should provide as much information on the module as "
+                    "possible.")
+    )
     picture = models.ImageField(
         upload_to='management/degrees/',
         default='management/books.png',
@@ -70,6 +80,8 @@ class Degree(BackOfficeResource):
         blank=True,
         max_length=225,
         verbose_name=_("Picture"),
+        help_text=_("Not required. If no picture is sent, the default picture "
+                    "will be used."),
     )
 
     class Meta:

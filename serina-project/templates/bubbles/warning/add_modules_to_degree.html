@@ -1,0 +1,18 @@
+{% extends 'bubbles/warning.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Once the degree created, you will be able to add modules to it
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    For technical reasons, these actions cannot be performed as long as the module has not been created yet.
+    <br>
+    You will be redirected to the update form, where you will be able to add modules once the degree created.
+  {% endblocktrans %}
+{% endblock bubble_content %}

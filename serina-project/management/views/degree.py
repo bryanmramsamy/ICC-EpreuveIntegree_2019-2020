@@ -4,7 +4,7 @@ from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
 from ..forms import DegreeCreateForm, DegreeCategoryForm, DegreeUpdateForm
-from ..models import Degree, DegreeCategory
+from ..models import Degree, DegreeCategory, Module
 from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
@@ -38,7 +38,19 @@ class DegreeCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     model = Degree
     form_class = DegreeCreateForm
     template_name = "management/degree/degree_createview.html"
-    success_url = reverse_lazy('degree_listview')
+
+    def get_context_data(self, **kwargs):
+        """Add all DegreeCategory to context for select input."""
+
+        context = super().get_context_data(**kwargs)
+        context["categories"] = DegreeCategory.objects.all()
+        return context
+
+    def get_success_url(self):
+        """Redirect to the update view of the created degree in order to add
+        modules to it."""
+
+        return reverse_lazy('degree_updateview', kwargs={'pk': self.object.id})
 
 
 class DegreeUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
@@ -47,12 +59,8 @@ class DegreeUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
 
     model = Degree
     form_class = DegreeUpdateForm
+    context_object_name = "degree"
     template_name = "management/degree/degree_updateview.html"
-
-    def get_success_url(self):
-        """Redirect the user to the newly created DegreeDetailView."""
-
-        return reverse('degree_detailview', kwargs={"pk": self.object.pk})
 
 
 class DegreeDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,

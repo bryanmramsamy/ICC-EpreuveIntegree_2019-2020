@@ -100,9 +100,9 @@
             <div class="custom-file">
               <input id="{{ form.picture.auto_id }}" name="{{ form.picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
               <label id="{{ form.picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.picture.id_for_label }}">
-                No picture selected yet
+                No picture selected
               </label>
-              <small class="text-danger">{% trans 'JPEG only' %}</small> <small class="text-muted">{{ form.picture.help_text }}</small>
+              <small class="badge badge-warning">{% trans 'Supported formats' %}: GIF, JPEG, PNG or WEBP</small> <small class="text-muted">{{ form.picture.help_text }}</small>
             </div>
           </div>
 

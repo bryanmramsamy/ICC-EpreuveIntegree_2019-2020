@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from ..models import Degree, DegreeCategory, Module
 from .resource import (
@@ -8,13 +9,18 @@ from .resource import (
     TeacherMultipleChoiceField,
 )
 
+
 # Degree forms
 
 class DegreeCreateForm(BackOfficeResourceFormMixin):
     """ModelForm for Degree creation."""
 
-    category = CategoryLevelChoiceField(queryset=DegreeCategory.objects.all(),
-                                        empty_label=None)
+    category = CategoryLevelChoiceField(
+        queryset=DegreeCategory.objects.all(),
+        empty_label=None,
+        label=_("Degree category"),
+        help_text=_("Defines the academic level of the degree."),
+    )
 
     class Meta(BackOfficeResourceFormMixin.Meta):
         """Meta definition for DegreeCreateForm."""
