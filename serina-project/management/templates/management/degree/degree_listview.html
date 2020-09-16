@@ -60,13 +60,13 @@
         <div class="card-header text-center pt-3">
           <div class="row">
             <div class="col d-none d-md-block">
-              XXX
+              {# TODO: To fill with data #}
             </div>
             <div class="col h5">
-              {% trans 'Regitration fee: ' %}<strong>€ {{ degree.total_price }}</strong>
+              {% trans 'Regitration fee' %}: <strong>€ {{ degree.total_price }}</strong>
             </div>
             <div class="col d-none d-md-block">
-              XXX
+              {# TODO: To fill with data #}
             </div>
           </div>
         </div>
@@ -78,8 +78,8 @@
             </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{% include 'logo/degree.html' %} {{ degree.title }}</h5>
-                  <p class="card-text"><small class="text-muted">{{ degree.reference }} | {% include 'logo/degree.html' %} {{ degree.category.name }}</small></p>
+                  <h5 class="card-title"><a href="{{ degree.get_absolute_url }}" class="text-reset">{% include 'logo/degree.html' %} {{ degree.title }}</a></h5>
+                  <p class="card-text"><small class="text-muted">{{ degree.reference }} | <a href="{% url 'degreecategory_detailview' pk=degree.category.pk %}" class="text-reset">{% include 'logo/degree_alt.html' %} {{ degree.category.name }}</a></small></p>
                   <p class="card-text">{{ degree.description|linebreaks|truncatechars:256 }}</p>
                   {% include 'management/degree/degree_status.html' %}
                 </div>

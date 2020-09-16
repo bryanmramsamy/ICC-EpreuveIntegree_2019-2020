@@ -11,7 +11,7 @@
       <h2>{{ module.title }}</h2>
       <div class="row">
         <div class="col">{{ module.reference }}</div>
-        <div class="col">{{ module.level.name }}</div>
+        <div class="col"><a href="{% url 'modulelevel_detailview' pk=module.level.pk %}" class="text-reset">{% include 'logo/module_alt.html' %} {{ module.level.name }}</a></div>
       </div>
       <hr>
       <div class="row h3">

@@ -11,7 +11,7 @@
       <h2>{{ degree.title }}</h2>
       <div class="row">
         <div class="col">{{ degree.reference }}</div>
-        <div class="col">{{ degree.category.name }}</div>
+        <div class="col"><a href="{% url 'degreecategory_detailview' pk=degree.category.pk %}" class="text-reset">{% include 'logo/degree_alt.html' %} {{ degree.category.name }}</a></div>
       </div>
       <hr>
       <div class="row h3">

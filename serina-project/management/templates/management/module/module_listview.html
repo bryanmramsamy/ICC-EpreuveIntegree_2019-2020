@@ -65,10 +65,10 @@
         <div class="card-header text-center pt-3">
           <div class="row">
             <div class="col d-none d-md-block">
-              {% trans 'Number of eligible teacher: ' %}{{ module.eligible_teachers.count }}
+              {% trans 'Number of eligible teacher' %}: {{ module.eligible_teachers.count }}
             </div>
             <div class="col h5">
-              {% trans 'Regitration fee: ' %}<strong>€ {{ module.price }}</strong>
+              {% trans 'Regitration fee' %}: <strong>€ {{ module.price }}</strong>
             </div>
             <div class="col d-none d-md-block">
               {% trans 'Number of courses available' %}: {{ module.courses.count }}
@@ -83,8 +83,8 @@
             </div>
               <div class="col-md-8">
                 <div class="card-body">
-                  <h5 class="card-title">{% include 'logo/module.html' %} {{ module.title }}</h5>
-                  <p class="card-text"><small class="text-muted">{{ module.reference }} | {% trans 'Difficulty level: ' %}{{ module.level.name }}</small></p>
+                  <h5 class="card-title"><a href="{{ module.get_absolute_url }}" class="text-reset">{% include 'logo/module.html' %} {{ module.title }}</a></h5>
+                  <p class="card-text"><small class="text-muted">{{ module.reference }} | <a href="{% url 'modulelevel_detailview' pk=module.level.pk %}" class="text-reset">{% include 'logo/module_alt.html' %} {{ module.level.name }}</a></small></p>
                   <p class="card-text">{{ module.description|linebreaks|truncatechars:256 }}</p>
 
                   {% with related_module=module %}
