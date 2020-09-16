@@ -11,147 +11,23 @@
   {% include 'management/degree/degree_detailview_jumbotron.html' %}
 
 
-  {# Presentation card #}
+  {# Back to ListView button #}
 
-  <section class="container p-1 p-md-3 border bg-light">
-    <div class="row rwo-cols-1 row-cols-lg-2">
-      <div class="col-lg-6 text-center">
-        <img src="{{ degree.picture.url }}" alt="{{ degree.title }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
-      </div>
-      <div class="col-lg-6 text-center">
-        <h1>{% include 'logo/degree.html' %}</h1>
-        <h2>{{ degree.title }}</h2>
-        <div class="row">
-          <div class="col">{{ degree.reference }}</div>
-          <div class="col">{{ degree.category.name }}</div>
-        </div>
-        <hr>
-        <div class="row h3">
-          <div class="col">ECTS: <strong>{{ degree.total_ECTS_value }}</strong></div>
-          <div class="col">€ <strong>{{ degree.total_price }}</strong></div>
-        </div>
-      </div>
-    </div>
-
-    <hr>
-
-    {% if request.user|is_manager_or_administrator %}
-    <div class="row row-cols-1 row-cols-md-2">
-      <div class="col mb-2 mb-md-0">
-        <a href="{% url 'degree_updateview' pk=degree.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
-      </div>
-      <div class="col">
-        <a href="{% url 'degree_deleteview' pk=degree.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
-      </div>
-    </div>
-
-    {% elif request.user|is_teacher %}
-      <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
-  
-    {% elif request.user|is_student %}
-      <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
-
-    {% elif request.user|is_guest %}
-      {% include 'bubbles/warning/still_registered_guest_not_student.html' %}
-
-      <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
-
-    {% else %}
-      <section class="container mb-2">
-        <div class="row row-cols-1 row-cols-md-2 pt-2 rounded text-black bg-warning">
-          <div class="col-md-1 text-center text-md-right">
-            <h1>{% include 'logo/warning.html' %}</h1>
-          </div>
-          <div class="col-md-11">
-            <p class="text-justify">
-              <span class="h5 font-weight-bold">
-                {% blocktrans %}
-                  You are not registered.
-                {% endblocktrans %}
-              </span>
-              <br>
-              {% blocktrans %}
-                To perform this action, register as a guest first. Then pursue your registration completely to become a student.
-              {% endblocktrans %}
-              <br>
-              {% blocktrans %}
-                Once registered as a student, come back to this page and try again.
-              {% endblocktrans %}
-            </p>
-          </div>
-        </div>
-      </section>
-
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col mb-2 mb-md-0">
-          <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
-        </div>
-        <div class="col">
-          <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
-        </div>
-      </div>
-    {% endif %}
-  </section>
+  {% include 'management/degree/degree_back_to_catalog_button.html' %}
 
   <br>
 
 
-  {# Modules list #}
+  {# Presentation card #}
 
-  {% if degree.modules.all.count > 0 %}
-    <section class="container p-1 p-md-3 border">
-      <div class="text-center">
-        <h3>{% trans 'Modules of this degree' %}</h3>
-      </div>
-      <hr>
-      {% for module in degree.modules.all %}
-        <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
-          <div class="col-md-7">
-            <a href="{{ module.get_absolute_url }}" class="text-reset">
-              <span class="h5">{% include 'logo/module.html' %} {{ module.title }}</span> 
-              <span class="small text-muted">{{ module.reference }}</span>
-            </a>
-          </div>
-          <div class="col-md-5">
-            {% if request.user|is_student %}
-              {% if request.user|module_already_validated_by_user:module %}
-                <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}</span>
-
-              {% elif request.user|all_prerequisites_validated_by_user:module %}
-                <span class="text-warning">{% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}</span>
-
-              {% else %}
-                <span class="text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}</span>
-              {% endif %}
-
-            {% else %}
-              <span class="text-info">{% include 'logo/check_info.html' %} 
-                {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
-                  This prerequisite has only one prerequisite itself.
-                {% plural %}
-                  This prerequisite has {{ nb_prerequisites }} perequisites itself.
-                {% endblocktrans %}
-              </span>
-            {% endif %}
-          </div>
-        </div>
-      {% endfor %}
-    </section>
-  {% endif %}
+  {% with degree_actions_enabled=True show_description=False %}
+    {% include 'management/degree/degree_card.html' %}
+  {% endwith %}
 
   <br>
 
 
   {# Back to ListView button #}
 
-  <div class="text-right">
-    <a href="{% url 'degree_listview' %}" class="btn btn-block btn-outline-dark">
-      <h3>
-        {% include 'logo/degree.html' %} {% trans 'Back to the degrees catalog' %} {% include 'logo/back.html' %}
-      </h3>
-    </a>
-  </div>
-
-  <br>
-
+  {% include 'management/degree/degree_back_to_catalog_button.html' %}
 {% endblock content %}

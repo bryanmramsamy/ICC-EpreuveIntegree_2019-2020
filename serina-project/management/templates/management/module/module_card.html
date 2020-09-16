@@ -1,4 +1,4 @@
-{% load i18n registration_extra static %}
+{% load i18n registration_extra %}
 
 
 <section class="container p-1 p-md-3 border bg-light">
@@ -68,7 +68,7 @@
 
   <hr>
 
-  <h3 class="text-center">Prerequisites</h3>
+  <h3 class="text-center">{% include 'logo/module.html' %} Prerequisites</h3>
 
   {% with module_list_queryset=module.prerequisites.all %}
     {% include 'management/module/related_modules_list.html' %}
@@ -76,7 +76,7 @@
 
   <hr>
 
-  <h3 class="text-center">Postrequisites</h3>
+  <h3 class="text-center">{% include 'logo/module.html' %} Postrequisites</h3>
 
   {% with module_list_queryset=module.postrequisites.all %}
     {% include 'management/module/related_modules_list.html' %}
