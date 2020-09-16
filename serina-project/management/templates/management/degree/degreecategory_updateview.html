@@ -1,26 +1,57 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'DegreeCategoryUpdateView' %}{% endblock title %}
+
+{% block title %}{% trans 'Update the degree category' %}: {{ category.name }}{% endblock title %}
+
 
 {% block content %}
-<h1>DegreeCategoryUpdateView</h1>
-<form action="." method="post">
-{% csrf_token %}
-{{ form.as_p }}
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">
+        {% trans 'Update the degree category' %}: {% include 'logo/degree_alt.html' %} {{ category.name }} {% include 'logo/new.html' %}
+      </h1>
 
-<input type="submit" value="{% trans 'Create new degree category' %}">
-</form>
+      <form method="POST">
+        {% csrf_token %}
 
-<h1>DegreeCategoryDetailView</h1>
-<div>
-<h2>{{ category.name }}</h2>
-</div>
+        {# created_by (hidden) #}
 
-<h2>Degrees from this category</h2>
-<ul>
-{% for degree in category.degrees.all %}
-    <li>{{ degree.title }}</li>
-{% endfor %}
-</ul>
+        {{ form.created_by }}
+
+        {# name #}
+
+        <div class="form-group">
+          <label for="{{ form.name.id_for_label }}" class="h5 text-uppercase">
+            {{ form.name.label }} <span class="badge badge-danger">{{ form.name.errors.as_text }}</span>
+          </label>
+          <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" value="{{ category.name }}" class="form-control form-control-lg" required>
+          <small class="text-muted">
+            {{ form.name.help_text }}
+          </small>
+        </div>
+
+        {# submit #}
+
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-2 mb-md-0">
+            <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Create the new degree category' %}">
+          </div>
+
+          <div class="col">
+            <a href="{% url 'degreecategory_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+              {% trans 'Cancel and back to degree categories catalog' %} {% include 'logo/back.html' %}
+            </a>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <br>
+
+    {% with degreecategory_actions_enabled=False %}
+      {% include 'management/degree/degreecategory_card.html' %}
+    {% endwith %}
+  </section>
 {% endblock content %}
