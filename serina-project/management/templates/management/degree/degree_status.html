@@ -1,0 +1,25 @@
+{% load i18n registration_extra %}
+
+
+<div>
+  {% if request.user|is_student %}
+    {% if request.user|degree_already_validated_by_user:degree %}
+      <span class="text-success">
+        {% include 'logo/check_valid.html' %} {% trans 'Degree completed' %}
+      </span>
+    {% else %}
+      <span class="text-danger">
+        {% include 'logo/check_invalid.html' %} {% trans 'Degree uncompleted' %}
+      </span>
+    {% endif %}
+  {% else %}
+    <span class="text-info">
+      {% include 'logo/check_info.html' %}
+      {% blocktrans count nb_modules=degree.modules.all.count %}
+        This degree is composed of only one module.
+      {% plural %}
+        This degree is composed of {{ nb_modules }} modules.
+      {% endblocktrans %}
+    </span>
+  {% endif %}
+</div>

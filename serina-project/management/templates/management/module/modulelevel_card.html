@@ -5,7 +5,7 @@
   <div class="card-header">
     <div class="row row-cols-1 row-cols-md-3">
       <div class="col col-md-6 pb-2 pb-md-0">
-        <a href="{{ level.get_absolute_url }}" class="text-reset"><span class="h2">{{ level.name }}</span> <small class="text-muted">{{ level.rank }}</small></a>
+        <a href="{{ level.get_absolute_url }}" class="text-reset"><span class="h2">{% include 'logo/module_alt.html' %} {{ level.name }}</span> <small class="text-muted">{{ level.rank }}</small></a>
       </div>
       {% if modulelevel_actions_enabled and request.user|is_manager_or_administrator %}
         <div class="col col-md-3 pb-2 pb-md-0">

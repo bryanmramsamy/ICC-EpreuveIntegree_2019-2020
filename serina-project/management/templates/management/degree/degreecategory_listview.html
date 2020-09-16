@@ -49,69 +49,15 @@
 
   <br>
 
-  {# Level card #}
-
+  {# Category card #}
 
   {% for category in categories %}
-    <div class="card">
-      <div class="card-header">
-        <div class="row row-cols-1 row-cols-md-3">
-          <div class="col col-md-6 pb-2 pb-md-0">
-            <span class="h2">{{ category.name }}</span>
-          </div>
-          {% if request.user|is_manager_or_administrator %}
-            <div class="col col-md-3 pb-2 pb-md-0">
-              <a href="{% url 'degreecategory_updateview' pk=category.pk %}" class="btn btn-block btn-warning">
-                {% trans 'Update' %} {% include 'logo/edit.html' %}
-              </a>
-            </div>
-            <div class="col col-md-3 pb-2 pb-md-0">
-              <a href="{% url 'degreecategory_deleteview' pk=category.pk %}" class="btn btn-block btn-danger">
-                {% trans 'Delete' %} {% include 'logo/delete.html' %}
-              </a>
-            </div>
-          {% endif %}
-        </div>
-        
-      </div>
+    {% with degreecategory_actions_enabled=True %}
+      {% include 'management/degree/degreecategory_card.html' %}
+    {% endwith %}
 
-      <div class="card-body">
-        {% for degree in category.degrees.all %}
-          <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
-            <div class="col-md-7">
-              <a href="{{ degree.get_absolute_url }}" class="text-reset">
-                <span class="h5">{% include 'logo/degree.html' %} {{ degree.title }}</span> 
-                <span class="small text-muted">{{ degree.reference }}</span>
-              </a>
-            </div>
-            <div class="col-md-5">
-              {% if request.user|is_student %}
-                {% if request.user|degree_already_validated_by_user:degree %}
-                  <span class="text-success">
-                    {% include 'logo/check_valid.html' %} {% trans 'Degree already validated' %}
-                  </span>
-                {% else %}
-                  <span class="text-danger">
-                    {% include 'logo/check_invalid.html' %} {% trans 'Degree not validated' %}
-                  </span>
-                {% endif %}
-              {% else %}
-                <span class="text-info">
-                  {% include 'logo/check_info.html' %} 
-                  {% blocktrans count nb_modules=degree.modules.all.count %}
-                    This degree is composed of only one module.
-                  {% plural %}
-                    This degree is composed of {{ nb_modules }} modules.
-                  {% endblocktrans %}
-                </span>
-              {% endif %}
-            </div>
-          </div>
-        {% endfor %}
-      </div>
-    </div>
+    <br>
+
   {% endfor %}
-
-  <br>
 
 {% endblock content %}

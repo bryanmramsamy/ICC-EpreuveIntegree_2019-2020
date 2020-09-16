@@ -1,0 +1,30 @@
+{% load i18n registration_extra %}
+
+
+<div class="card">
+  <div class="card-header">
+    <div class="row row-cols-1 row-cols-md-3">
+      <div class="col col-md-6 pb-2 pb-md-0">
+        <a href="{{ category.get_absolute_url }}" class="text-reset"><span class="h2">{% include 'logo/degree_alt.html' %} {{ category.name }}</span></a>
+      </div>
+      {% if degreecategory_actions_enabled and request.user|is_manager_or_administrator %}
+        <div class="col col-md-3 pb-2 pb-md-0">
+          <a href="{% url 'degreecategory_updateview' pk=category.pk %}" class="btn btn-block btn-warning">
+            {% trans 'Update' %} {% include 'logo/edit.html' %}
+          </a>
+        </div>
+        <div class="col col-md-3 pb-2 pb-md-0">
+          <a href="{% url 'degreecategory_deleteview' pk=category.pk %}" class="btn btn-block btn-danger">
+            {% trans 'Delete' %} {% include 'logo/delete.html' %}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card-body">
+    {% with degree_list_queryset=category.degrees.all %}
+      {% include 'management/degree/related_degrees_list.html' %}
+    {% endwith %}
+  </div>
+</div>

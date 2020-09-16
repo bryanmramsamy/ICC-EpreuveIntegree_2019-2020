@@ -81,28 +81,7 @@
                   <h5 class="card-title">{% include 'logo/degree.html' %} {{ degree.title }}</h5>
                   <p class="card-text"><small class="text-muted">{{ degree.reference }} | {% include 'logo/degree.html' %} {{ degree.category.name }}</small></p>
                   <p class="card-text">{{ degree.description|linebreaks|truncatechars:256 }}</p>
-                  <div>
-                    {% if request.user|is_student %}
-                      {% if request.user|degree_already_validated_by_user:degree %}
-                        <span class="text-success">
-                          {% include 'logo/check_valid.html' %} {% trans 'Degree already validated' %}
-                        </span>
-                      {% else %}
-                        <span class="text-danger">
-                          {% include 'logo/check_invalid.html' %} {% trans 'Degree not validated' %}
-                        </span>
-                      {% endif %}
-                    {% else %}
-                      <span class="text-info">
-                        {% include 'logo/check_info.html' %} 
-                        {% blocktrans count nb_modules=degree.modules.all.count %}
-                          This degree is composed of only one module.
-                        {% plural %}
-                          This degree is composed of {{ nb_modules }} modules.
-                        {% endblocktrans %}
-                      </span>
-                    {% endif %}
-                  </div>
+                  {% include 'management/degree/degree_status.html' %}
                 </div>
               </div>
             </div>

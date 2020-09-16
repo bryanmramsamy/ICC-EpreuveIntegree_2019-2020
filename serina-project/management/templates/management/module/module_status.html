@@ -5,7 +5,7 @@
   {% if request.user|is_student %}
     {% if request.user|module_already_validated_by_user:related_module %}
       <span class="text-success">
-        {% include 'logo/check_valid.html' %} {% trans 'Module already completed' %}
+        {% include 'logo/check_valid.html' %} {% trans 'Module completed' %}
       </span>
     {% elif related_module.prerequisites.all.count == 0%}
       <span class="text-info">
