@@ -145,7 +145,7 @@
               {{ form.eligible_teachers.label }} <span class="badge badge-danger">{{ form.eligible_teachers.errors.as_text }}</span>
             </label>
 
-            <select id="{{ form.eligible_teachers.auto_id }}" name="{{ form.eligible_teachers.html_name }}" class="form-control form-control-lg" multiple required>
+            <select id="{{ form.eligible_teachers.auto_id }}" name="{{ form.eligible_teachers.html_name }}" class="form-control form-control-lg" multiple>
               {% for teacher in teachers %}
                 <option value="{{ teacher.pk }}" {% if teacher|is_eligible_teacher:module %}selected{% endif %}>{{ teacher.get_full_name }}</option>
               {% endfor %}
