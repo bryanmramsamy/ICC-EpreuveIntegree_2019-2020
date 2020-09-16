@@ -78,7 +78,7 @@
             </div>
 
             <div class="col">
-              <a href="{% url 'module_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+              <a href="{% url 'degree_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
                 {% trans 'Cancel and back to degrees catalog' %} {% include 'logo/back.html' %}
               </a>
             </div>
@@ -91,13 +91,13 @@
 
           <div class="row row-cols-1 row-cols-md-2">
             <div class="col mb-2 mb-md-0">
-              <a href="{% url 'modulelevel_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
+              <a href="{% url 'degreecategory_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
                 {% trans 'Create a new degree category' %} {% include 'logo/degree_alt.html' %} {% include 'logo/new.html' %}
               </a>
             </div>
 
             <div class="col">
-              <a href="{% url 'module_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+              <a href="{% url 'degree_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
                 {% trans 'Back to degrees catalog' %} {% include 'logo/back.html' %}
               </a>
             </div>
@@ -115,5 +115,5 @@
       var fileName = $(this).val();
       $(this).next('#{{ form.picture.auto_id }}_label').html(fileName);
     })
-    </script>
+  </script>
 {% endblock scripts %}

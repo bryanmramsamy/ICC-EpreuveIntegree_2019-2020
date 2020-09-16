@@ -35,10 +35,18 @@ class DegreeUpdateForm(BackOfficeResourceFormMixin):
     Prevent the user to add the instance to its own prerequisites. Also prevent
     adding a postrequisite module to the prerequisites."""
 
-    category = CategoryLevelChoiceField(queryset=DegreeCategory.objects.all(),
-                                        empty_label=None)
-    modules = ModuleMultipleChoiceField(queryset=Module.objects.all(),
-                                        required=False)
+    category = CategoryLevelChoiceField(
+        queryset=DegreeCategory.objects.all(),
+        empty_label=None,
+        label=_("Degree category"),
+        help_text=_("Defines the academic level of the degree."),
+    )
+    modules = ModuleMultipleChoiceField(
+        queryset=Module.objects.all(),
+        required=False,
+        label=_("Modules"),
+        help_text=_("All the modules which are part of the degree.")
+    )
 
     class Meta(BackOfficeResourceFormMixin.Meta):
         """Meta definition for ModuleLevelForm."""

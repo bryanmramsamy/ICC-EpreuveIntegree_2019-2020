@@ -62,6 +62,15 @@ class DegreeUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     context_object_name = "degree"
     template_name = "management/degree/degree_updateview.html"
 
+    def get_context_data(self, **kwargs):
+        """Add all DegreeCategory and Module to context for select input."""
+
+        context = super().get_context_data(**kwargs)
+        context["categories"] = DegreeCategory.objects.all()
+        context["modules"] = Module.objects.all()
+
+        return context
+
 
 class DegreeDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
                        DeleteView):

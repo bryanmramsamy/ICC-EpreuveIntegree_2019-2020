@@ -1,39 +1,134 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n management_extra %}
 
-{% block title %}{% trans 'DegreeCreateView' %}{% endblock title %}
+
+{% block title %}{% trans 'Update the degree' %}: {{ degree.title }}{% endblock title %}
 
 {% block content %}
-    <h1>DegreeCreateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">{% trans 'Update the degree' %}: {% include 'logo/degree.html' %} {{ degree.title }} {% include 'logo/edit.html' %}</h1>
 
-        <input type="submit" value="{% trans 'Create new degree' %}">
-    </form>
+      {% if categories.count > 0 %}
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
 
-    <h1>DegreeDetailView</h1>
-    <div>
-        <h2>{{ degree.title }}</h2>
-        <h3>{{ degree.reference }}</h3>
-        <h4>{{ degree.category.name }}</h4>
-        <p>{{ degree.description }}</p>
-        <p>{{ degree.total_benefits }}</p>
+          {# created_by (hidden) #}
+
+          {{ form.created_by }}
+
+          {# title #}
+
+          <div class="form-group">
+            <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
+              {{ form.title.label }} <span class="badge badge-danger">{{ form.title.errors.as_text }}</span>
+            </label>
+            <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" value="{{ degree.title }}" class="form-control form-control-lg" required>
+            <small class="text-muted">{{ form.title.help_text }}</small>
+          </div>
+
+          {# category #}
+
+          <div class="form-group">
+            <label for="{{ form.category.id_for_label }}" class="h5 text-uppercase">
+              {{ form.category.label }} <span class="badge badge-danger">{{ form.category.errors.as_text }}</span>
+            </label>
+            <select id="{{ form.category.auto_id }}" name="{{ form.category.html_name }}" class="form-control form-control-lg" required>
+              {% for one_category in categories %}
+                <option value="{{ one_category.pk }}" {% if one_category.pk == degree.category.pk %}selected{% endif %}>{{ one_category.name }}</option>
+              {% endfor %}
+            </select>
+            <small class="text-muted">{{ form.category.help_text }}</small>
+          </div>
+
+          {# picture #}
+
+          <div class="form-group">
+            <label class="h5 text-uppercase" for="{{ form.picture.id_for_label }}">
+              {{ form.picture.label }} <a href="{{ degree.picture.url }}" class="badge badge-primary" target="_blank" rel="noopener noreferrer">See actual picture {% include 'logo/new_tab.html' %}</a> <span class="badge badge-danger">{{ form.picture.errors.as_text }}</span>
+            </label>
+            <div class="custom-file">
+              <input id="{{ form.picture.auto_id }}" name="{{ form.picture.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
+              <label id="{{ form.picture.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.picture.id_for_label }}">
+                {{ degree.picture }}
+              </label>
+              <small class="badge badge-warning">{% trans 'Supported formats' %}: GIF, JPEG, PNG or WEBP</small> <small class="text-muted">{{ form.picture.help_text }}</small>
+            </div>
+          </div>
+
+          {# description #}
+
+          <div class="form-group">
+            <label for="{{ form.description.id_for_label }}" class="h5 text-uppercase">
+              {{ form.description.label }} <span class="badge badge-danger">{{ form.description.errors.as_text }}</span>
+            </label>
+            <textarea id="{{ form.description.auto_id }}" name="{{ form.description.html_name }}" class="form-control form-control-lg" required>{{ degree.description }}</textarea>
+            <small class="text-muted">{{ form.description.help_text }}</small>
+          </div>
+
+          <hr>
+
+          {# modules #}
+
+          <div class="form-group">
+            <label for="{{ form.modules.id_for_label }}" class="h5 text-uppercase">
+              {{ form.modules.label }} <span class="badge badge-danger">{{ form.modules.errors.as_text }}</span>
+            </label>
+
+            <select id="{{ form.modules.auto_id }}" name="{{ form.modules.html_name }}" class="form-control form-control-lg" multiple required>
+              {% for module in modules %}
+                <option value="{{ module.pk }}" {% if degree|has_module:module %}selected{% endif %}>{{ module.reference }} | {{ module.title }}</option>
+              {% endfor %}
+            </select>
+
+            <small class="badge badge-warning">{% trans 'To select multiple entries, hold <kbd>Ctrl</kbd> while selecting' %}</small> <small class="text-muted">{{ form.modules.help_text }}</small>
+          </div>
+
+          {# submit #}
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-2 mb-md-0">
+              <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update degree' %}">
+            </div>
+
+            <div class="col">
+              <a href="{{ degree.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+                {% trans 'Cancel and back to degrees catalog' %} {% include 'logo/back.html' %}
+              </a>
+            </div>
+          </div>
+        </form>
+
+      {% else %}
+        <div class="rounded bg-warning p-2">
+          {% include 'bubbles/warning/no_degreecategory.html' %}
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-2 mb-md-0">
+              <a href="{% url 'degreecategory_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
+                {% trans 'Create a new degree category' %} {% include 'logo/degree_alt.html' %} {% include 'logo/new.html' %}
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="{% url 'degree_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+                {% trans 'Back to degrees catalog' %} {% include 'logo/back.html' %}
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
-
-    <h2>Teachers</h2>
-    <ul>
-        {% for module in degree.modules.all %}
-            {% for teacher in module.eligible_teachers.all %}
-                <li>{{ teacher.get_full_name }}</li>
-            {% endfor %}
-        {% endfor %}
-    </ul>
-
-    <h2>Modules</h2>
-    <ul>
-        {% for module in degree.modules.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+  </section>
 {% endblock content %}
+
+
+{% block scripts %}
+  <script>
+    $('#{{ form.picture.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.picture.auto_id }}_label').html(fileName);
+    })
+  </script>
+{% endblock scripts %}

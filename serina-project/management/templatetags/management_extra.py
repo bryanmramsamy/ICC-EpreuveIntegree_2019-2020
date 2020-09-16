@@ -23,3 +23,13 @@ def is_prerequisite(potential_prerequisite, module):
     module."""
 
     return management_utils.is_prerequisite(potential_prerequisite, module)
+
+
+# Degree select mutliple filters
+
+@register.filter
+def has_module(degree, module):
+    """Template tags checking if the given module is part of the given
+    degree."""
+
+    return management_utils.has_module(degree, module)

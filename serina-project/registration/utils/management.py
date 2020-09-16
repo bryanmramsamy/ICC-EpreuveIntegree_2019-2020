@@ -33,3 +33,9 @@ def is_prerequisite(potential_prerequisite, module):
     """Check if a module is a prerequisite of the other given module."""
 
     return potential_prerequisite.postrequisites.filter(pk=module.pk).exists()
+
+
+def has_module(degree, module):
+    """Check if a module is a prerequisite of the other given module."""
+
+    return degree.modules.filter(pk=module.pk).exists()

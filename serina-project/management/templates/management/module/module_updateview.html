@@ -11,7 +11,7 @@
     <div class="container p-3 border border-warning">
       <h1 class="text-center">{% trans 'Update the module' %}: {% include 'logo/module.html' %} {{ module.title }} {% include 'logo/edit.html' %}</h1>
 
-      {% if levels.count > 0 %} {# FIXME: What to do when no level ? #}
+      {% if levels.count > 0 %}
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
 
