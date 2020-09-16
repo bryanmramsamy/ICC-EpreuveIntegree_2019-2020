@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
+
 {% block title %}{% trans 'ModuleLevelDetailView' %}  {{ level.reference }}{% endblock title %}
 
-{% block content %}
 
+{% block content %}
   <section class="container">
     {% include 'backoffice_tag.html' %}
     <div class="container p-3 border border-warning">
       <h1 class="text-center">
-        {% trans 'Delete the module' %}: {% include 'logo/module.html' %} {{ module.title }} {% include 'logo/delete.html' %}
+        {% trans 'Delete the module difficulty level' %}: {% include 'logo/module_alt.html' %} {{ level.name }} {% include 'logo/delete.html' %}
       </h1>
 
       <form method="post">
@@ -24,7 +25,7 @@
 
           <div class="col">
             <a href="{{ level.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
-              {% trans 'Cancel and back to module page' %} {% include 'logo/back.html' %}
+              {% trans 'Cancel and back to module level page' %} {% include 'logo/back.html' %}
             </a>
           </div>
         </div>
@@ -40,5 +41,4 @@
     {% endwith %}
 
   </section>
-
 {% endblock content %}

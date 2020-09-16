@@ -10,7 +10,7 @@
     {% include 'backoffice_tag.html' %}
     <div class="container p-3 border border-warning">
       <h1 class="text-center">
-        {% trans 'Update the degree category' %}: {% include 'logo/degree_alt.html' %} {{ category.name }} {% include 'logo/new.html' %}
+        {% trans 'Update the degree category' %}: {% include 'logo/degree_alt.html' %} {{ category.name }} {% include 'logo/edit.html' %}
       </h1>
 
       <form method="POST">
@@ -49,6 +49,9 @@
     </div>
 
     <br>
+
+
+    {# Presentation card #}
 
     {% with degreecategory_actions_enabled=False %}
       {% include 'management/degree/degreecategory_card.html' %}
