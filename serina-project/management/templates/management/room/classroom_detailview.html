@@ -1,22 +1,59 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'ClassroomDetailView' %}  {{ classroom.reference }}{% endblock title %}
+{% block title %}{{ classroom.name }} | {{ classroom.reference }}{% endblock title %}
 
 {% block content %}
-    <h1>ClassroomDetailView</h1>
-    <div>
-        <h2>{{ classroom.name }}</h2>
-        <h3>{{ classroom.reference }}</h3>
-        <h4>{{ classroom.description }}</h4>
-        <p>{{ classroom.recommended_capacity }}</p>
-        <p>{{ classroom.max_capacity }}</p>
-    </div>
 
-    <h2>Courses given in this room</h2>
-    <ul>
-        {% for course in classroom.courses.all %}
-            <li>({{ course.reference }}) {{ course.module.title }} by {{ course.teacher.get_full_name }}</li>
-        {% endfor %}
-    </ul>
+  {# Heading jumbotron #}
+
+  {% include 'management/room/classroom_detailview_jumbotron.html' %}
+
+
+  {# Back to ListView button #}
+
+  {% include 'management/room/back_to_room_list_button.html' %}
+
+  <br>
+
+
+  {% if request.user|is_back_office_user %}
+    {# Classroom capacity #}
+
+    {% include 'backoffice_tag.html' %}
+      <section class="container p-2 h4 rounded border border-warning text-center">
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col">
+            {% trans 'Recommended capacity' %}
+            <br>
+            <span class="display-4">
+              {{ classroom.recommended_capacity }}
+            </span>
+          </div>
+          <div class="col">
+            {% trans 'Maximum capacity' %}
+            <br>
+            <span class="display-4">
+              {{ classroom.max_capacity }}
+          </div>
+        </div>
+      </section>
+    {% endif %}
+
+  <br>
+
+
+  {# Back to ListView button #}
+
+  {% include 'management/room/back_to_room_list_button.html' %}
+
+  <br><br><br>
+  DEBUG:
+
+  <h2>Courses given in this room</h2>
+  <ul>
+  {% for course in classroom.courses.all %}
+  <li>({{ course.reference }}) {{ course.module.title }} by {{ course.teacher.get_full_name }}</li>
+  {% endfor %}
+  </ul>
 {% endblock content %}

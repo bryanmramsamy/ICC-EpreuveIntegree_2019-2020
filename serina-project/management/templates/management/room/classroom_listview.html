@@ -4,28 +4,32 @@
 {% block title %}{% trans 'ClassroomListView' %}{% endblock title %}
 
 {% block content %}
-    <h1>ClassroomListView</h1>
 
-    {% for classroom in classrooms %}
-        <div>
-            <h2>{{ classroom.name }}</h2>
-            <h3>{{ classroom.description }}</h3>
-            <h4>{{ classroom.recommended_capacity }}</h4>
-            <p>{{ classroom.max_capacity }}</p>
 
-            <h3>Courses given in this classroom:</h3>
-            {% for course in classroom.courses.all %}
-                <ul>
-                    <li><p>{{ module.title }}</p></li>
-                </ul>
-            {% endfor %}
 
-            <p>{{ classroom.classroom_benefits }}</p>
-            <p>{{ classroom.nb_modules }}</p>
 
-            <h5><a href="{{ classroom.get_absolute_url }}">classroom_detailview/{{ classroom.pk }}/</a></h5>
-            <h5><a href="{% url 'classroom_updateview' pk=classroom.pk %}">classroom_updateview/{{ classroom.pk }}/</a></h5>
-            <h5><a href="{% url 'classroom_deleteview' pk=classroom.pk %}">classroom_deleteview/{{ classroom.pk }}/</a></h5>
-        </div>
-    {% endfor %}
+<h1>ClassroomListView</h1>
+
+{% for classroom in classrooms %}
+<div>
+<h2>{{ classroom.name }}</h2>
+<h3>{{ classroom.description }}</h3>
+<h4>{{ classroom.recommended_capacity }}</h4>
+<p>{{ classroom.max_capacity }}</p>
+
+<h3>Courses given in this classroom:</h3>
+{% for course in classroom.courses.all %}
+<ul>
+<li><p>{{ module.title }}</p></li>
+</ul>
+{% endfor %}
+
+<p>{{ classroom.classroom_benefits }}</p>
+<p>{{ classroom.nb_modules }}</p>
+
+<h5><a href="{{ classroom.get_absolute_url }}">classroom_detailview/{{ classroom.pk }}/</a></h5>
+<h5><a href="{% url 'classroom_updateview' pk=classroom.pk %}">classroom_updateview/{{ classroom.pk }}/</a></h5>
+<h5><a href="{% url 'classroom_deleteview' pk=classroom.pk %}">classroom_deleteview/{{ classroom.pk }}/</a></h5>
+</div>
+{% endfor %}
 {% endblock content %}

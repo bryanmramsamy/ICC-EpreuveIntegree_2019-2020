@@ -1,0 +1,10 @@
+{% load i18n %}
+
+
+<div class="text-right">
+  <a href="{% url 'classroom_listview' %}" class="btn btn-block btn-outline-dark">
+    <h3>
+      {% include 'logo/room.html' %} {% trans 'Back to the classroom list' %} {% include 'logo/back.html' %}
+    </h3>
+  </a>
+</div>

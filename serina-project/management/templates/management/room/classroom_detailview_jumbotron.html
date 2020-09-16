@@ -1,0 +1,28 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/classroom_02.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/room.html' %}
+  {{ classroom.name }}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {{ classroom.description|linebreaks }}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/teaching.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  {{ classroom.name }}
+{% endblock jumbotron_image_alt-text %}

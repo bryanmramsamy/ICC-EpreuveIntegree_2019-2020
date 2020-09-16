@@ -76,7 +76,7 @@
               {{ form.modules.label }} <span class="badge badge-danger">{{ form.modules.errors.as_text }}</span>
             </label>
 
-            <select id="{{ form.modules.auto_id }}" name="{{ form.modules.html_name }}" class="form-control form-control-lg" multiple required>
+            <select id="{{ form.modules.auto_id }}" name="{{ form.modules.html_name }}" class="form-control form-control-lg" multiple>
               {% for module in modules %}
                 <option value="{{ module.pk }}" {% if degree|has_module:module %}selected{% endif %}>{{ module.reference }} | {{ module.title }}</option>
               {% endfor %}
