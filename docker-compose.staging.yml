@@ -26,7 +26,7 @@ services:
         target: /home/app/web/static
 
     env_file:
-      - .env.prod
+      - .env.staging
 
     command: gunicorn serina.wsgi:application --bind 0.0.0.0:8000
 
@@ -41,11 +41,11 @@ services:
 
     volumes:
       - type: volume
-        source: postgres_database_prod
+        source: postgres_database_staging
         target: /var/lib/postgresql/data
 
     env_file:
-      - .env.prod.db
+      - .env.staging.db
 
 
   nginx-proxy:
@@ -90,7 +90,6 @@ services:
         read_only: true
 
 
-
   ngnix-proxy-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
 
@@ -118,7 +117,7 @@ services:
         read_only: true
 
     env_file:
-      - .env.prod.proxy-companion
+      - .env.staging.proxy-companion
 
 
 networks:
@@ -128,7 +127,7 @@ networks:
 volumes:
   web_media_volume:
   web_static_volume:
-  postgres_database_prod:
+  postgres_database_staging:
   certs:
   html:
   vhost:
