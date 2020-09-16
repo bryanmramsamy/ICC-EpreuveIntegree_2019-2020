@@ -42,37 +42,28 @@
 
         {# Courses dropdown #}
 
-
-        {% if request.user|is_back_office_user or request.user|is_student %}
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_catalogue" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              {% include 'logo/box.html' %} {% trans 'Resources' %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbar_dropdown_catalogue" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            {% include 'logo/box.html' %} {% trans 'Resources' %}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbar_dropdown_catalogue">
+            <a class="dropdown-item" href="{% url 'course_listview' %}">
+              {% include 'logo/course.html' %} {% trans 'All courses' %}
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbar_dropdown_catalogue">
-              <a class="dropdown-item" href="{% url 'course_listview' %}">
-                {% include 'logo/course.html' %} {% trans 'All courses' %}
+
+            {% if request.user|is_student %}
+              <a class="dropdown-item" href="404">
+                {% include 'logo/course_alt.html' %} {% trans 'My courses' %}
               </a>
+            {% endif %}
 
-              {% if request.user|is_student %}
-                <a class="dropdown-item" href="404">
-                  {% include 'logo/course_alt.html' %} {% trans 'My courses' %}
-                </a>
-              {% endif %}
+            <div class="dropdown-divider"></div>
 
-              <div class="dropdown-divider"></div>
-
-              <a class="dropdown-item" href="{% url 'classroom_listview' %}">
-                {% include 'logo/room.html' %} {% trans 'Classrooms' %}
-              </a>
-            </div>
-          </li>
-
-        {% else %}
-          <li class="nav-item active">
-            <a class="nav-link" href="{% url 'course_listview' %}">{% include 'logo/course.html' %} {% trans 'Courses' %}</a>
-          </li>
-        {% endif %}
-
+            <a class="dropdown-item" href="{% url 'classroom_listview' %}">
+              {% include 'logo/room.html' %} {% trans 'Classrooms' %}
+            </a>
+          </div>
+        </li>
       </ul>
 
 

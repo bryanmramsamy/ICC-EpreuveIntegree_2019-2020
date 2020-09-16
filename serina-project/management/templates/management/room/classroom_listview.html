@@ -1,35 +1,86 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
+
 
 {% block title %}{% trans 'ClassroomListView' %}{% endblock title %}
 
+
 {% block content %}
+  {# Heading jumbotron #}
+
+  {% include 'management/room/classroom_listview_jumbotron.html' %}
 
 
+  {# Classroom cards #}
 
+  <section class="container">
+    <div class="row row-cols-1">
+      {% for classroom in classrooms %}
+      <div class="card my-3">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <img src="{{ classroom.picture.url }}" class="img-fluid" alt="{{ classroom.name }} classroom picture" style="max-height: 200px;">
+            </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">
+                    <a href="{{ classroom.get_absolute_url }}" class="text-reset">{% include 'logo/room.html' %} {{ classroom.name }}</a>
+                  </h5>
+                  <p class="card-text">
+                    <small class="text-muted">{{ classroom.reference }}</small>
+                  </p>
+                  <p class="card-text">
+                    {{ classroom.description|linebreaks|truncatechars:256 }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-<h1>ClassroomListView</h1>
+          <div class="card-footer text-center">
+            <div class="row row-cols-1 {% if not request.user|is_student %}row-cols-md-2{% endif %} my-2 my-md-0">
+              <div class="col mb-2 mb-md-0">
+                <a href="{{ classroom.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
+              </div>
+              {% if request.user|is_manager_or_administrator %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'classroom_updateview' pk=classroom.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'classroom_deleteview' pk=classroom.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+                    </div>
+                  </div>
+                </div>
 
-{% for classroom in classrooms %}
-<div>
-<h2>{{ classroom.name }}</h2>
-<h3>{{ classroom.description }}</h3>
-<h4>{{ classroom.recommended_capacity }}</h4>
-<p>{{ classroom.max_capacity }}</p>
+              {% elif request.user|is_teacher %}
+                <div class="col">
+                  <a href="#" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+                </div>
 
-<h3>Courses given in this classroom:</h3>
-{% for course in classroom.courses.all %}
-<ul>
-<li><p>{{ module.title }}</p></li>
-</ul>
-{% endfor %}
+              {% elif request.user|is_guest %}
+                <div class="col">
+                  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
+                </div>
 
-<p>{{ classroom.classroom_benefits }}</p>
-<p>{{ classroom.nb_modules }}</p>
-
-<h5><a href="{{ classroom.get_absolute_url }}">classroom_detailview/{{ classroom.pk }}/</a></h5>
-<h5><a href="{% url 'classroom_updateview' pk=classroom.pk %}">classroom_updateview/{{ classroom.pk }}/</a></h5>
-<h5><a href="{% url 'classroom_deleteview' pk=classroom.pk %}">classroom_deleteview/{{ classroom.pk }}/</a></h5>
-</div>
-{% endfor %}
+              {% elif not request.user|is_student %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock content %}

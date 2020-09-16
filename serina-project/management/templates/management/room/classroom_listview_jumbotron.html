@@ -1,0 +1,32 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/classroom_01.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/room.html' %}
+  {% trans 'All our classrooms' %}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% blocktrans %}
+    Each person should have his/her home, each sportsclub should have its stadium and each school should have its own classrooms.
+    <br>
+    Here is a list of ours.
+  {% endblocktrans %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/teaching_alt.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  {% trans 'A list of all our classrooms' %}
+{% endblock jumbotron_image_alt-text %}
