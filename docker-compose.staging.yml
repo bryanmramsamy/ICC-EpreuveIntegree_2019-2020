@@ -20,12 +20,13 @@ services:
       - type: volume
         source: web_media_volume
         target: /home/app/web/media
+
       - type: volume
         source: web_static_volume
         target: /home/app/web/static
 
     env_file:
-      - .env.prod
+      - .env.staging
 
     command: gunicorn serina.wsgi:application --bind 0.0.0.0:8000
 
@@ -40,14 +41,15 @@ services:
 
     volumes:
       - type: volume
-        source: postgres_database_prod
+        source: postgres_database_staging
         target: /var/lib/postgresql/data
 
     env_file:
-      - .env.prod.db
+      - .env.staging.db
 
-  nginx:
-    container_name: serina_nginx
+
+  nginx-proxy:
+    container_name: nginx-proxy
     build:
       context: ./nginx
       dockerfile: Dockerfile
@@ -59,14 +61,63 @@ services:
     restart: always
     ports:
       - 80:80
+      - 443:443
 
     volumes:
       - type: volume
         source: web_media_volume
         target: /home/app/web/media
+
       - type: volume
         source: web_static_volume
         target: /home/app/web/static
+
+      - type: volume
+        source: certs
+        target: /etc/nginx/certs
+
+      - type: volume
+        source: html
+        target: /usr/share/nginx/html
+
+      - type: volume
+        source: vhost
+        target: /etc/nginx/vhost.d
+
+      - type: bind
+        source: /var/run/docker.sock
+        target: /tmp/docker.sock
+        read_only: true
+
+
+  ngnix-proxy-letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+
+    networks:
+      - serina_network
+    depends_on:
+      - nginx-proxy
+
+    volumes:
+      - type: volume
+        source: certs
+        target: /etc/nginx/certs
+
+      - type: volume
+        source: html
+        target: /usr/share/nginx/html
+
+      - type: volume
+        source: vhost
+        target: /etc/nginx/vhost.d
+
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+
+    env_file:
+      - .env.staging.proxy-companion
 
 
 networks:
@@ -76,4 +127,7 @@ networks:
 volumes:
   web_media_volume:
   web_static_volume:
-  postgres_database_prod:
+  postgres_database_staging:
+  certs:
+  html:
+  vhost:

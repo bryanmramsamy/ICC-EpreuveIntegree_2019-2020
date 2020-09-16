@@ -6,7 +6,7 @@ services:
     build:
       context: ./serina-project
       dockerfile: Dockerfile
-    image: serina_django
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020
 
     networks:
       - serina_network
