@@ -17,7 +17,7 @@
 
   {# Information bubble #}
 
-  
+
   {% if not request.user|is_back_office_user %}
     {% include 'bubbles/info/more_about_prerequisites.html' %}
   {% endif %}
@@ -86,41 +86,10 @@
                   <h5 class="card-title">{% include 'logo/module.html' %} {{ module.title }}</h5>
                   <p class="card-text"><small class="text-muted">{{ module.reference }} | {% trans 'Difficulty level: ' %}{{ module.level.name }}</small></p>
                   <p class="card-text">{{ module.description|linebreaks|truncatechars:256 }}</p>
-                  <div>
-                    {% if request.user|is_student %}
-                      {% if request.user|module_already_validated_by_user:module %}
-                        <span class="text-success">
-                          {% include 'logo/check_valid.html' %} {% trans 'Module already validated' %}
-                        </span>
 
-                      {% elif module.prerequisites.all.count > 0 and request.user|all_prerequisites_validated_by_user:module %}
-                        <span class="text-warning">
-                          {% include 'logo/check_ready.html' %} {% trans 'Prerequisites validated' %}
-                        </span>
-
-                      {% elif module.prerequisites.all.count > 0 %}
-                        <span class="text-danger">
-                          {% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}
-                        </span>
-                      {% endif %}
-
-                    {% elif module.prerequisites.all.count > 0 %}
-                      <span class="text-info">{% include 'logo/check_info.html' %} 
-                        {% blocktrans count nb_prerequisites=module.prerequisites.all.count %}
-                          This module has only one prerequisite itself.
-                        {% plural %}
-                          This module has {{ nb_prerequisites }} perequisites itself.
-                        {% endblocktrans %}
-                      </span>
-
-                    {% else %}
-                      <span class="text-info">{% include 'logo/check_info.html' %} 
-                        {% blocktrans  %}
-                          This module has no prerequisites.
-                        {% endblocktrans %}
-                      </span>
-                    {% endif %}
-                  </div>
+                  {% with related_module=module %}
+                    {% include 'management/module/module_status.html' %}
+                  {% endwith %}
                 </div>
               </div>
             </div>
