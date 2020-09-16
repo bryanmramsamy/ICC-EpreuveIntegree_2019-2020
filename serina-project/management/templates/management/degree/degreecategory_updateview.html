@@ -4,23 +4,23 @@
 {% block title %}{% trans 'DegreeCategoryUpdateView' %}{% endblock title %}
 
 {% block content %}
-    <h1>DegreeCategoryUpdateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<h1>DegreeCategoryUpdateView</h1>
+<form action="." method="post">
+{% csrf_token %}
+{{ form.as_p }}
 
-        <input type="submit" value="{% trans 'Create new degree category' %}">
-    </form>
+<input type="submit" value="{% trans 'Create new degree category' %}">
+</form>
 
-    <h1>DegreeCategoryDetailView</h1>
-    <div>
-        <h2>{{ category.name }}</h2>
-    </div>
+<h1>DegreeCategoryDetailView</h1>
+<div>
+<h2>{{ category.name }}</h2>
+</div>
 
-    <h2>Degrees from this category</h2>
-    <ul>
-        {% for degree in category.degrees.all %}
-            <li>{{ degree.title }}</li>
-        {% endfor %}
-    </ul>
+<h2>Degrees from this category</h2>
+<ul>
+{% for degree in category.degrees.all %}
+    <li>{{ degree.title }}</li>
+{% endfor %}
+</ul>
 {% endblock content %}

@@ -10,7 +10,12 @@ from .resource import BackOfficeResource
 class DegreeCategory(BackOfficeResource):
     """Model definition for DegreeCategory."""
 
-    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_("Name"),
+        help_text=_("An explicite name is recommended, such as 'Bachelor', "
+                    "'PhD', or 'Master'. "),
+    )
 
     class Meta:
         """Meta definition for DegreeCategory."""

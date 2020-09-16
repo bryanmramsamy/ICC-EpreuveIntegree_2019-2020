@@ -1,18 +1,21 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'DegreeCategoryDetailView' %}  {{ module.reference }}{% endblock title %}
+
+{% block title %}{% trans 'Degree category' %}: {{ category.name }}{% endblock title %}
+
 
 {% block content %}
-    <h1>DegreeCategoryDetailView</h1>
-    <div>
-        <h2>{{ category.name }}</h2>
-    </div>
+  {% include 'management/degree/degreecategory_back_to_catalog_button.html' %}
 
-    <h2>Degrees from this category</h2>
-    <ul>
-        {% for degree in category.degrees.all %}
-            <li>{{ degree.title }}</li>
-        {% endfor %}
-    </ul>
+  <br>
+
+  {% with degreecategory_actions_enabled=True %}
+    {% include 'management/degree/degreecategory_card.html' %}
+  {% endwith %}
+
+  <br>
+
+  {% include 'management/degree/degreecategory_back_to_catalog_button.html' %}
+
 {% endblock content %}
