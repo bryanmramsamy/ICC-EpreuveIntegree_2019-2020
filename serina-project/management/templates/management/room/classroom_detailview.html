@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n registration_extra %}
 
+
 {% block title %}{{ classroom.name }} | {{ classroom.reference }}{% endblock title %}
 
-{% block content %}
 
+{% block content %}
   {# Heading jumbotron #}
 
   {% include 'management/room/classroom_detailview_jumbotron.html' %}
@@ -16,29 +17,9 @@
 
   <br>
 
-
-  {% if request.user|is_back_office_user %}
-    {# Classroom capacity #}
-
-    {% include 'backoffice_tag.html' %}
-      <section class="container p-2 h4 rounded border border-warning text-center">
-        <div class="row row-cols-1 row-cols-md-2">
-          <div class="col">
-            {% trans 'Recommended capacity' %}
-            <br>
-            <span class="display-4">
-              {{ classroom.recommended_capacity }}
-            </span>
-          </div>
-          <div class="col">
-            {% trans 'Maximum capacity' %}
-            <br>
-            <span class="display-4">
-              {{ classroom.max_capacity }}
-          </div>
-        </div>
-      </section>
-    {% endif %}
+  {% with room_actions_enabled=True room_description=False %}
+    {% include 'management/room/classroom_card.html' %}
+  {% endwith %}
 
   <br>
 
@@ -46,14 +27,4 @@
   {# Back to ListView button #}
 
   {% include 'management/room/back_to_room_list_button.html' %}
-
-  <br><br><br>
-  DEBUG:
-
-  <h2>Courses given in this room</h2>
-  <ul>
-  {% for course in classroom.courses.all %}
-  <li>({{ course.reference }}) {{ course.module.title }} by {{ course.teacher.get_full_name }}</li>
-  {% endfor %}
-  </ul>
 {% endblock content %}
