@@ -120,6 +120,15 @@
         </div>
       {% endif %}
     </div>
+
+    <br>
+
+
+    {# Presentation card #}
+
+    {% with degree_actions_enabled=False show_description=True %}
+      {% include 'management/degree/degree_card.html' %}
+    {% endwith %}
   </section>
 {% endblock content %}
 
