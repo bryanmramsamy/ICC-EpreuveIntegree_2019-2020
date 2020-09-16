@@ -1,38 +1,44 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'DegreeCreateView' %}{% endblock title %}
+
+{% block title %}{% trans 'Delete the degree' %}: {{ degree.title }}{% endblock title %}
+
 
 {% block content %}
-    <h1>DegreeCreateView</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete "{{ degree.title }}"?</p>
-        <input type="submit" value="Confirm">
-    </form>
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">
+        {% trans 'Delete the degree' %}: {% include 'logo/degree.html' %} {{ degree.title }} {% include 'logo/delete.html' %}
+      </h1>
 
-    <h1>DegreeDetailView</h1>
-    <div>
-        <h2>{{ degree.title }}</h2>
-        <h3>{{ degree.reference }}</h3>
-        <h4>{{ degree.category.name }}</h4>
-        <p>{{ degree.description }}</p>
-        <p>{{ degree.total_benefits }}</p>
+      <form method="POST">
+        {% csrf_token %}
+
+        {% include 'bubbles/danger/confirm_deletation.html' %}
+
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-2 mb-md-0">
+            <input type="submit" class="btn btn-block btn-lg btn-danger text-uppercase" value="{% trans 'Confirm deletation' %}">
+          </div>
+
+          <div class="col">
+            <a href="{{ degree.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+              {% trans 'Cancel and back to degree page' %} {% include 'logo/back.html' %}
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
 
-    <h2>Teachers</h2>
-    <ul>
-        {% for module in degree.modules.all %}
-            {% for teacher in module.eligible_teachers.all %}
-                <li>{{ teacher.get_full_name }}</li>
-            {% endfor %}
-        {% endfor %}
-    </ul>
+    <br>
 
-    <h2>Modules</h2>
-    <ul>
-        {% for module in degree.modules.all %}
-            <li>{{ module.title }}</li>
-        {% endfor %}
-    </ul>
+    {# Presentation card #}
+
+    {% with degree_actions_enabled=False show_description=True %}
+      {% include 'management/degree/degree_card.html' %}
+    {% endwith %}
+
+  </section>
 {% endblock content %}
