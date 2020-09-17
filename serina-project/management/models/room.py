@@ -14,19 +14,28 @@ class Classroom(BackOfficeResource):
     specific capacity.
     """
 
-    name = models.CharField(max_length=50, verbose_name=_("Name"))
+    name = models.CharField(
+        max_length=50,
+        verbose_name=_("Designation"),
+        help_text=_("Must be as short and descriptive as possible."),
+    )
     reference = models.CharField(max_length=7, blank=True, unique=True,
                                  verbose_name=_('Reference'))
     description = models.TextField(
         null=True,
         blank=True,
-        verbose_name=_("Description")
+        verbose_name=_("Description"),
+        help_text=_("Should provide as much information on the module as "
+                    "possible.")
     )
     recommended_capacity = models.PositiveIntegerField(
-        verbose_name=_("Recommended capacity")
+        verbose_name=_("Recommended capacity"),
+        help_text=_("Capacity where the attendees can work in optimal "
+                    "conditions."),
     )
     max_capacity = models.PositiveIntegerField(
-        verbose_name=_("Maximum capacity")
+        verbose_name=_("Maximum capacity"),
+        help_text=_("Maximal capacity in case of over attendance."),
     )
     picture = models.ImageField(
         upload_to='management/rooms/',
@@ -35,6 +44,8 @@ class Classroom(BackOfficeResource):
         blank=True,
         max_length=225,
         verbose_name=_("Picture"),
+        help_text=_("Not required. If no picture is sent, the default picture "
+                    "will be used."),
     )
 
     class Meta:

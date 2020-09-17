@@ -99,10 +99,10 @@
 
 
 {% block scripts %}
-<script>
-  $('#{{ form.picture.auto_id }}').on('change',function(){
-    var fileName = $(this).val();
-    $(this).next('#{{ form.picture.auto_id }}_label').html(fileName);
-  })
+  <script>
+    $('#{{ form.picture.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.picture.auto_id }}_label').html(fileName);
+    })
   </script>
 {% endblock scripts %}
