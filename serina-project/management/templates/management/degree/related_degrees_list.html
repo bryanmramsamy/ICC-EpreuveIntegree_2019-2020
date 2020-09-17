@@ -26,7 +26,9 @@
           </a>
         </td>
         <td class="col-5">
-          {% include 'management/degree/degree_status.html' %}
+          {% with degree=related_degree %}
+            {% include 'management/degree/degree_status.html' %}
+          {% endwith %}
         </td>
       </tr>
     {% empty %}
