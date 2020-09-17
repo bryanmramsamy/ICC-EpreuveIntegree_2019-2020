@@ -1,16 +1,25 @@
 # Imported environnement variables
 *.env*
 
+
 # Python3.8 cache files and directories
 *.pyc
 __pycache__/
+
 
 # Uploaded Media files
 serina-project/media/*
 !serina-project/media/management/books.png
 
+
 # Do not ignore any .gitkeep file
 !*.gitkeep
 
+
 # Debug ngrok tunnel
 ngrok
+
+
+# Certbot data folder
+
+/data
