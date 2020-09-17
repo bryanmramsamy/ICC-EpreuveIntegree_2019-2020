@@ -1,6 +1,10 @@
 {% load i18n static %}
 
+
 <div class="row">
+
+  {# Footer logo #}
+
   <div class="col-md-3 text-center">
     <a href="{% url 'home' %}">
       <img src="{% static 'logo/serina.png' %}"  class="p-3 img-fluid" alt="" max-height=200px>
@@ -9,6 +13,18 @@
   </div>
 
   <div class="col-md-9">
+
+    {# Language change form #}
+
+    <div>
+      {% include 'i18n.html' %}
+    </div>
+
+    <br>
+
+
+    {# Project credits #}
+
     <h3>SERINA-Project</h3>
     <small class="d-block mb-3 text-muted">
       Bryan M. Ramsamy © 2019-2020 | Institut des Carrières Commerciales
@@ -16,9 +32,12 @@
       Épreuve intégrée de la section : Bachelier en informatique de gestion
     </small>
 
-    <div class="row">
-      <div class="col-6">
-        <span class="h4">{% trans 'See more' %}</span>
+
+    {# Footer nav #}
+
+    <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
+      <div class="col">
+        <span class="h4">{% trans 'About us' %}</span>
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="{% url 'home' %}">{% trans 'Home' %}</a></li>
           <li><a class="text-muted" href="mailto:support@serina.com">{% trans 'Contact us' %}</a></li>
@@ -28,8 +47,8 @@
         </ul>
       </div>
 
-      <div class="col-6">
-        <span class="h4">{% trans 'About the project' %}</span>
+      <div class="col">
+        <span class="h4">{% trans 'See more' %}</span>
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="{% url 'api' %}" target="_blank" rel="noopener noreferrer">{% trans 'Application Programming Interface' %} {% include 'logo/new_tab.html' %}</a></li>
           <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-1.pdf' %}" target="_blank" rel="noopener noreferrer">{% trans 'Project report: Volume 1' %} {% include 'logo/new_tab.html' %}</a></li>
@@ -42,6 +61,3 @@
   </div>
 </div>
 
-<div>
-  {% include 'i18n.html' %}
-</div>

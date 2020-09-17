@@ -127,7 +127,6 @@ class Course(BackOfficeResource):
 
         return str_result
 
-
     def clean(self):
         """Clean method for Course.
 
