@@ -9,7 +9,7 @@
     <a href="{% url 'home' %}">
       <img src="{% static 'logo/serina.png' %}"  class="p-3 img-fluid" alt="" max-height=200px>
     </a>
-    <p class="text-right text-muted">It is never to late to learn.</p>
+    <p class="text-center text-md-right text-muted">{% trans 'It is never to late to learn.' %}</p>
   </div>
 
   <div class="col-md-9">
@@ -33,9 +33,14 @@
     </small>
 
 
+    {# Academic project info bubble #}
+
+    {% include 'bubbles/info/academic_project.html' %}
+
+
     {# Footer nav #}
 
-    <div class="row row-cols-1 row-cols-md-2 text-center text-md-left">
+    <div class="row row-cols-1 row-cols-md-2">
       <div class="col">
         <span class="h4">{% trans 'About us' %}</span>
         <ul class="list-unstyled text-small">

@@ -1,0 +1,19 @@
+{% extends 'bubbles/info.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This project was made for academic purposes
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    This project is not an official profit application made in for an official organization.
+    <br>
+    If you want your own app, contact the owner:
+  {% endblocktrans %}
+  <a href="mailto:rainbow_delta@outlook.com" class="badge badge-light text-info">Bryan M. Ramsamy {% include 'logo/mail.html' %}</a>
+{% endblock bubble_content %}
