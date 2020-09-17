@@ -4,29 +4,105 @@
 <section class="container p-1 p-md-3 border bg-light">
   <div class="row rwo-cols-1 row-cols-lg-2">
     <div class="col-lg-6 text-center">
+
+      {# Course picture #}
+
       <img src="{{ course.picture.url }}" alt="{{ course.reference }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
+
+
+      {# Attendance #}
+
+      {% if request.user|is_back_office_user %}
+        {% include 'backoffice_tag.html' %}
+        <div class="border border-warning h5">
+          <table class="table table-striped table-hover">
+            <tr class="d-flex">
+              <td class="col-9 text-uppercase text-left">
+                Amount of registrants
+              </td>
+              <td class="col-3 h3 text-light bg-dark">
+                {{ course.nb_registrants }}
+              </td>
+            </tr>
+            <tr class="d-flex">
+              <td class="col-9 text-uppercase text-left">
+                Available/total seats before over attendance
+              </td>
+              <td class="col-3 h3 text-light bg-dark">
+                {{ course.recommended_seats_available }}/{{ course.room.recommended_capacity }}
+              </td>
+            </tr>
+            <tr class="d-flex">
+              <td class="col-9 text-uppercase text-left">
+                Available/total seats
+              </td>
+              <td class="col-3 h3 text-light bg-dark">
+                {{ course.max_seats_available }}/{{ course.room.max_capacity }}
+              </td>
+            </tr>
+          </table>
+        </div>
+      {% endif %}
     </div>
+
     <div class="col-lg-6 text-center">
       <h1>{% include 'logo/course.html' %}</h1>
       <h2>{{ course.reference }}</h2>
       <div class="row">
-        <div class="col">{% trans 'Start' %}: {{ course.date_start }}</div>
-        <div class="col">{% trans 'End' %}: {{ course.date_end }}</div>
+        <div class="col">
+          {% trans 'Starts on' %}:<br><span class="h3 font-weight-bold">{{ course.date_start }}</span>
+        </div>
+        <div class="col">
+          {% trans 'Ends on' %}:<br><span class="h3 font-weight-bold">{{ course.date_end }}</span>
+        </div>
       </div>
+
       <hr>
-      <div class="row h3">
+
+      <div class="row h4">
+
+        {# Status #}
+
         <div class="col">
-          <strong>{{ course.date_start }}</strong>
+          {% if course.status == "FINISHED" %}
+            <span class="font-weight-bold text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Course already finished' %}</span>
+
+          {% elif course.status == "ONGOING" %}
+            <span class="font-weight-bold text-warning">{% include 'logo/check_warning.html' %} {% trans 'Already started' %}</span>
+
+          {% else %}
+            <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Starting soon' %}</span>
+          {% endif %}
         </div>
-        <div class="col">
-          <strong>{{ course.date_start }}</strong>
-        </div>
+
+
+        {# Attendance availibility #}
+
+        {% if course.status != "FINISHED" %}
+          <div class="col">
+            {% if request.user|is_back_office_user %}
+              {% if course.max_seats_available == 0 %}
+                <span class="font-weight-bold text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Full attendance' %}</span>
+
+              {% elif course.over_attendance %}
+                <span class="font-weight-bold text-warning">{% include 'logo/check_warning.html' %} {% trans 'Over attendance' %}</span>
+
+              {% else %}
+                <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Acceptable attendance' %}</span>
+              {% endif %}
+
+            {% elif course.max_seats_available == 0 %}
+              <span class="font-weight-bold text-danger">{% include 'logo/check_invalid.html' %} {% trans 'No seats available' %}</span>
+
+            {% elif course.over_attendance %}
+              <span class="text-warning">{% include 'logo/check_warning.html' %} {% trans 'Few seats left' %}</span>
+
+            {% else %}
+              <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Seats available' %}</span>
+            {% endif %}
+          </div>
+        {% endif %}
       </div>
-      {{ course.nb_registrants }}
-      {{ course.status }}
-      {{ course.recommended_seats_available }}
-      {{ course.max_seats_available }}
-      {{ course.over_attendance }}
 
       <hr>
 
@@ -62,7 +138,6 @@
           </a>
         </li>
       </ul>
-      <hr>
     </div>
   </div>
 
