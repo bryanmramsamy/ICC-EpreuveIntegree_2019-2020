@@ -5,14 +5,16 @@
     {% for error in field.errors %}
     DEBUG:
       <div class="alert alert-danger" role="alert">
-      {{ error }} -> {{ field.name }}
+        {{ error }} -> {{ field.name }}
       </div>
     {% endfor %}
   {% endfor %}
 
   {% for error in form.non_field_errors %}
     <div class="alert alert-danger" role="alert">
-  {{ error }}
+      <div class="container text-center">
+        {{ error }}
+      </div>
     </div>
   {% endfor %}
 {% endif %}
