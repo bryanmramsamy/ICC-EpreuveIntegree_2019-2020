@@ -57,11 +57,12 @@
             <img src="{{ degree.picture.url }}" class="img-thumbnail rounded" alt="">
 
             <div class="card-body">
-              <h5 class="text-right">{{ degree.title }}</h5>
-              <small class="text-muted">
-                {% include 'logo/degree.html' %}
-                {{ degree.category.name }}
-              </small>
+              <a href="{{ degree.get_absolute_url }}" class="h5 text-reset">
+                {% include 'logo/degree.html' %} {{ degree.title }}
+              </a>
+              <br>
+
+              <small class="text-muted"><a href="{{ degree.category.get_absolute_url }}" class="text-reset">{% include 'logo/degree_alt.html' %} {{ degree.category.name }}</a> | {{ degree.reference }}</small>
 
               <p class="card-text">
                 {{ degree.description|linebreaks|truncatechars:100 }}
@@ -69,11 +70,15 @@
 
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a href="{{ degree.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more...' %}</a>
+                  <a href="{{ degree.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
                 </div>
 
                 <small class="text-muted">
-                  {{ degree.modules.count }} {% trans 'modules' %}
+                  {% blocktrans count nb_modules=degree.modules.count %}
+                    Single module degree
+                  {% plural %}
+                    Composed of {{ nb_modules }} modules
+                  {% endblocktrans %}
                 </small>
               </div>
             </div>
@@ -119,21 +124,23 @@
           <div class="card mb-4 shadow-sm bg-light">
             <img src="{{ module.picture.url }}" class="img-thumbnail rounded" alt="">
             <div class="card-body">
-              <h5 class="text-right">{{ module.title }}</h5>
-              <small class="text-muted">
-                {% include 'logo/module.html' %}
-                {{ module.level.name }}
-              </small>
+              <a href="{{ module.get_absolute_url }}" class="h5 text-reset">
+                {% include 'logo/module.html' %} {{ module.title }}
+              </a>
+              <br>
+
+              <small class="text-muted"><a href="{{ module.category.get_absolute_url }}" class="text-reset">{% include 'logo/module_alt.html' %} {{ module.level.name }}</a> | {{ module.reference }}</small>
+
               <p class="card-text">
                 {{ module.description|linebreaks|truncatechars:100 }}
               </p>
 
               <div class="d-flex justify-content-between align-items-center">
                 <div class="btn-group">
-                  <a href="{{ module.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more...' %}</a>
+                  <a href="{{ module.get_absolute_url }}" class="btn btn-sm btn-outline-secondary">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
                 </div>
 
-                <small class="text-muted">{{ module.price }} {% trans 'EUR' %}</small>
+                <small class="text-muted">ECTS {{ module.ECTS_value }} | € {{ module.price }}</small>
               </div>
             </div>
           </div>
