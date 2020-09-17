@@ -1,17 +1,38 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra static %}
 
-{% block title %}{% trans 'CourseDetailView' %} {{ course.reference }}{% endblock title %}
+
+{% block title %}{% trans 'Course' %}: {{ course.reference }}{% endblock title %}
+
 
 {% block content %}
-    <h1>CourseDetailView</h1>
-    <div>
-        <h2>{{ course.reference }}</h2>
-        <h3>{{ course.module.title }}</h3>
-        <h4>{{ course.teacher.get_full_name }}</h4>
-        <p>start: {{ course.date_start }}</p>
-        <p>end: {{ course.date_end }}</p>
-        <p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
-        <p>overcapacity: {{ course.possibile_over_attendance }}</p>
-    </div>
+  {# Heading jumbotron #}
+
+  {% include 'management/course/course_detailview_jumbotron.html' %}
+
+
+  {# Back to ListView button #}
+
+  {% include 'management/course/course_back_to_list_button.html' %}
+
+  <br>
+
+
+  {# Presentation card #}
+
+  {% with actions_enabled=True show_description=False %}
+    {% include 'management/course/course_card.html' %}
+  {% endwith %}
+
+
+<h1>CourseDetailView</h1>
+<div>
+<h2>{{ course.reference }}</h2>
+<h3>{{ course.module.title }}</h3>
+<h4>{{ course.teacher.get_full_name }}</h4>
+<p>start: {{ course.date_start }}</p>
+<p>end: {{ course.date_end }}</p>
+<p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
+<p>overcapacity: {{ course.possibile_over_attendance }}</p>
+</div>
 {% endblock content %}

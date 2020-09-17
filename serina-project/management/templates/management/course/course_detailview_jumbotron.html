@@ -1,0 +1,32 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/course_02.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% include 'logo/course.html' %}
+  {{ course.reference }}
+  <br>
+  {{ course.module.title }}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% blocktrans with module_title=course.module.title teacher_name=course.teacher.get_full_name room_name=course.room.name start_date=course.date_start end_date=course.date_end %}
+    {{ module_title }} given by {{ teacher_name }} at {{ room_name }} from {{ start_date }} to {{ end_date }}.
+  {% endblocktrans %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/course.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  {{ course.reference }}
+{% endblock jumbotron_image_alt-text %}

@@ -1,0 +1,73 @@
+{% load i18n registration_extra %}
+
+
+<section class="container p-1 p-md-3 border bg-light">
+  <div class="row rwo-cols-1 row-cols-lg-2">
+    <div class="col-lg-6 text-center">
+      <img src="{{ course.picture.url }}" alt="{{ course.reference }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
+    </div>
+    <div class="col-lg-6 text-center">
+      <h1>{% include 'logo/course.html' %}</h1>
+      <h2>{{ course.reference }}</h2>
+      <div class="row">
+        <div class="col">{% trans 'Start' %}: {{ course.date_start }}</div>
+        <div class="col">{% trans 'End' %}: {{ course.date_end }}</div>
+      </div>
+      <hr>
+      <div class="row h3">
+        <div class="col">
+          <strong>{{ course.date_start }}</strong>
+        </div>
+        <div class="col">
+          <strong>{{ course.date_start }}</strong>
+        </div>
+      </div>
+      {{ course.nb_registrants }}
+      {{ course.status }}
+      {{ course.recommended_seats_available }}
+      {{ course.max_seats_available }}
+      {{ course.over_attendance }}
+
+      <hr>
+
+      <p>
+        {% trans 'Module teached in this course' %}:
+      </p>
+      <ul class="list-unstyled">
+        <li class="h5">
+          <a href="{{ course.module.get_absolute_url }}" class="text-reset">
+            {% include 'logo/module.html' %} {{ course.module.title }} <small class="text-muted">{{ course.module.category.name }}</small>
+          </a>
+        </li>
+      </ul>
+      <hr>
+
+      <p>
+        {% trans 'Teacher of this course' %}:
+      </p>
+      <ul class="list-unstyled">
+        <li class="h5">
+          {{ course.teacher.get_full_name }} <a href="mailto:{{ course.teacher.email }}" class="badge badge-secondary">{% trans 'Contact by mail' %} {% include 'logo/mail.html' %}</a>
+        </li>
+      </ul>
+      <hr>
+
+      <p>
+        {% trans 'Classroom assigned to this course' %}:
+      </p>
+      <ul class="list-unstyled">
+        <li class="h5">
+          <a href="{{ course.room.get_absolute_url }}" class="text-reset">
+            {% include 'logo/room.html' %} {{ course.room.name }} <small class="text-muted">{{ course.room.reference }}</small>
+          </a>
+        </li>
+      </ul>
+      <hr>
+    </div>
+  </div>
+
+  {% if actions_enabled %}
+    <hr>
+    {% include 'management/course/actions.html' %}
+  {% endif %}
+</section>

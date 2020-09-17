@@ -37,17 +37,17 @@ def module_payment(request, pk):
         paypal_dict = {
             'business': settings.PAYPAL_RECEIVER_EMAIL,
             'amount': module_rr.module.price,
-            'item_name': _("Registration for {} to {} (From {} to {})".format(
+            'item_name': _("Registration for {} to {}".format(
                 module_rr.student_rr.created_by.get_full_name(),
                 module_rr.module.title,
-                module_rr.date_start,
-                module_rr.date_end,
             )),
             'currency_code': 'EUR',
             'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
             'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
-            'cancel_return': 'http://{}{}'.format(host,
-                                                reverse('payment_cancelled')),
+            'cancel_return': 'http://{}{}'.format(
+                host,
+                reverse('payment_cancelled'),
+            ),
         }
 
         form = PayPalPaymentsForm(initial=paypal_dict)

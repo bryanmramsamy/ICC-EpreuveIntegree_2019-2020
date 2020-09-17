@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n registration_extra static %}
 
+
 {% block title %}{{ module.title }} | {{ module.reference }}{% endblock title %}
 
-{% block content %}
 
+{% block content %}
   {# Heading jumbotron #}
 
   {% include 'management/module/module_detailview_jumbotron.html' %}

@@ -1,0 +1,21 @@
+{% load i18n registration_extra %}
+
+
+<div class="row row-cols-1 {% if request.user|is_student %}row-cols-md-2{% endif %} text-right">
+  <div class="col">
+    <a href="{% url 'course_listview' %}" class="btn btn-block btn-outline-dark">
+      <h3>
+        {% include 'logo/course.html' %} {% trans 'Back to the courses list' %} {% include 'logo/back.html' %}
+      </h3>
+    </a>
+  </div>
+  {% if request.user|is_student %}
+    <div class="col">
+      <a href="404" class="btn btn-block btn-outline-info">
+        <h3>
+          {% include 'logo/course_alt.html' %} {% trans 'Back to my courses' %} {% include 'logo/back.html' %}
+        </h3>
+      </a>
+    </div>
+  {% endif %}
+</div>

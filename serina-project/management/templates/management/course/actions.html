@@ -1,0 +1,36 @@
+{% load i18n registration_extra %}
+
+
+{% if request.user|is_manager_or_administrator %}
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col mb-2 mb-md-0">
+      <a href="{% url 'course_updateview' pk=course.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+    </div>
+    <div class="col">
+      <a href="{% url 'course_deleteview' pk=course.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+    </div>
+  </div>
+
+{% elif request.user|is_teacher %}
+  <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+
+{% elif request.user|is_student %}
+  <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
+
+{% elif request.user|is_guest %}
+  {% include 'bubbles/warning/still_registered_guest_not_student.html' %}
+
+  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Complete your registration' %} {% include 'logo/register_alt.html' %}</a>
+
+{% else %}
+  {% include 'bubbles/warning/unregistered.html' %}
+
+  <div class="row row-cols-1 row-cols-md-2">
+    <div class="col mb-2 mb-md-0">
+      <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+    </div>
+    <div class="col">
+      <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+    </div>
+  </div>
+{% endif %}
