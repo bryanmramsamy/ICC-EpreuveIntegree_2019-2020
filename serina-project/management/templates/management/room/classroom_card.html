@@ -32,8 +32,10 @@
     </div>
   </div>
 
-  {% if room_actions_enabled %}
-    <hr>
+  {% if actions_enabled %}
+    {% if request.user|is_back_office_user %}
+      <hr>
+    {% endif %}
 
     {% include 'management/room/actions.html' %}
   {% endif %}
