@@ -1,29 +1,43 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'ClassroomDeleteView' %}{% endblock title %}
+
+{% block title %}{% trans 'Delete the module' %}: {{ module.title }}{% endblock title %}
+
 
 {% block content %}
-    <h1>ClassroomDeleteView</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete "{{ classroom.name }}"?</p>
-        <input type="submit" value="Confirm">
-    </form>
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">
+        {% trans 'Remove the classroom' %}: {% include 'logo/room.html' %} {{ classroom.name }} {% include 'logo/delete.html' %}
+      </h1>
 
-    <h1>ClassroomDetailView</h1>
-    <div>
-        <h2>{{ classroom.name }}</h2>
-        <h3>{{ classroom.reference }}</h3>
-        <h4>{{ classroom.description }}</h4>
-        <p>{{ classroom.recommended_capacity }}</p>
-        <p>{{ classroom.max_capacity }}</p>
+      <form method="post">
+        {% csrf_token %}
+
+        {% include 'bubbles/danger/confirm_deletation.html' %}
+
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-2 mb-md-0">
+            <input type="submit" class="btn btn-block btn-lg btn-danger text-uppercase" value="{% trans 'Confirm deletation' %}">
+          </div>
+
+          <div class="col">
+            <a href="{{ classroom.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+              {% trans 'Cancel and back to classroom list' %} {% include 'logo/back.html' %}
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
 
-    <h2>Courses given in this room</h2>
-    <ul>
-        {% for course in classroom.courses.all %}
-            <li>({{ course.reference }}) {{ course.module.title }} by {{ course.teacher.get_full_name }}</li>
-        {% endfor %}
-    </ul>
+    <br>
+
+    {# Presentation card #}
+
+    {% with room_actions_enabled=False show_description=True %}
+      {% include 'management/room/classroom_card.html' %}
+    {% endwith %}
+  </section>
 {% endblock content %}
