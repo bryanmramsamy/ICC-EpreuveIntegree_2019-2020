@@ -24,15 +24,26 @@
     {% include 'management/course/course_card.html' %}
   {% endwith %}
 
+  <br>
 
-<h1>CourseDetailView</h1>
-<div>
-<h2>{{ course.reference }}</h2>
-<h3>{{ course.module.title }}</h3>
-<h4>{{ course.teacher.get_full_name }}</h4>
-<p>start: {{ course.date_start }}</p>
-<p>end: {{ course.date_end }}</p>
-<p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
-<p>overcapacity: {{ course.possibile_over_attendance }}</p>
-</div>
+
+  {# Attendees list #}
+
+  {% if request.user|is_back_office_user or request.user|is_student %}
+    <section class="container p-1 p-md-3 border rounded">
+      <h3 class="h3 text-center">
+        {% trans 'List of attendees' %}
+      </h3>
+      {% with modules_rrs_list_queryset=modules_rrs %}
+        {% include 'registration/registration_report/related_modules_rrs_list.html' %}
+      {% endwith %}
+    </section>
+
+    <br>
+  {% endif %}
+
+
+  {# Back to ListView button #}
+
+  {% include 'management/course/course_back_to_list_button.html' %}
 {% endblock content %}

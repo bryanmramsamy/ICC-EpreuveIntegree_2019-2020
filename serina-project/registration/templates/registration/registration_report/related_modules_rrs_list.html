@@ -1,0 +1,63 @@
+{% load i18n registration_extra %}
+
+
+<table class="table table-sm table-striped table-hover">
+  <thead>
+    <tr class="d-flex">
+      <th class="col-2">
+        {% include 'logo/person.html' %} {% trans 'Number' %}
+      </th>
+      <th class="col">
+        {% include 'logo/person.html' %} {% trans 'Student' %}
+      </th>
+      {% if request.user|is_back_office_user %}
+        <th class="col-2">
+          {% include 'logo/module_rr.html' %} {% trans 'Status' %}
+        </th>
+        <th class="col-1">
+          {% include 'logo/score.html' %} {% trans 'Score' %}
+        </th>
+        <th class="col-2">
+          {% include 'logo/options.html' %} {% trans 'Options' %}
+        </th>
+      {% endif %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for related_module_rr in modules_rrs_list_queryset %}
+      <tr class="d-flex">
+        <td class="col-2">
+          {{ related_module_rr.student_rr.created_by.username }}
+        </td>
+        <td class="col">
+          {{ related_module_rr.student_rr.created_by.get_full_name }}
+        </td>
+        {% if request.user|is_back_office_user %}
+          <td class="col-2 text-{% if related_module_rr.status == 'COMPLETED' %}info{% else %}success{% endif %}">
+            {% if related_module_rr.status == 'COMPLETED' %}{% include 'logo/check_info.html' %}{% else %}{% include 'logo/check_valid.html' %}{% endif %} {{ related_module_rr.get_status_display }}
+          </td>
+          <td class="col-1">
+            {% if related_module_rr.final_score %}
+              <span class="font-weight-bold text-{% if related_module_rr.succeeded %}success{% else %}danger{% endif %}">{{ related_module_rr.final_score }}</span>
+            {% else %}
+              <span class="text-muted">{% trans 'N/A' %}</span>
+            {% endif %}
+          </td>
+          <td class="col-2">
+            <a href="{# TODO: Add link #}{% if request.user|is_manager_or_administrator %}404{% else %}404{% endif %}" class="btn btn-sm btn-block btn-warning">
+              {% include 'logo/options.html' %} {% trans 'Options' %}
+            </a>
+          </td>
+        {% endif %}
+      </tr>
+    {% empty %}
+      <tr>
+        <td colspan="2" class="h5 text-center text-info">
+          {% include 'logo/check_info.html' %} {% trans 'No module found' %}
+        </td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+
