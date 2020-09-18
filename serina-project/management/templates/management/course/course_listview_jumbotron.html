@@ -1,0 +1,27 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/course_01.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% trans 'All our courses' %}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% trans 'Here is a list of all our courses. Feel free to look around. If you are already our student, you can even follow your progression from here.' %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/course.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  {% trans 'All our courses' %}
+{% endblock jumbotron_image_alt-text %}

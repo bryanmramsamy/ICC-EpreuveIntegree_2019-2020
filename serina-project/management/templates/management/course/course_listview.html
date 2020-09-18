@@ -1,24 +1,147 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
 {% block title %}{% trans 'CourseListView' %}{% endblock title %}
 
 {% block content %}
-    <h1>CourseListView</h1>
+  {# Heading jumbotron #}
 
-    {% for course in courses %}
-        <div>
-            <h2>{{ course.reference }}</h2>
-            <h3>{{ course.module.title }}</h3>
-            <h4>{{ course.teacher.get_full_name }}</h4>
-            <p>{{ course.room.label }}</p>
-            <p>From {{ course.date_start }} to {{ course.date_end }}</p>
-            <p>nb_registrants: {{ course.nb_registrants }}/{{ course.room.max_capacity }} (overcapacity ? {{ course.possibile_over_attendance }}</p>
+  {% include 'management/course/course_listview_jumbotron.html' %}
 
-            <h5><a href="{{ course.get_absolute_url }}">course_detailview/{{ course.pk }}/</a></h5>
-            <h5><a href="{% url 'course_updateview' pk=course.pk %}">course_updateview/{{ course.pk }}/</a></h5>
-            <h5><a href="{% url 'course_deleteview' pk=course.pk %}">course_deleteview/{{ course.pk }}/</a></h5>
-            
+
+  {# Statistical informations #}
+
+  <section class="container">
+    <div class="row text-muted">
+      <div class="col-sm">
+        {% blocktrans count nb_courses=courses.count %}
+          There was only one course given ever.
+        {% plural %}
+          They were {{ nb_courses }} courses given ever.
+        {% endblocktrans %}
+      </div>
+      <div class="col-sm">
+        {% blocktrans count nb_active_courses=nb_active_courses %}
+          There is actually only one course given.
+        {% plural %}
+          They are actually {{ nb_active_courses }} courses given.
+        {% endblocktrans %}
+      </div>
+    </div>
+  </section>
+
+
+  {# Create new course button #}
+
+  {% if request.user|is_manager_or_administrator %}
+    <div class="row">
+      <div class="col">
+        <a href="{% url 'course_createview' %}" class="btn btn-block btn-warning">
+          {% trans 'Register a new course' %} {% include 'logo/course.html' %} {% include 'logo/new.html' %}
+        </a>
+      </div>
+    </div>
+  {% endif %}
+
+
+  {# Courses cards #}
+
+  <section class="container">
+    <div class="row row-cols-1">
+      {% for course in courses %}
+      <div class="card my-3">
+        <div class="card-header text-center pt-3">
+          <div class="row">
+            <div class="col d-none d-md-block">
+              {% trans 'Starts on' %}: {{ course.date_start }}
+            </div>
+            <div class="col h5">
+              {% include 'management/course/course_status.html' %}
+            </div>
+            <div class="col d-none d-md-block">
+              {% trans 'Ends on' %}: {{ course.date_end }}
+            </div>
+          </div>
         </div>
-    {% endfor %}
+
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-4 text-center">
+              <img src="{{ course.module.picture.url }}" class="img-fluid" alt="{{ course.module.title }} course" style="max-height: 200px;">
+            </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title"><a href="{{ course.get_absolute_url }}" class="text-reset">{% include 'logo/course.html' %} {{ course.reference }}</a></h5>
+                  <p class="card-text">
+                    <ul class="list-unstyled">
+                      <li>
+                        <a href="{{ course.module.get_absolute_url }}" class="text-reset">
+                          {% include 'logo/module.html' %} {{ course.module.title }}
+                        </a>
+                      </li>
+                      <li>
+                        {% include 'logo/person_alt.html' %} {{ course.teacher.get_full_name }}
+                      </li>
+                      <li>
+                        <a href="{{ course.room.get_absolute_url }}" class="text-reset">
+                          {% include 'logo/room.html' %} {{ course.room.name }}
+                        </a>
+                      </li>
+                    </ul>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-footer text-center">
+            <div class="row row-cols-1 row-cols-md-2 my-2 my-md-0">
+              <div class="col mb-2 mb-md-0">
+                <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-outline-dark">{% trans 'See more' %} {% include 'logo/more.html' %}</a>
+              </div>
+              {% if request.user|is_manager_or_administrator %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'course_updateview' pk=course.pk %}" class="btn btn-block btn-warning">{% trans 'Update' %} {% include 'logo/edit.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'course_deleteview' pk=course.pk %}" class="btn btn-block btn-danger">{% trans 'Delete' %} {% include 'logo/delete.html' %}</a>
+                    </div>
+                  </div>
+                </div>
+
+              {% elif request.user|is_teacher %}
+                <div class="col">
+                  <a href="#" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+                </div>
+
+              {% elif request.user|is_student %}
+                <div class="col">
+                  <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                </div>
+
+              {% elif request.user|is_guest %}
+                <div class="col">
+                  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
+                </div>
+
+              {% else %}
+                <div class="col">
+                  <div class="row">
+                    <div class="col">
+                      <a href="{% url 'register' %}" class="btn btn-block btn-dark">{% trans 'Sign up' %} {% include 'logo/register.html' %}</a>
+                    </div>
+                    <div class="col">
+                      <a href="{% url 'login' %}" class="btn btn-block btn-outline-dark">{% trans 'Sign in' %} {% include 'logo/in-left.html' %}</a>
+                    </div>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock content %}

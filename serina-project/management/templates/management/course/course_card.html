@@ -7,7 +7,7 @@
 
       {# Course picture #}
 
-      <img src="{{ course.picture.url }}" alt="{{ course.reference }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
+      <img src="{{ course.module.picture.url }}" alt="{{ course.reference }}" class="img-fluid" style="max-width: 400px; max-height: 300px;"/>
 
 
       {# Attendance #}
@@ -64,15 +64,7 @@
         {# Status #}
 
         <div class="col">
-          {% if course.status == "FINISHED" %}
-            <span class="font-weight-bold text-danger">{% include 'logo/check_invalid.html' %} {% trans 'Course already finished' %}</span>
-
-          {% elif course.status == "ONGOING" %}
-            <span class="font-weight-bold text-warning">{% include 'logo/check_warning.html' %} {% trans 'Already started' %}</span>
-
-          {% else %}
-            <span class="text-success">{% include 'logo/check_valid.html' %} {% trans 'Starting soon' %}</span>
-          {% endif %}
+          {% include 'management/course/course_status.html' %}
         </div>
 
 

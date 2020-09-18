@@ -22,6 +22,15 @@ class CourseListView(ListView):
     template_name = "management/course/course_listview.html"
     paginate_by = 10
 
+    def get_context_data(self, **kwargs):
+        """Add number of active courses to the context."""
+
+        context = super().get_context_data(**kwargs)
+        context["nb_active_courses"] = len(
+            [course.status for course in Course.objects.all()],
+        )
+        return context
+
 
 class CourseDetailView(DetailView):
     """DetailView for Course."""

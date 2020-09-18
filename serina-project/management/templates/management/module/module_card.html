@@ -41,7 +41,7 @@
       <ul class="list-unstyled">
         {% for teacher in module.eligible_teachers.all %}
           <li class="h5">
-            {{ teacher.get_full_name }} <a href="mailto:{{ teacher.email }}" class="badge badge-secondary">{% trans 'Contact by mail' %} {% include 'logo/mail.html' %}</a>
+            {% include 'logo/person_alt.html' %} {{ teacher.get_full_name }} <a href="mailto:{{ teacher.email }}" class="badge badge-secondary">{% trans 'Contact by mail' %} {% include 'logo/mail.html' %}</a>
           </li>
         {% endfor %}
       </ul>

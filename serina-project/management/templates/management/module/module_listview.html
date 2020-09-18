@@ -4,7 +4,6 @@
 {% block title %}{% trans 'Modules catalog' %}{% endblock title %}
 
 {% block content %}
-
   {# Guest warning bubble #}
 
   {% include 'registered_user_warning.html' %}
@@ -44,13 +43,13 @@
     {% if request.user|is_manager_or_administrator %}
       <div class="col">
         <a href="{% url 'module_createview' %}" class="btn btn-block btn-warning">
-          Create a new module {% include 'logo/module.html' %} {% include 'logo/new.html' %}
+          {% trans 'Create a new module' %} {% include 'logo/module.html' %} {% include 'logo/new.html' %}
         </a>
       </div>
     {% endif %}
     <div class="col">
       <a href="{% url 'modulelevel_listview' %}" class="btn btn-block btn-dark">
-        Consult the modules by level {% include 'logo/module_alt.html' %}
+        {% trans 'Consult the modules by level' %} {% include 'logo/module_alt.html' %}
       </a>
     </div>
   </div>
@@ -145,5 +144,4 @@
       {% endfor %}
     </div>
   </section>
-
 {% endblock content %}
