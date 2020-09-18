@@ -42,14 +42,6 @@ class Course(BackOfficeResource):
         default=0,
         verbose_name=_("Amount of registrants")
     )
-    picture = models.ImageField(
-        upload_to='management/courses/',
-        default='management/books.png',
-        null=True,
-        blank=True,
-        max_length=225,
-        verbose_name=_("Picture"),
-    )
 
     class Meta:
         """Meta definition for Course."""
