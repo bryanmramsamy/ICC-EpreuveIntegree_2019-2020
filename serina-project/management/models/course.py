@@ -3,6 +3,7 @@ from datetime import date
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import Q
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
@@ -46,10 +47,13 @@ class Course(BackOfficeResource):
         verbose_name=_("End date"),
         help_text=_("When the course ends."),
     )
-    nb_registrants = models.PositiveIntegerField(
+    prebooked_seats = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("Amount of registrants"),
-        help_text=_("Amount of reserved seats unbookable by students."),
+        verbose_name=_("Prebooked seats"),
+        help_text=_(
+            "Seats unbookable by the regular students. Used for V.I.P. and "
+            "substracted by the total amount of available seats."
+        ),
     )
 
     class Meta:
@@ -58,6 +62,17 @@ class Course(BackOfficeResource):
         verbose_name = _('Course')
         verbose_name_plural = _('Courses')
         ordering = ('date_start', 'reference')
+
+    @property
+    def nb_registrants(self):
+        """Compute the total of registrants of this course.
+
+        The amount is the sum of the prebooked seats and the total amount of
+        accepted, payed or completed module registration requests for this
+        course.
+        """
+
+        return self.prebooked_seats + course_nb_registrants(self)
 
     @property
     def recommended_seats_available(self):
@@ -193,3 +208,15 @@ class Course(BackOfficeResource):
         """Return absolute url for Course."""
 
         return reverse('course_detailview', kwargs={'pk': self.pk})
+
+
+def course_nb_registrants(course):
+    """Count the amount of module registration request for the given course."""
+
+    # Local import to avoid circular import issue
+    from registration.models import ModuleRegistrationReport
+
+    return ModuleRegistrationReport.objects.filter(
+        Q(course=course),
+        Q(Q(status="APPROVED") | Q(status="PAYED") | Q(status="COMPLETED")),
+    ).count()

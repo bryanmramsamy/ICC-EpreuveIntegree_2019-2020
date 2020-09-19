@@ -21,16 +21,12 @@ def module_validation(request, pk):
     if module_rr.approved:
         messages_utils.module_rr_already_approved(request)
     else:
-        courses = Course.objects.filter(module=module_rr.module) \
-                                .order_by("nb_registrants")
+        courses = sorted(Course.objects.filter(module=module_rr.module),
+                         key=lambda course: course.nb_registrants)
 
         if courses.count() == 0:
             messages_utils.module_rr_has_no_course(request, module_rr.module)
         else:
-            selected_course = courses[0]
-            selected_course.nb_registrants += 1
-            selected_course.save()
-
             module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
                 Q(student_rr=module_rr.student_rr)
                 & Q(status="COMPLETED")

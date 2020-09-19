@@ -19,39 +19,21 @@
 
           {{ form.created_by }}
 
-          <div class="row row-cols-1 row-cols-md-2">
-
             {# module #}
 
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="{{ form.module.id_for_label }}" class="h5 text-uppercase">
-                  {{ form.module.label }} <span class="badge badge-danger">{{ form.module.errors.as_text }}</span>
-                </label>
+            <div class="form-group">
+              <label for="{{ form.module.id_for_label }}" class="h5 text-uppercase">
+                {{ form.module.label }} <span class="badge badge-danger">{{ form.module.errors.as_text }}</span>
+              </label>
 
-                <select id="{{ form.module.auto_id }}" name="{{ form.module.html_name }}" class="form-control form-control-lg" required>
-                  {% for module in modules %}
-                  <option value="{{ module.pk }}">{{ module.title }} | {{ module.reference }}</option>
-                  {% endfor %}
-                </select>
+              <select id="{{ form.module.auto_id }}" name="{{ form.module.html_name }}" class="form-control form-control-lg" required>
+                {% for module in modules %}
+                <option value="{{ module.pk }}">{{ module.title }} | {{ module.reference }}</option>
+                {% endfor %}
+              </select>
 
-                <small class="text-muted">{{ form.module.help_text }}</small>
-              </div>
+              <small class="text-muted">{{ form.module.help_text }}</small>
             </div>
-
-            {# nb_registrants #}
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="{{ form.nb_registrants.id_for_label }}" class="h5 text-uppercase">
-                  {{ form.nb_registrants.label }} <span class="badge badge-danger">{{ form.nb_registrants.errors.as_text }}</span>
-                </label>
-                <input id="{{ form.nb_registrants.auto_id }}" name="{{ form.nb_registrants.html_name }}" type="number" min="0" value="0" class="form-control form-control-lg" required>
-                <small class="text-muted"><span class="badge badge-warning">{% trans 'Must be set after the start date' %}</span> {{ form.nb_registrants.help_text }}</small>
-              </div>
-            </div>
-          </div>
-
 
           <div class="row row-cols-1 row-cols-md-2">
 
@@ -121,6 +103,16 @@
               </div>
             </div>
           </div>
+
+          {# prebooked_seats #}
+
+            <div class="form-group">
+              <label for="{{ form.prebooked_seats.id_for_label }}" class="h5 text-uppercase">
+                {{ form.prebooked_seats.label }} <span class="badge badge-danger">{{ form.prebooked_seats.errors.as_text }}</span>
+              </label>
+              <input id="{{ form.prebooked_seats.auto_id }}" name="{{ form.prebooked_seats.html_name }}" type="number" min="0" value="0" class="form-control form-control-lg" required>
+              <small class="text-muted">{{ form.prebooked_seats.help_text }}</small>
+            </div>
 
           {# submit #}
 

@@ -1,3 +1,4 @@
+from ..models import ModuleRegistrationReport
 from management.models import Course, Module
 
 
