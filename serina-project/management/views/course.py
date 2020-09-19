@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from django.shortcuts import render
@@ -5,7 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
 from ..forms import CourseCreateForm, CourseUpdateForm
-from ..models import Course
+from ..models import Classroom, Course, Module
 from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
@@ -58,6 +59,15 @@ class CourseCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     model = Course
     form_class = CourseCreateForm
     template_name = "management/course/course_createview.html"
+
+    def get_context_data(self, **kwargs):
+        """Add modules, teachers and classrooms to context for select field."""
+
+        context = super().get_context_data(**kwargs)
+        context["modules"] = Module.objects.all()
+        context["teachers"] = User.objects.filter(groups__name="Teacher")
+        context["rooms"] = Classroom.objects.all()
+        return context
 
 
 class CourseUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,

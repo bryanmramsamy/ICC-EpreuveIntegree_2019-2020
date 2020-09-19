@@ -20,14 +20,16 @@ class Course(BackOfficeResource):
         Module,
         on_delete=models.CASCADE,
         related_name="courses",
-        verbose_name=_("Modules")
+        verbose_name=_("Module"),
+        help_text=_("Module teached in the created course."),
     )
     teacher = models.ForeignKey(
         User,
         null=True,
         on_delete=models.SET_NULL,
         related_name="teaches",
-        verbose_name=_('Teached by')
+        verbose_name=_('Teacher'),
+        help_text=_("Module teached in the created course."),
     )
     room = models.ForeignKey(
         Classroom,
@@ -36,11 +38,18 @@ class Course(BackOfficeResource):
         related_name="courses",
         verbose_name=_("Classroom")
     )
-    date_start = models.DateField(verbose_name=_("Start date"))
-    date_end = models.DateField(verbose_name=_("End date"))
+    date_start = models.DateField(
+        verbose_name=_("Start date"),
+        help_text=_("When the course starts."),
+    )
+    date_end = models.DateField(
+        verbose_name=_("End date"),
+        help_text=_("When the course ends."),
+    )
     nb_registrants = models.PositiveIntegerField(
         default=0,
-        verbose_name=_("Amount of registrants")
+        verbose_name=_("Amount of registrants"),
+        help_text=_("Amount of reserved seats unbookable by students."),
     )
 
     class Meta:
