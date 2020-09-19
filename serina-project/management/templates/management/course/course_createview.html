@@ -11,7 +11,7 @@
     <div class="container p-3 border border-warning">
       <h1 class="text-center">{% trans 'Add a new course' %} {% include 'logo/course.html' %} {% include 'logo/new.html' %}</h1>
 
-      {% if modules.count > 0 %}
+      {% if modules.count > 0 and teachers.count > 0 and rooms.count > 0 %}
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
 
@@ -132,18 +132,39 @@
 
       {% else %}
         <div class="rounded bg-warning p-2">
-          {% include 'bubbles/warning/no_modulelevel.html' %}
+          {% if modules.count == 0 %}
+            {% include 'bubbles/warning/no_module.html' %}
+
+            {% elif teachers.count == 0 %}
+            {% include 'bubbles/warning/no_teacher.html' %}
+
+          {% else %}
+            {% include 'bubbles/warning/no_classroom.html' %}
+          {% endif %}
 
           <div class="row row-cols-1 row-cols-md-2">
             <div class="col mb-2 mb-md-0">
-              <a href="{% url 'modulelevel_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
-                {% trans 'Create a new module level' %} {% include 'logo/module_alt.html' %} {% include 'logo/new.html' %}
-              </a>
+              {% if modules.count == 0 %}
+                <a href="{% url 'module_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
+                  {% trans 'Create a new module' %} {% include 'logo/module.html' %} {% include 'logo/new.html' %}
+                </a>
+
+              {% elif teachers.count == 0 %}
+                <a href="404" {# TODO: Add link #} class="btn btn-block btn-lg btn-dark btn-border">
+                  {% trans 'Go to users manager' %} {% include 'logo/person_badge.html' %}
+                </a>
+
+              {% else %}
+                <a href="{% url 'classroom_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
+                  {% trans 'Register a new classroom' %} {% include 'logo/room.html' %} {% include 'logo/new.html' %}
+                </a>
+              {% endif %}
+
             </div>
 
             <div class="col">
               <a href="{% url 'module_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
-                {% trans 'Back to modules catalog' %} {% include 'logo/back.html' %}
+                {% trans 'Back to courses list' %} {% include 'logo/back.html' %}
               </a>
             </div>
           </div>

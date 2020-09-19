@@ -1,25 +1,174 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'CourseUpdateView' %}{% endblock title %}
+{% block title %}{% trans 'Add a new course' %}{% endblock title %}
+
 
 {% block content %}
-    <h1>CourseUpdateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">{% trans 'Add a new course' %} {% include 'logo/course.html' %} {% include 'logo/new.html' %}</h1>
 
-        <input type="submit" value="{% trans 'Create new Course' %}">
-    </form>
+      {% if modules.count > 0 %}
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
 
-    <h1>CourseDetailView</h1>
-    <div>
-        <h2>{{ course.reference }}</h2>
-        <h3>{{ course.module.title }}</h3>
-        <h4>{{ course.teacher.get_full_name }}</h4>
-        <p>start: {{ course.date_start }}</p>
-        <p>end: {{ course.date_end }}</p>
-        <p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
-        <p>overcapacity: {{ course.possibile_over_attendance }}</p>
+          {# created_by (hidden) #}
+
+          {{ form.created_by }}
+
+            {# module #}
+
+            <div class="form-group">
+              <label for="{{ form.module.id_for_label }}" class="h5 text-uppercase">
+                {{ form.module.label }} <span class="badge badge-danger">{{ form.module.errors.as_text }}</span>
+              </label>
+
+              <select id="{{ form.module.auto_id }}" name="{{ form.module.html_name }}" class="form-control form-control-lg" required>
+                {% for module in modules %}
+                <option value="{{ module.pk }}">{{ module.title }} | {{ module.reference }}</option>
+                {% endfor %}
+              </select>
+
+              <small class="text-muted">{{ form.module.help_text }}</small>
+            </div>
+
+          <div class="row row-cols-1 row-cols-md-2">
+
+            {# teacher #}
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="{{ form.teacher.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.teacher.label }} <span class="badge badge-danger">{{ form.teacher.errors.as_text }}</span>
+                </label>
+
+                <select id="{{ form.teacher.auto_id }}" name="{{ form.teacher.html_name }}" class="form-control form-control-lg" required>
+                  {% for teacher in teachers %}
+                  <option value="{{ teacher.pk }}">{{ teacher.get_full_name }}</option>
+                  {% endfor %}
+                </select>
+
+                <small class="text-muted"><span class="badge badge-warning">{% trans 'The chosen teacher must be eligible for the chosen module' %}</span> {{ form.teacher.help_text }}</small>
+              </div>
+            </div>
+
+
+            {# room #}
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="{{ form.room.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.room.label }} <span class="badge badge-danger">{{ form.room.errors.as_text }}</span>
+                </label>
+
+                <select id="{{ form.room.auto_id }}" name="{{ form.room.html_name }}" class="form-control form-control-lg" required>
+                  {% for room in rooms %}
+                  <option value="{{ room.pk }}">{{ room.name }}</option>
+                  {% endfor %}
+                </select>
+
+                <small class="text-muted"><span class="badge badge-warning">{% trans 'The chosen teacher must be eligible for the chosen module' %}</span> {{ form.room.help_text }}</small>
+              </div>
+
+            </div>
+          </div>
+
+
+          <div class="row row-cols-1 row-cols-md-2">
+
+            {# date_start #}
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="{{ form.date_start.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.date_start.label }} <span class="badge badge-danger">{{ form.date_start.errors.as_text }}</span>
+                </label>
+                <input id="{{ form.date_start.auto_id }}" name="{{ form.date_start.html_name }}" type="date" class="form-control form-control-lg" required>
+                <small class="text-muted"><span class="badge badge-warning">{% trans 'Must be set before the end date' %}</span> {{ form.date_start.help_text }}</small>
+              </div>
+            </div>
+
+            {# date_end #}
+
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="{{ form.date_end.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.date_end.label }} <span class="badge badge-danger">{{ form.date_end.errors.as_text }}</span>
+                </label>
+                <input id="{{ form.date_end.auto_id }}" name="{{ form.date_end.html_name }}" type="date" class="form-control form-control-lg" required>
+                <small class="text-muted"><span class="badge badge-warning">{% trans 'Must be set after the start date' %}</span> {{ form.date_end.help_text }}</small>
+              </div>
+            </div>
+          </div>
+
+          {# prebooked_seats #}
+
+            <div class="form-group">
+              <label for="{{ form.prebooked_seats.id_for_label }}" class="h5 text-uppercase">
+                {{ form.prebooked_seats.label }} <span class="badge badge-danger">{{ form.prebooked_seats.errors.as_text }}</span>
+              </label>
+              <input id="{{ form.prebooked_seats.auto_id }}" name="{{ form.prebooked_seats.html_name }}" type="number" min="0" value="0" class="form-control form-control-lg" required>
+              <small class="text-muted">{{ form.prebooked_seats.help_text }}</small>
+            </div>
+
+          {# submit #}
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-2 mb-md-0">
+              <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Create the new course' %}">
+            </div>
+
+            <div class="col">
+              <a href="{% url 'course_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+                {% trans 'Cancel and back to courses list' %} {% include 'logo/back.html' %}
+              </a>
+            </div>
+          </div>
+        </form>
+
+
+      {% else %}
+        <div class="rounded bg-warning p-2">
+          {% include 'bubbles/warning/no_modulelevel.html' %}
+
+          <div class="row row-cols-1 row-cols-md-2">
+            <div class="col mb-2 mb-md-0">
+              <a href="{% url 'modulelevel_createview' %}" class="btn btn-block btn-lg btn-dark btn-border">
+                {% trans 'Create a new module level' %} {% include 'logo/module_alt.html' %} {% include 'logo/new.html' %}
+              </a>
+            </div>
+
+            <div class="col">
+              <a href="{% url 'module_listview' %}" class="btn btn-block btn-lg btn-outline-dark">
+                {% trans 'Back to modules catalog' %} {% include 'logo/back.html' %}
+              </a>
+            </div>
+          </div>
+        </div>
+      {% endif %}
     </div>
+  </section>
+
+
+  <br><br><br><br><br><br><br>
+<h1>CourseUpdateView</h1>
+<form action="." method="post">
+{% csrf_token %}
+{{ form.as_p }}
+
+<input type="submit" value="{% trans 'Create new Course' %}">
+</form>
+
+<h1>CourseDetailView</h1>
+<div>
+<h2>{{ course.reference }}</h2>
+<h3>{{ course.module.title }}</h3>
+<h4>{{ course.teacher.get_full_name }}</h4>
+<p>start: {{ course.date_start }}</p>
+<p>end: {{ course.date_end }}</p>
+<p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
+<p>overcapacity: {{ course.possibile_over_attendance }}</p>
+</div>
 {% endblock content %}

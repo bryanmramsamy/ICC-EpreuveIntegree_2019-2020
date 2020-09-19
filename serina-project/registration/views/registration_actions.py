@@ -31,7 +31,6 @@ def module_validation(request, pk):
                 Q(student_rr=module_rr.student_rr)
                 & Q(status="COMPLETED")
             ).count()
-            module_rr.course = selected_course
             module_rr.status = "APPROVED"
             module_rr.save()
 
