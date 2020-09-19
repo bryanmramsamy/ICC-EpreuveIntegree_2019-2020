@@ -15,9 +15,11 @@
         <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
 
+
           {# created_by (hidden) #}
 
           {{ form.created_by }}
+
 
             {# module #}
 
@@ -28,7 +30,7 @@
 
               <select id="{{ form.module.auto_id }}" name="{{ form.module.html_name }}" class="form-control form-control-lg" required>
                 {% for module in modules %}
-                <option value="{{ module.pk }}">{{ module.title }} | {{ module.reference }}</option>
+                  <option value="{{ module.pk }}">{{ module.title }} | {{ module.reference }}</option>
                 {% endfor %}
               </select>
 
@@ -36,6 +38,7 @@
             </div>
 
           <div class="row row-cols-1 row-cols-md-2">
+
 
             {# teacher #}
 
@@ -79,6 +82,7 @@
 
           <div class="row row-cols-1 row-cols-md-2">
 
+
             {# date_start #}
 
             <div class="col-md-6">
@@ -104,6 +108,7 @@
             </div>
           </div>
 
+
           {# prebooked_seats #}
 
             <div class="form-group">
@@ -113,6 +118,7 @@
               <input id="{{ form.prebooked_seats.auto_id }}" name="{{ form.prebooked_seats.html_name }}" type="number" min="0" value="0" class="form-control form-control-lg" required>
               <small class="text-muted">{{ form.prebooked_seats.help_text }}</small>
             </div>
+
 
           {# submit #}
 

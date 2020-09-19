@@ -79,6 +79,19 @@ class CourseUpdateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
     context_object_name = "course"
     template_name = "management/course/course_updateview.html"
 
+    def get_context_data(self, **kwargs):
+        """Add modules, teachers and classrooms to context for select field.
+
+        Teachers are filtered by the chosen modules.
+        """
+
+        context = super().get_context_data(**kwargs)
+        context["modules"] = Module.objects.all()
+        context["teachers"] = User.objects.filter(groups__name="Teacher") \
+            .filter(teachable_modules=self.object.module)
+        context["rooms"] = Classroom.objects.all()
+        return context
+
 
 class CourseDeleteView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,
                        DeleteView):
