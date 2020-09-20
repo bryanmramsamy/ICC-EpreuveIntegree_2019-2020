@@ -1,5 +1,12 @@
 {% load i18n %}
 
-<div class="mb-0 p-2 h5 rounded text-right text-uppercase text-light bg-secondary">
-  {{ user.get_full_name }} ({{ user.username }}) {% trans 'profile' %} {% include 'logo/profile.html' %}
+<div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
+  <div class="row d-flex justify-content-between">
+    <div class="col">
+      {{ main_group }} {% include 'logo/group.html' %}
+    </div>
+    <div class="col text-right">
+      {{ user.get_full_name }} ({{ user.username }}) {% trans 'profile' %} {% include 'logo/profile.html' %}
+    </div>
+  </div>
 </div>

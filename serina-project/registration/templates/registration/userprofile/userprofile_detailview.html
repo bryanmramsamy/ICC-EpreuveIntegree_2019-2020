@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
 
 {% block title %}{% trans 'Profile of' %} {{ user.get_full_name }} | {{ user.username }}{% endblock title %}
@@ -7,6 +7,202 @@
 
 {% block content %}
   {% include 'profile_tag.html' %}
+  <section class="container p-1 p-md-3 border rounded text-center bg-light">
+
+
+    {# Presentation header #}
+
+    <div class="text-center">
+      <span class="h2">
+        {% include 'logo/profile.html' %} {{ user.username }}
+      </span>
+
+      <span class="h5 text-center text-muted text-uppercase">
+        {{ user.get_full_name }}
+      </span>
+    </div>
+
+    <br>
+
+
+    {# Information table #}
+
+    <table class="table table-hover h5 text-left">
+      <tr>
+        <td class="col-4">{% trans 'Registration number' %}:</td>
+        <th class="col-8">{{ user.username }}</th>
+      </tr>
+      <tr>
+        <td class="col-4">{% trans 'First name' %}:</td>
+        <th class="col-8">{{ user.first_name }}</th>
+      </tr>
+      <tr>
+        <td class="col-4">{% trans 'Last name' %}:</td>
+        <th class="col-8">{{ user.last_name }}</th>
+      </tr>
+      <tr>
+        <td class="col-4">{% trans 'Group' %}:</td>
+        <th class="col-8">{{ main_group }}</th>
+      </tr>
+      <tr>
+        <td class="col-4">{% trans 'Registration date' %}:</td>
+        <th class="col-8">{{ user.date_joined }}</th>
+      </tr>
+      <tr>
+        <td class="col-4">{% trans 'Last login date' %}:</td>
+        <th class="col-8">{{ user.last_login }}</th>
+      </tr>
+      {% if request.user|is_student %}
+        <tr>
+          <td class="col-4">{% trans 'Birthday date' %}:</td>
+          <th class="col-8">{{ student_rr.birthday }}</th>
+        </tr>
+        <tr>
+          <td class="col-4">{% trans 'Nationality' %}:</td>
+          <th class="col-8">{{ student_rr.nationality }}</th>
+        </tr>
+        <tr>
+          <td class="col-4">{% trans 'Address' %}:</td>
+          <th class="col-8">{{ student_rr.address }}</th>
+        </tr>
+        {% if student_rr.additional_address %}
+          <tr>
+            <td class="col-4"></td>
+            <th class="col-8">{{ student_rr.additional_address }}</th>:
+          </tr>
+        {% endif %}
+          <tr>
+            <td class="col-4">{% trans 'Location' %}:</td>
+            <th class="col-8">{{ student_rr.postal_code }} {{ student_rr.postal_locality }}</th>
+          </tr>
+          <tr>
+            <td class="col-4">{% trans 'ID picture' %}:</td>
+            <th class="col-8"><a href="{{ student_rr.id_picture.url }}"  target="_blank" rel="noopener noreferrer" class="badge badge-primary text-uppecase">{% trans 'Click here to see the picture sent' %} {% include 'logo/new_tab.html' %}</a></th>
+          </tr>
+          <tr>
+            <td class="col-4">{% trans 'Secondary Education Certificate' %}:</td>
+            <th class="col-8">
+              {% if student_rr.secondary_education_certificate %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                </span>
+              {% else %}
+                <span class="text-danger">
+                  {% include 'logo/check_ready.html' %} {% trans 'Missing' %}
+                </span>
+              {% endif %}
+            </th>
+          </tr>
+
+          {% if student_rr.national_register_extract %}
+            <tr>
+              <td class="col-4">{% trans 'Annex 403' %}:</td>
+              <th class="col-8">
+                {% if student_rr.annex_403 %}
+                  <span class="text-success">
+                    {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                  </span>
+                {% else %}
+                  <span class="text-danger">
+                    {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
+                  </span>
+                {% endif %}
+              </th>
+            </tr>
+            <tr>
+              <td class="col-4">{% trans 'Other schools inscription certificate' %}:</td>
+              <th class="col-8">
+                {% if student_rr.other_school_inscription_certificate %}
+                  <span class="text-success">
+                    {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                  </span>
+                {% else %}
+                  <span class="text-danger">
+                    {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
+                  </span>
+                {% endif %}
+              </th>
+            </tr>
+            <tr>
+              <td class="col-4">{% trans 'National Register Extract' %}:</td>
+              <th class="col-8">
+                {% if student_rr.national_register_extract %}
+                  <span class="text-success">
+                    {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                  </span>
+                {% else %}
+                  <span class="text-danger">
+                    {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
+                  </span>
+                {% endif %}
+              </th>
+            </tr>
+            <tr>
+              <td class="col-4">{% trans 'Belgian Studies History' %}:</td>
+              <th class="col-8">
+                {% if student_rr.belgian_studies_history %}
+                  <span class="text-success">
+                    {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                  </span>
+                {% else %}
+                  <span class="text-danger">
+                    {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
+                  </span>
+                {% endif %}
+              </th>
+            </tr>
+          {% endif %}
+          <tr>
+            <td colspan="2" class="col-12 bg-secondary rounded text-light text-center h4">{% trans 'Optional fields' %}</td>
+          </tr>
+          <tr>
+            <td class="col-4">{% trans 'Modules archievement certificates' %}:</td>
+            <th class="col-8">
+              {% if student_rr.archievement_certificates %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                </span>
+              {% else %}
+                <span class="text-warning">
+                  {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+                </span>
+              {% endif %}
+            </th>
+          </tr>
+          <tr>
+            <td class="col-4">{% trans 'Job organizations certificates' %}:</td>
+            <th class="col-8">
+              {% if student_rr.job_organization_certificates %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                </span>
+              {% else %}
+                <span class="text-warning">
+                  {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+                </span>
+              {% endif %}
+            </th>
+          </tr>
+          <tr>
+            <td class="col-4">{% trans 'Exemption reports' %}:</td>
+            <th class="col-8">
+              {% if student_rr.exemption_report %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                </span>
+              {% else %}
+                <span class="text-warning">
+                  {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+                </span>
+              {% endif %}
+            </th>
+          </tr>
+      {% endif %}
+
+    </table>
+
+  </section>
+
 
     <h1>UserProfileDetailView</h1>
     <a href="{% url 'userprofile_updateview' pk=user.pk%}"><h4>Update Profile</h4></a>
