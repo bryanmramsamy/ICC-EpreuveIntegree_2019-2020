@@ -7,7 +7,7 @@
 {% block content %}
 <section class="container">
     {% include 'backoffice_tag.html' %}
-    <div class="container p-3 border border-warning">
+    <div class="container p-3 rounded border border-warning">
       <h1 class="text-center">{% trans 'Update course' %}: {% include 'logo/course.html' %} {{ course.reference }} {% include 'logo/new.html' %}</h1>
 
       {% if modules.count > 0 and teachers.count > 0 and rooms.count > 0 %}
@@ -18,21 +18,40 @@
 
           {{ form.created_by }}
 
+
+          <div class="row row-cols-1 row-cols-md-2">
+
             {# module #}
 
-            <div class="form-group">
-              <label for="{{ form.module.id_for_label }}" class="h5 text-uppercase">
-                {{ form.module.label }} <span class="badge badge-danger">{{ form.module.errors.as_text }}</span>
-              </label>
+            <div class="col-md-9">
+              <div class="form-group">
+                <label for="{{ form.module.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.module.label }} <span class="badge badge-danger">{{ form.module.errors.as_text }}</span>
+                </label>
 
-              <select id="{{ form.module.auto_id }}" name="{{ form.module.html_name }}" class="form-control form-control-lg" required>
-                {% for module in modules %}
-                    <option value="{{ module.pk }}" {% if course.module == module %}selected{% endif %}>{{ module.title }} | {{ module.reference }}</option>
-                {% endfor %}
-              </select>
+                <select id="{{ form.module.auto_id }}" name="{{ form.module.html_name }}" class="form-control form-control-lg" required>
+                  {% for module in modules %}
+                      <option value="{{ module.pk }}" {% if course.module == module %}selected{% endif %}>{{ module.title }} | {{ module.reference }}</option>
+                  {% endfor %}
+                </select>
 
-              <small class="text-muted">{{ form.module.help_text }}</small>
+                <small class="text-muted">{{ form.module.help_text }}</small>
+              </div>
             </div>
+
+
+            {# reference #}
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="{{ form.reference.id_for_label }}" class="h5 text-uppercase">
+                  {% trans 'Reference' %}
+                </label>
+                <input type="text" value="{{ course.reference }}" class="form-control form-control-lg" readonly>
+                <small class="text-muted">{% trans 'Automatically generated' %}</small>
+              </div>
+            </div>
+          </div>
 
           <div class="row row-cols-1 row-cols-md-2">
 

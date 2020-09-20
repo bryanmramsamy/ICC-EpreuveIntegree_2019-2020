@@ -8,7 +8,7 @@
 {% block content %}
   <section class="container">
     {% include 'backoffice_tag.html' %}
-    <div class="container p-3 border border-warning">
+    <div class="container p-3 rounded border border-warning">
       <h1 class="text-center">{% trans 'Update the classroom' %}: {% include 'logo/room.html' %} {{ classroom.name }} {% include 'logo/edit.html' %}</h1>
 
         <form method="POST" enctype="multipart/form-data">
@@ -18,15 +18,34 @@
 
           {{ form.created_by }}
 
-          {# name #}
 
-          <div class="form-group">
-            <label for="{{ form.name.id_for_label }}" class="h5 text-uppercase">
-              {{ form.name.label }} <span class="badge badge-danger">{{ form.name.errors.as_text }}</span>
-            </label>
-            <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" value="{{ classroom.name }}" class="form-control form-control-lg" required>
-            <small class="text-muted">{{ form.name.help_text }}</small>
+          <div class="row row-cols-1 row-cols-md-2">
+
+            {# name #}
+
+            <div class="col-md-9">
+              <div class="form-group">
+                <label for="{{ form.name.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.name.label }} <span class="badge badge-danger">{{ form.name.errors.as_text }}</span>
+                </label>
+                <input id="{{ form.name.auto_id }}" name="{{ form.name.html_name }}" type="text" value="{{ classroom.name }}" class="form-control form-control-lg" required>
+                <small class="text-muted">{{ form.name.help_text }}</small>
+              </div>
+            </div>
+
+            {# reference #}
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="{{ form.reference.id_for_label }}" class="h5 text-uppercase">
+                  {% trans 'Reference' %}
+                </label>
+                <input type="text" value="{{ classroom.reference }}" class="form-control form-control-lg" readonly>
+                <small class="text-muted">{% trans 'Automatically generated' %}</small>
+              </div>
+            </div>
           </div>
+
 
           <div class="row row-cols-1 row-cols-md-2">
             {# recommended_capacity #}

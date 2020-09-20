@@ -7,7 +7,7 @@
 {% block content %}
   <section class="container">
     {% include 'backoffice_tag.html' %}
-    <div class="container p-3 border border-warning">
+    <div class="container p-3 rounded border border-warning">
       <h1 class="text-center">{% trans 'Update the degree' %}: {% include 'logo/degree.html' %} {{ degree.title }} {% include 'logo/edit.html' %}</h1>
 
       {% if categories.count > 0 %}
@@ -18,14 +18,31 @@
 
           {{ form.created_by }}
 
-          {# title #}
+          <div class="row row-cols-1 row-cols-md-2">
+            {# title #}
 
-          <div class="form-group">
-            <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
-              {{ form.title.label }} <span class="badge badge-danger">{{ form.title.errors.as_text }}</span>
-            </label>
-            <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" value="{{ degree.title }}" class="form-control form-control-lg" required>
-            <small class="text-muted">{{ form.title.help_text }}</small>
+            <div class="col-md-9">
+              <div class="form-group">
+                <label for="{{ form.title.id_for_label }}" class="h5 text-uppercase">
+                  {{ form.title.label }} <span class="badge badge-danger">{{ form.title.errors.as_text }}</span>
+                </label>
+                <input id="{{ form.title.auto_id }}" name="{{ form.title.html_name }}" type="text" value="{{ degree.title }}" class="form-control form-control-lg" required>
+                <small class="text-muted">{{ form.title.help_text }}</small>
+              </div>
+            </div>
+
+
+            {# reference #}
+
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="{{ form.reference.id_for_label }}" class="h5 text-uppercase">
+                  {% trans 'Reference' %}
+                </label>
+                <input type="text" value="{{ degree.reference }}" class="form-control form-control-lg" readonly>
+                <small class="text-muted">{% trans 'Automatically generated' %}</small>
+              </div>
+            </div>
           </div>
 
           {# category #}
