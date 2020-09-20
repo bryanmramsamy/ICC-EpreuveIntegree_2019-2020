@@ -44,12 +44,45 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
             context["student_rr"] = StudentRegistrationReport.objects.get(
                 created_by=self.request.user
             )
+
+            # Module Registration Reports
+
             context["modules_rrs"] = ModuleRegistrationReport.objects.filter(
-                student_rr=context["student_rr"]
+                student_rr=context["student_rr"],
             )
+            context["nb_approved_modules_rrs"] = \
+                len([x for x in context["modules_rrs"] if x.approved])
+            context["nb_payed_modules_rrs"] = \
+                len([x for x in context["modules_rrs"] if x.payed])
+            context["nb_succeeded_modules_rrs"] = \
+                len([x for x in context["modules_rrs"] if x.succeeded])
+            context["nb_payements_pending_modules_rrs"] = \
+                len(context["modules_rrs"]) - context["nb_payed_modules_rrs"]
+
+            # Degree Registration Reports
+
             context["degrees_rrs"] = DegreeRegistrationReport.objects.filter(
-                student_rr=context["student_rr"]
+                student_rr=context["student_rr"],
             )
+            context["nb_partially_approved_degrees_rrs"] = \
+                len([x for x in context["degrees_rrs"]
+                    if x.partially_approved])
+            context["nb_fully_approved_degrees_rrs"] = \
+                len([x for x in context["degrees_rrs"] if x.fully_approved]) \
+                - context["nb_partially_approved_degrees_rrs"]
+            context["nb_partially_payed_degrees_rrs"] = \
+                len([x for x in context["degrees_rrs"] if x.partially_payed])
+            context["nb_fully_payed_degrees_rrs"] = \
+                len([x for x in context["degrees_rrs"] if x.fully_payed]) \
+                - context["nb_partially_payed_degrees_rrs"]
+            context["nb_payements_pending_degrees_rrs"] = \
+                context["nb_fully_approved_degrees_rrs"] \
+                - context["nb_fully_payed_degrees_rrs"]
+            context["nb_graduated_degrees_rrs"] = \
+                len([x for x in context["degrees_rrs"] if x.student_graduated])
+
+            # Courses
+
             context["courses"] = []  # TODO: Find a way to express this in queryset
             for module_rr in context["modules_rrs"]:
                 context["courses"].append(module_rr.course)

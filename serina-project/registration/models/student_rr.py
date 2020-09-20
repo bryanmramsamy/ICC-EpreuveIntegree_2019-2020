@@ -102,7 +102,6 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
 
         return modules_approved
 
-
     @property
     def all_modules_payed(self):
         """Check if all the approved modules_rrs were payed."""
