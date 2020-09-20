@@ -25,7 +25,15 @@
     <br>
 
 
+    {# Update button #}
+
+    <a href="{% url 'userprofile_updateview' pk=user.pk %}" class="btn btn-block btn-outline-dark">{% trans 'Update your profile' %} {% include 'logo/edit.html' %}</a>
+
+    <br>
+
+
     {# Information table #}
+
 
     <table class="table table-hover h5 text-left">
       <tr>
@@ -198,26 +206,16 @@
             </th>
           </tr>
       {% endif %}
-
     </table>
 
+    <br>
+
+
+    {# Update button #}
+
+    <a href="{% url 'userprofile_updateview' pk=user.pk %}" class="btn btn-block btn-outline-dark">{% trans 'Update your profile' %} {% include 'logo/edit.html' %}</a>
   </section>
 
-
-    <h1>UserProfileDetailView</h1>
-    <a href="{% url 'userprofile_updateview' pk=user.pk%}"><h4>Update Profile</h4></a>
-
-    <h2>{{ user.get_full_name }}</h2>
-
-    <p>Matricule: {{ user.username }}</p>
-    <p>First name: {{ user.first_name }}</p>
-    <p>Last name: {{ user.last_name }}</p>
-    <p>Last login: {{ user.last_login }}</p>
-    <p>Registered: {{ user.date_joined }}</p>
-    <p>Group: {{ main_group }}</p>
-
-    <h2>Student_RR_DetailView</h2>
-    <p>{{ student_rr }}</p>
 
     <h2>Modules_RR_Student_ListView</h2>
     {% for module_rr in modules_rrs %}
