@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import render
@@ -22,7 +23,7 @@ class ModuleListView(ListView):
     model = Module
     context_object_name = "modules"
     template_name = "management/module/module_listview.html"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION["listview"]
 
 
 class ModuleDetailView(DetailView):

@@ -153,6 +153,13 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# Paginators
+
+PAGINATION = {
+    "listview": 1,
+}
+
+
 # Paypal settings
 
 PAYPAL_RECEIVER_EMAIL = os.environ.get('PAYPAL_RECEIVER_EMAIL')
