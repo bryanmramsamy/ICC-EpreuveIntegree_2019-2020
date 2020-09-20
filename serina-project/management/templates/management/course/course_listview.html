@@ -116,9 +116,14 @@
                   <a href="#" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
                 </div>
 
-              {% elif request.user|is_student %}
+              {% elif request.user|attends_course:course %}
                 <div class="col">
-                  <a href="{% url 'module_payment' pk=module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                  <a href="404" class="btn btn-block btn-primary">{% trans 'DEBUG: Link to module_rr' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                </div>
+
+                {% elif request.user|is_student %}
+                <div class="col">
+                  <a href="{% url 'module_payment' pk=course.module.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
                 </div>
 
               {% elif request.user|is_guest %}

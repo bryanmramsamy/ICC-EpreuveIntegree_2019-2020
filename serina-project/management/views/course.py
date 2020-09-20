@@ -12,7 +12,10 @@ from .resource import (
     BackOfficeResourceUpdateViewMixin,
 )
 from registration.models import ModuleRegistrationReport
-from registration.utils.mixins import ManagerAdministratorOnlyMixin
+from registration.utils.mixins import (
+    ManagerAdministratorOnlyMixin,
+    StudentOnlyMixin,
+)
 
 
 class CourseListView(ListView):
@@ -31,6 +34,22 @@ class CourseListView(ListView):
             [course.status for course in Course.objects.all()],
         )
         return context
+
+
+class StudentCourseListView(
+    LoginRequiredMixin,
+    StudentOnlyMixin,
+    CourseListView
+):
+    """Course detailed view for student.
+
+    Ony the student's courses will be displayed.
+    """
+
+    def get_queryset(self):
+        """Get the courses of the student only."""
+
+        return Course.objects.filter(modules_rrs__student_rr__created_by=self.request.user)
 
 
 class CourseDetailView(DetailView):

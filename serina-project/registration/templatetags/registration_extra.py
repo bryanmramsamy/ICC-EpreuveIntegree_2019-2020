@@ -1,7 +1,11 @@
 from django import template
 from django.contrib.auth.models import Group
 
-from ..utils import groups as groups_utils, registration as registration_utils
+from ..utils import (
+    groups as groups_utils,
+    management as management_utils,
+    registration as registration_utils,
+)
 
 
 register = template.Library()
@@ -79,3 +83,13 @@ def degree_already_validated_by_user(user, degree):
     """Filter that checks if the user has already vaidated the given degree."""
 
     return registration_utils.degree_already_validated_by_user(user, degree)
+
+
+# Course
+
+@register.filter
+def attends_course(user, course):
+    """Template tags checking if the student is already attending the given
+    course."""
+
+    return management_utils.student_attends_course(user, course)

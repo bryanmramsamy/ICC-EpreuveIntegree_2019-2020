@@ -52,7 +52,7 @@
             </a>
 
             {% if request.user|is_student %}
-              <a class="dropdown-item" href="404">
+              <a class="dropdown-item" href="{% url 'student_course_listview' %}">
                 {% include 'logo/course_alt.html' %} {% trans 'My courses' %}
               </a>
             {% endif %}

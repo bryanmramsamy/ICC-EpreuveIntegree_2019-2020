@@ -1,9 +1,13 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'UserProfileDetailView' %}{% endblock title %}
+
+{% block title %}{% trans 'Profile of' %} {{ user.get_full_name }} | {{ user.username }}{% endblock title %}
+
 
 {% block content %}
+  {% include 'profile_tag.html' %}
+
     <h1>UserProfileDetailView</h1>
     <a href="{% url 'userprofile_updateview' pk=user.pk%}"><h4>Update Profile</h4></a>
 
@@ -33,7 +37,7 @@
         </ul>
     {% endfor %}
 
-    <h2>Degrees_RR_Student_ListView</h2>        
+    <h2>Degrees_RR_Student_ListView</h2>
     {% for degree_rr in degrees_rrs %}
         <p>{{ degree_rr.student_rr.created_by.get_full_name }}</p>
         <ul>
@@ -53,13 +57,13 @@
     {% endfor %}
 
     <h2>Course_Listview</h2>
-    
+
     <ul>
         {% for course in courses %}
             <li>{{ course.reference }} (module: {{ course.module.title }}) from {{ course.date_start }} to {{ course.date_end }}</li>
         {% endfor %}
     </ul>
 
-    
-        
+
+
 {% endblock content %}

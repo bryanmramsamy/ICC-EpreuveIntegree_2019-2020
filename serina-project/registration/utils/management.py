@@ -1,4 +1,5 @@
 from ..models import ModuleRegistrationReport
+from . import groups as groups_utils
 from management.models import Course, Module
 
 
@@ -20,6 +21,14 @@ def count_active_courses():
     """Count the amount of active courses."""
 
     return len(filter_active_courses())
+
+
+def student_attends_course(user, course):
+    """Template tags checking if the student is already attending the given
+    course."""
+
+    return groups_utils.is_student(user) \
+        and course.modules_rrs.filter(student_rr__created_by=user).exists()
 
 
 # ManyToMany relationship check
