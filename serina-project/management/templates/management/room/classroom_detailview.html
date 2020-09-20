@@ -24,6 +24,16 @@
   <br>
 
 
+  {# Courses list #}
+
+  {% with modules_rrs_list_queryset=modules_rrs %}
+    {% include 'management/room/related_courses_list.html' %}
+  {% endwith %}
+
+
+  <br>
+
+
   {# Back to ListView button #}
 
   {% include 'management/room/back_to_room_list_button.html' %}

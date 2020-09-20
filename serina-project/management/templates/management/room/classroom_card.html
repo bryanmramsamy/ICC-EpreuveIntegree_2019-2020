@@ -48,22 +48,4 @@
       {{ classroom.description|linebreaks }}
     </p>
   {% endif %}
-
-  <hr>
-
-  <h3 class="text-center">{% include 'logo/course.html' %} {% trans 'Courses given in this location' %}</h3>
-
-  <!-- {% with module_list_queryset=module.prerequisites.all %}
-    {% include 'management/module/related_modules_list.html' %}
-  {% endwith %} -->
-
-  <br><br><br>
-  DEBUG:
-
-  <h2>Courses given in this room</h2>
-  <ul>
-  {% for course in classroom.courses.all %}
-  <li>({{ course.reference }}) {{ course.module.title }} by {{ course.teacher.get_full_name }}</li>
-  {% endfor %}
-  </ul>
 </section>

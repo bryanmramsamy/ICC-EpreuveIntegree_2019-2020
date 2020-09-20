@@ -1,0 +1,51 @@
+{% load i18n %}
+
+
+<section class="container p-1 p-md-3 border bg-light">
+  <h3 class="h3 text-center">{% trans 'Upcoming and ongoing courses for this module' %}</h3>
+  <table class="table table-responsive-md table-stripped table-hover table-sm">
+    <thead>
+      <tr>
+        <th class="col-2">{% include 'logo/course.html' %} {% trans 'Course' %}</th>
+        <th class="col-2">{% include 'logo/person_alt.html' %} {% trans 'Teacher' %}</th>
+        <th class="col-3">{% include 'logo/room.html' %} {% trans 'Classroom' %}</th>
+        <th class="col-1">{% trans 'Seats' %}</th>
+        <th class="col-2">{% trans 'Start date' %}</th>
+        <th class="col-2">{% trans 'End date' %}</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      {% for course in module.courses.all %}
+        {% if course.status != 'FINISHED' %}
+          <tr>
+            <td class="col-2"><a href="{{ course.get_absolute_url }}" class="text-reset">{{ course.reference }}</a></td>
+            <td class="col-2">{{ course.teacher.get_full_name }}</td>
+            {% if course.room is not None %}
+              <td class="col-3">
+                <a href="{{ course.room.get_absolute_url }}" class="text-reset">{{ course.room.name }}</a>
+              </td>
+              <td class="col-1 text-left">
+                <strong class="text-{% if course.over_attendance %}warning{% elif course.max_seats_available == 0 %}danger{% else %}success{% endif %}">
+                  {{ course.max_seats_available }}
+                </strong>
+              </td>
+            {% else %}
+              <td colspan="2" class="col-4 font-weight-bold text-danger">
+                {% include 'logo/check_warning.html' %} {% trans 'No classroom available yet' %}
+              </td>
+            {% endif %}
+            <td class="col-2">{{ course.date_start }}</td>
+            <td class="col-2">{{ course.date_end }}</td>
+          </tr>
+        {% endif %}
+      {% empty %}
+        <tr>
+          <td colspan="6" class="h5 text-center text-danger">
+            {% include 'logo/check_warning.html' %} {% trans 'No course available for this module' %}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
