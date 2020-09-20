@@ -1,12 +1,47 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans 'Password reset confirm' %}{% endblock title %}
+
+{% block title %}{% trans 'Reset your password' %}{% endblock title %}
+
 
 {% block content %}
-    <form method="post">
+  <section class="container">
+    <div class="container border rounded text-center bg-light p-3" style="max-width: 600px;">
+      <img src="{% static 'draws/my_password.svg' %}" alt="Reset your password" class="img-fluid">
+      <h1>{% trans 'Reset your password' %} {% include 'logo/unlock.html' %}</h1>
+
+      <hr>
+
+      {% blocktrans %}
+        <p>
+          Please enter a new password for your account.
+        </p>
+      {% endblocktrans %}
+
+      <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="{% trans 'Reset password' %}">
-    </form>
+
+        <div class="form-group">
+          <label for="{{ form.new_password1.id_for_label }}" class="h5 text-uppercase">
+            {% trans 'Your new password' %}
+          </label>
+          <input id="{{ form.new_password1.auto_id }}" name="{{ form.new_password1.html_name }}" type="password" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.new_password2.id_for_label }}" class="h5 text-uppercase">
+            {% trans 'Password confirmation' %}
+          </label>
+          <input id="{{ form.new_password2.auto_id }}" name="{{ form.new_password2.html_name }}" type="password" class="form-control form-control-lg" required>
+        </div>
+
+        <input type="submit" value='{% trans "Reset password" %}' class="btn btn-block btn-lg btn-dark h5 text-uppercase">
+
+        <a href="{% url 'login' %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Cancel and login' %} {% include 'logo/in-left.html' %}</a>
+      </form>
+    </div>
+  </section>
 {% endblock content %}
+
+
