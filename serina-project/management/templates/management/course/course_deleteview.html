@@ -1,24 +1,44 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'CourseDeleteView' %}{% endblock title %}
+
+{% block title %}{% trans 'Delete the course' %}: {{ course.reference }}{% endblock title %}
+
 
 {% block content %}
-    <h1>CourseDeleteView</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete "{{ course }}"?</p>
-        <input type="submit" value="Confirm">
-    </form>
+  <section class="container">
+    {% include 'backoffice_tag.html' %}
+    <div class="container p-3 border border-warning">
+      <h1 class="text-center">
+        {% trans 'Delete the course' %}: {% include 'logo/course.html' %} {{ course.reference }} {% include 'logo/delete.html' %}
+      </h1>
 
-    <h1>CourseDetailView</h1>
-    <div>
-        <h2>{{ course.reference }}</h2>
-        <h3>{{ course.module.title }}</h3>
-        <h4>{{ course.teacher.get_full_name }}</h4>
-        <p>start: {{ course.date_start }}</p>
-        <p>end: {{ course.date_end }}</p>
-        <p>attendance: {{ course.nb_registrants }}/{{ course.room.max_capacity }}</p>
-        <p>overcapacity: {{ course.possibile_over_attendance }}</p>
+      <form method="post">
+        {% csrf_token %}
+
+        {% include 'bubbles/danger/confirm_deletation.html' %}
+
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col mb-2 mb-md-0">
+            <input type="submit" class="btn btn-block btn-lg btn-danger text-uppercase" value="{% trans 'Confirm deletation' %}">
+          </div>
+
+          <div class="col">
+            <a href="{{ course.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+              {% trans 'Cancel and back to course page' %} {% include 'logo/back.html' %}
+            </a>
+          </div>
+        </div>
+      </form>
     </div>
+
+    <br>
+
+
+    {# Presentation card #}
+
+    {% with actions_enabled=False %}
+      {% include 'management/course/course_card.html' %}
+    {% endwith %}
+  </section>
 {% endblock content %}
