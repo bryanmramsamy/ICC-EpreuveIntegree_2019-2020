@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n registration_extra static %}
 
+
 {% block title %}{% trans 'Modules by level' %}{% endblock title %}
 
-{% block content %}
 
+{% block content %}
   {# Guest warning bubble #}
 
   {% include 'registered_user_warning.html' %}
@@ -46,6 +47,13 @@
   <br>
 
 
+  {# Paginator #}
+
+  {% include 'pagination_main.html' %}
+
+  <br>
+
+
   {# Level card #}
 
   {% for level in levels %}
@@ -54,7 +62,12 @@
     {% endwith %}
 
     <br>
-
   {% endfor %}
+
+
+  {# Paginator #}
+
+  {% include 'pagination_main.html' %}
+
 
 {% endblock content %}

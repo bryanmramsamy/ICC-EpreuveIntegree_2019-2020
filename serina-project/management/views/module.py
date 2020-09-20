@@ -110,6 +110,7 @@ class ModuleLevelListView(ListView):
     model = ModuleLevel
     context_object_name = "levels"
     template_name = "management/module/modulelevel_listview.html"
+    paginate_by = settings.PAGINATION["listview"]
 
 
 class ModuleLevelDetailView(DetailView):

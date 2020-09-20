@@ -156,7 +156,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Paginators
 
 PAGINATION = {
-    "listview": 1,
+    "listview": 2,
 }
 
 
