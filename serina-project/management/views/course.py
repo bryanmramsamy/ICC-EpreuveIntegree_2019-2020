@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -24,7 +25,7 @@ class CourseListView(ListView):
     model = Course
     context_object_name = "courses"
     template_name = "management/course/course_listview.html"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION["listview"]
 
     def get_context_data(self, **kwargs):
         """Add number of active courses to the context."""

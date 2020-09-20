@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% load i18n registration_extra static %}
 
+
 {% block title %}{% trans 'Degrees by category' %}{% endblock title %}
 
-{% block content %}
 
+{% block content %}
   {# Guest warning bubble #}
 
   {% include 'registered_user_warning.html' %}
@@ -49,6 +50,14 @@
 
   <br>
 
+
+  {# Paginator #}
+
+  {% include 'pagination_main.html' %}
+
+  <br>
+
+
   {# Category card #}
 
   {% for category in categories %}
@@ -57,7 +66,10 @@
     {% endwith %}
 
     <br>
-
   {% endfor %}
 
+
+  {# Paginator #}
+
+  {% include 'pagination_main.html' %}
 {% endblock content %}

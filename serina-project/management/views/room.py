@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
@@ -18,7 +19,7 @@ class ClassroomListView(ListView):
     model = Classroom
     template_name = "management/room/classroom_listview.html"
     context_object_name = "classrooms"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION["listview"]
 
 
 class ClassroomDetailView(DetailView):

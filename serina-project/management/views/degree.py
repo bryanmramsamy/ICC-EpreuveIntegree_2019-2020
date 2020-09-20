@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
@@ -20,7 +21,7 @@ class DegreeListView(ListView):
     model = Degree
     template_name = "management/degree/degree_listview.html"
     context_object_name = "degrees"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION["listview"]
 
 
 class DegreeDetailView(DetailView):
@@ -90,7 +91,7 @@ class DegreeCategoryListView(ListView):
     model = DegreeCategory
     template_name = "management/degree/degreecategory_listview.html"
     context_object_name = "categories"
-    paginate_by = 10
+    paginate_by = settings.PAGINATION["listview"]
 
 
 class DegreeCategoryDetailView(DetailView):
