@@ -221,34 +221,34 @@
   <br>
 
 
-  {# Student Registration Report stats #}
-
-  {% include 'registration/userprofile/student_statistics.html' %}
-
-  <br>
-
-
   {# Modules Registration Reports List #}
 
   {% include 'registration/userprofile/modules_rrs_list.html' %}
 
-  <br>
+  {% if student_rr.has_been_student %}
+    <br>
+  {% endif %}
 
 
   {# Degrees Registration Reports List #}
 
   {% include 'registration/userprofile/degrees_rrs_list.html' %}
 
+  {% if student_rr.has_been_student %}
+    <br>
+  {% endif %}
 
 
-    <h2>Course_Listview</h2>
+  {# Courses List #}
 
-    <ul>
-        {% for course in courses %}
-            <li>{{ course.reference }} (module: {{ course.module.title }}) from {{ course.date_start }} to {{ course.date_end }}</li>
-        {% endfor %}
-    </ul>
+  {% include 'registration/userprofile/courses_list.html' %}
+
+  {% if student_rr.has_been_student %}
+    <br>
+  {% endif %}
 
 
+  {# Student Registration Report stats #}
 
+  {% include 'registration/userprofile/student_statistics.html' %}
 {% endblock content %}
