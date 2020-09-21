@@ -52,12 +52,19 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
             )
             context["nb_approved_modules_rrs"] = \
                 len([x for x in context["modules_rrs"] if x.approved])
+            context["nb_exempted_modules_rrs"] = context["modules_rrs"].filter(
+                status="EXEMPTED",
+            ).count()
+            context["nb_denied_modules_rrs"] = context["modules_rrs"].filter(
+                status="DENIED",
+            ).count()
             context["nb_payed_modules_rrs"] = \
                 len([x for x in context["modules_rrs"] if x.payed])
             context["nb_succeeded_modules_rrs"] = \
                 len([x for x in context["modules_rrs"] if x.succeeded])
             context["nb_payements_pending_modules_rrs"] = \
-                len(context["modules_rrs"]) - context["nb_payed_modules_rrs"]
+                context["nb_approved_modules_rrs"] \
+                - context["nb_payed_modules_rrs"]
 
             # Degree Registration Reports
 

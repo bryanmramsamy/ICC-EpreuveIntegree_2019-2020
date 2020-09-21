@@ -142,7 +142,7 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
             if module_rr.succeeded:
                 succeeded_modules += 1
 
-        success_rate = succeeded_modules / total_modules * 100
+        success_rate = round(succeeded_modules / total_modules * 100, 1)
         return "{}%".format(success_rate)
 
     @property

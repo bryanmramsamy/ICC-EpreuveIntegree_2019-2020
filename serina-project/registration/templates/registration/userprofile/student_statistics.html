@@ -1,0 +1,129 @@
+{% load i18n registration_extra %}
+
+
+{% if student_rr.has_been_student %}
+  {# Presentation header #}
+
+  <section class="container p-1 p-md-3 border rounded text-center">
+    <div class="text-center">
+      <span class="h2">
+        {% include 'logo/graph.html' %} {% trans 'Student statistics' %}
+      </span>
+
+      <span class="h5 text-center text-muted text-uppercase">
+        {{ user.get_full_name }}
+      </span>
+    </div>
+
+
+    <div class="p-2 row row-cols-1 row-cols-md-2">
+      <div class="py-3 col col-md-3 rounded text-center text-light bg-dark">
+        <h3>
+          {% include 'logo/score.html' %} {% trans 'Success rate' %}
+        </h3>
+
+        <div class="display-4">
+          {% if student_rr.success_rate != -1 %}
+            {{ student_rr.success_rate }}
+          {% else %}
+            {% trans 'N/A' %}
+          {% endif %}
+        </div>
+
+        <br>
+
+        <h3>
+          {% trans 'ECTS spent' %}
+        </h3>
+
+        <div class="display-4">
+          {{ student_rr.spent_ECTS }}
+        </div>
+
+        <br>
+
+        <h3>
+          {% trans 'ECTS won' %}
+        </h3>
+
+        <div class="display-4">
+          {{ student_rr.won_ECTS }}
+        </div>
+      </div>
+      <div class="col col-md-9">
+        <table class="table table-hover h5 text-left">
+
+
+          {# Degree statistics #}
+
+          <tr>
+            <td colspan="2" class="text-center text-light bg-dark">{% include 'logo/degree.html' %} {% trans 'Degrees statistics' %}:</td>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Total registrations' %}:</td>
+            <th class="col">{{ degrees_rrs.count }}</th>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Partially approved registrations' %}:</td>
+            <th class="col">{{ nb_partially_approved_degrees_rrs }}</th>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Fully approved registrations' %}:</td>
+            <th class="col">{{ nb_fully_approved_degrees_rrs }}</th>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Partially payed registrations' %}:</td>
+            <th class="col">{{ nb_partially_payed_degrees_rrs }}</th>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Fully payed registrations' %}:</td>
+            <th class="col">{{ nb_fully_payed_degrees_rrs }}</th>
+          </tr>
+          <tr class="table-warning">
+            <td class="col">{% include 'logo/check_warning.html' %} {% trans 'Registration payments pending' %}:</td>
+            <th class="col">{{ nb_payements_pending_degrees_rrs }}</th>
+          </tr>
+          <tr class="table-success">
+            <td class="col">{% include 'logo/check_valid.html' %} {% trans 'Graduations' %}:</td>
+            <th class="col">{{ nb_graduated_degrees_rrs }}</th>
+          </tr>
+
+
+          {# Modules statistics #}
+
+          <tr>
+            <td colspan="2" class="text-center text-light bg-dark">{% include 'logo/module.html' %} {% trans 'Modules statistics' %}:</td>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Total registrations' %}:</td>
+            <th class="col">{{ modules_rrs.count }}</th>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Approved registrations' %}:</td>
+            <th class="col">{{ nb_approved_modules_rrs }}</th>
+          </tr>
+          <tr>
+            <td class="col">{% trans 'Payed registrations' %}:</td>
+            <th class="col">{{ nb_payed_modules_rrs }}</th>
+          </tr>
+          <tr class="table-danger">
+            <td class="col">{% include 'logo/check_invalid.html' %} {% trans 'Denied registrations' %}:</td>
+            <th class="col">{{ nb_exempted_modules_rrs }}</th>
+          </tr>
+          <tr class="table-info">
+            <td class="col">{% include 'logo/check_info.html' %} {% trans 'Exempted registrations' %}:</td>
+            <th class="col">{{ nb_exempted_modules_rrs }}</th>
+          </tr>
+          <tr class="table-warning">
+            <td class="col">{% include 'logo/check_warning.html' %} {% trans 'Registration payments pending' %}:</td>
+            <th class="col">{{ nb_payements_pending_modules_rrs }}</th>
+          </tr>
+          <tr class="table-success">
+            <td class="col">{% include 'logo/check_valid.html' %} {% trans 'Succeeded modules' %}:</td>
+            <th class="col">{{ nb_succeeded_modules_rrs }}</th>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </section>
+{% endif %}

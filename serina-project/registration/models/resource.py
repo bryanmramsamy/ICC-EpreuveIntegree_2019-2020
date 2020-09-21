@@ -24,7 +24,7 @@ class FrontOfficeResource(models.Model):
 
 
 def modules_average_score(student_or_degree_rr):
-    """Compute the average score the student got for each of his/her finished 
+    """Compute the average score the student got for each of his/her finished
     module.
 
     If the student didn't followed a single module, the result will be -1.
@@ -40,6 +40,6 @@ def modules_average_score(student_or_degree_rr):
                                            .filter(final_score__isnull=False):
             sum_score += module_student_or_degree_rr.final_score
 
-        return sum_score / total_module
+        return round(sum_score / total_module, 2)
     else:
         return -1
