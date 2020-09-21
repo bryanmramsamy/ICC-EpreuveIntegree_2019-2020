@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -123,6 +124,21 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
 
     template_name = "registration/userprofile/userprofile_updateview.html"
 
+    def get_context_data(self, **kwargs):
+        """Add the user's profile and it's Student Registration Report to
+        context."""
+
+        context = super().get_context_data(**kwargs)
+
+        context["support_team_mail"] = settings.CONTACT_MAILS["support"]
+        context["userprofile"] = User.objects.get(pk=self.request.user.pk)
+
+        if is_student(context["userprofile"]):
+            context["student_rr"] = StudentRegistrationReport.objects \
+                .get(created_by=context["userprofile"])
+
+        return context
+
     def get_form_class(self):
         """Return the StudentProfileUpdateForm if the user is a registered
         student. Otherwise, return the standard UserProfileUpdateForm."""
@@ -148,7 +164,6 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
         if is_student(self.request.user):
             student_rr = StudentRegistrationReport.objects.get(created_by=user)
 
-            initial['nationality'] = student_rr.nationality
             initial['address'] = student_rr.address
             initial['additional_address'] = student_rr.additional_address
             initial['postal_code'] = student_rr.postal_code
@@ -173,7 +188,6 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
 
             student_rr = StudentRegistrationReport.objects.get(created_by=user)
 
-            student_rr.nationality = form.cleaned_data["nationality"]
             student_rr.address = form.cleaned_data["address"]
             student_rr.additional_address = form.cleaned_data[
                 "additional_address"

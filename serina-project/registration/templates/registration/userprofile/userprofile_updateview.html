@@ -1,16 +1,157 @@
 {% extends 'base.html' %}
-{% load i18n static %}
+{% load i18n registration_extra %}
 
 
-{% block title %}{% trans 'StudentRRCreateView' %}{% endblock title %}
+{% block title %}{% trans 'Update your profile' %}{% endblock title %}
 
 
 {% block content %}
-    <h1>UserProfileUpdateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  {% include 'profile_tag.html' %}
+  <section class="container p-3 rounded border border">
+    <h1 class="text-center">
+      {% trans 'Update your profile' %}: {% include 'logo/profile.html' %} {{ category.name }} {{ userprofile.get_full_name }} {% include 'logo/edit.html' %}
+    </h1>
 
-        <input type="submit" value="{% trans 'Update userprofile' %}">
+
+    {# Form #}
+
+    <form method="POST">
+      {% csrf_token %}
+
+      <div class="row row-cols-1 row-cols-md-2">
+
+
+        {# first_name #}
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="{{ form.first_name.id_for_label }}" class="h5 text-uppercase">
+              {{ form.first_name.label }} <span class="badge badge-danger">{{ form.first_name.errors.as_text }}</span>
+            </label>
+            <input id="{{ form.first_name.auto_id }}" name="{{ form.first_name.html_name }}" type="text" value="{{ userprofile.first_name }}" class="form-control form-control-lg" required>
+            <small class="text-muted">{{ form.first_name.help_text }}</small>
+          </div>
+        </div>
+
+
+        {# last_name #}
+
+        <div class="col-md-6">
+          <div class="form-group">
+            <label for="{{ form.last_name.id_for_label }}" class="h5 text-uppercase">
+              {{ form.last_name.label }} <span class="badge badge-danger">{{ form.last_name.errors.as_text }}</span>
+            </label>
+            <input id="{{ form.last_name.auto_id }}" name="{{ form.last_name.html_name }}" type="text" value="{{ userprofile.last_name }}" class="form-control form-control-lg" required>
+            <small class="text-muted">{{ form.last_name.help_text }}</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="row row-cols-1 row-cols-md-2">
+
+
+        {# username #}
+
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="registration_number" class="h5 text-uppercase">
+              {% trans 'Registration number' %}
+            </label>
+            <input id="registration_number" name="registration_number" type="text" value="{{ userprofile.username }}" class="form-control form-control-lg" readonly>
+            <small class="text-muted">{% trans 'Automatically generated when you registered.' %}</small>
+          </div>
+        </div>
+
+
+        {# email #}
+
+        <div class="col-md-8">
+          <div class="form-group">
+            <label for="{{ form.email.id_for_label }}" class="h5 text-uppercase">
+              {{ form.email.label }} <span class="badge badge-danger">{{ form.email.errors.as_text }}</span>
+            </label>
+            <input id="{{ form.email.auto_id }}" name="{{ form.email.html_name }}" type="mail" value="{{ userprofile.email }}" class="form-control form-control-lg" required>
+            <small class="badge badge-warning">{% trans 'You cannot use an e-mail address already used by another user.' %}</small> <small class="text-muted">{{ form.email.help_text }}</small>
+          </div>
+        </div>
+      </div>
+
+
+      {% if request.user|is_student %}
+        <hr>
+
+        {# No manual metadata update info bubble #}
+
+        {% include 'bubbles/info/metadata_profile_update.html' %}
+
+
+        {# address #}
+
+        <div class="form-group">
+          <label for="{{ form.address.id_for_label }}" class="h5 text-uppercase">
+            {{ form.address.label }} <span class="badge badge-danger">{{ form.address.errors.as_text }}</span>
+          </label>
+          <input id="{{ form.address.auto_id }}" name="{{ form.address.html_name }}" type="text" value="{{ student_rr.address }}" class="form-control form-control-lg" required>
+          <small class="text-muted">{{ form.address.help_text }}</small>
+        </div>
+
+
+        {# additional_address #}
+
+        <div class="form-group">
+          <label for="{{ form.additional_address.id_for_label }}" class="h5 text-uppercase">
+            {{ form.additional_address.label }} <span class="badge badge-danger">{{ form.additional_address.errors.as_text }}</span>
+          </label>
+          <input id="{{ form.additional_address.auto_id }}" name="{{ form.additional_address.html_name }}" type="text" {% if student_rr.additional_address %}value="{{ student_rr.additional_address }}"{% endif %} class="form-control form-control-lg" required>
+          <small class="text-muted">{{ form.additional_address.help_text }}</small>
+        </div>
+
+
+        <div class="row row-cols-1 row-cols-md-2">
+
+
+          {# postal_code #}
+
+          <div class="col-md-4">
+            <div class="form-group">
+              <label for="{{ form.postal_code.id_for_label }}" class="h5 text-uppercase">
+                {{ form.postal_code.label }} <span class="badge badge-danger">{{ form.postal_code.errors.as_text }}</span>
+              </label>
+              <input id="{{ form.postal_code.auto_id }}" name="{{ form.postal_code.html_name }}" type="text" value="{{ student_rr.postal_code }}" class="form-control form-control-lg" required>
+              <small class="text-muted">{{ form.postal_code.help_text }}</small>
+            </div>
+          </div>
+
+
+          {# postal_locality #}
+
+          <div class="col-md-8">
+            <div class="form-group">
+              <label for="{{ form.postal_locality.id_for_label }}" class="h5 text-uppercase">
+                {{ form.postal_locality.label }} <span class="badge badge-danger">{{ form.postal_locality.errors.as_text }}</span>
+              </label>
+              <input id="{{ form.postal_locality.auto_id }}" name="{{ form.postal_locality.html_name }}" type="text" value="{{ student_rr.postal_locality }}" class="form-control form-control-lg" required>
+              <small class="text-muted">{{ form.postal_locality.help_text }}</small>
+            </div>
+          </div>
+        </div>
+      {% endif %}
+
+
+
+      {# submit #}
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-2 mb-md-0">
+          <input type="submit" class="btn btn-block btn-lg btn-dark text-uppercase" value="{% trans 'Update my profile' %}">
+        </div>
+
+        <div class="col">
+          <a href="{% url 'userprofile_detailview' pk=userprofile.pk %}" class="btn btn-block btn-lg btn-outline-dark">
+            {% trans 'Cancel and back to profile' %} {% include 'logo/back.html' %}
+          </a>
+        </div>
+      </div>
     </form>
+  </section>
 {% endblock content %}

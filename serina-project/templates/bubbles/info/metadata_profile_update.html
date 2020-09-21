@@ -1,0 +1,18 @@
+{% extends 'bubbles/info.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Some data are not updatable by yourself
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    For security and administrative reasons, some of your data such as your birthday cannot be changed by you manually.
+    <br><br>
+    If you would like to change an information or update a file sent, please contact our support team (<a href="mailto:{{ support_team_mail }}" class="badge badge-light">{{ support_team_mail }}</a>).
+  {% endblocktrans %}
+{% endblock bubble_content %}
