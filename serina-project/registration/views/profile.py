@@ -11,10 +11,15 @@ from ..models import(
     StudentRegistrationReport,
 )
 from ..utils.groups import is_student, main_group_i18n
+from ..utils import mixins as mixins_utils
 from management.models import Course
 
 
-class UserProfileDetailView(LoginRequiredMixin, DetailView):
+class UserProfileDetailView(
+    LoginRequiredMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
+    DetailView,
+):
     """User's profile view with all his/her related data.
 
     If the user is a student, (s)he should have a related StudentRegistration-
@@ -23,8 +28,17 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
     """
 
     model = User
-    context_object_name = "user"
+    context_object_name = "userprofile"
     template_name = "registration/userprofile/userprofile_detailview.html"
+
+    def test_func(self):
+        """Check if the user is not consulting anothers user's profile or is a
+        Manager or an Administrator."""
+
+        is_self_user = self.get_object().pk == self.request.user.pk
+
+        return super(UserProfileDetailView, self).test_func() \
+            or is_self_user
 
     def get_context_data(self, **kwargs):
         """Add more data related to user to the context. The user's profile
@@ -38,11 +52,12 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
         """
 
         context = super(UserProfileDetailView, self).get_context_data(**kwargs)
-        context["main_group"] = main_group_i18n(self.request.user)
+        context["is_self_user"] = self.get_object().pk == self.request.user.pk
+        context["main_group"] = main_group_i18n(self.get_object())
 
-        if is_student(self.request.user):
+        if is_student(self.get_object()):
             context["student_rr"] = StudentRegistrationReport.objects.get(
-                created_by=self.request.user
+                created_by=self.get_object()
             )
 
             # Module Registration Reports
@@ -92,7 +107,8 @@ class UserProfileDetailView(LoginRequiredMixin, DetailView):
 
             context["courses"] = []  # TODO: Find a way to express this in queryset
             for module_rr in context["modules_rrs"]:
-                context["courses"].append(module_rr.course)
+                if module_rr.course:
+                    context["courses"].append(module_rr.course)
 
         return context
 

@@ -2,34 +2,43 @@
 {% load i18n registration_extra %}
 
 
-{% block title %}{% trans 'Profile of' %} {{ user.get_full_name }} | {{ user.username }}{% endblock title %}
+{% block title %}{% trans 'Profile of' %} {{ userprofile.get_full_name }} | {{ userprofile.username }}{% endblock title %}
 
 
 {% block content %}
-  {% include 'profile_tag.html' %}
+  {% if is_self_user %}
+    {% include 'profile_tag.html' %}
+  {% else %}
+    {% include 'backoffice_tag.html' %}
+  {% endif %}
 
+
+  {# Back-Office tag #}
+
+  {% if not is_self_user %}
+    <section class="container p-1 p-md-3 border border-warning rounded">
+  {% endif %}
 
   {# Profile information #}
-
   <section class="container p-1 p-md-3 border rounded text-center bg-light">
     {# Presentation header #}
 
     <div class="text-center">
       <span class="h2">
-        {% include 'logo/profile.html' %} {{ user.username }}
+        {% include 'logo/profile.html' %} {{ userprofile.username }}
       </span>
 
       <span class="h5 text-center text-muted text-uppercase">
-        {{ user.get_full_name }}
+        {{ userprofile.get_full_name }}
       </span>
     </div>
 
     <br>
 
 
-    {# Update button #}
+    {# Profile actions #}
 
-    <a href="{% url 'userprofile_updateview' pk=user.pk %}" class="btn btn-block btn-outline-dark">{% trans 'Update your profile' %} {% include 'logo/edit.html' %}</a>
+    {% include 'registration/userprofile/actions.html' %}
 
     <br>
 
@@ -40,15 +49,15 @@
     <table class="table table-hover h5 text-left">
       <tr>
         <td class="col-4">{% trans 'Registration number' %}:</td>
-        <th class="col-8">{{ user.username }}</th>
+        <th class="col-8">{{ userprofile.username }}</th>
       </tr>
       <tr>
         <td class="col-4">{% trans 'First name' %}:</td>
-        <th class="col-8">{{ user.first_name }}</th>
+        <th class="col-8">{{ userprofile.first_name }}</th>
       </tr>
       <tr>
         <td class="col-4">{% trans 'Last name' %}:</td>
-        <th class="col-8">{{ user.last_name }}</th>
+        <th class="col-8">{{ userprofile.last_name }}</th>
       </tr>
       <tr>
         <td class="col-4">{% trans 'Group' %}:</td>
@@ -56,11 +65,11 @@
       </tr>
       <tr>
         <td class="col-4">{% trans 'Registration date' %}:</td>
-        <th class="col-8">{{ user.date_joined }}</th>
+        <th class="col-8">{{ userprofile.date_joined }}</th>
       </tr>
       <tr>
         <td class="col-4">{% trans 'Last login date' %}:</td>
-        <th class="col-8">{{ user.last_login }}</th>
+        <th class="col-8">{{ userprofile.last_login }}</th>
       </tr>
       {% if request.user|is_student %}
         <tr>
@@ -87,7 +96,37 @@
           </tr>
           <tr>
             <td class="col-4">{% trans 'ID picture' %}:</td>
-            <th class="col-8"><a href="{{ student_rr.id_picture.url }}"  target="_blank" rel="noopener noreferrer" class="badge badge-primary text-uppecase">{% trans 'Click here to see the picture sent' %} {% include 'logo/new_tab.html' %}</a></th>
+            <th class="col-8">
+              {% if student_rr.id_picture %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                </span>
+                <a href="{{ student_rr.id_picture.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                  {% trans 'Click here to see the picture sent' %} {% include 'logo/new_tab.html' %}
+                </a>
+              {% else %}
+                <span class="text-danger">
+                  {% include 'logo/check_ready.html' %} {% trans 'Missing' %}
+                </span>
+              {% endif %}
+            </th>
+          </tr>
+          <tr>
+            <td class="col-4">{% trans 'ID card scan' %}:</td>
+            <th class="col-8">
+              {% if student_rr.id_card %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+                </span>
+                <a href="{{ student_rr.id_card.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                  {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                </a>
+              {% else %}
+                <span class="text-danger">
+                  {% include 'logo/check_ready.html' %} {% trans 'Missing' %}
+                </span>
+              {% endif %}
+            </th>
           </tr>
           <tr>
             <td class="col-4">{% trans 'Secondary Education Certificate' %}:</td>
@@ -96,6 +135,9 @@
                 <span class="text-success">
                   {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                 </span>
+                <a href="{{ student_rr.secondary_education_certificate.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                  {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                </a>
               {% else %}
                 <span class="text-danger">
                   {% include 'logo/check_ready.html' %} {% trans 'Missing' %}
@@ -112,6 +154,9 @@
                   <span class="text-success">
                     {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                   </span>
+                  <a href="{{ student_rr.annex_403.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
                 {% else %}
                   <span class="text-danger">
                     {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
@@ -126,6 +171,9 @@
                   <span class="text-success">
                     {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                   </span>
+                  <a href="{{ student_rr.other_school_inscription_certificate.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
                 {% else %}
                   <span class="text-danger">
                     {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
@@ -140,6 +188,9 @@
                   <span class="text-success">
                     {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                   </span>
+                  <a href="{{ student_rr.national_register_extract.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
                 {% else %}
                   <span class="text-danger">
                     {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
@@ -154,6 +205,9 @@
                   <span class="text-success">
                     {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                   </span>
+                  <a href="{{ student_rr.belgian_studies_history.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
                 {% else %}
                   <span class="text-danger">
                     {% include 'logo/check_invalid.html' %} {% trans 'Missing' %}
@@ -172,6 +226,9 @@
                 <span class="text-success">
                   {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                 </span>
+                  <a href="{{ student_rr.archievement_certificates.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
               {% else %}
                 <span class="text-warning">
                   {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
@@ -186,6 +243,9 @@
                 <span class="text-success">
                   {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                 </span>
+                  <a href="{{ student_rr.job_organization_certificates.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
               {% else %}
                 <span class="text-warning">
                   {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
@@ -200,6 +260,9 @@
                 <span class="text-success">
                   {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
                 </span>
+                  <a href="{{ student_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                    {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                  </a>
               {% else %}
                 <span class="text-warning">
                   {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
@@ -213,9 +276,9 @@
     <br>
 
 
-    {# Update button #}
+    {# Profile actions #}
 
-    <a href="{% url 'userprofile_updateview' pk=user.pk %}" class="btn btn-block btn-outline-dark">{% trans 'Update your profile' %} {% include 'logo/edit.html' %}</a>
+    {% include 'registration/userprofile/actions.html' %}
   </section>
 
   <br>
@@ -251,4 +314,11 @@
   {# Student Registration Report stats #}
 
   {% include 'registration/userprofile/student_statistics.html' %}
+
+
+  {# Back-Office tag closure #}
+
+  {% if not is_self_user %}
+    </section>
+  {% endif %}
 {% endblock content %}

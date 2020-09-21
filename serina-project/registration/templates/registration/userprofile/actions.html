@@ -1,0 +1,20 @@
+{% load i18n registration_extra %}
+
+
+{% if is_self_user %}
+  <a href="{% url 'userprofile_updateview' pk=user.pk %}" class="btn btn-block btn-outline-dark">
+    {% trans 'Update your profile' %} {% include 'logo/edit.html' %}
+  </a>
+
+{% else %}
+  {% if user.is_active %}
+    <a href="404" class="btn btn-block btn-danger">
+      {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
+    </a>
+
+  {% else %}
+    <a href="404" class="btn btn-block btn-success">
+      {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
+    </a>
+  {% endif %}
+{% endif %}
