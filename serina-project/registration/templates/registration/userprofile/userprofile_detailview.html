@@ -232,25 +232,14 @@
 
   {% include 'registration/userprofile/modules_rrs_list.html' %}
 
+  <br>
 
-    <h2>Degrees_RR_Student_ListView</h2>
-    {% for degree_rr in degrees_rrs %}
-        <p>{{ degree_rr.student_rr.created_by.get_full_name }}</p>
-        <ul>
-            <li>{{ degree_rr.degree.title }}</li>
-            <li>Nb modules = {{ degree_rr.modules_rrs.count }}</li>
-            <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
-            <li>partially approved ? {{ degree_rr.partially_approved }}</li>
-            <li>fully approved ? {{ degree_rr.fully_approved }}</li>
-            <li>partially_payed ? {{ degree_rr.partially_payed }}</li>
-            <li>fully_payed ? {{ degree_rr.fully_payed }}</li>
-            <ul>
-                {% for module_rr in degree_rr.modules_rrs.all %}
-                    <li>{{ module_rr.module.title }}</li>
-                {% endfor %}
-            </ul>
-        </ul>
-    {% endfor %}
+
+  {# Degrees Registration Reports List #}
+
+  {% include 'registration/userprofile/degrees_rrs_list.html' %}
+
+
 
     <h2>Course_Listview</h2>
 

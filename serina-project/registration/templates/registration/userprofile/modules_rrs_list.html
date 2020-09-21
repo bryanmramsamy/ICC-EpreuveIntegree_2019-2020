@@ -78,6 +78,12 @@
               {% endif %}
             </td>
           </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5" class="h5 text-center text-info">
+              {% include 'logo/check_info.html' %} {% trans 'No module registration found' %}
+            </td>
+          </tr>
         {% endfor %}
       </tbody>
     </table>
