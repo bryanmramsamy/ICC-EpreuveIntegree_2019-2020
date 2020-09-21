@@ -1,0 +1,34 @@
+{% extends 'jumbotron_header.html' %}
+{% load i18n static %}
+
+
+{% block jumbotron_background %}
+  {% static 'images/signature_01.jpg' %}
+{% endblock jumbotron_background %}
+
+
+{% block jumbotron_title %}
+  {% trans 'Register now as a student by creating your own registration report' %}
+  {% include 'logo/register_alt.html' %}
+{% endblock jumbotron_title %}
+
+
+{% block jumbotron_lead %}
+  {% blocktrans %}
+    Your student registration report is the proof that you are registered as a student.
+    <br>
+    It will contain all your legal data, files, as well as all your subscribtions to each of your degree and/or modules.
+    <br>
+    From your student registration report, you will be able to consult your data, track your progression along your degrees and/or modules, check if your subscribtion to a degree and/or module has been validated, proceed to a pending payment, consult your invoices or your scores and many more.
+  {% endblocktrans %}
+{% endblock jumbotron_lead %}
+
+
+{% block jumbotron_image %}
+  {% static 'draws/fill_forms.svg' %}
+{% endblock jumbotron_image %}
+
+
+{% block jumbotron_image_alt-text %}
+  {% trans 'Register now as a student by creating your own registration report' %}
+{% endblock jumbotron_image_alt-text %}

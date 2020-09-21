@@ -1,38 +1,17 @@
 {% extends 'base.html' %}
 {% load i18n static %}
 
-{% block title %}{% trans 'StudentRRCreateView' %}{% endblock title %}
+
+{% block title %}{% trans 'Complete yout registration' %}{% endblock title %}
+
 
 {% block content %}
+  {# Heading jumbotron #}
 
-  {# Heading jumbotron # TODO: Must be exported #}
+  {% include 'registration/registration_report/student_rr_createview_jumbotron.html' %}
 
-  <section class="jumbotron jumbotron-fluid" style="background-image: url('{% static 'images/signature_01.jpg' %}'); background-attachment: fixed; background-size: 1200px;">
-    <div class="container bg-light" style="font-family: papyrus; opacity: 0.9;">
-      <div class="row row-cols-1 row-cols-md-2">
-        <div class="col col-md-8">
-          <h1 class="display-4" style="font-style: italic;">
-            Register now as a student by creating your own registration report
-            {% include 'logo/register_alt.html' %}
-          </h1>
-          <hr>
-          <p class="lead">
-            {% blocktrans %}
-            Your student registration report is the proof that you are registered as a student.
-            <br>
-            It will contain all your legal data, files, as well as all your subscribtions to each of your degree and/or modules.
-            <br>
-            From your student registration report, you will be able to consult your data, track your progression along your degrees and/or modules, check if your subscribtion to a degree and/or module has been validated, proceed to a pending payment, consult your invoices or your scores and many more.
-          {% endblocktrans %}
-          </p>
-        </div>
 
-        <div class="col col-md-4">
-          <img src="{% static 'draws/fill_forms.svg' %}" alt="Degrees catalog" class="img-fluid rounded">
-        </div>
-      </div>
-    </div>
-  </section>
+  {# Form #}
 
   <section class="container py-3 rounded bg-light">
     <form method="POST" enctype="multipart/form-data">
@@ -291,7 +270,6 @@
       <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Cancel and return to previous page' %} {% include 'logo/back.html' %}</a>
     </form>
   </section>
-
 {% endblock content %}
 
 
