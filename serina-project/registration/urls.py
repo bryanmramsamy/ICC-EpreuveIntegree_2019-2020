@@ -158,7 +158,7 @@ urlpatterns = [
         name="module_rr_detailview",
     ),
     url(
-        r"^report/module/c/$",
+        r"^report/module/c/(?P<module_pk>\d+)/$",
         views.ModuleRegistrationReportCreateView.as_view(),
         name="module_rr_createview",
     ),
@@ -199,12 +199,16 @@ urlpatterns = [
 
     # Payment
 
+    # url(
+    #     r"^payment/checkout/(?P<pk>\d+)/$",
+    #     views.module_payment,
+    #     name="module_payment"
+    # ),
     url(
-        r"^payment/checkout/(?P<pk>\d+)/$",
-        views.module_payment,
-        name="module_payment"
+        r'payment-done/',
+        views.payment_done,
+        name='payment_done',
     ),
-    url(r'payment-done/', views.payment_done, name='payment_done'),
     url(
         r'payment-cancelled/',
         views.payment_canceled,

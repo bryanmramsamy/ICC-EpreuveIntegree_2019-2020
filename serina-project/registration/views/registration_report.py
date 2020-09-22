@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
-from django.shortcuts import redirect
+from django.db.models import Q
+from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 from django.views.generic import CreateView, DetailView, ListView
 
@@ -22,6 +23,7 @@ from ..utils import (
     messages as messages_utils,
     mixins as mixins_utils,
 )
+from management import models
 
 
 # StudentRegistrationReport
@@ -181,10 +183,10 @@ class ModuleRegistrationReportDetailView(
 
 class ModuleRegistrationReportCreateView(
     LoginRequiredMixin,
-    # mixins_utils.StudentOnlyMixin,  # TODO: Disabled for debug purposes
+    mixins_utils.StudentOnlyMixin,
     CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
-):  # TODO: Debug view
+):
     """CreateView for ModuleRegistrationReport."""
 
     model = ModuleRegistrationReport
@@ -197,7 +199,44 @@ class ModuleRegistrationReportCreateView(
 
         initial = super().get_initial()
         initial['student_rr'] = self.request.user.student_rr
+        initial['module'] = get_object_or_404(models.Module,
+                                              pk=self.kwargs["module_pk"])
         return initial
+
+    def get_context_data(self, **kwargs):
+        """Add check variables for template conditions."""
+
+        context = super().get_context_data(**kwargs)
+        context["active_module_rr_already_exists"] = \
+            ModuleRegistrationReport.objects.filter(
+                Q(student_rr=self.request.user.student_rr),
+                Q(module__pk=self.kwargs["module_pk"]),
+                Q(
+                    Q(status="PENDING")
+                    | Q(status="APPROVED")
+                    | Q(status="PAYED")
+                ),
+            ).exists()
+        context["succeeded_module_rr_already_exists"] = \
+            True in [module_rr.succeeded for module_rr in ModuleRegistrationReport.objects.filter(
+                Q(student_rr=self.request.user.student_rr),
+                Q(module__pk=self.kwargs["module_pk"]),
+                Q(
+                    Q(status="COMPLETED")
+                    | Q(status="EXEMPTED"),
+                ),
+            )]
+        context["chocolate"] = \
+            [module_rr.succeeded for module_rr in ModuleRegistrationReport.objects.filter(
+                Q(student_rr=self.request.user.student_rr),
+                Q(module__pk=self.kwargs["module_pk"]),
+                Q(
+                    Q(status="COMPLETED")
+                    | Q(status="EXEMPTED"),
+                ),
+            )]
+        return context
+
 
 
 # DegreeRegistrationReport
