@@ -3,7 +3,7 @@
 
 <div>
   {% if request.user|is_student %}
-    {% if request.user|module_already_validated_by_user:related_module %}
+    {% if request.user|succeeded_module_rr_already_exists:related_module %}
       <span class="text-success">
         {% include 'logo/check_valid.html' %} {% trans 'Module completed' %}
       </span>

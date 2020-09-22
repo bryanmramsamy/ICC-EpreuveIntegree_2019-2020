@@ -40,7 +40,7 @@ class ModuleDetailView(DetailView):
         context = super().get_context_data(**kwargs)
 
         context["already_validated"] = registration \
-            .module_already_validated_by_user(self.request.user, self.object)
+            .succeeded_module_rr_already_exists(self.request.user, self.object)
 
         context["all_prerequisites_validated"] = registration \
             .all_prerequisites_validated_by_user(self.request.user,

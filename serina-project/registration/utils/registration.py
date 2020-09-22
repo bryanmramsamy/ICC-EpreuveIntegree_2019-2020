@@ -19,7 +19,7 @@ def module_still_ongoing_by_user(user, module):
     ).exists()
 
 
-def module_already_validated_by_user(user, module):
+def succeeded_module_rr_already_exists(user, module):
     """Check if a module has already been validated by a user."""
 
     return groups_utils.is_student(user) \
@@ -38,11 +38,27 @@ def all_prerequisites_validated_by_user(user, module):
     all_prerequisites_validated = True
 
     for prerequisite in module.prerequisites.all():
-        if not module_already_validated_by_user(user, prerequisite):
+        if not succeeded_module_rr_already_exists(user, prerequisite):
             all_prerequisites_validated = False
             break
 
     return groups_utils.is_student(user) and all_prerequisites_validated
+
+
+def active_module_rr_already_exists(user, module):
+    """Check if a still active Module Registration Report exists for the given
+    Student Registration Report.
+
+    A still active Module Registration has either a 'PENDING', 'APPROVED' or
+    'PAYED' status.
+    """
+
+    return groups_utils.is_student(user) and \
+        ModuleRegistrationReport.objects.filter(
+            Q(student_rr=user.student_rr),
+            Q(module=module),
+            Q(Q(status="PENDING") | Q(status="APPROVED") | Q(status="PAYED")),
+        ).exists()
 
 
 # Degree Registration Reports

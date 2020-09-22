@@ -199,11 +199,11 @@ urlpatterns = [
 
     # Payment
 
-    # url(
-    #     r"^payment/checkout/(?P<pk>\d+)/$",
-    #     views.module_payment,
-    #     name="module_payment"
-    # ),
+    url(
+        r"^payment/checkout/(?P<pk>\d+)/$",
+        views.module_payment,
+        name="module_payment"
+    ),
     url(
         r'payment-done/',
         views.payment_done,

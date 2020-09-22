@@ -17,45 +17,45 @@ from ..models import ModuleRegistrationReport
 from ..utils import messages as messages_utils
 
 
-# def module_payment(request, pk):
-#     """CheckoutView of the module registration request in order to proceed to a
-#     PayPal payment.
+def module_payment(request, pk):
+    """CheckoutView of the module registration request in order to proceed to a
+    PayPal payment.
 
-#     Send the payment data to PayPal IPN in order for the user to procced to the
-#     payment.
-#     """
+    Send the payment data to PayPal IPN in order for the user to procced to the
+    payment.
+    """
 
-#     module_rr = get_object_or_404(ModuleRegistrationReport, pk=pk)
-#     request.session['module_rr'] = module_rr.pk
+    module_rr = get_object_or_404(ModuleRegistrationReport, pk=pk)
+    request.session['module_rr'] = module_rr.pk
 
-#     if module_rr.status != "APPROVED":
-#         messages_utils.module_not_payable(request)
-#         redirect(module_rr.get_absolute_url())
-#     else:
-#         host = request.get_host()
+    if module_rr.status != "APPROVED":
+        messages_utils.module_not_payable(request)
+        redirect(module_rr.get_absolute_url())
+    else:
+        host = request.get_host()
 
-#         paypal_dict = {
-#             'business': settings.PAYPAL_RECEIVER_EMAIL,
-#             'amount': module_rr.module.price,
-#             'item_name': _("Registration for {} to {}".format(
-#                 module_rr.student_rr.created_by.get_full_name(),
-#                 module_rr.module.title,
-#             )),
-#             'currency_code': 'EUR',
-#             'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
-#             'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
-#             'cancel_return': 'http://{}{}'.format(
-#                 host,
-#                 reverse('payment_cancelled'),
-#             ),
-#         }
+        paypal_dict = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': module_rr.module.price,
+            'item_name': _("Registration for {} to {}".format(
+                module_rr.student_rr.created_by.get_full_name(),
+                module_rr.module.title,
+            )),
+            'currency_code': 'EUR',
+            'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+            'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+            'cancel_return': 'http://{}{}'.format(
+                host,
+                reverse('payment_cancelled'),
+            ),
+        }
 
-#         form = PayPalPaymentsForm(initial=paypal_dict)
-#         return render(
-#             request,
-#             'registration/payment/process_payment.html',
-#             {'module_rr': module_rr, 'form': form},
-#         )
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        return render(
+            request,
+            'registration/payment/process_payment.html',
+            {'module_rr': module_rr, 'form': form},
+        )
 
 
 def get_module_rr_and_clean_session_pk(request):

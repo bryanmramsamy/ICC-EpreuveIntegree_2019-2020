@@ -58,14 +58,14 @@ def is_manager_or_administrator(user):
 def module_still_ongoing_by_user(user, module):
     """Filter that checks if the user is still following the given module."""
 
-    return registration_utils.module_already_validated_by_user(user, module)
+    return registration_utils.succeeded_module_rr_already_exists(user, module)
 
 
 @register.filter
-def module_already_validated_by_user(user, module):
+def succeeded_module_rr_already_exists(user, module):
     """Filter that checks if the user has already vaidated the given module."""
 
-    return registration_utils.module_already_validated_by_user(user, module)
+    return registration_utils.succeeded_module_rr_already_exists(user, module)
 
 
 @register.filter

@@ -22,6 +22,7 @@ from ..utils import (
     groups as groups_utils,
     messages as messages_utils,
     mixins as mixins_utils,
+    registration as registration_utils,
 )
 from management import models
 
@@ -208,35 +209,16 @@ class ModuleRegistrationReportCreateView(
 
         context = super().get_context_data(**kwargs)
         context["active_module_rr_already_exists"] = \
-            ModuleRegistrationReport.objects.filter(
-                Q(student_rr=self.request.user.student_rr),
-                Q(module__pk=self.kwargs["module_pk"]),
-                Q(
-                    Q(status="PENDING")
-                    | Q(status="APPROVED")
-                    | Q(status="PAYED")
-                ),
-            ).exists()
+            registration_utils.active_module_rr_already_exists(
+                self.request.user,
+                get_object_or_404(models.Module, pk=self.kwargs["module_pk"]),
+            )
         context["succeeded_module_rr_already_exists"] = \
-            True in [module_rr.succeeded for module_rr in ModuleRegistrationReport.objects.filter(
-                Q(student_rr=self.request.user.student_rr),
-                Q(module__pk=self.kwargs["module_pk"]),
-                Q(
-                    Q(status="COMPLETED")
-                    | Q(status="EXEMPTED"),
-                ),
-            )]
-        context["chocolate"] = \
-            [module_rr.succeeded for module_rr in ModuleRegistrationReport.objects.filter(
-                Q(student_rr=self.request.user.student_rr),
-                Q(module__pk=self.kwargs["module_pk"]),
-                Q(
-                    Q(status="COMPLETED")
-                    | Q(status="EXEMPTED"),
-                ),
-            )]
+            registration_utils.succeeded_module_rr_already_exists(
+                self.request.user,
+                get_object_or_404(models.Module, pk=self.kwargs["module_pk"]),
+            )
         return context
-
 
 
 # DegreeRegistrationReport
