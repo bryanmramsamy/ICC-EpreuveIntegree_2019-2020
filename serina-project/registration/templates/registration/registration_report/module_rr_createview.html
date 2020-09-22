@@ -1,20 +1,90 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'ModuleRRCreateView' %}{% endblock title %}
+
+{% block title %}
+  {% trans 'Subscribe to' %}: {{ module.title }} | {{ module.reference }}
+{% endblock title %}
+
 
 {% block content %}
-    <h1>ModuleRRCreateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <section class="container">
+    <div class="container border rounded text-center bg-light py-3" style="max-width: 600px;">
+      <div class="text-center">
+        <img src="{{ module.picture.url }}" class="img-fluid" alt="{{ module.title }} module picture" style="max-height: 400px;">
+      </div>
+      <div class="text-center h1">
+        {% include 'logo/module.html' %} {{ module.title }}
+      </div>
 
-        <input type="submit" value="{% trans 'Submit module rr' %}">
-    </form>
+      {# Active Module Registration Report already existing danger bubble #}
 
-    active_module_rr_already_exists = {{ active_module_rr_already_exists }}
-    <br>
-    succeeded_module_rr_already_exists = {{ succeeded_module_rr_already_exists }}
-    <br>
-    chocolate = {{ chocolate }}
+      {% if request.user|active_module_rr_already_exists:module %}
+        <div class="container pb-3 rounded text-light bg-danger">
+          {% include 'bubbles/danger/active_module_rr_already_exists.html' %}
+
+          <a href="{% url 'module_listview' %}" class="btn btn-block btn-lg btn-light">
+            {% trans 'Go back to module catalog' %} {% include 'logo/back.html' %}
+          </a>
+          <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-light">
+            {% trans 'Go back to module page' %} {% include 'logo/back.html' %}
+          </a>
+        </div>
+
+      {% else %}
+        {% if request.user|succeeded_module_rr_already_exists:module %}
+          {% include 'bubbles/warning/succeeded_module_rr_already_exists.html' %}
+        {% endif %}
+
+        {% include 'bubbles/info/module_rr_wait_for_mail_validation.html' %}
+
+        <form action="." method="post">
+          {% csrf_token %}
+
+
+          {# student_rr (hidden) #}
+
+          {{ form.student_rr }}
+
+
+          {# module (hidden) #}
+
+          {{ form.module }}
+
+
+          {# notes (hidden) #}
+
+          {{ form.notes }}
+
+
+          {# exemption_request #}
+
+          <div class="form-group">
+
+            <div class="custom-control custom-switch">
+              <input id="{{ form.exemption_request.auto_id }}" name="{{ form.exemption_request.html_name }}" type="checkbox" class="custom-control-input" required>
+              <label for="{{ form.exemption_request.id_for_label }}" class="custom-control-label h5 text-uppercase">
+                {% trans 'Do you want to ask for an exemption ?' %} <span class="badge badge-danger">{{ form.exemption_request.errors.as_text }}</span>
+              </label>
+              <br>
+              <small class="badge badge-warning">
+                {% trans 'To get an exemption, you must send your exemption documents to our management staff' %}
+                <br>
+                <a href="mailto:management@serina-project.bryanmramsamy.com" class="badge badge-info">{% trans 'Mail our management staff' %} {% include 'logo/mail.html' %}</a>
+              </small>
+            </div>
+          </div>
+
+
+          {# submit #}
+
+          <input type="submit" class="btn btn-block btn-lg btn-success text-uppercase" value="{% trans 'Send registration request' %}">
+
+          <a href="{{ module.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+            {% trans 'Go back to module page' %} {% include 'logo/back.html' %}
+          </a>
+        </form>
+      {% endif %}
+      </div>
+  </section>
 {% endblock content %}

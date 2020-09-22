@@ -1,0 +1,24 @@
+{% extends 'bubbles/info.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    You will receive a notification mail when your subscribtion request will be validated or denied
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    Once you click on the confirmation button bellow, your subscribtion request will be sent to our staff.
+    <br>
+    They will examinate your request and your student report and will take a decision regarding of your data and your study history.
+    <br><br>
+    You will receive a notification on your registered e-mail address indication if your subscribtion to this module was accepted or denied.
+    <br>
+    If it was accepted, you will find a link to proceed to the payment of your registration.
+    <br><br>
+    You can also pay later but your module will never be considerate as completed as long as your payment is incomplete.
+  {% endblocktrans %}
+{% endblock bubble_content %}

@@ -85,18 +85,20 @@ class HomegrownStudentRegistrationReportCreateFrom(
 
 
 class ModuleRegistrationReportCreateFrom(forms.ModelForm):
-    """ModelForm for Module."""  # TODO: Comment correctly
+    """ModelForm for ModuleRegistrationReportCreateFrom.
 
-    module = VerboseDegreeModuleChoiceField(queryset=Module.objects.all(),
-                                            empty_label=None)
+    All the fields are hidden and autocompleted by the view.
+    """
 
     class Meta:
         """Meta definition for ModuleLevelForm."""
 
         model = ModuleRegistrationReport
-        fields = ("student_rr", "module", "notes")
+        fields = ("student_rr", "module", "exemption_request", "notes")
         widgets = {
             'student_rr': forms.HiddenInput(),
+            'module': forms.HiddenInput(),
+            'notes': forms.HiddenInput(),
         }
 
 

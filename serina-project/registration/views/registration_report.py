@@ -208,15 +208,17 @@ class ModuleRegistrationReportCreateView(
         """Add check variables for template conditions."""
 
         context = super().get_context_data(**kwargs)
+        context["module"] = get_object_or_404(models.Module,
+                                              pk=self.kwargs["module_pk"])
         context["active_module_rr_already_exists"] = \
             registration_utils.active_module_rr_already_exists(
                 self.request.user,
-                get_object_or_404(models.Module, pk=self.kwargs["module_pk"]),
+                context["module"],
             )
         context["succeeded_module_rr_already_exists"] = \
             registration_utils.succeeded_module_rr_already_exists(
                 self.request.user,
-                get_object_or_404(models.Module, pk=self.kwargs["module_pk"]),
+                context["module"],
             )
         return context
 

@@ -1,0 +1,24 @@
+{% extends 'bubbles/warning.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    You already have succeeded this module
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    You already have succeeded this module before or the was exempted.
+    <br><br>
+    However, you are allowed to subscribe to this module again.
+    <br>
+    Keep in mind that procceeding this way, your subscribtion still must be validated by our staff and you must pay for your registration.
+    <br><br>
+    If you fail, the module will still be considered as validated.
+    <br>
+    If this module is part of a degree you are following, the best final score will be taken in consideration.
+  {% endblocktrans %}
+{% endblock bubble_content %}
