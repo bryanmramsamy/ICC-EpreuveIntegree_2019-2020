@@ -66,6 +66,10 @@ class ModuleRegistrationReport(FrontOfficeResource):
         validators=[MinValueValidator(0), MaxValueValidator(100)],
         verbose_name=_("Final score")
     )
+    exemption_request = models.BooleanField(
+        default=False,
+        verbose_name=_("Student exemption request"),
+    )
 
     STATUS = [
         ("PENDING", _('Pending')),
