@@ -115,8 +115,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
         """
 
         return self.status == "EXEMPTED" \
-               or (self.status == "COMPLETED" and self.final_score >= settings
-                   .SUCCESS_SCORE_THRESHOLD)
+               or (self.status == "COMPLETED"
+                   and self.final_score >= settings.SUCCESS_SCORE_THRESHOLD)
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
@@ -128,8 +128,28 @@ class ModuleRegistrationReport(FrontOfficeResource):
             self.status,
         )
 
+    def clean(self):
+        """Clean method for ModuleRegistrationReport.
+
+        Check if the user is a guest or a student, if the student is not
+        underaged and if the uploaded files are on the correct format.
+        """
+
+        if (self.status == "COMPLETED" or self.status == "EXEMPTED") \
+           and not self.final_score:
+            raise ValidationError(_(
+                "The Module Registration Request cannot be flagged as "
+                "completed nor exempted if no final score was given."
+            ))
+
+        if self.payed and not self.date_payed:
+            raise ValidationError(_(
+                "The Module Registration Request cannot be flagged as "
+                "payed nor completed if no payment date was entered."
+            ))
+
     def get_absolute_url(self):
-        """Return absolute url for DegreeRegistrationReport."""
+        """Return absolute url for ModuleRegistrationReport."""
 
         return reverse('module_rr_detailview', kwargs={"pk": self.pk})
 
