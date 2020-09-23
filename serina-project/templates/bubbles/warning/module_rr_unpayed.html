@@ -1,0 +1,18 @@
+{% extends 'bubbles/warning.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This registration request has not been payed yet
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    You didn't pay this registration fee yet.
+    <br><br>
+    Therefore, this module won't be considered as completed, no matter what result you get at the end of it, as long as the payment wasn't procceeded.
+  {% endblocktrans %}
+{% endblock bubble_content %}

@@ -1,0 +1,18 @@
+{% extends 'bubbles/warning.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This registration request has not been validated or denied yet
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    Our management staff didn't validate or deny this registration request yet.
+    <br><br>
+    When a decision will be taken, you will receive a notification on the e-mail address you registered on your account.
+  {% endblocktrans %}
+{% endblock bubble_content %}

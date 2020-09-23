@@ -1,32 +1,271 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'ModuleRRDetailView' %}{% endblock title %}
+
+{% block title %}
+
+  {% blocktrans with module_rr_id=module_rr.pk module_title=module_rr.module.title %}
+    Registration #{{ module_rr_id }} for {{ module_title }}
+  {% endblocktrans %}
+
+{% endblock title %}
+
 
 {% block content %}
-    <h1>ModuleRRDetailView</h1>
+  {# Module Registration Report Tag #}
 
-    <p>{{ module_rr.student_rr.student.get_full_name }}</p>
-    <ul>
-        <li>{{ module_rr.degree_rr.degree.title }}</li>
-        <li>{{ module_rr.module.title }}</li>
-        <li>{{ module_rr.course.reference }}</li>
-        <li>from: {{ module_rr.date_start }} to {{ module_rr.date_end }}</li>
-        <li>attempt: {{ module_rr.student_attempt }}</li>
-        <li>{{ module_rr.final_score }}</li>
-        <li>status : {{ module_rr.status }}</li>
-    </ul>
+  <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
+      <div class="text-right">
+        {% trans 'Module Registration Report' %} {% include 'logo/module_rr.html' %}
+      </div>
+  </div>
 
-    <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
 
-    
-    {% if module_rr.status == "APPROVED" %}
-        <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
+  <section class="container border border-secondary rounded">
+
+    <br>
+
+    {# Status info bubble #}
+
+
+    {% if request.user|is_student %}
+      {% if module_rr.status == "PENDING" %}
+        {% include 'bubbles/warning/module_rr_pending.html' %}
+
+      {% elif module_rr.status == "DENIED" %}
+        {% include 'bubbles/danger/module_rr_denied.html' %}
+
+      {% elif module_rr.status == "APPROVED" %}
+        {% include 'bubbles/warning/module_rr_unpayed.html' %}
+      {% endif %}
     {% endif %}
 
-    <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Submit score">
-    </form>
+
+    {# Module_rr details #}
+
+    <table class="table table-hover h5 text-left">
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration status' %}:
+        </td>
+        <th class="col-8">
+            {% if module_rr.status == "PENDING" %}
+              <span class="text-warning">
+                {% include 'logo/check_ready.html' %}
+            {% elif module_rr.status == "DENIED" %}
+              <span class="text-danger">
+                {% include 'logo/check_invalid.html' %}
+            {% elif module_rr.status == "APPROVED" %}
+              <span class="text-info">
+                {% include 'logo/check_info.html' %}
+            {% else %}
+              <span class="text-success">
+                {% include 'logo/check_valid.html' %}
+            {% endif %}
+
+             {{ module_rr.get_status_display }}
+            </span>
+        </th>
+      </tr>
+      {% if module_rr.date_payed %}
+      <tr>
+        <td class="col-4">
+          {% trans 'Payment date and time' %}:
+        </td>
+        <th class="col-8">
+          {{ module_rr.date_payed }}
+        </th>
+      </tr>
+    {% endif %}
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s registration number' %}:
+        </td>
+        <th class="col-8">
+          {{ module_rr.student_rr.created_by.username }}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s name' %}:
+        </td>
+        <th class="col-8">
+          {{ module_rr.student_rr.created_by.get_full_name }}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Module' %}:
+        </td>
+        <th class="col-8">
+          <a href="{{ module_rr.module.get_absolute_url }}" class="text-reset">{% include 'logo/module.html' %} {{ module_rr.module.title }} <small class="text-muted">{{ module_rr.module.reference }}</small></a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Degree related' %}:
+        </td>
+        <th class="col-8">
+          {% if module_rr.degree_rr %}
+            <span class="text-success">
+              {% include 'logo/check_valid.html' %} {% trans 'Yes' %} <a href="{{ module_rr.degree_rr.get_absolute_url }}" class="badge badge-primary">{% include 'logo/degree_rr.html' %} {% trans 'Click here to see more' %}</a>
+            </span>
+          {% else %}
+            <span class="text-muted">
+              {% include 'logo/check_ready.html' %} {% trans 'Not related to a degree' %}
+            </span>
+          {% endif %}
+        </th>
+      </tr>
+      {% if module_rr.degree_rr %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Degree' %}:
+          </td>
+          <th class="col-8">
+            <a href="{{ module_rr.degree_rr.degree.get_absolute_url }}" class="text-reset">{% include 'logo/degree.html' %} {{ module_rr.degree_rr.degree.title }} <small class="text-muted">{{ module_rr.degree_rr.degree.reference }}</small></a>
+          </th>
+        </tr>
+      {% endif %}
+      <tr>
+        <td class="col-4">
+          {% trans 'Attempt number' %}:
+        </td>
+        <th class="col-8">
+          {{ module_rr.nb_attempt }}
+        </th>
+      </tr>
+      {% if module_rr.course %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Course' %}:
+          </td>
+          <th class="col-8">
+            <a href="{{ module_rr.course.get_absolute_url }}" class="text-reset">{% include 'logo/course.html' %} {{ module_rr.course.reference }}</a>
+          </th>
+        </tr>
+      {% endif %}
+      {% if module_rr.approved %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Final score' %}:
+          </td>
+          <th class="col-8">
+            {% include 'logo/score.html' %}
+            {% if module_rr.final_score %}
+              {% if module_rr.succeeded %}
+                <span class="text-success">
+                  {{ module_rr.final_score }}
+                </span>
+              {% else %}
+                <span class="text-danger">
+                  {{ module_rr.final_score }}
+                </span>
+              {% endif %}
+
+
+            {% else %}
+              <span class="text-muted">{% trans 'N/A' %}</span>
+            {% endif %}
+          </th>
+        </tr>
+        <tr>
+          <td class="col-4">
+            {% trans 'Success status' %}:
+          </td>
+          <th class="col-8">
+            {% if module_rr.final_score %}
+              {% if module_rr.succeeded %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Module validated' %}
+                </span>
+              {% else %}
+                <span class="text-danger">
+                  {% include 'logo/check_invalid.html' %} {% trans 'Module failed' %}
+                </span>
+              {% endif %}
+
+
+            {% else %}
+              <span class="text-muted">{% trans 'N/A' %}</span>
+            {% endif %}
+          </th>
+        </tr>
+      {% endif %}
+      {% if module_rr.notes %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Notes' %}:
+          </td>
+          <td class="col-8">
+            {{ module_rr.notes|linebreaks }}
+          </td>
+        </tr>
+      {% endif %}
+    </table>
+
+    {# DEBUG #}
+      <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
+
+
+      {% if module_rr.status == "APPROVED" %}
+          <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
+      {% endif %}
+
+      <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <input type="submit" value="Submit score">
+      </form>
+  </section>
+
+  <br>
+
+
+  {# Back to profile button #}
+
+
+  {% if request.user|is_back_office_user %}
+    {% include 'backoffice_tag.html' %}
+      <section class="container border border-warning rounded py-3">
+  {% endif %}
+
+
+  <div class="row row-cols-1 {% if not request.user|is_student and not module_rr.status == 'APPROVED' %}row-cols-md-2{% endif %} {% if request.user|is_manager_or_administrator and module_rr.status == 'PENDING' %}row-cols-md-3{% endif %}">
+    {% if request.user|is_manager_or_administrator %}
+      <div class="col">
+        <a href="" class="btn btn-block btn-lg btn-success">{% trans 'Approve registration' %} {% include 'logo/check_valid.html' %}</a>
+      </div>
+      <div class="col">
+        <a href="" class="btn btn-block btn-lg btn-danger">{% trans 'Deny registration' %} {% include 'logo/check_invalid.html' %}</a>
+      </div>
+
+    {% elif request.user|is_teacher %}
+      <div class="col">
+        <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
+      </div>
+
+    {% elif module_rr.status == "APPROVED" %}
+      <div class="col">
+        <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
+      </div>
+    {% endif %}
+
+    <div class="col">
+      <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
+    </div>
+  </div>
+
+  {% if request.user|is_back_office_user %}
+    </section>
+  {% endif %}
+
+  <br>
+
+
+  {# Module list card #}
+
+  {% with module=module_rr.module  %}
+    {% include 'management/module/module_listcard.html' %}
+  {% endwith %}
 {% endblock content %}

@@ -67,6 +67,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'serina.serina.context_processors.get_contact_mails',
             ],
         },
     },
@@ -180,8 +181,9 @@ EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 # Mails
 
 CONTACT_MAILS = {
-    "administrators": "administrators@serina.com",
-    "support": "support@serina.com",
+    "administrator": "administrators@serina-project.bryanmramsamy.com",
+    "management": "management@serina-project.bryanmramsamy.com",
+    "support": "support@serina-project.bryanmramsamy.com",
 }
 
 

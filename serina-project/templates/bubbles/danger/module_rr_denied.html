@@ -1,0 +1,22 @@
+{% extends 'bubbles/danger.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    This registration request has been denied
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    This registration request has been denied by our staff during its validation phase.
+    <br>
+    You can try again or try our other modules.
+    <br><br>
+    To get more information,
+  {% endblocktrans %}
+
+  <a href="mailto:{{ contact_mails.mangement }}" class="badge badge-light">Contact our staff {% include 'logo/mail.html' %}</a>.
+{% endblock bubble_content %}
