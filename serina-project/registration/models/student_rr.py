@@ -47,6 +47,12 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     secondary_education_certificate = models.FileField(
         verbose_name=_("Secondary Education Certificate")
     )
+
+    student_is_foreigner = models.BooleanField(
+        default=False,
+        verbose_name=_("Foreign student"),
+    )
+
     annex_403 = models.FileField(
         null=True,
         blank=True,
@@ -67,6 +73,7 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
         blank=True,
         verbose_name=_("Belgian Studies History")
     )
+
     archievement_certificates = models.FileField(
         null=True,
         blank=True,
