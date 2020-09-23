@@ -11,7 +11,7 @@
   </div>
   {% if request.user|is_student %}
     <div class="col">
-      <a href="404" class="btn btn-block btn-outline-info">
+      <a href="{% url 'student_course_listview' %}" class="btn btn-block btn-outline-info">
         <h3>
           {% include 'logo/course_alt.html' %} {% trans 'Back to my courses' %} {% include 'logo/back.html' %}
         </h3>

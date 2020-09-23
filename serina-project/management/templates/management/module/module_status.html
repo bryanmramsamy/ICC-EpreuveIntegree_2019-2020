@@ -20,6 +20,14 @@
         {% include 'logo/check_invalid.html' %} {% trans 'Prerequisites missing' %}
       </span>
     {% endif %}
+
+    {% if request.user|active_module_rr_already_exists:module %}
+      <br>
+
+      <span class="text-info">
+        {% include 'logo/check_info.html' %} {% trans 'You already registered to this module' %}
+      </span>
+    {% endif %}
   {% else %}
     <span class="text-info">
       {% include 'logo/check_info.html' %}

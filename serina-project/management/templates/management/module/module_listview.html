@@ -125,7 +125,12 @@
 
               {% elif request.user|is_student %}
                 <div class="col">
-                  <a href="{% url 'module_rr_createview' module_pk=module.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>
+                  {% if request.user|active_module_rr_already_exists:module %}
+                    <a href="{% url 'module_rr_createview' module_pk=module.pk %}" class="btn btn-block btn-warning disabled">{% trans 'You cannot subscribe to this module yet again' %} {% include 'logo/puzzle.html' %}</a>
+
+                  {% else %}
+                    <a href="{% url 'module_rr_createview' module_pk=module.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>
+                  {% endif %}
                 </div>
 
               {% elif request.user|is_guest %}

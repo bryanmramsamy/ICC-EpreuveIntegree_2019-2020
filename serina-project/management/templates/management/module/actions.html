@@ -33,7 +33,15 @@
     {% endif %}
   {% endif %}
 
-  <a href="{% url 'module_rr_createview' module_pk=module.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>
+  {% if request.user|active_module_rr_already_exists:module %}
+    {% include 'bubbles/warning/active_module_rr_already_exists.html' %}
+
+    <a href="{% url 'module_rr_createview' module_pk=module.pk %}" class="btn btn-block btn-warning disabled">{% trans 'You cannot subscribe to this module yet again' %} {% include 'logo/puzzle.html' %}</a>
+
+  {% else %}
+    <a href="{% url 'module_rr_createview' module_pk=module.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>
+  {% endif %}
+
 
 {% elif request.user|is_guest %}
   {% include 'bubbles/warning/still_registered_guest_not_student.html' %}
