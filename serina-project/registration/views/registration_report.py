@@ -125,12 +125,10 @@ class ModuleRegistrationReportListView(
     context_object_name = "modules_rrs"
     template_name = "registration/registration_report/module_rr_listview.html"
 
-# TODO: Add ListView for student's modules_rrs only
-
 
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
-    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,  # TODO: teachers
+    mixins_utils.SelfStudentBackOfficeUsersOnlyMixin,
     DetailView,
 ):
     """DetailView for ModuleRegistrationReport."""

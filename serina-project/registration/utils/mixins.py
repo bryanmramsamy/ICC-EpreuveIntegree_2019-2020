@@ -13,6 +13,8 @@ from . import messages as messages_utils
 from rating import models as rating_models
 
 
+# TODO: Optimize code
+
 # Access restriction mixins
 
 
@@ -62,6 +64,17 @@ class ManagerAdministratorOnlyMixin(AccessRestrictionMixin):
         return groups_utils.is_manager_or_administrator(self.request.user)
 
 
+class StudentBackOfficeUsersOnlyMixin(BackOfficeUsersOnlyMixin):
+    """Restrict view access to students, teachers, managers and administrators.
+    """
+
+    def test_func(self):
+        """Check if the user is a Student, Manager or an Administrator."""
+
+        return super(StudentBackOfficeUsersOnlyMixin, self).test_func() \
+            or groups_utils.is_student(self.request.user)
+
+
 class StudentManagerAdministratorOnlyMixin(ManagerAdministratorOnlyMixin):
     """Restrict view access to 'Student'-group members, the 'Manager'-group
     members and 'Administrator'-group members."""
@@ -71,6 +84,66 @@ class StudentManagerAdministratorOnlyMixin(ManagerAdministratorOnlyMixin):
 
         return super(StudentManagerAdministratorOnlyMixin, self).test_func() \
             or groups_utils.is_student(self.request.user)
+
+
+class SelfStudentBackOfficeUsersOnlyMixin(StudentBackOfficeUsersOnlyMixin):
+    """Restrict view access to teachers, managers, administrators and the
+    student who created the object.
+
+    This mixins works for students, modules and degrees regitrations reports.
+    """
+
+    def test_func(self):
+        """Check if the user is a Student, Manager or an Administrator. If the
+        user is a student, check if (s)he is the one who created the object.
+
+        The object being variable, the queryset is adapted according to the
+        object-type received.
+        """
+
+        super_test_valid = super(SelfStudentBackOfficeUsersOnlyMixin,
+                                 self).test_func()
+        self_test_valid = False
+
+        # Check if user is a student
+
+        if groups_utils.is_student(self.request.user):
+
+            # StudentRegistrationReport
+
+            if type(self.get_object()) is models.student_rr \
+                                                .StudentRegistrationReport:
+                self_test_valid = \
+                    self.request.user.student_rr.pk == self.get_object().pk
+
+            # ModuleRegistrationReport
+
+            elif type(self.get_object()) is models.module_rr \
+                                                  .ModuleRegistrationReport:
+                self_test_valid = self.request.user.student_rr.modules_rrs \
+                                      .filter(pk=self.get_object().pk) \
+                                      .exists()
+
+            # DegreeRegistrationReport
+
+            elif type(self.get_object()) is models.degree_rr \
+                                                  .DegreeRegistrationReport:
+                self_test_valid = self.request.user.student_rr.degrees_rrs \
+                                      .filter(pk=self.get_object().pk) \
+                                      .exists()
+
+            # StudentRating
+
+            elif type(self.get_object()) is rating_models.StudentRating:
+                self_test_valid = self.request.user.ratings.filter(
+                    pk=self.get_object().pk).exists()
+
+        # Otherwise user is manager or administrator
+
+        else:
+            self_test_valid = True
+
+        return super_test_valid and self_test_valid
 
 
 class SelfStudentManagerAdministratorOnlyMixin(
