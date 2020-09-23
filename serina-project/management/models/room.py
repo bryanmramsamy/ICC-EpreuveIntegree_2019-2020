@@ -74,6 +74,12 @@ class Classroom(BackOfficeResource):
         # Creator must be a promoted user
         super().clean()
 
+        # recommended_capacity cannot be
+        if self.recommended_capacity == 0 or self.max_capacity == 0:
+            raise ValidationError(
+                _("The capacity of a classroom cannot be zero.")
+            )
+
         # recommended_capacity cannot be higher than max_capacity
         if self.recommended_capacity > self.max_capacity:
             raise ValidationError(
