@@ -9,7 +9,7 @@
 
 {% block content %}
   <section class="container">
-    <div class="container border rounded text-center bg-light py-3" style="max-width: 600px;">
+    <div class="container border rounded bg-light py-3" style="max-width: 600px;">
       <div class="text-center">
         <img src="{{ module.picture.url }}" class="img-fluid" alt="{{ module.title }} module picture" style="max-height: 400px;">
       </div>
@@ -38,7 +38,7 @@
 
         {% include 'bubbles/info/module_rr_wait_for_mail_validation.html' %}
 
-        <form action="." method="post">
+        <form method="POST" enctype="multipart/form-data">
           {% csrf_token %}
 
 
@@ -60,19 +60,31 @@
           {# exemption_request #}
 
           <div class="form-group">
-
             <div class="custom-control custom-switch">
-              <input id="{{ form.exemption_request.auto_id }}" name="{{ form.exemption_request.html_name }}" type="checkbox" class="custom-control-input" required>
+              <input id="{{ form.exemption_request.auto_id }}" name="{{ form.exemption_request.html_name }}" type="checkbox" class="custom-control-input" onclick="myFunction()">
               <label for="{{ form.exemption_request.id_for_label }}" class="custom-control-label h5 text-uppercase">
                 {% trans 'Do you want to ask for an exemption ?' %} <span class="badge badge-danger">{{ form.exemption_request.errors.as_text }}</span>
               </label>
               <br>
-              <small class="badge badge-warning">
-                {% trans 'To get an exemption, you must send your exemption documents to our management staff' %}
-                <br>
-                <a href="mailto:management@serina-project.bryanmramsamy.com" class="badge badge-info">{% trans 'Mail our management staff' %} {% include 'logo/mail.html' %}</a>
-              </small>
+              <small class="text-muted">{{ form.exemption_request.help_text }}</small>
             </div>
+          </div>
+
+          {# exemption_report #}
+
+          <div id="exemption_report_field" class="form-group" style="display:none">
+            <label class="h5 text-uppercase" for="{{ form.exemption_report.id_for_label }}">
+              {{ form.exemption_report.label }} <span class="badge badge-danger">{{ form.exemption_report.errors.as_text }}</span>
+            </label>
+            <div class="form-group custom-file">
+              <input id="{{ form.exemption_report.auto_id }}" name="{{ form.exemption_report.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
+              <label id="{{ form.exemption_report.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.exemption_report.id_for_label }}">
+                No file selected
+              </label>
+            </div>
+            <small class="badge badge-warning">
+              {% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.exemption_report.help_text }}
+            </small>
           </div>
 
 
@@ -88,3 +100,27 @@
       </div>
   </section>
 {% endblock content %}
+
+
+{% block scripts %}
+  <script>
+    function myFunction() {
+      // Get the checkbox
+      var checkBox = document.getElementById("{{ form.exemption_request.auto_id }}");
+      // Get the output text
+      var text = document.getElementById("exemption_report_field");
+
+      // If the checkbox is checked, display the output text
+      if (checkBox.checked == true){
+        text.style.display = "block";
+      } else {
+        text.style.display = "none";
+      }
+    }
+
+    $('#{{ form.exemption_report.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.exemption_report.auto_id }}_label').html(fileName);
+    })
+  </script>
+{% endblock scripts %}

@@ -69,6 +69,22 @@ class ModuleRegistrationReport(FrontOfficeResource):
     exemption_request = models.BooleanField(
         default=False,
         verbose_name=_("Student exemption request"),
+        help_text=_(
+            "If you already succeeded this or a similar module in another "
+            "school or educational organization, you can ask for an "
+            "exemption. This will prevent you from passing paying this module "
+            "if your request is accepted by our staff."
+        ),
+    )
+    exemption_report = models.FileField(  # TODO: Add validator: only zip file
+        null=True,
+        blank=True,
+        verbose_name=_("Exemption reports"),
+        help_text=_(
+            "Send the documents that can provide you a exemption for this "
+            "module. The documents will be verified by our staff and help "
+            "them taking a decision regarding your request."
+        ),
     )
 
     STATUS = [

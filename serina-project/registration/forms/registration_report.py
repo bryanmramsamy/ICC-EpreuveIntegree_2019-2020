@@ -94,7 +94,13 @@ class ModuleRegistrationReportCreateFrom(forms.ModelForm):
         """Meta definition for ModuleLevelForm."""
 
         model = ModuleRegistrationReport
-        fields = ("student_rr", "module", "exemption_request", "notes")
+        fields = (
+            "student_rr",
+            "module",
+            "exemption_request",
+            "exemption_report",
+            "notes"
+        )
         widgets = {
             'student_rr': forms.HiddenInput(),
             'module': forms.HiddenInput(),
