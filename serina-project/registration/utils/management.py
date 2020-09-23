@@ -1,3 +1,6 @@
+from django.core.exceptions import ValidationError
+from django.utils.translation import gettext_lazy as _
+
 from ..models import ModuleRegistrationReport
 from . import groups as groups_utils
 from management.models import Course, Module
@@ -48,11 +51,37 @@ def courses_sorted_by_attendance_percentage(courses):
     maximal capacity.
     """
 
-    return sorted(
+    courses_by_recommended_attendance = sorted(
         courses,
         key=lambda course: course.recommended_attendance_percentage,
         reverse=False
     )
+
+    if len(courses_by_recommended_attendance) == 0:
+        raise ValidationError(_("No course was found for this module"))
+
+    if courses_by_recommended_attendance[-1] \
+       .recommended_attendance_percentage >= 1:
+        courses_by_max_attendance = sorted(
+            courses,
+            key=lambda course: course.max_attendance_percentage,
+            reverse=False
+        )
+
+        result_list = courses_by_max_attendance
+    else:
+        result_list = courses_by_recommended_attendance
+
+    return result_list
+
+
+def still_registrable_course_with_lowest_attendance(module):
+    """Get the sill registrable courses with the lowest attendance capacity for
+    the given module."""
+
+    return courses_sorted_by_attendance_percentage(
+        still_registrable_courses(module),
+    )[0]
 
 
 # ManyToMany relationship check

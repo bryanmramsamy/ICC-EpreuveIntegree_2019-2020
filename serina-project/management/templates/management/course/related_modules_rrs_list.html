@@ -18,7 +18,7 @@
           {% include 'logo/score.html' %} {% trans 'Score' %}
         </th>
         <th class="col-2">
-          {% include 'logo/options.html' %} {% trans 'Options' %}
+          {% include 'logo/gear.html' %} {% trans 'Options' %}
         </th>
       {% endif %}
     </tr>
@@ -44,8 +44,8 @@
             {% endif %}
           </td>
           <td class="col-2">
-            <a href="{# TODO: Add link #}{% if request.user|is_manager_or_administrator %}404{% else %}404{% endif %}" class="btn btn-sm btn-block btn-warning">
-              {% include 'logo/options.html' %} {% trans 'Options' %}
+            <a href="{% url 'module_rr_detailview' pk=related_module_rr.pk %}" class="btn btn-sm btn-block btn-warning">
+              {% include 'logo/gear.html' %} {% trans 'Options' %}
             </a>
           </td>
         {% endif %}

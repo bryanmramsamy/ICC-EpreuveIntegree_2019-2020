@@ -184,6 +184,11 @@ urlpatterns = [
         views.module_validation,
         name='backoffice_module_validation'
     ),
+    url(
+        r'^back_office/module_deny/(?P<pk>[0-9]+)/$',
+        views.module_deny,
+        name='backoffice_module_deny'
+    ),
 
     url(
         r'^back_office/module_score_submit/(?P<pk>[0-9]+)/$',

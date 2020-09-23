@@ -117,6 +117,27 @@ def module_rr_already_approved(request):
     )
 
 
+def module_rr_denied(request):
+    """Inform the user that the ModuleRegistrationReport object has
+    successfully been denied."""
+
+    messages.success(
+        request,
+        _("The module's registration has been denied. A notification mail has "
+          "been sent to the student.")
+    )
+
+
+def module_rr_already_denied(request):
+    """Warns the user that the ModuleRegistrationReport object (s)he wants to
+    approve has already been denied."""
+
+    messages.warning(
+        request,
+        _("This module registration request has already been denied.")
+    )
+
+
 # ModuleResgitrationReport Final Score Submission
 
 def module_rr_final_score_submitted(request):

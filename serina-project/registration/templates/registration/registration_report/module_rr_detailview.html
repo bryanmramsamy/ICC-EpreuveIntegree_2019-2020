@@ -12,12 +12,24 @@
 
 
 {% block content %}
+  {# Back Office Tag openning #}
+
+  {% if request.user|is_back_office_user %}
+    {% include 'backoffice_tag.html' %}
+    <section class="container border border-warning rounded py-3">
+  {% endif %}
+
   {# Module Registration Report Tag #}
 
   <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
-      <div class="text-right">
+    <div class="row">
+      <div class="col">
+        {% trans 'Invoice ID' %} #{{ module_rr.pk }}
+      </div>
+      <div class="col text-right">
         {% trans 'Module Registration Report' %} {% include 'logo/module_rr.html' %}
       </div>
+    </div>
   </div>
 
 
@@ -67,16 +79,26 @@
             </span>
         </th>
       </tr>
+      {% if module_rr.status == 'APPROVED' or module_rr.status == 'PAYED' or module_rr.status == 'COMPLETED' %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Registration fee' %}:
+          </td>
+          <th class="col-8">
+            € {{ module_rr.module.price }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
+          </th>
+        </tr>
+      {% endif %}
       {% if module_rr.date_payed %}
-      <tr>
-        <td class="col-4">
-          {% trans 'Payment date and time' %}:
-        </td>
-        <th class="col-8">
-          {{ module_rr.date_payed }}
-        </th>
-      </tr>
-    {% endif %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Payment date and time' %}:
+          </td>
+          <th class="col-8">
+            {{ module_rr.date_payed }}
+          </th>
+        </tr>
+      {% endif %}
       <tr>
         <td class="col-4">
           {% trans 'Student\'s registration number' %}:
@@ -148,6 +170,14 @@
       {% if module_rr.approved %}
         <tr>
           <td class="col-4">
+            {% trans 'ECTS' %}:
+          </td>
+          <th class="col-8">
+            {{ module_rr.module.ECTS_value }}
+          </th>
+        </tr>
+        <tr>
+          <td class="col-4">
             {% trans 'Final score' %}:
           </td>
           <th class="col-8">
@@ -162,8 +192,6 @@
                   {{ module_rr.final_score }}
                 </span>
               {% endif %}
-
-
             {% else %}
               <span class="text-muted">{% trans 'N/A' %}</span>
             {% endif %}
@@ -205,9 +233,6 @@
     </table>
 
     {# DEBUG #}
-      <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}">validate</a>
-
-
       {% if module_rr.status == "APPROVED" %}
           <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
       {% endif %}
@@ -217,17 +242,10 @@
           {{ form.as_p }}
           <input type="submit" value="Submit score">
       </form>
+    {# ENDDEBUG #}
   </section>
 
   <br>
-
-
-  {# Back Office Tag openning #}
-
-  {% if request.user|is_back_office_user %}
-    {% include 'backoffice_tag.html' %}
-    <section class="container border border-warning rounded py-3">
-  {% endif %}
 
 
   {# Actions #}
@@ -239,10 +257,14 @@
   ">
     {% if request.user|is_manager_or_administrator and module_rr.status == 'PENDING' %}
       <div class="col pb-3">
-        <a href="" class="btn btn-block btn-lg btn-success">{% trans 'Approve registration' %} {% include 'logo/check_valid.html' %}</a>
+        <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-success">
+          {% trans 'Approve registration' %} {% include 'logo/check_valid.html' %}
+        </a>
       </div>
       <div class="col pb-3">
-        <a href="" class="btn btn-block btn-lg btn-danger">{% trans 'Deny registration' %} {% include 'logo/check_invalid.html' %}</a>
+        <a href="{% url 'backoffice_module_deny' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-danger">
+          {% trans 'Deny registration' %} {% include 'logo/check_invalid.html' %}
+        </a>
       </div>
     {% endif %}
 
