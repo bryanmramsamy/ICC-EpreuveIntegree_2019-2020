@@ -65,7 +65,7 @@ class UserProfileDetailView(
 
             context["modules_rrs"] = ModuleRegistrationReport.objects.filter(
                 student_rr=context["student_rr"],
-            )
+            ).order_by("status")
             context["nb_approved_modules_rrs"] = \
                 len([x for x in context["modules_rrs"] if x.approved])
             context["nb_exempted_modules_rrs"] = context["modules_rrs"].filter(

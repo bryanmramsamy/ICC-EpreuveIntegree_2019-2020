@@ -179,7 +179,7 @@ def module_rr_not_payed(request):
 
     messages.warning(
         request,
-        _("This module registration request has not been payed by the sudent "
+        _("This module registration request has not been payed by the student "
           "yet. The final score was saved anyway but the module cannot be "
           "coonsidered as completed as long as the payment wasn't done.")
     )

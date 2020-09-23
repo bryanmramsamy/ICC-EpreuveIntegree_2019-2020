@@ -183,15 +183,17 @@
           <th class="col-8">
             {% include 'logo/score.html' %}
             {% if module_rr.final_score %}
-              {% if module_rr.succeeded %}
+              {% if module_rr.success_score_threshold_reached %}
                 <span class="text-success">
                   {{ module_rr.final_score }}
                 </span>
+
               {% else %}
                 <span class="text-danger">
                   {{ module_rr.final_score }}
                 </span>
               {% endif %}
+
             {% else %}
               <span class="text-muted">{% trans 'N/A' %}</span>
             {% endif %}
@@ -207,6 +209,12 @@
                 <span class="text-success">
                   {% include 'logo/check_valid.html' %} {% trans 'Module validated' %}
                 </span>
+
+              {% elif module_rr.success_score_threshold_reached %}
+                <span class="text-warning">
+                  {% include 'logo/check_ready.html' %} {% trans 'Module succeeded but not payed yet' %}
+                </span>
+
               {% else %}
                 <span class="text-danger">
                   {% include 'logo/check_invalid.html' %} {% trans 'Module failed' %}
@@ -232,17 +240,8 @@
       {% endif %}
     </table>
 
-    {# DEBUG #}
-      {% if module_rr.status == "APPROVED" %}
-          <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
-      {% endif %}
+    DEBUG: <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
 
-      <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="post">
-          {% csrf_token %}
-          {{ form.as_p }}
-          <input type="submit" value="Submit score">
-      </form>
-    {# ENDDEBUG #}
   </section>
 
   <br>
@@ -270,8 +269,16 @@
 
     {% if request.user|is_back_office_user %}
       <div class="col">
-        <a href="404" class="btn btn-block btn-lg btn-primary">
-          {% trans 'DEBUG: SCORE FORM' %}
+        <a data-toggle="collapse" href="#score_note_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning {% if not module_rr.approved %}disabled{% endif %}">
+          {% if not module_rr.approved %}
+            {% trans 'This regitration was is not approved' %} {% include 'logo/score.html' %}
+
+          {% elif module_rr.final_score %}
+            {% trans 'Update final score or note' %} {% include 'logo/score.html' %}
+
+          {% else %}
+            {% trans 'Add final score or note' %} {% include 'logo/score.html' %}
+          {% endif %}
         </a>
       </div>
 
@@ -287,6 +294,42 @@
     <div class="col">
       <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
     </div>
+  </div>
+
+
+  {# Score and note form update #}
+
+  <div class="container py-3 collapse" id="score_note_form">
+    <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="POST">
+      {% csrf_token %}
+
+
+      {# final_score #}
+
+      <label for="{{ form.final_score.id_for_label }}" class="h5 text-uppercase">
+        {{ form.final_score.label }} <span class="badge badge-danger">{{ form.final_score.errors.as_text }}</span>
+      </label>
+      <input id="{{ form.final_score.auto_id }}" name="{{ form.final_score.html_name }}" type="number" min="0" max="100" step="0.01" value="{{ form_final_score }}" class="form-control form-control-lg" required>
+      <small class="text-muted">
+        {{ form.final_score.help_text }}
+      </small>
+
+
+      {# notes #}
+
+      <div class="form-group">
+        <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
+          {{ form.notes.label }} <span class="badge badge-danger">{{ form.notes.errors.as_text }}</span>
+        </label>
+        <textarea id="{{ form.notes.auto_id }}" name="{{ form.notes.html_name }}" class="form-control form-control-lg">{{ form_notes }}</textarea>
+        <small class="badge badge-warning">{% trans 'Do not erase the text you want to keep' %}</small> <small class="text-muted">{{ form.notes.help_text }}</small>
+      </div>
+
+
+      {# submit #}
+
+      <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update final score and/or notes' %}">
+    </form>
   </div>
 
 

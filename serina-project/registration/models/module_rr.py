@@ -127,6 +127,12 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return self.status == "APPROVED" or self.payed
 
     @property
+    def success_score_threshold_reached(self):
+        """Check if the final score is above the success score threshold."""
+
+        return self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
+
+    @property
     def succeeded(self):
         """Check if the student succeeded the module modules.
 
@@ -134,9 +140,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
         registration to it.
         """
 
-        return self.status == "EXEMPTED" \
-               or (self.status == "COMPLETED"
-                   and self.final_score >= settings.SUCCESS_SCORE_THRESHOLD)
+        return (self.status == "EXEMPTED" or self.status == "COMPLETED") \
+            and self.success_score_threshold_reached
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
@@ -160,6 +165,20 @@ class ModuleRegistrationReport(FrontOfficeResource):
             raise ValidationError(_(
                 "The Module Registration Request cannot be flagged as "
                 "completed nor exempted if no final score was given."
+            ))
+
+        if not (self.approved or self.status == "EXEMPTED") \
+           and self.final_score:
+            raise ValidationError(_(
+                "You cannot put a final score to a registration which is not "
+                "approved."
+            ))
+
+        if self.status == "EXEMPTED" and not self.succeeded:
+            raise ValidationError(_(
+                "If a module is exempted, the final score must be equal or "
+                "above the success score threshold, which is actually at {}."
+                .format(settings.SUCCESS_SCORE_THRESHOLD)
             ))
 
         if self.payed and not self.date_payed:

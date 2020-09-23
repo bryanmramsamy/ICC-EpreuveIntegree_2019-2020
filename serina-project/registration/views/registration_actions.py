@@ -82,7 +82,8 @@ def module_score_submit(request, pk):
         form = SubmitFinalScoreForm(request.POST or None)
 
         if form.is_valid():
-            score = form.cleaned_data['score']
+            score = form.cleaned_data['final_score']
+            notes = form.cleaned_data['notes']
             module_rr.final_score = score
 
             if module_rr.status == "PAYED":
