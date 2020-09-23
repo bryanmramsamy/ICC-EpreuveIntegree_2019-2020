@@ -288,10 +288,10 @@
       {# notes #}
 
       <div class="form-group">
-        <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
-          {{ form.notes.label }} <span class="badge badge-danger">{{ form.notes.errors.as_text }}</span>
+        <label for="{{ form_notes.notes.id_for_label }}" class="h5 text-uppercase">
+          {{ form_notes.notes.label }} <span class="badge badge-danger">{{ form_notes.notes.errors.as_text }}</span>
         </label>
-        <textarea id="{{ form.notes.auto_id }}" name="{{ form.notes.html_name }}" class="form-control form-control-lg"></textarea>
+        <textarea id="{{ form_notes.notes.auto_id }}" name="{{ form_notes.notes.html_name }}" class="form-control form-control-lg"></textarea>
       </div>
 
       <hr>

@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
 
-from ..forms import SubmitFinalScoreForm
+from ..forms import SubmitFinalScoreForm, SubmitNotesForm
 from ..models import ModuleRegistrationReport
 from ..utils import (
     decorators as decorators_utils,
@@ -76,17 +76,25 @@ def module_score_submit(request, pk):
 
     module_rr = get_object_or_404(ModuleRegistrationReport, pk=pk)
 
+    form_notes = SubmitNotesForm(request.POST or None)
+
+    if form_notes.is_valid():
+        module_rr.notes = form_notes.cleaned_data['notes']
+        module_rr.save()
+
+        messages_utils.module_rr_notes_updated(request)
+
+        return redirect(module_rr.get_absolute_url())
+
     if module_rr.status == "APPROVED" \
        or module_rr.status == "PAYED" \
        or module_rr.status == "EXEMPTED":
         form = SubmitFinalScoreForm(request.POST or None)
 
         if form.is_valid():
-            score = form.cleaned_data['final_score']
-            notes = form.cleaned_data['notes']
-            module_rr.final_score = score
+            module_rr.final_score = form.cleaned_data['final_score']
 
-            if module_rr.status == "PAYED":
+            if module_rr.status == "PAYED" and module_rr.final_score:
                 module_rr.status = "COMPLETED"
 
             module_rr.save()

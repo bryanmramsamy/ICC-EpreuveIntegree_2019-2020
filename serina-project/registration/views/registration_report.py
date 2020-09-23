@@ -11,6 +11,7 @@ from ..forms import (
     ModuleRegistrationReportCreateFrom,
     StudentRegistrationReportCreateFrom,
     SubmitFinalScoreForm,
+    SubmitNotesForm,
 )
 from ..models import (
     DegreeRegistrationReport,
@@ -145,12 +146,13 @@ class ModuleRegistrationReportDetailView(
 
         if groups_utils.is_back_office_user(self.request.user):
             context["form"] = SubmitFinalScoreForm
+            context["form_notes"] = SubmitNotesForm
 
             if self.get_object().final_score:
-                context['form_final_score'] = self.get_object().final_score
+                context['final_score_value'] = self.get_object().final_score
 
             if self.get_object().notes:
-                context['form_notes'] = self.get_object().notes
+                context['notes_value'] = self.get_object().notes
 
         return context
 

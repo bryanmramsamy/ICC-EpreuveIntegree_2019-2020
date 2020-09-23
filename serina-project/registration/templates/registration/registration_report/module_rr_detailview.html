@@ -221,21 +221,10 @@
                 </span>
               {% endif %}
 
-
             {% else %}
               <span class="text-muted">{% trans 'N/A' %}</span>
             {% endif %}
           </th>
-        </tr>
-      {% endif %}
-      {% if module_rr.notes %}
-        <tr>
-          <td class="col-4">
-            {% trans 'Notes' %}:
-          </td>
-          <td class="col-8">
-            {{ module_rr.notes|linebreaks }}
-          </td>
         </tr>
       {% endif %}
     </table>
@@ -269,15 +258,15 @@
 
     {% if request.user|is_back_office_user %}
       <div class="col">
-        <a data-toggle="collapse" href="#score_note_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning {% if not module_rr.approved %}disabled{% endif %}">
+        <a data-toggle="collapse" href="#score_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning {% if not module_rr.approved %}disabled{% endif %}">
           {% if not module_rr.approved %}
             {% trans 'This regitration was is not approved' %} {% include 'logo/score.html' %}
 
           {% elif module_rr.final_score %}
-            {% trans 'Update final score or note' %} {% include 'logo/score.html' %}
+            {% trans 'Update final score' %} {% include 'logo/score.html' %}
 
           {% else %}
-            {% trans 'Add final score or note' %} {% include 'logo/score.html' %}
+            {% trans 'Add final score' %} {% include 'logo/score.html' %}
           {% endif %}
         </a>
       </div>
@@ -299,7 +288,7 @@
 
   {# Score and note form update #}
 
-  <div class="container py-3 collapse" id="score_note_form">
+  <div class="container py-3 collapse" id="score_form">
     <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="POST">
       {% csrf_token %}
 
@@ -314,23 +303,80 @@
         {{ form.final_score.help_text }}
       </small>
 
-
-      {# notes #}
-
-      <div class="form-group">
-        <label for="{{ form.notes.id_for_label }}" class="h5 text-uppercase">
-          {{ form.notes.label }} <span class="badge badge-danger">{{ form.notes.errors.as_text }}</span>
-        </label>
-        <textarea id="{{ form.notes.auto_id }}" name="{{ form.notes.html_name }}" class="form-control form-control-lg">{{ form_notes }}</textarea>
-        <small class="badge badge-warning">{% trans 'Do not erase the text you want to keep' %}</small> <small class="text-muted">{{ form.notes.help_text }}</small>
-      </div>
-
+      <hr>
 
       {# submit #}
 
       <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update final score and/or notes' %}">
     </form>
   </div>
+
+  <br>
+
+
+  {# Notes #}
+
+  <section class="container border rounded py-3">
+    <div class="h3 text-center">
+      {% include 'logo/notes.html' %} {% trans 'Notes from the teachers and the staff' %}
+    </div>
+
+    <hr>
+
+    {% if module_rr.notes %}
+      <p>
+        {{ module_rr.notes|linebreaks }}
+      </p>
+
+    {% else %}
+      <div class="h5 text-center text-muted">
+        {% include 'logo/check_info.html' %} {% trans 'No notes available' %}
+      </div>
+    {% endif %}
+
+
+    {# Note update form #}
+
+    {% if request.user|is_back_office_user %}
+      <hr>
+
+      <a data-toggle="collapse" href="#notes_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning">
+        {% trans 'Add a note' %} {% include 'logo/notes.html' %}
+      </a>
+
+
+      <div class="container py-3 collapse" id="notes_form">
+
+        <hr>
+        <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="POST">
+          {% csrf_token %}
+
+
+          {# notes #}
+
+          <label for="{{ form_notes.notes.id_for_label }}" class="h5 text-uppercase">
+            {{ form_notes.notes.label }} <span class="badge badge-danger">{{ form_notes.notes.errors.as_text }}</span>
+          </label>
+          <textarea id="{{ form_notes.notes.auto_id }}" name="{{ form_notes.notes.html_name }}" class="form-control form-control-lg" required>{{ notes_value }}</textarea>
+          <small class="badge badge-warning">
+            {% trans 'Keep the pre-existing notes in order to not over override them' %}
+          </small>
+          <small class="text-muted">
+            {{ form_notes.notes.help_text }}
+          </small>
+
+          <hr>
+
+          {# submit #}
+
+          <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update final score and/or notes' %}">
+        </form>
+      </div>
+    {% endif %}
+
+
+
+  </section>
 
 
   {# Back Office Tag closing #}

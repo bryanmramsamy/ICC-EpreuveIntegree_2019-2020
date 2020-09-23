@@ -185,6 +185,16 @@ def module_rr_not_payed(request):
     )
 
 
+def module_rr_notes_updated(request):
+    """Informs the user that the notes from the Module Registration Request has
+    correctly been updated."""
+
+    messages.success(
+        request,
+        _("The notes for this module report has correctly been updated.")
+    )
+
+
 # ModuleRegistrationReport payment
 
 def module_payment_succeeded(request):

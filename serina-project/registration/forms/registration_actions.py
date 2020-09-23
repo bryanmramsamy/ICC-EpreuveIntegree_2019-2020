@@ -13,6 +13,11 @@ class SubmitFinalScoreForm(forms.Form):
         help_text=(_("Student's final score on this module. This score will "
                      "determine if the student succeeded the module or not.")),
     )
+
+
+class SubmitNotesForm(forms.Form):
+    """Form to update the notes from a ModuleRegistrationReport instance."""
+
     notes = forms.CharField(
         widget=forms.Textarea,
         label=_("Additonal notes"),
