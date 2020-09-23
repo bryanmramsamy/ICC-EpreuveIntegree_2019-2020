@@ -31,6 +31,30 @@ def student_attends_course(user, course):
         and course.modules_rrs.filter(student_rr__created_by=user).exists()
 
 
+def still_registrable_courses(module):
+    """Get the list of all the sill registrable courses based on the
+    settings.COURSE_MINIMUM_REGISTRATION_DAYS value"""
+
+    return [course for course in Course.objects.filter(module=module)
+            if course.still_registrable]
+
+
+def courses_sorted_by_attendance_percentage(courses):
+    """Sort a list of courses by their attendance capacity.
+
+    The attendance capacity is calculated by the percentage of free seats on
+    the total amout of seats for a recommended capacity. If all the courses
+    recommended capacity has been reached, the same calculation is made on the
+    maximal capacity.
+    """
+
+    return sorted(
+        courses,
+        key=lambda course: course.recommended_attendance_percentage,
+        reverse=False
+    )
+
+
 # ManyToMany relationship check
 
 def is_eligible_teacher(teacher, module):

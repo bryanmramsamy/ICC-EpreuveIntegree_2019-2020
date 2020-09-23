@@ -19,6 +19,7 @@ from ..models import (
 )
 from ..utils import (
     groups as groups_utils,
+    management as management_utils,
     messages as messages_utils,
     mixins as mixins_utils,
     registration as registration_utils,
@@ -129,9 +130,9 @@ class ModuleRegistrationReportListView(
 
 class ModuleRegistrationReportDetailView(
     LoginRequiredMixin,
-    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
+    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,  # TODO: teachers
     DetailView,
-):  # TODO: Debug view
+):
     """DetailView for ModuleRegistrationReport."""
 
     model = ModuleRegistrationReport

@@ -13,9 +13,11 @@ from management.models import Course
 @decorators_utils.managers_or_administrators_only
 def module_validation(request, pk):
     """Validate a ModuleRegistrationReport submitted based on its 'pk'.
+
     Register the student to the less populated course available for the chosen
     module. Also save the amount of attempts done by the student for the
-    chosen module."""
+    chosen module.
+    """
 
     module_rr = get_object_or_404(ModuleRegistrationReport, pk=pk)
     if module_rr.approved:

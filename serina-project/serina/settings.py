@@ -178,6 +178,17 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 
 
+# Messages
+
+MESSAGE_TAGS = {messages.ERROR: 'danger'}
+
+
+# App settings
+
+COURSE_MINIMUM_REGISTRATION_DAYS = 7
+SUCCESS_SCORE_THRESHOLD = 50
+
+
 # Mails
 
 CONTACT_MAILS = {
@@ -185,13 +196,3 @@ CONTACT_MAILS = {
     "management": "management@serina-project.bryanmramsamy.com",
     "support": "support@serina-project.bryanmramsamy.com",
 }
-
-
-# App settings
-
-SUCCESS_SCORE_THRESHOLD = 50
-
-
-# Messages
-
-MESSAGE_TAGS = {messages.ERROR: 'danger'}
