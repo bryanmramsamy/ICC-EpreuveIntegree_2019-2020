@@ -27,7 +27,7 @@
 
       {{ form.created_by }}
 
-      <div class="row row-cols-1 row-cols-md-2">
+      <div class="row row-cols-1 row-cols-md-3">
         {# birthday #}
 
         <div class="form-group col">
@@ -36,6 +36,7 @@
           </label>
           <input id="{{ form.birthday.auto_id }}" name="{{ form.birthday.html_name }}" type="date" class="form-control form-control-lg" required>
         </div>
+
 
         {# nationality #}
 
@@ -47,7 +48,22 @@
             {% include 'nationality_select.html' %}
           </select>
         </div>
+
+
+        {# student_is_foreigner #}
+
+        <div class="form-group col">
+          <div class="custom-control custom-switch">
+            <input id="{{ form.student_is_foreigner.auto_id }}" name="{{ form.student_is_foreigner.html_name }}" type="checkbox" class="custom-control-input" onclick="myFunction()">
+            <label for="{{ form.student_is_foreigner.id_for_label }}" class="custom-control-label h5 text-uppercase">
+              {{ form.student_is_foreigner.label }} <span class="badge badge-danger">{{ form.student_is_foreigner.errors.as_text }}</span>
+            </label>
+            <br>
+            <small class="text-muted">{{ form.student_is_foreigner.help_text }}</small>
+          </div>
+        </div>
       </div>
+
 
       {# address #}
 
@@ -57,6 +73,7 @@
         </label>
         <input id="{{ form.address.auto_id }}" name="{{ form.address.html_name }}" type="text" class="form-control form-control-lg" required>
       </div>
+
 
       {# additional_address #}
 
@@ -68,6 +85,8 @@
       </div>
 
       <div class="row row-cols-1 row-cols-md-2">
+
+
         {# postal_code #}
 
         <div class="form-group col-md-4">
@@ -76,6 +95,7 @@
           </label>
           <input id="{{ form.postal_code.auto_id }}" name="{{ form.postal_code.html_name }}" type="text" class="form-control form-control-lg" required>
         </div>
+
 
         {# postal_locality #}
 
@@ -86,6 +106,7 @@
           <input id="{{ form.postal_locality.auto_id }}" name="{{ form.postal_locality.html_name }}" type="text" class="form-control form-control-lg" required>
         </div>
       </div>
+
 
       {# id_picture #}
 
@@ -102,6 +123,7 @@
         </div>
       </div>
 
+
       {# id_card #}
 
       <div class="form-group">
@@ -116,6 +138,7 @@
         </div>
         <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.id_card.help_text }}</small>
       </div>
+
 
       {# secondary_education_certificate #}
 
@@ -135,7 +158,8 @@
 
       {# Foreign student additional mandatory fields #}
 
-      {% if foreign_form %}
+      <div id="foreign_fields" style="display: none;">
+
 
         {# annex_403 #}
 
@@ -144,13 +168,14 @@
             {{ form.annex_403.label }} <span class="badge badge-danger">{{ form.annex_403.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
-            <input id="{{ form.annex_403.auto_id }}" name="{{ form.annex_403.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <input id="{{ form.annex_403.auto_id }}" name="{{ form.annex_403.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
             <label id="{{ form.annex_403.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.annex_403.id_for_label }}">
               No file selected yet
             </label>
             <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.annex_403.help_text }}</small>
           </div>
         </div>
+
 
         {# other_school_inscription_certificate #}
 
@@ -159,13 +184,14 @@
             {{ form.other_school_inscription_certificate.label }} <span class="badge badge-danger">{{ form.other_school_inscription_certificate.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
-            <input id="{{ form.other_school_inscription_certificate.auto_id }}" name="{{ form.other_school_inscription_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <input id="{{ form.other_school_inscription_certificate.auto_id }}" name="{{ form.other_school_inscription_certificate.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
             <label id="{{ form.other_school_inscription_certificate.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.other_school_inscription_certificate.id_for_label }}">
               No file selected yet
             </label>
             <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.other_school_inscription_certificate.help_text }}</small>
           </div>
         </div>
+
 
         {# national_register_extract #}
 
@@ -174,13 +200,14 @@
             {{ form.national_register_extract.label }} <span class="badge badge-danger">{{ form.national_register_extract.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
-            <input id="{{ form.national_register_extract.auto_id }}" name="{{ form.national_register_extract.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <input id="{{ form.national_register_extract.auto_id }}" name="{{ form.national_register_extract.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
             <label id="{{ form.national_register_extract.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.national_register_extract.id_for_label }}">
               No file selected yet
             </label>
             <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.national_register_extract.help_text }}</small>
           </div>
         </div>
+
 
         {# belgian_studies_history #}
 
@@ -189,14 +216,14 @@
             {{ form.belgian_studies_history.label }} <span class="badge badge-danger">{{ form.belgian_studies_history.errors.as_text }}</span>
           </label>
           <div class="form-group custom-file">
-            <input id="{{ form.belgian_studies_history.auto_id }}" name="{{ form.belgian_studies_history.html_name }}" class="custom-file-input form-control form-control-lg" type="file" required>
+            <input id="{{ form.belgian_studies_history.auto_id }}" name="{{ form.belgian_studies_history.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
             <label id="{{ form.belgian_studies_history.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.belgian_studies_history.id_for_label }}">
               No file selected yet
             </label>
             <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.belgian_studies_history.help_text }}</small>
           </div>
         </div>
-      {% endif %}
+      </div>
 
       <div class="h5 text-uppercase">
         {% include 'registration/authentication/gdpr_checkbox.html' %}
@@ -208,6 +235,7 @@
       <h4 class="text-uppercase text-center">{% trans 'Additional information' %}</h4>
 
       <br>
+
 
       {# archievement_certificates #}
 
@@ -224,6 +252,7 @@
         <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.archievement_certificates.help_text }}</small>
       </div>
 
+
       {# job_organization_certificates #}
 
       <div class="form-group">
@@ -239,6 +268,7 @@
         <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.job_organization_certificates.help_text }}</small>
       </div>
 
+
       {# exemption_report #}
 
       <div class="form-group">
@@ -253,6 +283,7 @@
         </div>
         <small class="badge badge-warning">{% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.exemption_report.help_text }}</small>
       </div>
+
 
       {# notes #}
 
@@ -277,6 +308,28 @@
 
 {% block scripts %}
   <script>
+    function myFunction() {
+      // Get the checkbox
+      var checkBox = document.getElementById("{{ form.student_is_foreigner.auto_id }}");
+      // Get the output text
+      var text = document.getElementById("foreign_fields");
+
+      // If the checkbox is checked, display the output text
+      if (checkBox.checked == true){
+        text.style.display = "block";
+        document.getElementById("{{ form.annex_403.auto_id }}").required = true;
+        document.getElementById("{{ form.other_school_inscription_certificate.auto_id }}").required = true;
+        document.getElementById("{{ form.national_register_extract.auto_id }}").required = true;
+        document.getElementById("{{ form.belgian_studies_history.auto_id }}").required = true;
+      } else {
+        text.style.display = "none";
+        document.getElementById("{{ form.annex_403.auto_id }}").required = false;
+        document.getElementById("{{ form.other_school_inscription_certificate.auto_id }}").required = false;
+        document.getElementById("{{ form.national_register_extract.auto_id }}").required = false;
+        document.getElementById("{{ form.belgian_studies_history.auto_id }}").required = false;
+      }
+    }
+
     $('#{{ form.id_picture.auto_id }}').on('change',function(){
       var fileName = $(this).val();
       $(this).next('#{{ form.id_picture.auto_id }}_label').html(fileName);

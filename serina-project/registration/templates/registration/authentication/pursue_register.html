@@ -45,8 +45,6 @@
           But you are not a student yet ! There is one more step to complete !
         </h2>
         To become a student and being able to register to our degrees and our modules, you must finish your registration by filling the student registration report form.
-        <br><br>
-        If you are a foreign student, you must fill additional fields and submit additional files in order to complete your registration.
         <br>
         You can also fill finish your registration later if you want to.
         <hr>
@@ -55,11 +53,8 @@
         </h2>
       {% endblocktrans %}
 
-      <a href="{% url 'student_rr_createview_homegrown' %}" class="btn btn-block btn-lg btn-dark">
-        {% trans 'I\'m a homegrown student and I want to complete my registration' %} {% include 'logo/register_alt.html' %}
-      </a>
-      <a href="{% url 'student_rr_createview_foreigner' %}" class="btn btn-block btn-lg btn-dark">
-        {% trans 'I\'m a foreign student and I want to complete my registration' %} {% include 'logo/register_alt.html' %}
+      <a href="{% url 'student_rr_createview' %}" class="btn btn-block btn-lg btn-dark">
+        {% trans 'I want to complete my registration' %} {% include 'logo/register_alt.html' %}
       </a>
       <a href="{% url 'home' %}" class="btn btn-block btn-lg btn-outline-dark">
         {% trans 'I want to complete my registration later' %} {% include 'logo/clock.html' %}

@@ -8,9 +8,8 @@ from django.views.generic import CreateView, DetailView, ListView
 
 from ..forms import (
     DegreeRegistrationReportCreateFrom,
-    ForeignStudentRegistrationReportCreateFrom,
     ModuleRegistrationReportCreateFrom,
-    HomegrownStudentRegistrationReportCreateFrom,
+    StudentRegistrationReportCreateFrom,
     SubmitFinalScoreForm,
 )
 from ..models import (
@@ -55,7 +54,7 @@ class StudentRegistrationReportDetailView(
                     "html"
 
 
-class HomegrownStudentRegistrationReportCreateView(
+class StudentRegistrationReportCreateView(
     LoginRequiredMixin,
     UserPassesTestMixin,
     CreateView,
@@ -63,18 +62,13 @@ class HomegrownStudentRegistrationReportCreateView(
 ):
     """CreateView for HomegrownStudentRegistrationReport.
 
-    Student Registration request view for homegrown students.
-    Homegrown students are exempted of filling some additional data which are
-    mandatory for foreign students.
-    This view ommit those fields.
-
     Only registered 'Guest'-group members can submit a
     StudentRegistrationReport. Once done, the 'Guest'-user is automatically
     promoted to the 'Student'-group.
     """
 
     model = StudentRegistrationReport
-    form_class = HomegrownStudentRegistrationReportCreateFrom
+    form_class = StudentRegistrationReportCreateFrom
     template_name = "registration/registration_report/student_rr_createview" \
                     ".html"
 
@@ -113,32 +107,6 @@ class HomegrownStudentRegistrationReportCreateView(
         context = super().get_context_data(*args, **kwargs)
         context["support_team_mail"] = settings.CONTACT_MAILS["support"]
         context["foreign_form"] = False
-
-        return context
-
-
-class ForeignStudentRegistrationReportCreateView(
-    HomegrownStudentRegistrationReportCreateView,
-):
-    """CreateView for ForeignStudentRegistrationReport.
-
-    Student Registration request view for foreign students.
-    Foreign students must fill additional fields and send additional data which
-    are not required for homegrown students.
-
-    Only registered 'Guest'-group members can submit a
-    StudentRegistrationReport. Once done, the 'Guest'-user is automatically
-    promoted to the 'Student'-group.
-    """
-
-    form_class = ForeignStudentRegistrationReportCreateFrom
-
-    def get_context_data(self, *args, **kwargs):
-        """Add foreign student flag to view in order hide/show foreign
-        student's additional fields to fill."""
-
-        context = super().get_context_data(*args, **kwargs)
-        context["foreign_form"] = True
 
         return context
 
