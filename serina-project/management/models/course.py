@@ -1,5 +1,6 @@
-from datetime import date
+from datetime import date, timedelta
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -82,11 +83,25 @@ class Course(BackOfficeResource):
         return self.room.recommended_capacity - self.nb_registrants
 
     @property
+    def recommended_attendance_percentage(self):
+        """Compute the percentage of attendance compared to the total
+        recommended capacity amount."""
+
+        return (self.nb_registrants/self.room.recommended_capacity)
+
+    @property
     def max_seats_available(self):
         """Compute the amount of seats left of this course until the
         classroom's maximal capacity is reached."""
 
         return self.room.max_capacity - self.nb_registrants
+
+    @property
+    def max_attendance_percentage(self):
+        """Compute the percentage of attendance compared to the total maximum
+        capacity amount."""
+
+        return (self.nb_registrants/self.room.max_capacity)
 
     @property
     def over_attendance(self):
@@ -123,6 +138,18 @@ class Course(BackOfficeResource):
 
         return status
 
+    @property
+    def still_registrable(self):
+        """Check if it is not too late to be assigned to this course.
+
+        The maximum amount of days of attendance per course required is defined
+        by the settings.COURSE_MINIMUM_REGISTRATION_DAYS value.
+        """
+
+        return (self.date_end - date.today()) >= timedelta(
+            days=settings.COURSE_MINIMUM_REGISTRATION_DAYS,
+        )
+
     def __str__(self):
         """Unicode representation of Course.
 
@@ -130,7 +157,8 @@ class Course(BackOfficeResource):
         any.
         """
 
-        str_result = _("({}) {} course".format(self.reference, self.module.title))
+        str_result = _("({}) {} course".format(self.reference,
+                                               self.module.title))
 
         if self.teacher or self.room:
             str_result += _(" given")
@@ -179,14 +207,21 @@ class Course(BackOfficeResource):
                 ))
             )
 
+        # date_start cannot be set in the past
+        if self.date_start < date.today():
+            raise ValidationError(
+                _("Start date ({}) must be set after today's date ({})."
+                    .format(self.date_start, date.today()))
+                )
+
         # nb_registrants must not exceed room.max_capacity
         if self.room and self.nb_registrants > self.room.max_capacity:
             raise ValidationError(
                 _("Amount of registrants ({}) cannot be higher than the "
-                "maximum capacity of the assigned classroom ({}).".format(
+                  "maximum capacity of the assigned classroom ({}).".format(
                     self.nb_registrants,
-                    self.room.max_capacity
-                ))
+                    self.room.max_capacity,
+                  ))
             )
 
     def save(self, *args, **kwargs):
