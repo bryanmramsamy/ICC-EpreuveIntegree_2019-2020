@@ -222,39 +222,53 @@
   <br>
 
 
-  {# Back to profile button #}
-
+  {# Back Office Tag openning #}
 
   {% if request.user|is_back_office_user %}
     {% include 'backoffice_tag.html' %}
-      <section class="container border border-warning rounded py-3">
+    <section class="container border border-warning rounded py-3">
   {% endif %}
 
 
-  <div class="row row-cols-1 {% if not request.user|is_student and not module_rr.status == 'APPROVED' %}row-cols-md-2{% endif %} {% if request.user|is_manager_or_administrator and module_rr.status == 'PENDING' %}row-cols-md-3{% endif %}">
-    {% if request.user|is_manager_or_administrator %}
-      <div class="col">
+  {# Actions #}
+
+  <div class="row row-cols-1
+    {% if request.user == module_rr.student_rr.created_by and module_rr.status == 'APPROVED' or request.user|is_back_office_user %}
+      row-cols-md-2
+    {% endif %}
+  ">
+    {% if request.user|is_manager_or_administrator and module_rr.status == 'PENDING' %}
+      <div class="col pb-3">
         <a href="" class="btn btn-block btn-lg btn-success">{% trans 'Approve registration' %} {% include 'logo/check_valid.html' %}</a>
       </div>
-      <div class="col">
+      <div class="col pb-3">
         <a href="" class="btn btn-block btn-lg btn-danger">{% trans 'Deny registration' %} {% include 'logo/check_invalid.html' %}</a>
       </div>
+    {% endif %}
 
-    {% elif request.user|is_teacher %}
+    {% if request.user|is_back_office_user %}
       <div class="col">
-        <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
+        <a href="404" class="btn btn-block btn-lg btn-primary">
+          {% trans 'DEBUG: SCORE FORM' %}
+        </a>
       </div>
 
-    {% elif module_rr.status == "APPROVED" %}
+    {% elif request.user == module_rr.student_rr.created_by and module_rr.status == 'APPROVED' %}
       <div class="col">
-        <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
+        <a href="404" class="btn btn-block btn-lg btn-success">
+          {% trans 'Checkout' %} {% include 'logo/checkout.html' %}
+        </a>
       </div>
+
     {% endif %}
 
     <div class="col">
       <a href="{% url 'userprofile_detailview' pk=module_rr.student_rr.created_by.pk %}" class="btn btn-block btn-lg btn-outline-dark">{% trans 'Back to profile' %} {% include 'logo/profile.html' %}</a>
     </div>
   </div>
+
+
+  {# Back Office Tag closing #}
 
   {% if request.user|is_back_office_user %}
     </section>

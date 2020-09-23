@@ -2,6 +2,7 @@ from django import forms
 
 from ..models import ModuleRegistrationReport
 
+
 class PaymentForm(forms.Form):
     """PaymentForm definition."""
 
