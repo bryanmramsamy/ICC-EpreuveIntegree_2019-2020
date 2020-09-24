@@ -135,11 +135,19 @@
         {% include 'bubbles/info/paypal_only.html' %}
 
 
+        {# paypal logo #}
+
+        <div class="mx-5 my-3 p-5 rounded bg-light">
+          <img src="{% static 'logo/paypal_logo.png' %}" alt="Checkout" class="img-fluid">
+        </div>
+
+
         {# paypal form #}
 
         {{ form.render }}
 
         <br>
+
 
         {# cancel button #}
 
