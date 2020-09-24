@@ -1,18 +1,53 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n static %}
 
-{% block title %}{% trans 'Password change' %}{% endblock title %}
+
+{% block title %}
+    {% trans 'Change your password' %}
+{% endblock title %}
+
 
 {% block content %}
-    <form action="{% url 'password_change' %}" method="post">
+  <section class="container">
+    <div class="container border rounded text-center bg-light p-3" style="max-width: 600px;">
+      <img src="{% static 'draws/authentication.svg' %}" alt="Change your password" class="img-fluid">
+      <h1>{% trans 'Change your password' %} {% include 'logo/lock.html' %}</h1>
+
+      <hr>
+
+
+      {# change password form #}
+
+      <form method="POST">
         {% csrf_token %}
-        {{ form.as_p }}
 
-        Your password can’t be too similar to your other personal information.
-        Your password must contain at least 8 characters.
-        Your password can’t be a commonly used password.
-        Your password can’t be entirely numeric.
+        <div class="form-group">
+          <label for="{{ form.old_password.id_for_label }}" class="h5 text-uppercase">
+            {% trans 'Your new password' %}
+          </label>
+          <input id="{{ form.old_password.auto_id }}" name="{{ form.old_password.html_name }}" type="password" class="form-control form-control-lg" required>
+        </div>
 
-        <input type="submit" value="{% trans 'Change password' %}">
-    </form>
+        <div class="form-group">
+          <label for="{{ form.new_password1.id_for_label }}" class="h5 text-uppercase">
+            {% trans 'Your new password' %}
+          </label>
+          <input id="{{ form.new_password1.auto_id }}" name="{{ form.new_password1.html_name }}" type="password" class="form-control form-control-lg" required>
+        </div>
+
+        <div class="form-group">
+          <label for="{{ form.new_password2.id_for_label }}" class="h5 text-uppercase">
+            {% trans 'Password confirmation' %}
+          </label>
+          <input id="{{ form.new_password2.auto_id }}" name="{{ form.new_password2.html_name }}" type="password" class="form-control form-control-lg" required>
+        </div>
+
+        <input type="submit" value='{% trans "Change your password" %}' class="btn btn-block btn-lg btn-dark h5 text-uppercase">
+
+        <a href="{% url 'userprofile_detailview' pk=request.user.pk %}" class="btn btn-block btn-lg btn-outline-dark">
+          {% trans 'Cancel and back to profile' %} {% include 'logo/profile.html' %}
+        </a>
+      </form>
+    </div>
+  </section>
 {% endblock content %}

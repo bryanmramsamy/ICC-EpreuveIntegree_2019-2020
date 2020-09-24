@@ -14,9 +14,11 @@
 
     <div class="collapse navbar-collapse" id="navbarCollapse">
 
+
       {# Navbar options #}
 
       <ul class="navbar-nav mr-auto">
+
 
         {# Catalog dropdown #}
 
@@ -89,12 +91,12 @@
 
         {% else %}
           <a href="{% url 'register' %}" class="btn btn-light mr-2">
-            {% trans 'Sign Up' %}
+            {% trans 'Sign up' %}
             {% include 'logo/register.html' %}
           </a>
 
           <a href="{% url 'login' %}" class="btn btn-outline-light">
-            {% trans 'Sign In' %}
+            {% trans 'Sign in' %}
             {% include 'logo/in-left.html' %}
           </a>
         {% endif %}
