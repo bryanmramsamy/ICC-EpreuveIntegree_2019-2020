@@ -31,6 +31,11 @@
       <span class="h5 text-center text-muted text-uppercase">
         {{ userprofile.get_full_name }}
       </span>
+      {% if request.user|is_manager_or_administrator and not userprofile.is_active %}
+        <br><br>
+
+        {% include 'bubbles/danger/user_disabled.html' %}
+      {% endif %}
     </div>
 
     <br>

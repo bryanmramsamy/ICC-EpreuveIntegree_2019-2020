@@ -224,3 +224,32 @@ def module_not_payable(request):
         _("This module registration request cannot be payed. It has either "
           "not been approved, is already payed, completed or exempted.")
     )
+
+
+# User (de)activation
+
+def user_activated(request):
+    """Warns the manager/administrator that the selected user's account has
+    been activated."""
+
+    messages.success(
+        request,
+        _(
+            "The selected user's account has been successfully re-enabled. "
+            "It can be disabled again without cuasing any data loss."
+        )
+    )
+
+
+def user_deactivated(request):
+    """Warns the manager/administrator that the selected user's account has
+    been deactivated."""
+
+    messages.success(
+        request,
+        _(
+            "The selected user's account has been successfully disabled. All "
+            "his/her is still saved in the database and the account can be "
+            "reactivated anytime."
+        )
+    )
