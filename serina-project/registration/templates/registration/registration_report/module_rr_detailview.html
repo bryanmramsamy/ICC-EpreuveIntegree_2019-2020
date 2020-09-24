@@ -139,6 +139,25 @@
           {% endif %}
         </th>
       </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Exemption request' %}:
+        </td>
+        <th class="col-8">
+          {% if module_rr.exemption_request %}
+            <span class="text-info">
+              {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
+            </span>
+            <a href="{{ module_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+              {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+            </a>
+          {% else %}
+            <span class="text-muted">
+              {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+            </span>
+          {% endif %}
+        </th>
+      </tr>
       {% if module_rr.degree_rr %}
         <tr>
           <td class="col-4">
