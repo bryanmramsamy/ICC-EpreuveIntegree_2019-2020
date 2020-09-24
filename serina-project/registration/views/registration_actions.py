@@ -109,9 +109,7 @@ def module_score_submit(request, pk):
 
         return redirect(module_rr.get_absolute_url())
 
-    if module_rr.status == "APPROVED" \
-       or module_rr.status == "PAYED" \
-       or module_rr.status == "EXEMPTED":
+    if not module_rr.status == "DENIED":
         form = SubmitFinalScoreForm(request.POST or None)
 
         if form.is_valid():
@@ -119,6 +117,9 @@ def module_score_submit(request, pk):
 
             if module_rr.status == "PAYED" and module_rr.final_score:
                 module_rr.status = "COMPLETED"
+
+            elif module_rr.status == "PENDING" and module_rr.final_score:
+                module_rr.status = "EXEMPTED"
 
             module_rr.save()
 

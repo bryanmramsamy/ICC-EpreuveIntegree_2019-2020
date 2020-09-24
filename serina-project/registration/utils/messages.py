@@ -162,14 +162,14 @@ def module_rr_already_completed(request):
     )
 
 
-def module_rr_not_approved(request):
+def module_rr_final_score_while_denied(request):
     """Warns the user that the module on which (s)he tries to submit a score
-    has not been approved yet."""
+    has been denied."""
 
     messages.error(
         request,
-        _("This module registration request has not been approved or yet and "
-          "can therefore not been rated.")
+        _("This module registration request has been denied and can therefore "
+          "not been rated.")
     )
 
 

@@ -145,9 +145,23 @@
         </td>
         <th class="col-8">
           {% if module_rr.exemption_request %}
-            <span class="text-info">
-              {% include 'logo/check_valid.html' %} {% trans 'Uploaded' %}
-            </span>
+
+            {% if module_rr.status == "EXEMPTED" %}
+              <span class="text-success">
+                {% include 'logo/check_valid.html' %} {% trans 'Accepted' %}
+              </span>
+
+            {% elif module_rr.status == "PENDING" %}
+              <span class="text-info">
+                {% include 'logo/check_info.html' %} {% trans 'Uploaded' %}
+              </span>
+
+            {% else %}
+              <span class="text-danger">
+                {% include 'logo/check_invalid.html' %} {% trans 'Denied' %}
+              </span>
+            {% endif %}
+
             <a href="{{ module_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
               {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
             </a>
@@ -186,7 +200,7 @@
           </th>
         </tr>
       {% endif %}
-      {% if module_rr.approved %}
+      {% if module_rr.approved or module_rr.status == 'EXEMPTED' %}
         <tr>
           <td class="col-4">
             {% trans 'ECTS' %}:
@@ -273,9 +287,12 @@
     {% endif %}
 
     {% if request.user|is_back_office_user %}
-      <div class="col">
-        <a data-toggle="collapse" href="#score_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning {% if not module_rr.approved %}disabled{% endif %}">
-          {% if not module_rr.approved %}
+      <div class="col pb-3">
+        <a data-toggle="collapse" href="#score_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning {% if module_rr.status == 'DENIED' %}disabled{% endif %}">
+          {% if module_rr.status == 'PENDING' %}
+            {% trans 'Exempt this registration' %} {% include 'logo/score.html' %}
+
+          {% elif module_rr.status == 'DENIED' %}
             {% trans 'This regitration was is not approved' %} {% include 'logo/score.html' %}
 
           {% elif module_rr.final_score %}
@@ -308,22 +325,37 @@
     <form action="{% url 'backoffice_module_score_submit' pk=module_rr.pk %}" method="POST">
       {% csrf_token %}
 
+      <div class="row row-cols-1 row-cols-md-2">
 
-      {# final_score #}
+          {# final_score #}
 
-      <label for="{{ form.final_score.id_for_label }}" class="h5 text-uppercase">
-        {{ form.final_score.label }} <span class="badge badge-danger">{{ form.final_score.errors.as_text }}</span>
-      </label>
-      <input id="{{ form.final_score.auto_id }}" name="{{ form.final_score.html_name }}" type="number" min="0" max="100" step="0.01" value="{{ form_final_score }}" class="form-control form-control-lg" required>
-      <small class="text-muted">
-        {{ form.final_score.help_text }}
-      </small>
+          <div class="col">
+            <label for="{{ form.final_score.id_for_label }}" class="h5 text-uppercase">
+              {{ form.final_score.label }} <span class="badge badge-danger">{{ form.final_score.errors.as_text }}</span>
+            </label>
+            <input id="{{ form.final_score.auto_id }}" name="{{ form.final_score.html_name }}" type="number" min="0" max="100" step="0.01" value="{{ form_final_score }}" class="form-control form-control-lg" required>
+            <small class="text-muted">
+              {{ form.final_score.help_text }}
+            </small>
+          </div>
 
-      <hr>
+        {# submit #}
 
-      {# submit #}
+        <div class="col">
+          <h5><br></h5>
+          <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value=
+            {% if module_rr.status == 'PENDING' %}
+              "{% trans 'Mark registration as exempted' %}""
 
-      <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update final score and/or notes' %}">
+            {% elif module_rr.final_score %}
+              "{% trans 'Update final score' %}"
+
+            {% else %}
+              "{% trans 'Add final score' %}"
+            {% endif %}
+          >
+        </div>
+      </div>
     </form>
   </div>
 
