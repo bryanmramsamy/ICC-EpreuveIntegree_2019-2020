@@ -1,0 +1,18 @@
+{% extends 'bubbles/info.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Payment with PayPal only
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    We only accept direct payment via PayPal.
+    <br>
+    If you don't have a PayPal account, please make one on PayPal's official site.
+  {% endblocktrans %}
+{% endblock bubble_content %}

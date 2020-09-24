@@ -102,7 +102,7 @@
           <label for="{{ form.additional_address.id_for_label }}" class="h5 text-uppercase">
             {{ form.additional_address.label }} <span class="badge badge-danger">{{ form.additional_address.errors.as_text }}</span>
           </label>
-          <input id="{{ form.additional_address.auto_id }}" name="{{ form.additional_address.html_name }}" type="text" {% if student_rr.additional_address %}value="{{ student_rr.additional_address }}"{% endif %} class="form-control form-control-lg" required>
+          <input id="{{ form.additional_address.auto_id }}" name="{{ form.additional_address.html_name }}" type="text" {% if student_rr.additional_address %}value="{{ student_rr.additional_address }}"{% endif %} class="form-control form-control-lg">
           <small class="text-muted">{{ form.additional_address.help_text }}</small>
         </div>
 

@@ -24,7 +24,7 @@
   <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
     <div class="row">
       <div class="col">
-        {% trans 'Invoice ID' %} #{{ module_rr.pk }}
+        {% trans 'Invoice ID' %} #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
       </div>
       <div class="col text-right">
         {% trans 'Module Registration Report' %} {% include 'logo/module_rr.html' %}
@@ -228,9 +228,6 @@
         </tr>
       {% endif %}
     </table>
-
-    DEBUG: <a href="{% url 'module_payment' pk=module_rr.pk %}">Pay</a>
-
   </section>
 
   <br>
@@ -273,7 +270,7 @@
 
     {% elif request.user == module_rr.student_rr.created_by and module_rr.status == 'APPROVED' %}
       <div class="col">
-        <a href="404" class="btn btn-block btn-lg btn-success">
+        <a href="{% url 'module_payment' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-success">
           {% trans 'Checkout' %} {% include 'logo/checkout.html' %}
         </a>
       </div>

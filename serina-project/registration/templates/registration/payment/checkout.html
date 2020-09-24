@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'Login' %}{% endblock title %}
+{% block title %}
+  {% trans 'Checkout #' %}{{ module_rr.pk }}
+{% endblock title %}
 
 {% block content %}
   <form action="" method="post">

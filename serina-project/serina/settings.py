@@ -189,6 +189,13 @@ COURSE_MINIMUM_REGISTRATION_DAYS = 7
 SUCCESS_SCORE_THRESHOLD = 50
 
 
+# Billing data
+
+BILLING = {
+    "name": "SERINA-Project 2020 Fictional Inc.",
+    "vat": "1234567890",
+}
+
 # Mails
 
 CONTACT_MAILS = {

@@ -1,0 +1,20 @@
+{% extends 'bubbles/warning.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    Check the validity of these data
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    For legal purpose, your data must be correct.
+    <br>
+    Please check their validity before procceeding to the payment.
+    <br><br>
+    If one of these data is incorrect, you can edit it from your profile.
+  {% endblocktrans %}
+{% endblock bubble_content %}

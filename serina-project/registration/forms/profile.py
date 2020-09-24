@@ -33,6 +33,7 @@ class StudentProfileUpdateForm(UserProfileUpdateForm):
         help_text=_("Your legal residential address."),
     )
     additional_address = forms.CharField(
+        required=False,
         max_length=255,
         label=_("Additional address"),
         help_text=_("Address complement for long addresses."),
