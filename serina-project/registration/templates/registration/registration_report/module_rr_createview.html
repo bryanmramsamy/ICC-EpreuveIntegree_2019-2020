@@ -113,8 +113,10 @@
       // If the checkbox is checked, display the output text
       if (checkBox.checked == true){
         text.style.display = "block";
+        document.getElementById("{{ form.exemption_report.auto_id }}").required = true;
       } else {
         text.style.display = "none";
+        document.getElementById("{{ form.exemption_report.auto_id }}").required = false;
       }
     }
 

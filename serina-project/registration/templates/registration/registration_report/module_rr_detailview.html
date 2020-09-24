@@ -162,9 +162,18 @@
               </span>
             {% endif %}
 
-            <a href="{{ module_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
-              {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
-            </a>
+            {% if module_rr.exemption_report %}
+              <a href="{{ module_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+              </a>
+
+            {% else %}
+              <span class="badge badge-danger">
+                {% trans 'No file found !' %} <a href="mailto:{{ contact_mails.support }}" class="badge badge-light">Contact our support team {% include 'logo/mail.html' %}</a>.
+              </span>
+
+            {% endif %}
+
           {% else %}
             <span class="text-muted">
               {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
@@ -240,17 +249,17 @@
             {% if module_rr.final_score %}
               {% if module_rr.succeeded %}
                 <span class="text-success">
-                  {% include 'logo/check_valid.html' %} {% trans 'Module validated' %}
+                  {% include 'logo/check_valid.html' %} {% trans 'Succeeded' %}
                 </span>
 
               {% elif module_rr.success_score_threshold_reached %}
                 <span class="text-warning">
-                  {% include 'logo/check_ready.html' %} {% trans 'Module succeeded but not payed yet' %}
+                  {% include 'logo/check_ready.html' %} {% trans 'Succeeded but not payed yet' %}
                 </span>
 
               {% else %}
                 <span class="text-danger">
-                  {% include 'logo/check_invalid.html' %} {% trans 'Module failed' %}
+                  {% include 'logo/check_invalid.html' %} {% trans 'Failed' %}
                 </span>
               {% endif %}
 
