@@ -1,4 +1,5 @@
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models import Q
 from django.shortcuts import reverse
@@ -34,6 +35,30 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         blank=True,
         verbose_name=_("Payment date"),
     )
+    exemption_request = models.BooleanField(
+        default=False,
+        verbose_name=_("Student exemption request"),
+        help_text=_(
+            "If you already succeeded this or a similar module part of this "
+            "degree in another school or educational organization, you can "
+            "ask for an exemption. This will prevent you from passing paying "
+            "this module if your request is accepted by our staff."
+        ),
+    )
+    exemption_report = models.FileField(
+        null=True,
+        blank=True,
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
+        verbose_name=_("Exemption reports"),
+        help_text=_(
+            "Send the documents that can provide you a exemption for one or "
+            "miltiple modules of this degree. The documents will be verified "
+            "by our staff and help them taking a decision regarding your "
+            "request."
+        ),
+    )
 
     class Meta:
         """Meta definition for DegreeRegistrationReport."""
@@ -42,10 +67,29 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         verbose_name_plural = _('Degrees Registration Reports')
 
     @property
+    def partially_denied(self):
+        """Check if at least one of the related modules_rr is denied."""
+
+        if self.modules_rrs.all().count() > 0:
+            partially_denied = self.modules_rrs.filter(status="DENIED")\
+                                               .exists()
+
+        return partially_denied
+
+    @property
+    def fully_denied(self):
+        """Check if all the related modules_rr are denied."""
+
+        if self.modules_rrs.all().count() > 0:
+            fully_denied = self.modules_rrs.exclude(status="DENIED").exists()
+
+        return fully_denied
+
+    @property
     def partially_approved(self):
         """Check if at least one of the related modules_rr is approved.
 
-        Return 'None' if  there is no modules_rrs in the degree_rr.
+        Return 'None' if there is no modules_rrs in the degree_rr.
         """
 
         if self.modules_rrs.all().count() > 0:
