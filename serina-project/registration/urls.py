@@ -180,6 +180,12 @@ urlpatterns = [
     # Back-Office functions
 
     url(
+        r'^back_office/user_activation/(?P<user_pk>[0-9]+)/$',
+        views.activate_deactivate_user,
+        name='backoffice_user_activation'
+    ),
+
+    url(
         r'^back_office/module_validation/(?P<pk>[0-9]+)/$',
         views.module_validation,
         name='backoffice_module_validation'

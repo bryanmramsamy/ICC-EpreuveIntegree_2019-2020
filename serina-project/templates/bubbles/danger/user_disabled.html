@@ -1,0 +1,16 @@
+{% extends 'bubbles/danger.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    User disabled
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    The user has been disabled and cannot furthermore perform any more action.
+  {% endblocktrans %}
+{% endblock bubble_content %}

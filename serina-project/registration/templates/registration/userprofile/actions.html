@@ -16,14 +16,12 @@
 </div>
 
 {% else %}
-  {% if user.is_active %}
-    <a href="404" class="btn btn-block btn-danger">  {# TODO: Add option #}
+  <a href="{% url 'backoffice_user_activation' user_pk=userprofile.pk %}" class="btn btn-block btn-{% if userprofile.is_active %}danger{% else %}success{% endif %}">
+    {% if userprofile.is_active %}
       {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
-    </a>
 
-  {% else %}
-    <a href="404" class="btn btn-block btn-success">  {# TODO: Add option #}
+    {% else %}
       {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
-    </a>
-  {% endif %}
+    {% endif %}
+  </a>
 {% endif %}

@@ -162,14 +162,14 @@ def module_rr_already_completed(request):
     )
 
 
-def module_rr_not_approved(request):
+def module_rr_final_score_while_denied(request):
     """Warns the user that the module on which (s)he tries to submit a score
-    has not been approved yet."""
+    has been denied."""
 
     messages.error(
         request,
-        _("This module registration request has not been approved or yet and "
-          "can therefore not been rated.")
+        _("This module registration request has been denied and can therefore "
+          "not been rated.")
     )
 
 
@@ -223,4 +223,33 @@ def module_not_payable(request):
         request,
         _("This module registration request cannot be payed. It has either "
           "not been approved, is already payed, completed or exempted.")
+    )
+
+
+# User (de)activation
+
+def user_activated(request):
+    """Warns the manager/administrator that the selected user's account has
+    been activated."""
+
+    messages.success(
+        request,
+        _(
+            "The selected user's account has been successfully re-enabled. "
+            "It can be disabled again without cuasing any data loss."
+        )
+    )
+
+
+def user_deactivated(request):
+    """Warns the manager/administrator that the selected user's account has
+    been deactivated."""
+
+    messages.success(
+        request,
+        _(
+            "The selected user's account has been successfully disabled. All "
+            "his/her is still saved in the database and the account can be "
+            "reactivated anytime."
+        )
     )

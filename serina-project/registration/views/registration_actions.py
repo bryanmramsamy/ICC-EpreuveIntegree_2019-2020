@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
@@ -12,6 +13,28 @@ from ..utils import (
 )
 
 from management.models import Course
+
+
+@decorators_utils.managers_or_administrators_only
+def activate_deactivate_user(request, user_pk):
+    """Activate or deactivate a user."""
+
+    user = get_object_or_404(User, pk=user_pk)
+
+    if user.is_active:
+        user.is_active = False
+
+        # TODO: Send mail
+        messages_utils.user_deactivated(request)
+    else:
+        user.is_active = True
+
+        # TODO: Send mail
+        messages_utils.user_activated(request)
+
+    user.save()
+
+    return redirect('userprofile_detailview', pk=user.pk)
 
 
 @decorators_utils.managers_or_administrators_only
@@ -86,9 +109,7 @@ def module_score_submit(request, pk):
 
         return redirect(module_rr.get_absolute_url())
 
-    if module_rr.status == "APPROVED" \
-       or module_rr.status == "PAYED" \
-       or module_rr.status == "EXEMPTED":
+    if not module_rr.status == "DENIED":
         form = SubmitFinalScoreForm(request.POST or None)
 
         if form.is_valid():
@@ -96,6 +117,9 @@ def module_score_submit(request, pk):
 
             if module_rr.status == "PAYED" and module_rr.final_score:
                 module_rr.status = "COMPLETED"
+
+            elif module_rr.status == "PENDING" and module_rr.final_score:
+                module_rr.status = "EXEMPTED"
 
             module_rr.save()
 

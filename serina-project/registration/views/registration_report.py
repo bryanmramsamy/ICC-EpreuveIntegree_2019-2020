@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.models import User
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
@@ -119,12 +120,88 @@ class ModuleRegistrationReportListView(
     LoginRequiredMixin,
     mixins_utils.ManagerAdministratorOnlyMixin,
     ListView,
-):  # TODO: Debug view
-    """ListView for ModuleRegistrationReport."""
+):
+    """ListView for ModuleRegistrationReport.
+
+    The view support user filters on student, module, degree, course and
+    status.
+    """
 
     model = ModuleRegistrationReport
     context_object_name = "modules_rrs"
     template_name = "registration/registration_report/module_rr_listview.html"
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+
+        search_student = self.request.GET.get('q_student')
+        search_module = self.request.GET.get('q_module')
+        search_degree = self.request.GET.get('q_degree')
+        search_course = self.request.GET.get('q_course')
+        search_status = self.request.GET.get('q_status')
+
+        # Main query
+
+        query_result = ModuleRegistrationReport.objects.all()
+
+        # Foreign key conditions
+
+        if search_student:
+            query_result = query_result.filter(
+                student_rr__created_by__pk=search_student,
+            )
+
+        if search_module:
+            query_result = query_result.filter(
+                module__pk=search_module,
+            )
+
+        if search_degree:
+            query_result = query_result.filter(
+                degree_rr__degree__pk=search_degree,
+            )
+
+        if search_course:
+            query_result = query_result.filter(
+                course__pk=search_course,
+            )
+
+        if search_status:
+            query_result = query_result.filter(
+                status=search_status,
+            )
+
+        # Query result
+
+        return query_result.order_by("status")
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+
+        context['q_student'] = self.request.GET.get('q_student')
+        context['q_module'] = self.request.GET.get('q_module')
+        context['q_degree'] = self.request.GET.get('q_degree')
+        context['q_course'] = self.request.GET.get('q_course')
+        context['q_status'] = self.request.GET.get('q_status')
+
+        # Search values
+
+        context['s_students'] = User.objects.filter(
+            groups__name="Student",
+            student_rr__isnull=False,
+        )
+        context['s_modules'] = models.Module.objects.all()
+        context['s_degrees'] = models.Degree.objects.all()
+        context['s_courses'] = models.Course.objects.all()
+        context['s_statuses'] = ModuleRegistrationReport.STATUS
+
+        return context
 
 
 class ModuleRegistrationReportDetailView(
