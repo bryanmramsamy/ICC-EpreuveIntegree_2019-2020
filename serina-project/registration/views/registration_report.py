@@ -133,19 +133,37 @@ class ModuleRegistrationReportListView(
     def get_queryset(self):
         """Apply filters if submitted by user."""
 
-        search_student = self.request.GET.get('search_student', '')
-        search_module = self.request.GET.get('search_module', '')
-        search_degree = self.request.GET.get('search_degree', '')
-        search_course = self.request.GET.get('search_course', '')
-        search_status = self.request.GET.get('search_status', '')
+        # GET variables
 
-        return ModuleRegistrationReport.objects.filter(
-            student_rr__created_by__username__icontains=search_student,
-            module__reference__icontains=search_module,
-            # degree_rr__degree__reference__icontains=search_degree,
-            # course__reference__icontains=search_course,
-            # status__icontains=search_status,
-        ).order_by("status")
+        search_student = self.request.GET.get('q_student', '')
+        search_module = self.request.GET.get('q_module', '')
+        search_degree = self.request.GET.get('q_degree', '')
+        search_course = self.request.GET.get('q_course', '')
+        search_status = self.request.GET.get('q_status', '')
+
+        # Main query
+
+        query_result = ModuleRegistrationReport.objects.filter(
+            student_rr__created_by__username__icontains=search_student,   # TODO: filter by pk with select in form
+            module__reference__icontains=search_module,   # TODO: filter by pk with select in form
+            status__icontains=search_status,   # TODO: filter by pk with select in form
+        )
+
+        # Foreign key conditions
+
+        if search_degree != '' and search_degree is not None:
+            query_result = query_result.filter(
+                degree_rr__degree__reference__icontains=search_degree,
+            )
+
+        if search_course != '' and search_course is not None:
+            query_result = query_result.filter(
+                course__reference__icontains=search_course,
+            )
+
+        # Qurey result
+
+        return query_result
 
     def get_context_data(self, **kwargs):
         """Add search values to context."""

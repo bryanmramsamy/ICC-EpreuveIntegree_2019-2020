@@ -15,11 +15,11 @@
 
 
     <form method="GET" action="{% url 'module_rr_listview' %}">
-      <p>student: <input type="text" value="{{ search_student }}" name="search_student"/></p>
-      <p>module: <input type="text" value="{{ search_module }}" name="search_student"/></p>
-      <p>degree: <input type="text" value="{{ search_degree }}" name="search_student"/></p>
-      <p>course: <input type="text" value="{{ search_course }}" name="search_student"/></p>
-      <p>status: <input type="text" value="{{ search_status }}" name="search_student"/></p>
+      <p>student: <input type="text" value="{{ q_student }}" name="q_student"/></p>
+      <p>module: <input type="text" value="{{ q_module }}" name="q_module"/></p>
+      <p>degree: <input type="text" value="{{ q_degree }}" name="q_degree"/></p>
+      <p>course: <input type="text" value="{{ q_course }}" name="q_course"/></p>
+      <p>status: <input type="text" value="{{ q_status }}" name="q_status"/></p>
       <p><input type="submit" value="eee"/></p>
     </form>
 
