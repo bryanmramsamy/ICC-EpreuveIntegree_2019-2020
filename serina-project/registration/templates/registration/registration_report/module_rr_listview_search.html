@@ -17,11 +17,11 @@
         </label>
 
         <select id="q_student" name="q_student" class="form-control form-control-sm">
-          <option {% if q_student == '' or q_student is None %}selected{% endif %} value="">
+          <option {% if False %}selected{% endif %} value="">
             --- {% trans 'All students' %} ---
           </option>
           {% for student in s_students %}
-            <option value="{{ student.pk }}" {% if q_student == student.pk %}selected{% endif %}>
+            <option value="{{ student.pk }}" {% if q_student|add:"0" == student.pk %}selected{% endif %}>
               {{ student.username }} | {{ student.get_full_name }}
             </option>
           {% endfor %}
@@ -41,7 +41,7 @@
             --- {% trans 'All modules' %} ---
           </option>
           {% for module in s_modules %}
-            <option value="{{ module.pk }}" {% if q_module == module.pk %}selected{% endif %}>
+            <option value="{{ module.pk }}" {% if q_module|add:"0" == module.pk %}selected{% endif %}>
               {{ module.reference }} | {{ module.title }}
             </option>
           {% endfor %}
@@ -81,7 +81,7 @@
             --- {% trans 'All degrees' %} ---
           </option>
           {% for degree in s_degrees %}
-            <option value="{{ degree.pk }}" {% if q_degree == degree.pk %}selected{% endif %}>
+            <option value="{{ degree.pk }}" {% if q_degree|add:"0" == degree.pk %}selected{% endif %}>
               {{ degree.reference }} | {{ degree.title }}
             </option>
           {% endfor %}
@@ -101,7 +101,7 @@
             --- {% trans 'All courses' %} ---
           </option>
           {% for course in s_courses %}
-            <option value="{{ course.pk }}" {% if q_course == course.pk %}selected{% endif %}>
+            <option value="{{ course.pk }}" {% if q_course|add:"0" == course.pk %}selected{% endif %}>
               {{ course.reference }}
             </option>
           {% endfor %}

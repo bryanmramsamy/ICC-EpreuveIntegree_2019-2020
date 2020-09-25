@@ -136,11 +136,11 @@ class ModuleRegistrationReportListView(
 
         # GET variables
 
-        search_student = self.request.GET.get('q_student', '')
-        search_module = self.request.GET.get('q_module', '')
-        search_degree = self.request.GET.get('q_degree', '')
-        search_course = self.request.GET.get('q_course', '')
-        search_status = self.request.GET.get('q_status', '')
+        search_student = self.request.GET.get('q_student')
+        search_module = self.request.GET.get('q_module')
+        search_degree = self.request.GET.get('q_degree')
+        search_course = self.request.GET.get('q_course')
+        search_status = self.request.GET.get('q_status')
 
         # Main query
 
@@ -148,27 +148,27 @@ class ModuleRegistrationReportListView(
 
         # Foreign key conditions
 
-        if search_student != '' and search_student is not None:
+        if search_student:
             query_result = query_result.filter(
                 student_rr__created_by__pk=search_student,
             )
 
-        if search_module != '' and search_module is not None:
+        if search_module:
             query_result = query_result.filter(
                 module__pk=search_module,
             )
 
-        if search_degree != '' and search_degree is not None:
+        if search_degree:
             query_result = query_result.filter(
                 degree_rr__degree__pk=search_degree,
             )
 
-        if search_course != '' and search_course is not None:
+        if search_course:
             query_result = query_result.filter(
                 course__pk=search_course,
             )
 
-        if search_status != '' and search_status is not None:
+        if search_status:
             query_result = query_result.filter(
                 status=search_status,
             )
@@ -184,11 +184,11 @@ class ModuleRegistrationReportListView(
 
         # GET variables for search filters
 
-        context['q_student'] = self.request.GET.get('q_student', '')
-        context['q_module'] = self.request.GET.get('q_module', '')
-        context['q_degree'] = self.request.GET.get('q_degree', '')
-        context['q_course'] = self.request.GET.get('q_course', '')
-        context['q_status'] = self.request.GET.get('q_status', '')
+        context['q_student'] = self.request.GET.get('q_student')
+        context['q_module'] = self.request.GET.get('q_module')
+        context['q_degree'] = self.request.GET.get('q_degree')
+        context['q_course'] = self.request.GET.get('q_course')
+        context['q_status'] = self.request.GET.get('q_status')
 
         # Search values
 
