@@ -74,9 +74,20 @@
       <div class="text-right">
         {% if user.is_authenticated %}
           {% if request.user|is_manager_or_administrator %}
-            <a href="{% url 'admin:index' %}" class="btn btn-outline-warning mr-2">
-              {% trans 'Admin' %} {% include 'logo/gear.html' %}
-            </a>
+            <span class="dropdown mr-2">
+              <button class="btn btn-outline-warning dropdown-toggle" type="button" id="admin_nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% trans 'Admin' %} {% include 'logo/gear.html' %}
+              </button>
+
+              <div class="dropdown-menu bg-warning" aria-labelledby="admin_nav">
+                <a href="{% url 'module_rr_listview' %}" class="dropdown-item">
+                  {% trans 'Module Registrations List' %} {% include 'logo/module_rr.html' %}
+                </a>
+                <a href="{% url 'admin:index' %}" class="dropdown-item">
+                  {% trans 'Advanced back-office panel' %} {% include 'logo/gear.html' %}
+                </a>
+              </div>
+            </span>
           {% endif %}
 
           <a href="{% url 'userprofile_detailview' pk=user.pk %}" class="btn btn-light mr-2">
