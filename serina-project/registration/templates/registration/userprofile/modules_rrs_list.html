@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n registration_extra %}
 
 
 {% if student_rr.has_been_student %}
@@ -19,81 +19,18 @@
     <br>
 
 
-    <table class="table table-striped table-hover h5 text-left">
-      <thead class="thead-dark">
-        <tr>
-          <th class="col-4">
-            {% include 'logo/module.html' %} {% trans 'Module' %}
-          </th>
-          <th>
-            {% include 'logo/degree.html' %} {% trans 'Degree' %}
-          </th>
-          <th>
-            {% include 'logo/course.html' %} {% trans 'Course' %}
-          </th>
-          <th>
-            {% trans 'Status' %}
-          </th>
-          <th>
-            {% include 'logo/score.html' %} {% trans 'Score' %}
-          </th>
-          <th>
-            {% trans 'See more' %} {% include 'logo/more.html' %}
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for module_rr in modules_rrs %}
-          <tr {% if module_rr.status == "APPROVED" %}class="table-warning"{% endif %}>
-            <td class="col-4">
-              <a href="{{ module_rr.module.get_absolute_url }}" class="text-reset">{{ module_rr.module.title }} <small class="text-muted">{{ module_rr.module.reference }}</small></a>
-            </td>
-            <td>
-              {% if module_rr.degree_rr %}
-                <a href="{{ module_rr.degree_rr.get_absolute_url }}" class="text-success">
-                  {% include 'logo/check_valid.html' %} {% trans 'Yes' %}
-                </a>
-              {% else %}
-                <span class="text-danger">
-                  {% include 'logo/check_invalid.html' %} {% trans 'No' %}
-                </span>
-              {% endif %}
-            </td>
-            <td>
-              {% if module_rr.course %}
-                <a href="{{ module_rr.course.get_absolute_url }}" class="text-success">
-                  {% include 'logo/check_valid.html' %} {{ module_rr.course.reference }}
-                </a>
-              {% else %}
-                <span class="text-danger">
-                  {% include 'logo/check_invalid.html' %} {% trans 'No' %}
-                </span>
-              {% endif %}
-            </td>
-            <td>
-              {{ module_rr.get_status_display }}
-            </td>
-            <td>
-              {% if module_rr.final_score %}
-                <span class="font-weight-bold text-{% if module_rr.succeeded %}success{% else %}danger{% endif %}">{{ module_rr.final_score }}</span>
-              {% else %}
-                <span class="text-muted">{% trans 'N/A' %}</span>
-              {% endif %}
-            </td>
-            <td>
-              <a href="{{ module_rr.get_absolute_url }}" class="btn btn-sm btn-block btn-outline-dark">
-                {% include 'logo/page_last.html' %}
-              </a>
-            </td>
-          </tr>
-        {% empty %}
-          <tr>
-            <td colspan="6" class="h5 text-center text-info">
-              {% include 'logo/check_info.html' %} {% trans 'No module registration found' %}
-            </td>
-          </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    {# Module Registration Reports table #}
+
+    {% with listview_enabled=False %}
+      {% include 'registration/registration_report/modules_rrs_table.html' %}
+    {% endwith %}
+
+
+    {% if request.user|is_manager_or_administrator %}
+      <a href="{% url 'module_rr_listview' %}" class="btn btn-block btn-outline-warning">
+        {% trans 'Back to all module registrations lists' %} {% include 'logo/back.html' %}
+      </a>
+    {% endif %}
+
   </section>
 {% endif %}

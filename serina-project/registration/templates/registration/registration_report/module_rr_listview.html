@@ -1,24 +1,37 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'ModuleRRListView' %}{% endblock title %}
+{% block title %}
+  {% trans 'ModuleRRListView' %}
+{% endblock title %}
+
 
 {% block content %}
-    <h1>ModuleRRListView</h1>
+  {% include 'backoffice_tag.html' %}
+  <section class="container p-1 p-md-3 border border-warning rounded text-center">
 
-    {% for module_rr in modules_rrs %}
-        <p>{{ module_rr.student_rr.created_by.get_full_name }}</p>
-        <ul>
-            <li>{{ module_rr.degree_rr.degree.title }}</li>
-            <li>{{ module_rr.module.title }}</li>
-            <li>{{ module_rr.course.reference }}</li>
-            <li>from: {{ module_rr.date_start }} to {{ module_rr.date_end }}</li>
-            <li>attempt: {{ module_rr.student_attempt }}</li>
-            <li>{{ module_rr.final_score }}</li>
-            <li>approved ? {{ module_rr.approved }}</li>
-            <li>status : {{ module_rr.status }}</li>
-        </ul>
+    {# Presentation header #}
 
-        <a href="{{ module_rr.get_absolute_url }}">module_rr_detailview</a>
-    {% endfor %}
+    <div class="text-center">
+      <span class="h2">
+        {% include 'logo/module_rr.html' %} {% trans 'Modules Registration Reports' %}
+      </span>
+
+      <span class="h5 text-center text-muted text-uppercase">
+        {{ userprofile.get_full_name }}
+      </span>
+    </div>
+
+    <br>
+
+
+    {# Module Registration Reports table #}
+
+    {% with listview_enabled=True %}
+      {% include 'registration/registration_report/modules_rrs_table.html' %}
+    {% endwith %}
+
+  </section>
 {% endblock content %}
+
+
