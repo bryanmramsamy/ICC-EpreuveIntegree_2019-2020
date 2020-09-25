@@ -119,7 +119,7 @@
 
               {% elif request.user|is_student %}
                 <div class="col">
-                  <a href="{% url 'module_payment' pk=degree.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                  <a href="{% url 'degree_rr_createview' degree_pk=degree.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>
                 </div>
 
               {% elif request.user|is_guest %}

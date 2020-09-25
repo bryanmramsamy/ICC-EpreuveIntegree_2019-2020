@@ -2,16 +2,16 @@
 
 
 <div>
-  {% if request.user|is_student %}
-    {% if request.user|degree_already_validated_by_user:degree %}
+  {% if request.user|is_student and request.user|degree_already_validated_by_user:degree %}
       <span class="text-success">
         {% include 'logo/check_valid.html' %} {% trans 'Degree completed' %}
       </span>
-    {% else %}
-      <span class="text-danger">
-        {% include 'logo/check_invalid.html' %} {% trans 'Degree uncompleted' %}
-      </span>
-    {% endif %}
+
+  {% elif request.user|is_student and request.user|degree_still_ongoing_by_user:degree %}
+    <span class="text-warning">
+      {% include 'logo/check_invalid.html' %} {% trans 'Ongoing degree' %}
+    </span>
+
   {% else %}
     <span class="text-info">
       {% include 'logo/check_info.html' %}

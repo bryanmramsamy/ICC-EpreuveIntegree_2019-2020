@@ -254,6 +254,7 @@ class ModuleRegistrationReportCreateView(
         initial['student_rr'] = self.request.user.student_rr
         initial['module'] = get_object_or_404(models.Module,
                                               pk=self.kwargs["module_pk"])
+
         return initial
 
     def get_context_data(self, **kwargs):
@@ -272,6 +273,7 @@ class ModuleRegistrationReportCreateView(
                 self.request.user,
                 context["module"],
             )
+
         return context
 
 
@@ -304,10 +306,10 @@ class DegreeRegistrationReportDetailView(
 
 class DegreeRegistrationReportCreateView(
     LoginRequiredMixin,
-    # mixins_utils.StudentOnlyMixin,  # TODO: Disabled for debug purposes
+    mixins_utils.StudentOnlyMixin,
     CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
-):  # TODO: Debug view
+):
     """CreateView for DegreeRegistrationReport."""
 
     model = DegreeRegistrationReport
@@ -320,4 +322,26 @@ class DegreeRegistrationReportCreateView(
 
         initial = super().get_initial()
         initial['student_rr'] = self.request.user.student_rr
+        initial['degree'] = get_object_or_404(models.Degree,
+                                              pk=self.kwargs["degree_pk"])
+
         return initial
+
+    def get_context_data(self, **kwargs):
+        """Add check variables for template conditions."""
+
+        context = super().get_context_data(**kwargs)
+        context["degree"] = get_object_or_404(models.Degree,
+                                              pk=self.kwargs["degree_pk"])
+        context["degree_still_ongoing_by_user"] = \
+            registration_utils.degree_still_ongoing_by_user(
+                self.request.user,
+                context["degree"],
+            )
+        context["degree_already_validated_by_user"] = \
+            registration_utils.degree_already_validated_by_user(
+                self.request.user,
+                context["degree"],
+            )
+
+        return context

@@ -79,8 +79,16 @@ def all_prerequisites_validated_by_user(user, module):
 # Degree Registration Report
 
 @register.filter
+def degree_still_ongoing_by_user(user, degree):
+    """Filter that checks if the user subscribed to the given degree."""
+
+    return registration_utils.degree_still_ongoing_by_user(user, degree)
+
+
+@register.filter
 def degree_already_validated_by_user(user, degree):
-    """Filter that checks if the user has already vaidated the given degree."""
+    """Filter that checks if the user has already validated the given
+    degree."""
 
     return registration_utils.degree_already_validated_by_user(user, degree)
 

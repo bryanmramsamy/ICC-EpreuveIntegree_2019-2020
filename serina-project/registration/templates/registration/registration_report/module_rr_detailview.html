@@ -321,16 +321,23 @@
         </a>
       </div>
 
-    {% elif request.user == module_rr.student_rr.created_by and module_rr.status == 'APPROVED' %}
+    {% elif request.user == module_rr.student_rr.created_by %}
+
+      {% if module_rr.status == 'APPROVED' %}
+        <div class="col pb-3">
+          <a href="{% url 'module_payment' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-success">
+            {% trans 'Checkout' %} {% include 'logo/checkout.html' %}
+          </a>
+        </div>
+      {% endif %}
+
       <div class="col pb-3">
-        <a href="{% url 'module_payment' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-success">
-          {% trans 'Checkout' %} {% include 'logo/checkout.html' %}
+        <a href="{% url 'userprofile_detailview' pk=request.user.pk %}" class="btn btn-block btn-lg btn-outline-dark">
+          {% trans 'Back to profile' %} {% include 'logo/profile.html' %}
         </a>
       </div>
-
     {% endif %}
-
-    </div>
+  </div>
 
 
   {# Score and note form update #}

@@ -85,10 +85,10 @@ class ModuleRegistrationReportCreateFrom(forms.ModelForm):
 
 
 class DegreeRegistrationReportCreateFrom(forms.ModelForm):
-    """ModelForm for Module."""  # TODO: Comment correctly
+    """ModelForm for DegreeRegistrationReportCreateFrom.
 
-    degree = VerboseDegreeModuleChoiceField(queryset=Degree.objects.all(),
-                                            empty_label=None)
+    All the fields are hidden and autocompleted by the view.
+    """
 
     class Meta:
         """Meta definition for ModuleLevelForm."""
@@ -97,4 +97,6 @@ class DegreeRegistrationReportCreateFrom(forms.ModelForm):
         fields = ("student_rr", "degree", "notes")
         widgets = {
             'student_rr': forms.HiddenInput(),
+            'degree': forms.HiddenInput(),
+            'notes': forms.HiddenInput(),
         }

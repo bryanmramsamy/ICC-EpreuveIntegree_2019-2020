@@ -171,7 +171,7 @@ urlpatterns = [
         name="degree_rr_detailview"
     ),
     url(
-        r"^report/degree/c/$",
+        r"^report/degree/c/(?P<degree_pk>\d+)/$",
         views.DegreeRegistrationReportCreateView.as_view(),
         name="degree_rr_createview"
     ),
@@ -205,19 +205,39 @@ urlpatterns = [
 
     # Payment
 
+    # Module Registration Report
+
     url(
-        r"^payment/checkout/(?P<pk>\d+)/$",
+        r"^payment/module/checkout/(?P<pk>\d+)/$",
         views.module_payment,
         name="module_payment"
     ),
     url(
-        r'payment-done/',
-        views.payment_done,
-        name='payment_done',
+        r'payment/module/done/$',
+        views.module_payment_done,
+        name='module_payment_done',
     ),
     url(
-        r'payment-cancelled/',
-        views.payment_canceled,
-        name='payment_cancelled'
+        r'payment/module/cancelled/$',
+        views.module_payment_cancelled,
+        name='module_payment_cancelled'
+    ),
+
+    # Degree Registration Report
+
+    url(
+        r"^payment/degree/checkout/(?P<pk>\d+)/$",
+        views.degree_payment,
+        name="degree_payment"
+    ),
+    url(
+        r'payment/degree/done/$',
+        views.degree_payment_done,
+        name='degree_payment_done',
+    ),
+    url(
+        r'payment/degree/cancelled/$',
+        views.degree_payment_cancelled,
+        name='degree_payment_cancelled'
     ),
 ]
