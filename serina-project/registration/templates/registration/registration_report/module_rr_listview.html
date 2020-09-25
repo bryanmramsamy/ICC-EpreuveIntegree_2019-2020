@@ -10,6 +10,22 @@
   {% include 'backoffice_tag.html' %}
   <section class="container p-1 p-md-3 border border-warning rounded text-center">
 
+
+    {# List filter #}
+
+
+    <form method="GET" action="{% url 'module_rr_listview' %}">
+      <p>student: <input type="text" value="{{ search_student }}" name="search_student"/></p>
+      <p>module: <input type="text" value="{{ search_module }}" name="search_student"/></p>
+      <p>degree: <input type="text" value="{{ search_degree }}" name="search_student"/></p>
+      <p>course: <input type="text" value="{{ search_course }}" name="search_student"/></p>
+      <p>status: <input type="text" value="{{ search_status }}" name="search_student"/></p>
+      <p><input type="submit" value="eee"/></p>
+    </form>
+
+
+
+
     {# Presentation header #}
 
     <div class="text-center">

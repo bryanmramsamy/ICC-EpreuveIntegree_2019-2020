@@ -119,12 +119,44 @@ class ModuleRegistrationReportListView(
     LoginRequiredMixin,
     mixins_utils.ManagerAdministratorOnlyMixin,
     ListView,
-):  # TODO: Debug view
-    """ListView for ModuleRegistrationReport."""
+):
+    """ListView for ModuleRegistrationReport.
+
+    The view support user filters on student, module, degree, course and
+    status.
+    """
 
     model = ModuleRegistrationReport
     context_object_name = "modules_rrs"
     template_name = "registration/registration_report/module_rr_listview.html"
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        search_student = self.request.GET.get('search_student', '')
+        search_module = self.request.GET.get('search_module', '')
+        search_degree = self.request.GET.get('search_degree', '')
+        search_course = self.request.GET.get('search_course', '')
+        search_status = self.request.GET.get('search_status', '')
+
+        return ModuleRegistrationReport.objects.filter(
+            student_rr__created_by__username__icontains=search_student,
+            module__reference__icontains=search_module,
+            # degree_rr__degree__reference__icontains=search_degree,
+            # course__reference__icontains=search_course,
+            # status__icontains=search_status,
+        ).order_by("status")
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+        context['search_student'] = self.request.GET.get('search_student', '')
+        context['search_module'] = self.request.GET.get('search_module', '')
+        context['search_degree'] = self.request.GET.get('search_degree', '')
+        context['search_course'] = self.request.GET.get('search_course', '')
+        context['search_status'] = self.request.GET.get('search_status', '')
+        return context
 
 
 class ModuleRegistrationReportDetailView(
