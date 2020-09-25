@@ -1,14 +1,130 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'DegreeRRCreateView' %}{% endblock title %}
+
+{% block title %}
+  {% trans 'Subscribe to' %}: {{ degree.title }} | {{ degree.reference }}
+{% endblock title %}
+
 
 {% block content %}
-    <h1>DegreeRRCreateView</h1>
-    <form action="." method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+  <section class="container">
+    <div class="container border rounded bg-light py-3" style="max-width: 600px;">
+      <div class="text-center">
+        <img src="{{ degree.picture.url }}" class="img-fluid" alt="{{ degree.title }} degree picture" style="max-height: 400px;">
+      </div>
+      <div class="text-center h1">
+        {% include 'logo/degree.html' %} {{ degree.title }}
+      </div>
 
-        <input type="submit" value="{% trans 'Submit module rr' %}">
-    </form>
+
+      {# Degree still ongoing our already completed by user danger bubble #}
+
+      {% if request.user|degree_still_ongoing_by_user:degree or request.user|degree_already_validated_by_user:degree %}
+        <div class="container pb-3 rounded text-light bg-danger">
+          {% if request.user|degree_already_validated_by_user:degree %}
+            {% include 'bubbles/danger/completed_degree_rr_already_exists.html' %}
+
+          {% elif request.user|degree_still_ongoing_by_user:degree %}
+            {% include 'bubbles/danger/active_degree_rr_already_exists.html' %}
+          {% endif %}
+
+            <a href="{% url 'degree_listview' %}" class="btn btn-block btn-lg btn-light">
+              {% trans 'Go back to degree catalog' %} {% include 'logo/back.html' %}
+            </a>
+            <a href="{{ degree.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-light">
+              {% trans 'Go back to degree page' %} {% include 'logo/back.html' %}
+            </a>
+        </div>
+
+      {% else %}
+        {% include 'bubbles/info/module_rr_wait_for_mail_validation.html' %}
+
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+
+
+          {# student_rr (hidden) #}
+
+          {{ form.student_rr }}
+
+
+          {# degree (hidden) #}
+
+          {{ form.degree }}
+
+
+          {# notes (hidden) #}
+
+          {{ form.notes }}
+
+
+          {# exemption_request #}
+
+          <div class="form-group">
+            <div class="custom-control custom-switch">
+              <input id="{{ form.exemption_request.auto_id }}" name="{{ form.exemption_request.html_name }}" type="checkbox" class="custom-control-input" onclick="myFunction()">
+              <label for="{{ form.exemption_request.id_for_label }}" class="custom-control-label h5 text-uppercase">
+                {% trans 'Do you want to ask for an exemption for one or multiple modules part of this degree ?' %} <span class="badge badge-danger">{{ form.exemption_request.errors.as_text }}</span>
+              </label>
+              <br>
+              <small class="text-muted">{{ form.exemption_request.help_text }}</small>
+            </div>
+          </div>
+
+          {# exemption_report #}
+
+          <div id="exemption_report_field" class="form-group" style="display:none">
+            <label class="h5 text-uppercase" for="{{ form.exemption_report.id_for_label }}">
+              {{ form.exemption_report.label }} <span class="badge badge-danger">{{ form.exemption_report.errors.as_text }}</span>
+            </label>
+            <div class="form-group custom-file">
+              <input id="{{ form.exemption_report.auto_id }}" name="{{ form.exemption_report.html_name }}" class="custom-file-input form-control form-control-lg" type="file">
+              <label id="{{ form.exemption_report.auto_id }}_label" class="custom-file-label h5 text-uppercase" for="{{ form.exemption_report.id_for_label }}">
+                No file selected
+              </label>
+            </div>
+            <small class="badge badge-warning">
+              {% trans 'Supported formats' %}: PDF, ZIP, JPEG or PNG</small> <small class="text-muted">{{ form.exemption_report.help_text }}
+            </small>
+          </div>
+
+
+          {# submit #}
+
+          <input type="submit" class="btn btn-block btn-lg btn-success text-uppercase" value="{% trans 'Send registration request' %}">
+
+          <a href="{{ degree.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+            {% trans 'Go back to degree page' %} {% include 'logo/back.html' %}
+          </a>
+        </form>
+      {% endif %}
+      </div>
+  </section>
 {% endblock content %}
+
+
+{% block scripts %}
+  <script>
+    function myFunction() {
+      // Get the checkbox
+      var checkBox = document.getElementById("{{ form.exemption_request.auto_id }}");
+      // Get the output text
+      var text = document.getElementById("exemption_report_field");
+
+      // If the checkbox is checked, display the output text
+      if (checkBox.checked == true){
+        text.style.display = "block";
+        document.getElementById("{{ form.exemption_report.auto_id }}").required = true;
+      } else {
+        text.style.display = "none";
+        document.getElementById("{{ form.exemption_report.auto_id }}").required = false;
+      }
+    }
+
+    $('#{{ form.exemption_report.auto_id }}').on('change',function(){
+      var fileName = $(this).val();
+      $(this).next('#{{ form.exemption_report.auto_id }}_label').html(fileName);
+    })
+  </script>
+{% endblock scripts %}

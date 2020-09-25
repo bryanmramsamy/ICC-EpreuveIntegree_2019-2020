@@ -1,0 +1,20 @@
+{% extends 'bubbles/danger.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    You already follow this degree or your last related request was not answered yet
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    You cannot subscribe to a degree you are already subscribed to.
+    <br><br>
+    If you are not following this degree yet but you already sent a subscribtion request before, this means your request has been sent but not answered yet.
+    <br>
+    You will receive a notification by mail when you will get an answer.
+  {% endblocktrans %}
+{% endblock bubble_content %}
