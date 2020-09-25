@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
@@ -15,7 +16,7 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     degree(s) and/or module(s).
     """
 
-    created_by = models.OneToOneField(  # TODO: Add validator: guest/student
+    created_by = models.OneToOneField(
         User,
         on_delete=models.CASCADE,
         related_name="student_rr",
@@ -40,12 +41,17 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
 
     # TODO: Add upload_to argument
 
-    id_picture = models.ImageField(verbose_name=_("ID picture"))
-    # TODO: Add validators to accept pdf files only
-    # https://stackoverflow.com/questions/6460848/how-to-limit-file-types-on-file-uploads-for-modelforms-with-filefields
+    id_picture = models.ImageField(
+        verbose_name=_("ID picture"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['jpeg', 'jpg', 'png'],
+        )],)
     id_card = models.FileField(verbose_name=_("ID card"))
     secondary_education_certificate = models.FileField(
-        verbose_name=_("Secondary Education Certificate")
+        verbose_name=_("Secondary Education Certificate"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
 
     student_is_foreigner = models.BooleanField(
@@ -56,38 +62,59 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     annex_403 = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Annex 403")
+        verbose_name=_("Annex 403"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
     other_school_inscription_certificate = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Other schools inscription certificate")
+        verbose_name=_("Other schools inscription certificate"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
     national_register_extract = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("National Register Extract")
+        verbose_name=_("National Register Extract"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
     belgian_studies_history = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Belgian Studies History")
+        verbose_name=_("Belgian Studies History"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
 
     archievement_certificates = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Modules archievement certificates")
+        verbose_name=_("Modules archievement certificates"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
     job_organization_certificates = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Job organizations certificates")
+        verbose_name=_("Job organizations certificates"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
-    exemption_report = models.FileField(  # TODO: Add validator: only zip file
+    exemption_report = models.FileField(
         null=True,
         blank=True,
-        verbose_name=_("Exemption reports")
+        verbose_name=_("Exemption reports"),
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
     )
 
     class Meta:
@@ -202,7 +229,7 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     def has_graduated(self):
         """Check if the studend did graduate for a degree at least once."""
 
-        pass
+        pass  # TODO: ?
 
     def __str__(self):
         """Unicode representation of StudentRegistrationReport."""
@@ -211,16 +238,6 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
             self.pk,
             self.created_by.get_full_name(),
         )
-
-    # TODO: Must be defined
-    # def clean(self):
-    #     """Clean method for StudentRegistrationReport.
-
-    #     Check if the user is a guest or a student, if the student is not
-    #     underaged and if the uploaded files are on the correct format.
-    #     """
-
-    #     pass
 
     def get_absolute_url(self):
         """Return absolute url for StudentRegistrationReport."""

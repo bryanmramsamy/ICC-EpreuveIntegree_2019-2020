@@ -69,10 +69,4 @@ def degree_already_validated_by_user(user, degree):
         Q(degree=degree),
     )
 
-    student_graduated = False
-    for degree_rr in degrees_rrs:
-        if degree_rr.student_graduated:
-            student_graduated = True
-            break
-
-    return student_graduated
+    return True in [degree_rr.student_graduated for degree_rr in degrees_rrs]

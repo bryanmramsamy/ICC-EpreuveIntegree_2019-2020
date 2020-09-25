@@ -48,14 +48,9 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         Return 'None' if  there is no modules_rrs in the degree_rr.
         """
 
-        partially_approved = None
-
-        for module_rr in self.modules_rrs.all():
-            partially_approved = False
-
-            if module_rr.approved:
-                partially_approved = True
-                break
+        if self.modules_rrs.all().count() > 0:
+            partially_approved = True in [module_rr.approved for module_rr in
+                                          self.modules_rrs.all()]
 
         return partially_approved
 
@@ -63,17 +58,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     def fully_approved(self):
         """Check if all the related modules_rr are approved.
 
-        Return 'None' if  there is no modules_rrs in the degree_rr.
+        Return 'None' if there is no modules_rrs in the degree_rr.
         """
 
-        fully_approved = None
-
-        for module_rr in self.modules_rrs.all():
-            fully_approved = True
-
-            if not module_rr.approved:
-                fully_approved = False
-                break
+        if self.modules_rrs.all().count() > 0:
+            fully_approved = not (False in [module_rr.approved for module_rr in
+                                            self.modules_rrs.all()])
 
         return fully_approved
 
@@ -81,17 +71,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     def partially_payed(self):
         """Check if at least one of the related modules_rr is approved.
 
-        Return 'None' if  there is no modules_rrs in the degree_rr.
+        Return 'None' if there is no modules_rrs in the degree_rr.
         """
 
-        partially_payed = None
-
-        for module_rr in self.modules_rrs.all():
-            partially_payed = False
-
-            if module_rr.payed:
-                partially_payed = True
-                break
+        if self.modules_rrs.all().count() > 0:
+            partially_payed = True in [module_rr.payed for module_rr in
+                                       self.modules_rrs.all()]
 
         return partially_payed
 
@@ -99,17 +84,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     def fully_payed(self):
         """Check if all the related modules_rr are payed.
 
-        Return 'None' if  there is no modules_rrs in the degree_rr.
+        Return 'None' if there is no modules_rrs in the degree_rr.
         """
 
-        fully_payed = None
-
-        for module_rr in self.modules_rrs.all():
-            fully_payed = True
-
-            if not module_rr.payed:
-                fully_payed = False
-                break
+        if self.modules_rrs.all().count() > 0:
+            fully_payed = not (False in [module_rr.payed for module_rr in
+                                         self.modules_rrs.all()])
 
         return fully_payed
 
@@ -117,15 +97,9 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     def student_graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
-        student_graduated = True
-
-        for module_rr in self.modules_rrs.all():
-            if not (module_rr.status == 'COMPLETED'
-                    or module_rr.status == 'EXEMPTED'):
-                student_graduated = False
-                break
-
-        return student_graduated
+        return self.modules_rrs.exclude(
+            Q(status="COMPLETED") | Q(status="EXEMPTED")
+        ).count() == 0
 
     @property
     def average_score(self):

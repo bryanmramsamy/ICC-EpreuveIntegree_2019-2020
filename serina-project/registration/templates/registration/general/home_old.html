@@ -11,7 +11,7 @@
         <li><a href="{% url 'register' %}">register</a> <strong>OK</strong></li>
         <li><a href="{% url 'login' %}">login</a> <strong>OK</strong></li>
         <li><a href="{% url 'logout' %}">logout</a> <strong>OK</strong></li>
-        <li><a href="{% url 'password_change' %}">password_change</a></li>
+        <li><a href="{% url 'password_change' %}">password_change</a> <strong>OK</strong></li>
         <li><a href="{% url 'password_reset' %}">password_reset</a> <strong>OK</strong></li>
         <li><a href="/admin">admin</a></li>
     </ul>
@@ -19,12 +19,11 @@
     <h3>RegistrationReports</h3>
     <ul>
         <li><a href="{% url 'student_rr_listview' %}">student_rr_listview</a></li>
-        <li><a href="{% url 'student_rr_createview_homegrown' %}">student_rr_createview_homegrown</a> <strong>OK</strong></li>
-        <li><a href="{% url 'student_rr_createview_foreigner' %}">student_rr_createview_foreigner</a> <strong>OK</strong></li>
+        <li><a href="{% url 'student_rr_createview' %}">student_rr_createview_homegrown</a> <strong>OK</strong></li>
         <li><a href="{% url 'pursue_registration' %}">pursue_registration</a> <strong>OK</strong></li>
         <br>
-        <li><a href="{% url 'module_rr_listview' %}">module_rr_listview</a></li>
-        <li><a href="{% url 'module_rr_createview' %}">module_rr_createview</a></li>
+        <li><a href="{% url 'module_rr_listview' %}">module_rr_listview</a> <strong>OK</strong></li>
+        <li><a href="{% url 'module_rr_createview' module_pk=1 %}">module_rr_createview/1</a> <strong>OK</strong></li>
         <br>
         <li><a href="{% url 'degree_rr_listview' %}">degree_rr_listview</a></li>
         <li><a href="{% url 'degree_rr_createview' %}">degree_rr_createview</a></li>

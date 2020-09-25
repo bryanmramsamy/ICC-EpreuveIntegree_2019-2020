@@ -1,6 +1,10 @@
 from django.conf import settings
 from django.core.exceptions import ValidationError
-from django.core.validators import MaxValueValidator, MinValueValidator
+from django.core.validators import (
+    FileExtensionValidator,
+    MaxValueValidator,
+    MinValueValidator,
+)
 from django.db import models
 from django.db.models.signals import post_save
 from django.dispatch import receiver
@@ -76,9 +80,12 @@ class ModuleRegistrationReport(FrontOfficeResource):
             "if your request is accepted by our staff."
         ),
     )
-    exemption_report = models.FileField(  # TODO: Add validator: only zip file
+    exemption_report = models.FileField(
         null=True,
         blank=True,
+        validators=[FileExtensionValidator(
+            allowed_extensions=['pdf', 'zip', 'jpeg', 'jpg', 'png'],
+        )],
         verbose_name=_("Exemption reports"),
         help_text=_(
             "Send the documents that can provide you a exemption for this "
