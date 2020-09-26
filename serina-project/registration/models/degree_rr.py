@@ -11,7 +11,6 @@ from . import resource
 from .student_rr import StudentRegistrationReport
 
 from management.models import Degree
-#
 
 
 class DegreeRegistrationReport(resource.FrontOfficeResource):
@@ -205,10 +204,10 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         ):
             total_paid_price += module_rr.module.price
 
-        return total_paid_price
+        return total_paid_price if total_paid_price > 0 else -1
 
     def __str__(self):
-        """Unicode representation of DegreeRegistrationRappport."""
+        """Unicode representation of DegreeRegistrationRapport."""
 
         return "[{}] {}'s degree registration for {}".format(
             self.pk,

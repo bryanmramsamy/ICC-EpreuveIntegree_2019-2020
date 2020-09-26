@@ -149,3 +149,38 @@ def create_modules_rrs_for_degree_rr(degree_rr):
             )
 
         module_rr.save()
+
+
+# Degree Registration Report statuses
+
+def get_degree_rr_status(degree_rr):
+    """Get the status of the Degree Registration Report.
+
+    The status is based on the statuses of all it's related Module Registration
+    Reports.
+    """
+
+    modules_rrs = degree_rr.modules_rrs.all()
+    modules = degree_rr.degree.modules.all()
+
+
+
+
+    # GRADUATED
+
+    status_graduated = True
+
+    for module in modules:  # For each module of the degree
+        modules_rrs_related_to_module = ModuleRegistrationReport.objects \
+            .filter(
+                Q(degree_rr=degree_rr),
+                Q(module=module),
+            )  # All modules_rrs related to degree_rr and to current module
+
+        if not (True in [module_rr.succeeded for module_rr in
+                         modules_rrs_related_to_module]):
+            status_graduated = False
+            break
+
+    if status_graduated:
+        return "COMPLETED"

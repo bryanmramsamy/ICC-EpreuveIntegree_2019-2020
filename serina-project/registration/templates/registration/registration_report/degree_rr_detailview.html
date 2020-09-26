@@ -1,13 +1,120 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'DegreeRRDetailView' %}{% endblock title %}
+
+{% block title %}
+  {% trans 'Degree registration' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }} for {{ degree_rr.degree.title }}
+{% endblock title %}
+
 
 {% block content %}
+  {# Back Office Tag openning #}
+
+  {% if request.user|is_back_office_user %}
+    {% include 'backoffice_tag.html' %}
+    <section class="container border border-warning rounded py-3">
+  {% endif %}
+
+  {# Module Registration Report Tag #}
+
+  <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
+    <div class="row">
+      <div class="col">
+        {% trans 'Invoice ID' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }}
+      </div>
+      <div class="col text-right">
+        {% trans 'Module Registration Report' %} {% include 'logo/module_rr.html' %}
+      </div>
+    </div>
+  </div>
+
+  <section class="container border border-secondary rounded">
+
+    <br>
+    {{ degree_rr }}
+
+    <h1>
+      degree_rr|get_degree_rr_status =
+      <strong>
+        {{ degree_rr|get_degree_rr_status }}
+      </strong>
+    </h1>
+
+    <br>
+
+    <h2>
+      modules_rrs
+    </h2>
+    <ul>
+      {% for module_rr in degree_rr.modules_rrs.all %}
+      <li>
+        {{ module_rr }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    <h2>
+      modules
+    </h2>
+    <ul>
+      {% for module in degree_rr.degree.modules.all %}
+      <li>
+        {{ module }}
+      </li>
+      {% endfor %}
+    </ul>
+
+    {# Status info bubble #}
+
+    {% if request.user|is_student %}
+      {% if module_rr.status == "PENDING" %}
+        {% include 'bubbles/warning/module_rr_pending.html' %}
+
+      {% elif module_rr.status == "DENIED" %}
+        {% include 'bubbles/danger/module_rr_denied.html' %}
+
+      {% elif module_rr.status == "APPROVED" %}
+        {% include 'bubbles/warning/module_rr_unpayed.html' %}
+      {% endif %}
+    {% endif %} -->
+
+
+    {# Module_rr details #}
+
+    <table class="table table-hover h5 text-left">
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration status' %}:
+        </td>
+        <th class="col-8">
+          {% if module_rr.status == "PENDING" %}
+            <span class="text-warning">
+              {% include 'logo/check_ready.html' %}
+          {% elif module_rr.status == "DENIED" %}
+            <span class="text-danger">
+              {% include 'logo/check_invalid.html' %}
+          {% elif module_rr.status == "APPROVED" %}
+            <span class="text-info">
+              {% include 'logo/check_info.html' %}
+          {% else %}
+            <span class="text-success">
+              {% include 'logo/check_valid.html' %}
+          {% endif %}
+
+          {{ module_rr.get_status_display }}
+          </span>
+        </th>
+      </tr>
+    </table>
+
+
+
+
     <h1>DegreeRRDetailView</h1>
 
     <p>{{ degree_rr.student_rr.student.get_full_name }}</p>
     <ul>
+      <li>statuts = </li>
         <li>{{ degree_rr.degree.title }}</li>
         <li>Nb modules = {{ degree_rr.modules_rrs.count }}</li>
         <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
@@ -15,6 +122,8 @@
         <li>fully approved ? {{ degree_rr.fully_approved }}</li>
         <li>partially_payed ? {{ degree_rr.partially_payed }}</li>
         <li>fully_payed ? {{ degree_rr.fully_payed }}</li>
+        <li>total_paid_price = {{ degree_rr.total_paid_price }}</li>
+
         <ul>
             {% for module_rr in degree_rr.modules_rrs.all %}
                 <li>{{ module_rr.module.title }}</li>

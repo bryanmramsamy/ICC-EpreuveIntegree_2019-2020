@@ -61,22 +61,22 @@
           {% trans 'Registration status' %}:
         </td>
         <th class="col-8">
-            {% if module_rr.status == "PENDING" %}
-              <span class="text-warning">
-                {% include 'logo/check_ready.html' %}
-            {% elif module_rr.status == "DENIED" %}
-              <span class="text-danger">
-                {% include 'logo/check_invalid.html' %}
-            {% elif module_rr.status == "APPROVED" %}
-              <span class="text-info">
-                {% include 'logo/check_info.html' %}
-            {% else %}
-              <span class="text-success">
-                {% include 'logo/check_valid.html' %}
-            {% endif %}
+          {% if module_rr.status == "PENDING" %}
+            <span class="text-warning">
+              {% include 'logo/check_ready.html' %}
+          {% elif module_rr.status == "DENIED" %}
+            <span class="text-danger">
+              {% include 'logo/check_invalid.html' %}
+          {% elif module_rr.status == "APPROVED" %}
+            <span class="text-info">
+              {% include 'logo/check_info.html' %}
+          {% else %}
+            <span class="text-success">
+              {% include 'logo/check_valid.html' %}
+          {% endif %}
 
-             {{ module_rr.get_status_display }}
-            </span>
+          {{ module_rr.get_status_display }}
+          </span>
         </th>
       </tr>
       {% if module_rr.status == 'APPROVED' or module_rr.status == 'PAYED' or module_rr.status == 'COMPLETED' %}

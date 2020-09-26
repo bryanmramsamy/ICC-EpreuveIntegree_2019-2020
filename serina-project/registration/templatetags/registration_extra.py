@@ -94,6 +94,17 @@ def succeeded_degree_rr_already_exists(user, degree):
     return registration_utils.succeeded_degree_rr_already_exists(user, degree)
 
 
+@register.filter
+def get_degree_rr_status(degree_rr):
+    """Get the status of the Degree Registration Report.
+
+    The status is based on the statuses of all it's related Module Registration
+    Reports.
+    """
+
+    return registration_utils.get_degree_rr_status(degree_rr)
+
+
 # Course
 
 @register.filter
