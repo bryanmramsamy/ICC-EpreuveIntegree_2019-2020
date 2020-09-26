@@ -333,13 +333,13 @@ class DegreeRegistrationReportCreateView(
         context = super().get_context_data(**kwargs)
         context["degree"] = get_object_or_404(models.Degree,
                                               pk=self.kwargs["degree_pk"])
-        context["degree_still_ongoing_by_user"] = \
-            registration_utils.degree_still_ongoing_by_user(
+        context["active_degree_rr_already_exists"] = \
+            registration_utils.active_degree_rr_already_exists(
                 self.request.user,
                 context["degree"],
             )
-        context["degree_already_validated_by_user"] = \
-            registration_utils.degree_already_validated_by_user(
+        context["succeeded_degree_rr_already_exists"] = \
+            registration_utils.succeeded_degree_rr_already_exists(
                 self.request.user,
                 context["degree"],
             )

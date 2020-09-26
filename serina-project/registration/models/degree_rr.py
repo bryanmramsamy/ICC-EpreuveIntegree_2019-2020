@@ -67,12 +67,31 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         verbose_name_plural = _('Degrees Registration Reports')
 
     @property
+    def partially_pending(self):
+        """Check if at least one of the related modules_rr is pending."""
+
+        if self.modules_rrs.all().count() > 0:
+            partially_pending = self.modules_rrs.filter(status="PENDING")\
+                                                .exists()
+
+        return partially_pending
+
+    @property
+    def fully_pending(self):
+        """Check if all the related modules_rr are pending."""
+
+        if self.modules_rrs.all().count() > 0:
+            fully_pending = self.modules_rrs.exclude(status="PENDING").exists()
+
+        return fully_pending
+
+    @property
     def partially_denied(self):
         """Check if at least one of the related modules_rr is denied."""
 
         if self.modules_rrs.all().count() > 0:
-            partially_denied = self.modules_rrs.filter(status="DENIED")\
-                                               .exists()
+            partially_denied = self.modules_rrs.filter(
+                Q(status="DENIED") | ~Q(status="EXEMPTED")).exists()
 
         return partially_denied
 
@@ -81,7 +100,9 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         """Check if all the related modules_rr are denied."""
 
         if self.modules_rrs.all().count() > 0:
-            fully_denied = self.modules_rrs.exclude(status="DENIED").exists()
+            fully_denied = self.modules_rrs.exclude(
+                Q(status="DENIED") | Q(status="EXEMPTED")
+            ).exists()
 
         return fully_denied
 
@@ -141,9 +162,11 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     def student_graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
-        return self.modules_rrs.exclude(
-            Q(status="COMPLETED") | Q(status="EXEMPTED")
-        ).count() == 0
+        if self.modules_rrs.all().count() > 0:
+            fully_succeeded = not (False in [module_rr.succeeded for module_rr
+                                             in self.modules_rrs.all()])
+
+        return fully_succeeded
 
     @property
     def average_score(self):

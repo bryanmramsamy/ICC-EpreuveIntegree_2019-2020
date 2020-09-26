@@ -20,12 +20,12 @@
 
       {# Degree still ongoing our already completed by user danger bubble #}
 
-      {% if request.user|degree_still_ongoing_by_user:degree or request.user|degree_already_validated_by_user:degree %}
+      {% if request.user|active_degree_rr_already_exists:degree or request.user|succeeded_degree_rr_already_exists:degree %}
         <div class="container pb-3 rounded text-light bg-danger">
-          {% if request.user|degree_already_validated_by_user:degree %}
+          {% if request.user|succeeded_degree_rr_already_exists:degree %}
             {% include 'bubbles/danger/completed_degree_rr_already_exists.html' %}
 
-          {% elif request.user|degree_still_ongoing_by_user:degree %}
+          {% elif request.user|active_degree_rr_already_exists:degree %}
             {% include 'bubbles/danger/active_degree_rr_already_exists.html' %}
           {% endif %}
 

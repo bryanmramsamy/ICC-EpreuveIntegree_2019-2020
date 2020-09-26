@@ -52,21 +52,51 @@ def all_prerequisites_validated_by_user(user, module):
 
 # Degree Registration Reports
 
-def degree_still_ongoing_by_user(user, degree):
-    """Check if a degree is still followed by the user."""
+def get_degree_rr_from_user_and_degree(user, degree):
+    """Get the unique Degree Registration Report from the given user for the
+    given degree.
 
-    return DegreeRegistrationReport.objects.filter(
-        Q(student_rr__created_by=user),
-        Q(degree=degree),
-    ).exists()
+    Return 'None' if the report does not exists.
+    """
 
-
-def degree_already_validated_by_user(user, degree):
-    """Check if a degree has already been completed by a user."""
-
-    degrees_rrs = DegreeRegistrationReport.objects.filter(
+    degree_rr = DegreeRegistrationReport.objects.filter(
         Q(student_rr__created_by=user),
         Q(degree=degree),
     )
 
-    return True in [degree_rr.student_graduated for degree_rr in degrees_rrs]
+    if degree_rr.count() > 1:
+        raise Exception("Mutliple DegreeRegistrationReports objects found for "
+                        "degree: {} for user: {}".format(degree, user))
+
+    if degree_rr.exists():
+        return degree_rr.get()
+    else:
+        return None
+
+
+def pending_degree_rr_already_exists(user, degree):
+    """Check if the given user has his/her degree subscribtion still
+    pending."""
+
+    degree_rr = get_degree_rr_from_user_and_degree(user, degree)
+
+    return degree_rr.partially_pending if degree_rr else False
+
+
+def active_degree_rr_already_exists(user, degree):
+    """Check if a degree is still followed by the user."""
+
+    degree_rr = get_degree_rr_from_user_and_degree(user, degree)
+
+    return ((degree_rr.partially_approved and degree_rr.partially_denied)
+            or degree_rr.fully_approved
+            or pending_degree_rr_already_exists(user, degree)) \
+        if degree_rr else False
+
+
+def succeeded_degree_rr_already_exists(user, degree):
+    """Check if a degree has already been completed by a user."""
+
+    degree_rr = get_degree_rr_from_user_and_degree(user, degree)
+
+    return degree_rr.student_graduated if degree_rr else False
