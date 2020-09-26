@@ -2,6 +2,8 @@ from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
 from django.db.models import Q
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
@@ -9,6 +11,7 @@ from . import resource
 from .student_rr import StudentRegistrationReport
 
 from management.models import Degree
+#
 
 
 class DegreeRegistrationReport(resource.FrontOfficeResource):
@@ -83,6 +86,8 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         if self.modules_rrs.all().count() > 0:
             fully_pending = self.modules_rrs.exclude(status="PENDING").exists()
 
+        # FIXME: See note in student_graduated
+
         return fully_pending
 
     @property
@@ -103,6 +108,8 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
             fully_denied = self.modules_rrs.exclude(
                 Q(status="DENIED") | Q(status="EXEMPTED")
             ).exists()
+
+        # FIXME: See note in student_graduated
 
         return fully_denied
 
@@ -130,6 +137,8 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
             fully_approved = not (False in [module_rr.approved for module_rr in
                                             self.modules_rrs.all()])
 
+        # FIXME: See note in student_graduated
+
         return fully_approved
 
     @property
@@ -155,6 +164,8 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         if self.modules_rrs.all().count() > 0:
             fully_payed = not (False in [module_rr.payed for module_rr in
                                          self.modules_rrs.all()])
+        # FIXME: See note in student_graduated
+
 
         return fully_payed
 
@@ -165,6 +176,11 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         if self.modules_rrs.all().count() > 0:
             fully_succeeded = not (False in [module_rr.succeeded for module_rr
                                              in self.modules_rrs.all()])
+        # FIXME: What if student fails, resubscribe to module and succeed ?
+        # He will accomplish every module, but the fail still count and degree
+        # won't be succeeded
+        # NOTE: Must loop on each module and on each rr of these
+        # NOTE: Use query instead of for-loops if possible
 
         return fully_succeeded
 
@@ -204,3 +220,18 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         """Return absolute url for DegreeRegistrationRappport."""
 
         return reverse("degree_rr_detailview", kwargs={"pk": self.pk})
+
+
+@receiver(post_save, sender=DegreeRegistrationReport)
+def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
+    """Create all the Module Registration Reports for each module of the
+    degree from the given Degree Registration Report.
+
+    If a Module Registration Report already validated or exempted already
+    exists for a specific module, a new report will be created and flagged as
+    'EXEMPTED'. The final score will be repported as well.
+    """
+
+    from ..utils import registration as registration_utils
+
+    registration_utils.create_modules_rrs_for_degree_rr(instance)

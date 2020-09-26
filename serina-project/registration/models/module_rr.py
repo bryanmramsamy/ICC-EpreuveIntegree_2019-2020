@@ -6,8 +6,6 @@ from django.core.validators import (
     MinValueValidator,
 )
 from django.db import models
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 from django.shortcuts import reverse
 from django.utils.translation import ugettext as _
 
@@ -198,33 +196,3 @@ class ModuleRegistrationReport(FrontOfficeResource):
         """Return absolute url for ModuleRegistrationReport."""
 
         return reverse('module_rr_detailview', kwargs={"pk": self.pk})
-
-
-@receiver(post_save, sender=DegreeRegistrationReport)  # TODO: Review this
-def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
-    """When a DegreeRegistrationReport is created, all the related
-    ModuleRegistrationReports of the related modules are generated too and
-    linked to the StudentRegistrationReport.
-
-    NOTE: This couldn't be done in the DegreeRegistrationReport.save() because
-    of a circular import issue.
-    """
-    # FIXME: A new module_rr must be created for each module of the degree_rr, if a previous module_rr validated exists, the user should should be prompted to ignore it (default, module_rr wil be flagged as EXEMPTED and best final_score available will be taken over) or redo it.
-
-    for module in instance.degree.modules.all():
-        for module_rr in module.modules_rrs.all():
-            if module_rr.student_rr == instance.student_rr:
-                if module_rr.status == "DENIED" or module_rr.status == "COMPLETED":
-                    pass
-
-
-
-        if module.modules_rrs.filter :
-            pass
-        else:
-            pass
-        ModuleRegistrationReport.objects.create(
-            student_rr=instance.student_rr,
-            degree_rr=instance,
-            module=module,
-        )
