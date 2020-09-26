@@ -163,13 +163,11 @@ def get_degree_rr_status(degree_rr):
     modules_rrs = degree_rr.modules_rrs.all()
     modules = degree_rr.degree.modules.all()
 
-
-
-
-    # GRADUATED
-
     status_graduated = True
     status_payed_or_exempted = True
+    status_approved_or_exempted = True
+    status_denied = False
+
 
     # For each module of the degree
 
@@ -183,6 +181,43 @@ def get_degree_rr_status(degree_rr):
                 Q(module=module),
             )
 
+        # NOTE: is DENIED ?
+        # All modules must been denied ('DENIED')
+
+        if modules_rrs_related_to_module.filter(status="DENIED").exists():
+            status_denied, status_approved_or_exempted, \
+                status_payed_or_exempted, status_graduated = True, False, \
+                False, False
+            break
+
+        # NOTE: is PENDING ?
+        # No modules must be denied ('DENIED') and at least one module must be
+        # pending ('PENDING')
+
+        if modules_rrs_related_to_module.filter(status="PENDING").exists():
+            status_approved_or_exempted, status_payed_or_exempted, \
+                status_graduated = False, False, False
+            break
+
+        # NOTE: is APPROVED ?
+        # All modules must been approved ('APPROVED', 'PAYED', 'COMPLETED' or
+        # 'EXEMPTED')
+
+        if False in [module_rr.approved_or_exempted for module_rr
+                     in modules_rrs_related_to_module]:
+            status_approved_or_exempted, status_payed_or_exempted, \
+                status_graduated = False, False, False
+            break
+
+        # NOTE: is PAYED ?
+        # All modules must been payed or exempted ('PAYED', 'COMPLETED' or
+        # 'EXEMPTED')
+
+        if False in [module_rr.payed_or_exempted for module_rr
+                     in modules_rrs_related_to_module]:
+            status_payed_or_exempted, status_graduated = False, False
+            break
+
         # NOTE: is COMPLETED ?
         # At least one module_rr for each modules must have been succeeded
         # ('COMPLETED' or 'EXEMPTED')
@@ -192,20 +227,17 @@ def get_degree_rr_status(degree_rr):
             status_graduated = False
             break
 
-        # NOTE: is PAYED ?
-        # All modules must been payed or exempted ('PAYED', 'COMPLETED' or
-        # 'EXEMPTED')
-
-        if False in [module_rr.payed_or_exempted for module_rr
-                     in modules_rrs_related_to_module]:
-            status_payed_or_exempted = False
-            break
-
     # Final status result
 
     if status_graduated:
         status_result = "COMPLETED"
     elif status_payed_or_exempted:
         status_result = "PAYED"
+    elif status_approved_or_exempted:
+        status_result = "APPROVED"
+    elif status_denied:
+        status_result = "DENIED"
+    else:
+        status_result = "PENDING"
 
     return status_result

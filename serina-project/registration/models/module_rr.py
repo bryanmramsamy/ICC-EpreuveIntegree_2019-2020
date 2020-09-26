@@ -142,6 +142,16 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return self.status == "APPROVED" or self.payed
 
     @property
+    def approved_or_exempted(self):
+        """Check if the module registration request has been approved or
+        exempted.
+
+        An approved request is either approved, payed or completed.
+        """
+
+        return self.status == "EXEMPTED" or self.approved
+
+    @property
     def success_score_threshold_reached(self):
         """Check if the final score is above the success score threshold."""
 
