@@ -123,6 +123,16 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return self.status == "PAYED" or self.status == "COMPLETED"
 
     @property
+    def payed_or_exempted(self):
+        """Check if the module registration request has been payed or was
+        exempted.
+
+        A payed request is either payed or completed.
+        """
+
+        return self.status == "EXEMPTED" or self.payed
+
+    @property
     def approved(self):
         """Check if the module registration request has been approved.
 

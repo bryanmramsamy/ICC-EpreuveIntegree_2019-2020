@@ -169,18 +169,43 @@ def get_degree_rr_status(degree_rr):
     # GRADUATED
 
     status_graduated = True
+    status_payed_or_exempted = True
 
-    for module in modules:  # For each module of the degree
+    # For each module of the degree
+
+    for module in modules:
+
+        # All modules_rrs related to degree_rr and to current module
+
         modules_rrs_related_to_module = ModuleRegistrationReport.objects \
             .filter(
                 Q(degree_rr=degree_rr),
                 Q(module=module),
-            )  # All modules_rrs related to degree_rr and to current module
+            )
 
-        if not (True in [module_rr.succeeded for module_rr in
-                         modules_rrs_related_to_module]):
+        # NOTE: is COMPLETED ?
+        # At least one module_rr for each modules must have been succeeded
+        # ('COMPLETED' or 'EXEMPTED')
+
+        if not (True in [module_rr.succeeded for module_rr
+                         in modules_rrs_related_to_module]):
             status_graduated = False
             break
 
+        # NOTE: is PAYED ?
+        # All modules must been payed or exempted ('PAYED', 'COMPLETED' or
+        # 'EXEMPTED')
+
+        if False in [module_rr.payed_or_exempted for module_rr
+                     in modules_rrs_related_to_module]:
+            status_payed_or_exempted = False
+            break
+
+    # Final status result
+
     if status_graduated:
-        return "COMPLETED"
+        status_result = "COMPLETED"
+    elif status_payed_or_exempted:
+        status_result = "PAYED"
+
+    return status_result
