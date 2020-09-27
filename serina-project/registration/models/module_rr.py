@@ -171,12 +171,19 @@ class ModuleRegistrationReport(FrontOfficeResource):
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
 
-        return "[{}] {}'s module registration for {} ({})".format(
+        result = "[{}] {}'s module registration for {} ({})".format(
             self.pk,
             self.student_rr.created_by.get_full_name(),
             self.module.title,
             self.status,
         )
+
+        if self.status == "COMPLETED" and self.succeeded:
+            result += " (Succes)"
+        elif self.status == "COMPLETED":
+            result += " (Failure)"
+
+        return result
 
     def clean(self):
         """Clean method for ModuleRegistrationReport.

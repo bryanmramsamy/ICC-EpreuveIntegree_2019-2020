@@ -153,91 +153,49 @@ def create_modules_rrs_for_degree_rr(degree_rr):
 
 # Degree Registration Report statuses
 
-def get_degree_rr_status(degree_rr):
+def get_degree_rr_status(degree_rr):  # FIXME: You motherfucking piece of shit
     """Get the status of the Degree Registration Report.
 
     The status is based on the statuses of all it's related Module Registration
     Reports.
     """
 
-    modules_rrs = degree_rr.modules_rrs.all()
-    modules = degree_rr.degree.modules.all()
+    # Boolean check instanciation
+    degree_completed = True
+    degree_payed = True
+    degree_approved = True
+    degree_not_denied = True
+    degree_pending = True
 
-    status_graduated = True
-    status_payed_or_exempted = True
-    status_approved_or_exempted = True
-    status_denied = False
+    # Loop for each module of the degree
+    for module in degree_rr.degree.modules.all():
 
+        # Get all module registrations related to this module only
+        module_related_modules_rrs = degree_rr.modules_rrs.filter(
+            module=module,
+        )  # NOTE: OK
 
-    # For each module of the degree
+        # If not a single module registration was succeeded, the degree is not
+        # completed
+        if degree_completed and not (True in [
+            module_rr.succeeded for module_rr in module_related_modules_rrs
+        ]):
+            degree_completed = False  # NOTE: OK
 
-    for module in modules:
+        # If not a single module registration has a 'PAYED' status, the degree
+        # is not payed
+        print([
+            not (True in [
+            (module_rr.payed_or_exempted and not module_rr.succeeded) for module_rr in module_related_modules_rrs
+        ])
+        ])
+        if degree_payed and not (True in [
+            (module_rr.payed_or_exempted and not module_rr.succeeded) for module_rr in module_related_modules_rrs
+        ]):
+            degree_payed = False
 
-        # All modules_rrs related to degree_rr and to current module
-
-        modules_rrs_related_to_module = ModuleRegistrationReport.objects \
-            .filter(
-                Q(degree_rr=degree_rr),
-                Q(module=module),
-            )
-
-        # NOTE: is DENIED ?
-        # All modules must been denied ('DENIED')
-
-        if modules_rrs_related_to_module.filter(status="DENIED").exists():
-            status_denied, status_approved_or_exempted, \
-                status_payed_or_exempted, status_graduated = True, False, \
-                False, False
-            break
-
-        # NOTE: is PENDING ?
-        # No modules must be denied ('DENIED') and at least one module must be
-        # pending ('PENDING')
-
-        if modules_rrs_related_to_module.filter(status="PENDING").exists():
-            status_approved_or_exempted, status_payed_or_exempted, \
-                status_graduated = False, False, False
-            break
-
-        # NOTE: is APPROVED ?
-        # All modules must been approved ('APPROVED', 'PAYED', 'COMPLETED' or
-        # 'EXEMPTED')
-
-        if False in [module_rr.approved_or_exempted for module_rr
-                     in modules_rrs_related_to_module]:
-            status_approved_or_exempted, status_payed_or_exempted, \
-                status_graduated = False, False, False
-            break
-
-        # NOTE: is PAYED ?
-        # All modules must been payed or exempted ('PAYED', 'COMPLETED' or
-        # 'EXEMPTED')
-
-        if False in [module_rr.payed_or_exempted for module_rr
-                     in modules_rrs_related_to_module]:
-            status_payed_or_exempted, status_graduated = False, False
-            break
-
-        # NOTE: is COMPLETED ?
-        # At least one module_rr for each modules must have been succeeded
-        # ('COMPLETED' or 'EXEMPTED')
-
-        if not (True in [module_rr.succeeded for module_rr
-                         in modules_rrs_related_to_module]):
-            status_graduated = False
-            break
-
-    # Final status result
-
-    if status_graduated:
-        status_result = "COMPLETED"
-    elif status_payed_or_exempted:
-        status_result = "PAYED"
-    elif status_approved_or_exempted:
-        status_result = "APPROVED"
-    elif status_denied:
-        status_result = "DENIED"
-    else:
-        status_result = "PENDING"
-
-    return status_result
+    # Result degree registration status
+    if degree_completed:
+        return "COMPLETED"
+    elif degree_payed:
+        return "PAYED"
