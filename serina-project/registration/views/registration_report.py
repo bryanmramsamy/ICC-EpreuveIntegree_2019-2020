@@ -31,32 +31,6 @@ from management import models
 
 # StudentRegistrationReport
 
-class StudentRegistrationReportListView(
-    LoginRequiredMixin,
-    mixins_utils.ManagerAdministratorOnlyMixin,
-    ListView,
-):  # TODO: Debug view
-    """ListView for StudentRegistrationReports."""
-
-    model = StudentRegistrationReport
-    context_object_name = "student_rrs"
-    template_name = "registration/registration_report/student_rr_listview." \
-                    "html"
-
-
-class StudentRegistrationReportDetailView(
-    LoginRequiredMixin,
-    mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
-    DetailView,
-):  # TODO: Debug view
-    """DetailView for StudentRegistrationReport."""
-
-    model = StudentRegistrationReport
-    context_object_name = "student_rr"
-    template_name = "registration/registration_report/student_rr_detailview." \
-                    "html"
-
-
 class StudentRegistrationReportCreateView(
     LoginRequiredMixin,
     UserPassesTestMixin,

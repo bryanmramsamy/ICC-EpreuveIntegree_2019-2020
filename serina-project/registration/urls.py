@@ -125,16 +125,6 @@ urlpatterns = [
     # StudentRegistrationReport
 
     url(
-        r"^report/student/l/",
-        views.StudentRegistrationReportListView.as_view(),
-        name="student_rr_listview",
-    ),
-    url(
-        r"^report/student/r/(?P<pk>[0-9]+)/$",
-        views.StudentRegistrationReportDetailView.as_view(),
-        name="student_rr_detailview",
-    ),
-    url(
         r"^report/student/c/$",
         views.StudentRegistrationReportCreateView.as_view(),
         name="student_rr_createview",
