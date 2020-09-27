@@ -13,7 +13,7 @@ from ..models import(
     StudentRegistrationReport,
 )
 from ..utils.groups import is_student, main_group_i18n
-from ..utils import mixins as mixins_utils
+from ..utils import decorators as decorators_utils, mixins as mixins_utils
 from management.models import Course
 
 
@@ -208,11 +208,12 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
                        kwargs={"pk": self.request.user.pk})
 
 
+@decorators_utils.managers_or_administrators_only
 def user_listview(request):
     """Back-Office User ListView."""
 
     return render(
         request,
-        "",
+        "registration/userprofile/user_admin_panel.html",
         {},
     )
