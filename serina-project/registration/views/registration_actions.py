@@ -114,48 +114,6 @@ def promote_to_group(request, group_name, user_pk):
     return redirect('backoffice_user_admin_panel')
 
 
-# @decorators_utils.managers_or_administrators_only
-# def promote_to_teacher(request, user_pk):
-#     """Promote a registered user to the 'Teacher'-group."""
-
-#     user = get_object_or_404(User, pk=user_pk)
-#     administrator_on_admnistrator_only(request.user, user)
-
-#     groups_utils.promote_to_teacher(user)
-#     # TODO: Send mail
-#     messages_utils.promote_to_teacher(request, user)
-
-#     return redirect('backoffice_user_admin_panel')
-
-
-# @decorators_utils.managers_or_administrators_only
-# def promote_to_manager(request, user_pk):
-#     """Promote a registered user to the 'Manager'-group."""
-
-#     user = get_object_or_404(User, pk=user_pk)
-#     administrator_on_admnistrator_only(request.user, user)
-
-#     groups_utils.promote_to_manager(user)
-#     # TODO: Send mail
-#     messages_utils.promote_to_manager(request, user)
-
-#     return redirect('backoffice_user_admin_panel')
-
-
-# @decorators_utils.managers_or_administrators_only
-# def promote_to_administrator(request, user_pk):
-#     """Promote a registered user to the 'Administrator'-group."""
-
-#     user = get_object_or_404(User, pk=user_pk)
-#     administrator_on_admnistrator_only(request.user, user)
-
-#     groups_utils.promote_to_administrator(user)
-#     # TODO: Send mail
-#     messages_utils.promote_to_administrator(request, user)
-
-#     return redirect('backoffice_user_admin_panel')
-
-
 # Module Registration Report actions
 
 @decorators_utils.managers_or_administrators_only

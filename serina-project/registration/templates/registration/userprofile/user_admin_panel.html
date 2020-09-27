@@ -13,9 +13,20 @@
   {% include 'backoffice_tag.html' %}
   <section class="container p-1 p-md-3 border border-warning rounded">
 
+
+    {# Filters #}
+
+    {% include 'registration/userprofile/user_admin_panel_search.html' %}
+
+
+    {# Presentation header#}
+
     <div class="h1 text-center">
       {% include 'logo/group.html' %} {% trans 'Users Administration Panel' %}
     </div>
+
+
+    {# Users table #}
 
     <table id="dtBasicExample" class="table table-striped table-hover">
       <thead class="thead-dark">
