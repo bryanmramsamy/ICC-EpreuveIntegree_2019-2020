@@ -166,8 +166,8 @@ urlpatterns = [
 
     url(
         r'^back_office/user/l/$',
-        views.user_listview,
-        name='backoffice_user_listview'
+        views.user_admin_panel,
+        name='backoffice_user_admin_panel'
     ),
     url(
         r'^back_office/user/activation/(?P<user_pk>[0-9]+)/$',

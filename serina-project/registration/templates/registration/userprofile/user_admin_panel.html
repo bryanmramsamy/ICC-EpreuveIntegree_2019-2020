@@ -33,7 +33,7 @@
             {% include 'logo/mail.html' %} {% trans 'Contact mail' %}
           </th>
           <th>
-            {% include 'logo/ban.html' %} {% trans '(De)activate' %}
+            {% include 'logo/options.html' %} {% trans 'Options' %}
           </th>
         </tr>
       </thead>
@@ -69,17 +69,29 @@
               </a>
             </td>
             <td>
-              <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}" class="btn btn-block btn-sm btn-{% if request.user == one_user or not request.user|is_administrator and one_user|is_manager_or_administrator %}warning disabled{% elif one_user.is_active %}danger{% else %}success{% endif %}">
-                {% if request.user == one_user or not request.user|is_administrator and one_user|is_manager_or_administrator %}
-                  {% trans 'Cannot be desactivated' %} {% include 'logo/check_invalid.html' %}
+              <div class="dropdown">
+                <button class="btn btn-warning btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  {% trans 'Options' %} {% include 'logo/options.html' %}
+                </button>
+                <div class="dropdown-menu bg-warning" aria-labelledby="dropdownMenuButton">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
 
-                {% elif one_user.is_active %}
-                  {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
+                  <div class="dropdown-divider border border-dark"></div>
 
-                {% else %}
-                  {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
-                {% endif %}
-              </a>
+                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?admin=true" class="dropdown-item bg-{% if request.user == one_user or not request.user|is_administrator and one_user|is_manager_or_administrator %}warning disabled{% elif one_user.is_active %}danger{% else %}success{% endif %}">
+                    {% if request.user == one_user or not request.user|is_administrator and one_user|is_manager_or_administrator %}
+                      {% trans 'Cannot be desactivated' %} {% include 'logo/check_invalid.html' %}
+
+                    {% elif one_user.is_active %}
+                      {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
+
+                    {% else %}
+                      {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
+                    {% endif %}
+                  </a>
+                </div>
+              </div>
             </td>
           </tr>
         {% endfor %}
@@ -90,3 +102,5 @@
   </section>
 
 {% endblock content %}
+
+

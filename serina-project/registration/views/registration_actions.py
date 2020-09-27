@@ -36,7 +36,16 @@ def activate_deactivate_user(request, user_pk):
 
     user.save()
 
-    return redirect('userprofile_detailview', pk=user.pk)
+    if request.GET['admin'] == "true":
+        return redirect('backoffice_user_admin_panel')
+    else:
+        return redirect('userprofile_detailview', pk=user.pk)
+
+
+def promote_to_guest(request, user):
+
+    promote_to_guest(user)
+    redirect
 
 
 # Module Registration Report actions

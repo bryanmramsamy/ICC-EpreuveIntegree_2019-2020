@@ -209,7 +209,7 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
 
 
 @decorators_utils.managers_or_administrators_only
-def user_listview(request):
+def user_admin_panel(request):
     """Back-Office User ListView."""
 
     all_users = User.objects.all().order_by("-groups")

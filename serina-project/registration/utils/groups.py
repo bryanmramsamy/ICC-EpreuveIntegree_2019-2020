@@ -113,6 +113,9 @@ def promote_to_guest(user):
 def promote_to_student(user):
     """Promote a registered user to the 'Student'-group."""
 
+    if not user.student_rr:
+        raise Exception("A Student must have a related Registration Report")
+
     change_group(user, 'Student')
 
 
