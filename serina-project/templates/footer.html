@@ -45,7 +45,7 @@
         <span class="h4">{% trans 'About us' %}</span>
         <ul class="list-unstyled text-small">
           <li><a class="text-muted" href="{% url 'home' %}">{% trans 'Home' %}</a></li>
-          <li><a class="text-muted" href="mailto:support@serina.com">{% trans 'Contact us' %}</a></li>
+          <li><a class="text-muted" href="mailto: {{ contact_mails.support }}">{% trans 'Contact us' %}</a></li>
           <li><a class="text-muted" href="{% url 'terms_and_conditions' %}">{% trans 'Terms and conditions' %}</a></li>
           <li><a class="text-muted" href="{% url 'privacy_policy' %}">{% trans 'Privacy policy' %}</a></li>
           <li><a class="text-muted" href="{% url 'cookies_policy' %}">{% trans 'Cookies policy' %}</a></li>
@@ -59,7 +59,6 @@
           <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-1.pdf' %}" target="_blank" rel="noopener noreferrer">{% trans 'Project report: Volume 1' %} {% include 'logo/new_tab.html' %}</a></li>
           <li><a class="text-muted" href="{% static 'files/2019-2020_Bryan_Ramsamy_19-00092_rapportEI_volume-2.pdf' %}" target="_blank" rel="noopener noreferrer">{% trans 'Project report: Volume 2' %} {% include 'logo/new_tab.html' %}</a></li>
           <li><a class="text-muted" href="https://gitlab.com/bryanmramsamy/ICC-EpreuveIntegree_2019-2020/" target="_blank" rel="noopener noreferrer">{% trans 'GitLab.com project repository' %} {% include 'logo/new_tab.html' %}</a></li>
-          <li><a class="text-danger" href="{% url 'home_old' %}">home_old</a></li>
         </ul>
       </div>
     </div>

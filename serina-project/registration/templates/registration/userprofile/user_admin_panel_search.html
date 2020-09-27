@@ -1,0 +1,63 @@
+{% load i18n %}
+
+
+{% include 'filter_tag.html' %}
+<section class="container p-3 rounded text-left text-light bg-dark">
+  <form method="GET" action="{% url 'backoffice_user_admin_panel' %}">
+
+
+    <div class="row row-cols-1 row-cols-md-3">
+
+
+      {# q_group #}
+
+      <div class="form-group col">
+        <label for="q_group" class="h5 text-uppercase">
+          {% include 'logo/group.html' %} {% trans 'Group' %}
+        </label>
+
+        <select id="q_group" name="q_group" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All groups' %} ---
+          </option>
+          {% for group in s_groups %}
+            <option value="{{ group.pk }}" {% if q_group|add:0 == group.pk %}selected{% endif %}>
+              {{ group.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_status #}
+
+      <div class="form-group col">
+        <label for="q_status" class="h5 text-uppercase">
+          {% include 'logo/unban.html' %} {% trans 'Status' %}
+        </label>
+
+        <select id="q_status" name="q_status" class="form-control form-control-sm">
+          <option {% if q_status == '' or q_status is None %}selected{% endif %} value="">
+            --- {% trans 'All users' %} ---
+          </option>
+          <option value="active" {% if q_status == 'active' %}selected{% endif %}>
+            {% trans 'Active users' %}
+          </option>
+          <option value="inactive" {% if q_status == 'inactive' %}selected{% endif %}>
+            {% trans 'Inactive users' %}
+          </option>
+        </select>
+      </div>
+
+
+      {# submit #}
+
+      <div class="form-group col">
+        <label class="h5 text-uppercase d-none d-md-block">
+          <br>
+        </label>
+        <input type="submit" value="{% trans 'Filter' %}" class="btn btn-block btn-sm btn-outline-light h5 text-uppercase"/>
+      </div>
+    </div>
+  </form>
+</section>

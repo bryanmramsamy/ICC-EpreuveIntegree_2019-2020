@@ -1,5 +1,5 @@
-from django.contrib.auth.models import User
-from django.core.exceptions import ValidationError
+from django.contrib.auth.models import Group, User
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.translation import ugettext as _
@@ -8,6 +8,7 @@ from ..forms import SubmitFinalScoreForm, SubmitNotesForm
 from ..models import DegreeRegistrationReport, ModuleRegistrationReport
 from ..utils import (
     decorators as decorators_utils,
+    groups as groups_utils,
     management as management_utils,
     messages as messages_utils,
 )
@@ -36,7 +37,81 @@ def activate_deactivate_user(request, user_pk):
 
     user.save()
 
-    return redirect('userprofile_detailview', pk=user.pk)
+    if request.GET['admin'] == "true":
+        return redirect('backoffice_user_admin_panel')
+    else:
+        return redirect('userprofile_detailview', pk=user.pk)
+
+
+def administrator_on_admnistrator_only(request_user, updated_user):
+    """Prevent an action performed on an administrator account by anyone else
+    than another administrator."""
+
+    if groups_utils.is_administrator(updated_user) \
+       and not groups_utils.is_administrator(request_user):
+        raise PermissionDenied
+
+
+# @decorators_utils.managers_or_administrators_only
+# def promote_to_guest(request, user_pk):
+#     """Promote a registered user to the 'Guest'-group."""
+
+#     user = get_object_or_404(User, pk=user_pk)
+#     administrator_on_admnistrator_only(request.user, user)
+
+#     groups_utils.promote_to_guest(user)
+#     # TODO: Send mail
+#     messages_utils.promote_to_guest(request, user)
+
+#     return redirect('backoffice_user_admin_panel')
+
+
+@decorators_utils.managers_or_administrators_only
+def promote_to_group(request, group_name, user_pk):
+    """Promote the given user to the given group.
+
+    Only administrators can change the group of another administrator member.
+    """
+
+    user = get_object_or_404(User, pk=user_pk)
+    administrator_on_admnistrator_only(request.user, user)
+    group_name = group_name.capitalize()
+
+    if group_name == "Guest" or group_name == "Student" \
+       or group_name == "Teacher" or group_name == "Manager" \
+       or group_name == "Administrator":
+        group, is_created = Group.objects.get_or_create(name=group_name)
+        group.save()
+
+    if group.name == "Guest":
+        groups_utils.promote_to_guest(user)
+
+    elif group.name == "Student":
+        try:
+            groups_utils.promote_to_student(user)
+        except Exception:
+            messages_utils.cannot_promote_to_student_student_rr_missing(
+                request,
+                user,
+            )
+
+            return redirect('backoffice_user_admin_panel')
+
+    elif group.name == "Teacher":
+        groups_utils.promote_to_teacher(user)
+
+    elif group.name == "Manager":
+        groups_utils.promote_to_manager(user)
+
+    elif group.name == "Administrator":
+        groups_utils.promote_to_administrator(user)
+    else:
+        raise Exception("Group {} does not exist.".format(group_name))
+
+    # TODO: Send mail
+    messages_utils.promote_to_group(request, user, group)
+
+    return redirect('backoffice_user_admin_panel')
 
 
 # Module Registration Report actions

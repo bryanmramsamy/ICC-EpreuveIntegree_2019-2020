@@ -120,7 +120,7 @@ class ModuleRegistrationReportListView(
 
         query_result = ModuleRegistrationReport.objects.all()
 
-        # Foreign key conditions
+        # Filtering
 
         if search_student:
             query_result = query_result.filter(

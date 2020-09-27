@@ -44,6 +44,12 @@ def is_manager_or_administrator(user):
                               | Q(name="Administrator")).exists()
 
 
+def is_administrator(user):
+    """Check if the user is an administrator."""
+
+    return user.groups.filter(name="Administrator").exists()
+
+
 def main_group_i18n(user):
     """Main group of the user in the case one has multiple groups.
 
@@ -83,10 +89,8 @@ def add_to_group(user, group_name):
     """Add a user to a given group. Creates it if the group does not exist yet.
     """
 
-    group, isCreated = Group.objects.get_or_create(name=group_name)
+    group = Group.objects.get(name=group_name)
     group.user_set.add(user)
-
-    return isCreated
 
 
 def change_group(user, group_name):
@@ -106,6 +110,9 @@ def promote_to_guest(user):
 
 def promote_to_student(user):
     """Promote a registered user to the 'Student'-group."""
+
+    if not user.student_rr:
+        raise Exception("A Student must have a related Registration Report")
 
     change_group(user, 'Student')
 

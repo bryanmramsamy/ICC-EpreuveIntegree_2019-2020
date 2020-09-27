@@ -2,7 +2,9 @@
 {% load i18n registration_extra %}
 
 
-{% block title %}{% trans 'Profile of' %} {{ userprofile.get_full_name }} | {{ userprofile.username }}{% endblock title %}
+{% block title %}
+  {% trans 'Profile of' %} {{ userprofile.get_full_name }} | {{ userprofile.username }}
+{% endblock title %}
 
 
 {% block content %}

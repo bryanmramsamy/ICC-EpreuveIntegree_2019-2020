@@ -46,9 +46,23 @@ def is_teacher(user):
 
 @register.filter
 def is_manager_or_administrator(user):
-    """Template tags that checks if a user is is manager or administrator."""
+    """Template tags that checks if a user is a manager or administrator."""
 
     return groups_utils.is_manager_or_administrator(user)
+
+
+@register.filter
+def is_administrator(user):
+    """Template tags that checks if a user is an administrator."""
+
+    return groups_utils.is_administrator(user)
+
+
+@register.filter
+def main_group(user):
+    """Return the name of the given user's main group."""
+
+    return groups_utils.main_group_i18n(user)
 
 
 # Module Registration Report

@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from django.db.models import Q
+from django.shortcuts import render
 from django.views.generic import DetailView, FormView
 from django.urls import reverse
 
@@ -12,7 +13,7 @@ from ..models import(
     StudentRegistrationReport,
 )
 from ..utils.groups import is_student, main_group_i18n
-from ..utils import mixins as mixins_utils
+from ..utils import decorators as decorators_utils, mixins as mixins_utils
 from management.models import Course
 
 
@@ -205,3 +206,41 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
 
         return reverse("userprofile_detailview",
                        kwargs={"pk": self.request.user.pk})
+
+
+@decorators_utils.managers_or_administrators_only
+def user_admin_panel(request):
+    """Back-Office User ListView."""
+
+    # Main query
+    query_result = User.objects.all().order_by("-groups")
+
+    # GET variables
+    search_group = request.GET.get('q_group')
+    search_status = request.GET.get('q_status')
+
+    # Filtering
+    if search_group:
+        query_result = query_result.filter(
+            groups__pk=search_group,
+        )
+
+    if search_status == "active":
+        query_result = query_result.filter(is_active=True)
+
+    elif search_status == "inactive":
+        query_result = query_result.filter(is_active=False)
+
+    # Result rendering
+    return render(
+        request,
+        "registration/userprofile/user_admin_panel.html",
+        {
+            "s_groups": Group.objects.all(),
+
+            "q_group": request.GET.get('q_group'),
+            "q_status": request.GET.get('q_status'),
+
+            "all_users": query_result,
+        },
+    )

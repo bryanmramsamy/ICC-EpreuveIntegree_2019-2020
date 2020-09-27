@@ -54,12 +54,16 @@
 
     <script>
       $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+      })
+
+      $(function () {
         $('[data-toggle="gdpr-popover"]').popover({
-          delay: {show: 0, hide: 1500},
+          delay: {show: 0, hide: 750},
           trigger: "hover",
           html: true,
           title: '<div class="bg-light text-center h4"><img src="/static/logo/gdpr.png" class="img-fluid" alt="GDPR logo" max-height="100px"> {% trans 'GDPR disclaimer' %}</div><div class="small text-justify text-muted">{% trans 'To know more about your rights, consult our ' %}<a href="{% url 'terms_and_conditions' %}">{% trans 'Terms and conditions' %}</a>{% trans ', our ' %}<a href="{% url 'privacy_policy' %}"> {% trans 'Privacy Policy' %}</a>{% trans ' and our ' %}<a href="{% url 'cookies_policy' %}">{% trans 'Cookies Policy' %}</a>.</div>',
-        }); 
+        });
       })
     </script>
 
