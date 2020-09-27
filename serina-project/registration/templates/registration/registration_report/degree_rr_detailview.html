@@ -1,24 +1,367 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'DegreeRRDetailView' %}{% endblock title %}
+
+{% block title %}
+  {% trans 'Degree registration' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }} for {{ degree_rr.degree.title }}
+{% endblock title %}
+
 
 {% block content %}
-    <h1>DegreeRRDetailView</h1>
+  {# Back Office Tag openning #}
 
-    <p>{{ degree_rr.student_rr.student.get_full_name }}</p>
-    <ul>
-        <li>{{ degree_rr.degree.title }}</li>
-        <li>Nb modules = {{ degree_rr.modules_rrs.count }}</li>
-        <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
-        <li>partially approved ? {{ degree_rr.partially_approved }}</li>
-        <li>fully approved ? {{ degree_rr.fully_approved }}</li>
-        <li>partially_payed ? {{ degree_rr.partially_payed }}</li>
-        <li>fully_payed ? {{ degree_rr.fully_payed }}</li>
-        <ul>
-            {% for module_rr in degree_rr.modules_rrs.all %}
-                <li>{{ module_rr.module.title }}</li>
+  {% if request.user|is_back_office_user %}
+    {% include 'backoffice_tag.html' %}
+    <section class="container border border-warning rounded py-3">
+  {% endif %}
+
+  {# Module Registration Report Tag #}
+
+  <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
+    <div class="row">
+      <div class="col">
+        {% trans 'Invoice ID' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }}
+      </div>
+      <div class="col text-right">
+        {% trans 'Degree Registration Report' %} {% include 'logo/degree_rr.html' %}
+      </div>
+    </div>
+  </div>
+
+  <section class="container border border-secondary rounded">
+
+    <br>
+
+  {% with debug=False  %}
+
+
+  {% if debug %}
+
+
+  {{ degree_rr }}
+
+  <h1>
+    degree_rr|get_degree_rr_status =
+    <strong>
+      {{ degree_rr|get_degree_rr_status }}
+    </strong>
+  </h1>
+
+  <br>
+
+  <h2>
+    modules_rrs
+  </h2>
+  <ul>
+    {% for module_rr in degree_rr.modules_rrs.all %}
+    <li>
+      {{ module_rr }}
+    </li>
+    {% endfor %}
+  </ul>
+
+  <h2>
+    modules
+  </h2>
+  <ul>
+    {% for module in degree_rr.degree.modules.all %}
+    <li>
+      {{ module }}
+    </li>
+    {% endfor %}
+  </ul>
+
+  {# Status info bubble #}
+
+  {% if request.user|is_student %}
+  {% if module_rr.status == "PENDING" %}
+  {% include 'bubbles/warning/module_rr_pending.html' %}
+
+  {% elif module_rr.status == "DENIED" %}
+  {% include 'bubbles/danger/module_rr_denied.html' %}
+
+  {% elif module_rr.status == "APPROVED" %}
+  {% include 'bubbles/warning/module_rr_unpayed.html' %}
+  {% endif %}
+  {% endif %} -->
+  {% endif %}
+  {% endwith %}
+
+
+    {# Module_rr details #}
+
+    <table class="table table-hover h5 text-left">
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration status' %}:
+        </td>
+        <th class="col-8">
+          DEBUG: Status of degree  {# FIXME: utils. status function not ready yet #}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration fee' %}:
+        </td>
+        <th class="col-8">
+          € {{ degree_rr.total_paid_price }}
+          <small class="text-muted text-uppercase">
+            {% trans 'V.A.T. included' %}
+          </small>
+        </th>
+      </tr>
+      {% if degree_rr.date_payed %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Payment date and time' %}:
+          </td>
+          <th class="col-8">
+            {{ degree_rr.date_payed }} {# FIXME: utils. status function not ready yet #}
+          </th>
+        </tr>
+      {% endif %}
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s registration number' %}:
+        </td>
+        <th class="col-8">
+          {{ degree_rr.student_rr.created_by.username }}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s name' %}:
+        </td>
+        <th class="col-8">
+          <a href="{% url 'userprofile_detailview' degree_rr.student_rr.created_by.pk %}" class="text-reset">
+            {% include 'logo/person.html' %} {{ degree_rr.student_rr.created_by.get_full_name }}
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Degree' %}:
+        </td>
+        <th class="col-8">
+          <a href="{{ degree_rr.degree.get_absolute_url }}" class="text-reset">
+            {% include 'logo/degree.html' %} {{ degree_rr.degree.title }}
+            <small class="text-muted">
+              {{ degree_rr.degree.reference }}
+            </small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Modules' %}:
+        </td>
+        <th class="col-8">
+          {% blocktrans with nb_modules=degree_rr.degree.modules.count %}
+            This degree contains {{ nb_modules }} modules
+          {% endblocktrans %}
+          :
+          <br>
+          <ul class="list-unstyled">
+            {% for module in degree_rr.degree.modules.all %}
+              <li>
+                <a href="{{ module.get_absolute_url }}" class="text-reset">
+                  {% include 'logo/module.html' %} {{ module.title }}
+                  <small class="text-muted">
+                    {{ module.reference }}
+                  </small>
+                </a>
+              </li>
             {% endfor %}
-        </ul>
-    </ul>
+          </ul>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Exemption request' %}:
+        </td>
+        <th class="col-8">
+          {% if degree_rr.exemption_request %}
+              <span class="text-info">
+                {% include 'logo/check_info.html' %} {% trans 'Uploaded' %}
+              </span>
+
+            {% if degree_rr.exemption_report %}
+              <a href="{{ degree_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+              </a>
+
+            {% else %}
+              <span class="badge badge-danger">
+                {% trans 'No file found !' %} <a href="mailto:{{ contact_mails.support }}" class="badge badge-light">Contact our support team {% include 'logo/mail.html' %}</a>.
+              </span>
+            {% endif %}
+
+          {% else %}
+            <span class="text-muted">
+              {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+            </span>
+          {% endif %}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'ECTS' %}:
+        </td>
+        <th class="col-8">
+          {{ degree_rr.degree.total_ECTS_value }}
+        </th>
+      </tr>
+    </table>
+  </section>
+
+  <br>
+
+
+  {# Actions #}
+
+  <div class="row row-cols-1
+    {% if request.user == degree_rr.student_rr.created_by and True %}  {# FIXME: utils. status function not ready yet #}
+      row-cols-md-2
+    {% endif %}
+  ">
+    {% if request.user|is_manager_or_administrator and True %}  {# FIXME: utils. status function not ready yet #}
+      <div class="col pb-3">
+        <div class="row row-cols-1 row-cols-md-2">
+          <div class="col">
+            <a href="{% url 'backoffice_degree_validation' pk=degree_rr.pk %}" class="btn btn-block btn-lg btn-success">
+              {% trans 'Approve registration' %} {% include 'logo/check_valid.html' %}
+            </a>
+          </div>
+          <div class="col">
+            <a href="{% url 'backoffice_degree_deny' pk=degree_rr.pk %}" class="btn btn-block btn-lg btn-danger">
+              {% trans 'Deny registration' %} {% include 'logo/check_invalid.html' %}
+            </a>
+          </div>
+        </div>
+      </div>
+    {% endif %}
+
+    {% if request.user|is_back_office_user %}
+      <div class="col">
+        <a href="{% url 'degree_rr_listview' %}" class="btn btn-block btn-lg btn-outline-warning">
+          {% trans 'Back to all degree registrations lists' %} {% include 'logo/back.html' %}
+        </a>
+      </div>
+
+    {% elif request.user == degree_rr.student_rr.created_by %}
+
+      {% if True %}  {# FIXME: utils. status function not ready yet #}
+        <div class="col pb-3">
+          <a href="{% url 'degree_payment' pk=degree_rr.pk %}" class="btn btn-block btn-lg btn-success">
+            {% trans 'Checkout' %} {% include 'logo/checkout.html' %}
+          </a>
+        </div>
+      {% endif %}
+
+      <div class="col pb-3">
+        <a href="{% url 'userprofile_detailview' pk=request.user.pk %}" class="btn btn-block btn-lg btn-outline-dark">
+          {% trans 'Back to profile' %} {% include 'logo/profile.html' %}
+        </a>
+      </div>
+    {% endif %}
+  </div>
+
+  <br>
+
+
+  {# Notes #}
+
+  <section class="container border rounded py-3">
+    <div class="h3 text-center">
+      {% include 'logo/notes.html' %} {% trans 'Notes from the teachers and the staff' %}
+    </div>
+
+    <hr>
+
+    {% if module_rr.notes %}
+      <p>
+        {{ module_rr.notes|linebreaks }}
+      </p>
+
+    {% else %}
+      <div class="h5 text-center text-muted">
+        {% include 'logo/check_info.html' %} {% trans 'No notes available' %}
+      </div>
+    {% endif %}
+
+    <br>
+
+
+    {# Note update form #}
+
+    {% if request.user|is_back_office_user %}
+      <hr>
+
+      <a data-toggle="collapse" href="#notes_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning">
+        {% trans 'Add a note' %} {% include 'logo/notes.html' %}
+      </a>
+
+
+      <div class="container py-3 collapse" id="notes_form">
+
+        <hr>
+        <form action="{% url 'backoffice_degree_notes_submit' pk=degree_rr.pk %}" method="POST">
+          {% csrf_token %}
+
+
+          {# notes #}
+
+          <label for="{{ form_notes.notes.id_for_label }}" class="h5 text-uppercase">
+            {{ form_notes.notes.label }} <span class="badge badge-danger">{{ form_notes.notes.errors.as_text }}</span>
+          </label>
+          <textarea id="{{ form_notes.notes.auto_id }}" name="{{ form_notes.notes.html_name }}" class="form-control form-control-lg" required>{{ notes_value }}</textarea>
+          <small class="badge badge-warning">
+            {% trans 'Keep the pre-existing notes in order to not over override them' %}
+          </small>
+          <small class="text-muted">
+            {{ form_notes.notes.help_text }}
+          </small>
+
+          <hr>
+
+          {# submit #}
+
+          <input type="submit" class="btn btn-block btn-lg btn-warning text-uppercase" value="{% trans 'Update final score and/or notes' %}">
+        </form>
+      </div>
+    {% endif %}
+  </section>
+
+  <br>
+
+
+  <section class="container p-1 p-md-3 border rounded text-center">
+
+    {# Presentation header #}
+
+    <div class="text-center">
+      <span class="h2">
+        {% include 'logo/module_rr.html' %} {% trans 'Modules Registration Reports' %}
+      </span>
+
+      <span class="h5 text-center text-muted text-uppercase">
+        {{ userprofile.get_full_name }}
+      </span>
+    </div>
+
+    <br>
+
+
+    {# Module Registration Reports table #}
+
+    {% with listview_enabled=False modules_rrs=degree_rr.modules_rrs.all %}
+      {% include 'registration/registration_report/modules_rrs_table.html' %}
+    {% endwith %}
+
+    {% if request.user|is_manager_or_administrator %}
+      <a href="{% url 'module_rr_listview' %}" class="btn btn-block btn-outline-warning">
+        {% trans 'Back to all module registrations lists' %} {% include 'logo/back.html' %}
+      </a>
+    {% endif %}
+  </section>
 {% endblock content %}

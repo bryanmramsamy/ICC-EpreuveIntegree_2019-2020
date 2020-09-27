@@ -125,16 +125,6 @@ urlpatterns = [
     # StudentRegistrationReport
 
     url(
-        r"^report/student/l/",
-        views.StudentRegistrationReportListView.as_view(),
-        name="student_rr_listview",
-    ),
-    url(
-        r"^report/student/r/(?P<pk>[0-9]+)/$",
-        views.StudentRegistrationReportDetailView.as_view(),
-        name="student_rr_detailview",
-    ),
-    url(
         r"^report/student/c/$",
         views.StudentRegistrationReportCreateView.as_view(),
         name="student_rr_createview",
@@ -171,13 +161,19 @@ urlpatterns = [
         name="degree_rr_detailview"
     ),
     url(
-        r"^report/degree/c/$",
+        r"^report/degree/c/(?P<degree_pk>\d+)/$",
         views.DegreeRegistrationReportCreateView.as_view(),
         name="degree_rr_createview"
     ),
 
 
     # Back-Office functions
+
+    url(
+        r'^back_office/user_activation/(?P<user_pk>[0-9]+)/$',
+        views.activate_deactivate_user,
+        name='backoffice_user_activation'
+    ),
 
     url(
         r'^back_office/module_validation/(?P<pk>[0-9]+)/$',
@@ -189,29 +185,64 @@ urlpatterns = [
         views.module_deny,
         name='backoffice_module_deny'
     ),
-
     url(
         r'^back_office/module_score_submit/(?P<pk>[0-9]+)/$',
         views.module_score_submit,
         name='backoffice_module_score_submit'
     ),
 
+    url(
+        r'^back_office/degree_validation/(?P<pk>[0-9]+)/$',
+        views.degree_validation,
+        name='backoffice_degree_validation'
+    ),
+    url(
+        r'^back_office/degree_deny/(?P<pk>[0-9]+)/$',
+        views.degree_deny,
+        name='backoffice_degree_deny'
+    ),
+    url(
+        r'^back_office/degree_notes_submit/(?P<pk>[0-9]+)/$',
+        views.degree_notes_submit,
+        name='backoffice_degree_notes_submit'
+    ),
+
 
     # Payment
 
+    # Module Registration Report
+
     url(
-        r"^payment/checkout/(?P<pk>\d+)/$",
+        r"^payment/module/checkout/(?P<pk>\d+)/$",
         views.module_payment,
         name="module_payment"
     ),
     url(
-        r'payment-done/',
-        views.payment_done,
-        name='payment_done',
+        r'payment/module/done/$',
+        views.module_payment_done,
+        name='module_payment_done',
     ),
     url(
-        r'payment-cancelled/',
-        views.payment_canceled,
-        name='payment_cancelled'
+        r'payment/module/cancelled/$',
+        views.module_payment_cancelled,
+        name='module_payment_cancelled'
+    ),
+
+    # Degree Registration Report
+
+    url(
+        r"^payment/degree/checkout/(?P<pk>\d+)/$",
+        views.degree_payment,
+        name="degree_payment"
+    ),
+    url(
+        r'payment/degree/done/$',
+        views.degree_payment_done,
+        name='degree_payment_done',
+    ),
+    url(
+        r'payment/degree/cancelled/$',
+        views.degree_payment_cancelled,
+        name='degree_payment_cancelled'
     ),
 ]

@@ -13,13 +13,15 @@ from ..forms import PaymentForm
 
 from django.utils.translation import ugettext as _
 
-from ..models import ModuleRegistrationReport
+from ..models import DegreeRegistrationReport, ModuleRegistrationReport
 from ..utils import messages as messages_utils
 
 
+# Module Registration Report payments
+
 def module_payment(request, pk):
-    """CheckoutView of the module registration request in order to proceed to a
-    PayPal payment.
+    """Checkout view of the module registration request in order to proceed to
+    a PayPal payment.
 
     Send the payment data to PayPal IPN in order for the user to procced to the
     payment.
@@ -44,17 +46,17 @@ def module_payment(request, pk):
             )),
             'currency_code': 'EUR',
             'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
-            'return_url': 'http://{}{}'.format(host, reverse('payment_done')),
+            'return_url': 'http://{}{}'.format(host, reverse('module_payment_done')),
             'cancel_return': 'http://{}{}'.format(
                 host,
-                reverse('payment_cancelled'),
+                reverse('module_payment_cancelled'),
             ),
         }
 
         form = PayPalPaymentsForm(initial=paypal_dict)
         return render(
             request,
-            'registration/payment/process_payment.html',
+            'registration/payment/process_module_payment.html',
             {
                 'module_rr': module_rr,
                 'form': form,
@@ -76,7 +78,7 @@ def get_module_rr_and_clean_session_pk(request):
 
 
 @csrf_exempt
-def payment_done(request):
+def module_payment_done(request):
     """Payement done view that flags the module registration request as 'PAYED'
     and redirect to the DetailView."""
 
@@ -95,7 +97,7 @@ def payment_done(request):
 
 
 @csrf_exempt
-def payment_canceled(request):
+def module_payment_cancelled(request):
     """Redirect the user to the module registration DetailView with a message
     indicating that the payment has failed."""
 
@@ -104,3 +106,95 @@ def payment_canceled(request):
     messages_utils.module_payment_failed(request)
 
     return redirect(module_rr.get_absolute_url())
+
+
+# Degree Registration Report payments
+
+def degree_payment(request, pk):
+    """Checkout view of the degree registration request in order to proceed to
+    a PayPal payment.
+
+    Send the payment data to PayPal IPN in order for the user to procced to the
+    payment.
+    """
+
+    degree_rr = get_object_or_404(DegreeRegistrationReport, pk=pk)
+    request.session['degree_rr'] = degree_rr.pk
+    vat_excluded_price = round(degree_rr.degree.total_price / Decimal(1.21), 2)
+
+    if False:  # FIXME: utils. status function not ready yet
+        messages_utils.module_not_payable(request)  # TODO: Change message for degree_rr
+        return redirect(module_rr.get_absolute_url())
+    else:
+        host = request.get_host()
+
+        paypal_dict = {
+            'business': settings.PAYPAL_RECEIVER_EMAIL,
+            'amount': degree_rr.degree.total_price,
+            'item_name': _("Registration for {} to {}".format(
+                degree_rr.student_rr.created_by.get_full_name(),
+                degree_rr.degree.title,
+            )),
+            'currency_code': 'EUR',
+            'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
+            'return_url': 'http://{}{}'.format(host, reverse('degree_payment_done')),
+            'cancel_return': 'http://{}{}'.format(
+                host,
+                reverse('degree_payment_cancelled'),
+            ),
+        }
+
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        return render(
+            request,
+            'registration/payment/process_degree_payment.html',
+            {
+                'degree_rr': degree_rr,
+                'form': form,
+                'vat_excluded_price': vat_excluded_price,
+            },
+        )
+
+
+def get_degree_rr_and_clean_session_pk(request):
+    """Get the degree registration instance based on the session variable
+    stored and clean it."""
+
+    degree_rr_pk = request.session.get('degree_rr')
+    degree_rr = ModuleRegistrationReport.objects.get(pk=degree_rr_pk)
+
+    del request.session['degree_rr']
+
+    return degree_rr
+
+
+@csrf_exempt
+def degree_payment_done(request):
+    """Payement done view that flags the module registration request as 'PAYED'
+    and redirect to the DetailView."""
+
+    degree_rr = get_degree_rr_and_clean_session_pk(request)
+
+    for module_rr in degree_rr.modules_rrs.all():
+        if module_rr.final_score:
+            module_rr.status = "COMPLETED"
+        else:
+            module_rr.status = "PAYED"
+
+        module_rr.save()
+
+    messages_utils.module_payment_succeeded(request)  # TODO: Change message for degree_rr
+
+    return redirect(degree_rr.get_absolute_url())
+
+
+@csrf_exempt
+def degree_payment_cancelled(request):
+    """Redirect the user to the degree registration DetailView with a message
+    indicating that the payment has failed."""
+
+    degree_rr = get_degree_rr_and_clean_session_pk(request)
+
+    messages_utils.module_payment_failed(request)  # TODO: Change message for degree_rr
+
+    return redirect(degree_rr.get_absolute_url())

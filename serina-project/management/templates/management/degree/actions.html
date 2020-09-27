@@ -15,7 +15,12 @@
   <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
 
 {% elif request.user|is_student %}
-  <a href="404" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>   <!-- TODO: redirect to module_rr_createview -->
+  {% if request.user|active_degree_rr_already_exists:degree or request.user|succeeded_degree_rr_already_exists:degree %}
+    <a href="{% url 'degree_rr_createview' degree_pk=degree.pk %}" class="btn btn-block btn-warning disabled">{% trans 'You cannot subscribe to this degree again' %} {% include 'logo/puzzle.html' %}</a>
+
+  {% else %}
+    <a href="{% url 'degree_rr_createview' degree_pk=degree.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>
+  {% endif %}
 
 {% elif request.user|is_guest %}
   {% include 'bubbles/warning/still_registered_guest_not_student.html' %}

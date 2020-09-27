@@ -1,0 +1,20 @@
+{% extends 'bubbles/danger.html' %}
+{% load i18n %}
+
+
+{% block bubble_title %}
+  {% blocktrans %}
+    You already have completed this degree
+  {% endblocktrans %}
+{% endblock bubble_title %}
+
+
+{% block bubble_content %}
+  {% blocktrans %}
+    You cannot subscribe to a degree you are already fully completed.
+    <br>
+    Have a look at our degree catalog to find other ones which may interest you.
+    <br>
+    Remeber that some degrees have modules in common, which means if those modules already were validated in this degree, you don't have to follow them again, which will make your path to your next degree shorter.
+  {% endblocktrans %}
+{% endblock bubble_content %}

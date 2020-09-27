@@ -1,29 +1,39 @@
 {% extends 'base.html' %}
-{% load i18n %}
+{% load i18n registration_extra %}
 
-{% block title %}{% trans 'DegreeRRListView' %}{% endblock title %}
+{% block title %}
+  {% trans 'Degree Registration Report List' %}
+{% endblock title %}
+
 
 {% block content %}
-    <h1>DegreeRRListView</h1>
+  {% include 'backoffice_tag.html' %}
+  <section class="container p-1 p-md-3 border border-warning rounded text-center">
 
-        
-    {% for degree_rr in degrees_rrs %}
-    <p>{{ degree_rr.student_rr.student.get_full_name }}</p>
-    <ul>
-        <li>{{ degree_rr.degree.title }}</li>
-        <li>Nb modules = {{ degree_rr.modules_rrs.count }}</li>
-        <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
-        <li>partially approved ? {{ degree_rr.partially_approved }}</li>
-        <li>fully approved ? {{ degree_rr.fully_approved }}</li>
-        <li>partially_payed ? {{ degree_rr.partially_payed }}</li>
-        <li>fully_payed ? {{ degree_rr.fully_payed }}</li>
-        <ul>
-            {% for module_rr in degree_rr.modules_rrs.all %}
-                <li>{{ module_rr.module.title }}</li>
-            {% endfor %}
-        </ul>
-        <li><strong><a href="{% url 'degree_rr_detailview' pk=degree_rr.pk %}">degree_rr_detailview/{{ degree_rr.pk }}</a></strong></li>
-    </ul>
-    {% endfor %}
 
+    {# Search bar #}
+
+    {% include 'registration/registration_report/degree_rr_listview_search.html' %}
+
+    <br>
+
+
+    {# Presentation header #}
+
+    <div class="text-center">
+      <span class="h2">
+        {% include 'logo/degree_rr.html' %} {% trans 'Degrees Registration Reports' %}
+      </span>
+    </div>
+
+    <br>
+
+
+    {# Module Registration Reports table #}
+
+    {% with listview_enabled=True %}
+      {% include 'registration/registration_report/degrees_rrs_table.html' %}
+    {% endwith %}
+
+  </section>
 {% endblock content %}

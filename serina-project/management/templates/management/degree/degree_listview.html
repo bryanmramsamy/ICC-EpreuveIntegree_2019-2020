@@ -67,13 +67,13 @@
         <div class="card-header text-center pt-3">
           <div class="row">
             <div class="col d-none d-md-block">
-              {# TODO: To fill with data #}
+              {% trans 'Number of modules' %}: {{ degree.nb_modules }}
             </div>
             <div class="col h5">
               {% trans 'Regitration fee' %}: <strong>€ {{ degree.total_price }}</strong>
             </div>
             <div class="col d-none d-md-block">
-              {# TODO: To fill with data #}
+              {% trans 'Total ECTS value' %}: {{ degree.total_ECTS_value }}
             </div>
           </div>
         </div>
@@ -119,7 +119,13 @@
 
               {% elif request.user|is_student %}
                 <div class="col">
-                  <a href="{% url 'module_payment' pk=degree.pk %}" class="btn btn-block btn-dark">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+
+                  {% if request.user|active_degree_rr_already_exists:degree or request.user|succeeded_degree_rr_already_exists:degree %}
+                    <a href="{% url 'degree_rr_createview' degree_pk=degree.pk %}" class="btn btn-block btn-warning disabled">{% trans 'You cannot subscribe to this degree again' %} {% include 'logo/puzzle.html' %}</a>
+
+                  {% else %}
+                    <a href="{% url 'degree_rr_createview' degree_pk=degree.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this degree' %} {% include 'logo/puzzle.html' %}</a>
+                  {% endif %}
                 </div>
 
               {% elif request.user|is_guest %}

@@ -2,7 +2,7 @@
 {% load i18n static %}
 
 {% block title %}
-  {% trans 'Checkout' %} #M{{ module_rr.pk }}
+  {% trans 'Checkout' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }}
 {% endblock title %}
 
 
@@ -13,7 +13,7 @@
       <div class="h1">
         {% trans 'Checkout' %}
           <span class="h3 text-uppercase text-muted">
-            #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+            #{{ module_rr.student_rr.created_by.username }}M{{ degree_rr.pk }}
           </span>
           {% include 'logo/checkout.html' %}
       </div>
@@ -28,7 +28,7 @@
           {% trans 'Student full name' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          {{ module_rr.student_rr.created_by.get_full_name }}
+          {{ degree_rr.student_rr.created_by.get_full_name }}
         </div>
       </div>
 
@@ -40,7 +40,7 @@
           {% trans 'Student registration number' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          {{ module_rr.student_rr.created_by.username }}
+          {{ degree_rr.student_rr.created_by.username }}
         </div>
       </div>
 
@@ -52,13 +52,13 @@
           {% trans 'Student address' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          {{ module_rr.student_rr.address }}
+          {{ degree_rr.student_rr.address }}
           <br>
-          {% if module_rr.student_rr.additional_address %}
-            {{ module_rr.student_rr.additional_address }}
+          {% if degree_rr.student_rr.additional_address %}
+            {{ degree_rr.student_rr.additional_address }}
             <br>
           {% endif %}
-          {{ module_rr.student_rr.postal_code }} {{ module_rr.student_rr.postal_locality }}
+          {{ degree_rr.student_rr.postal_code }} {{ degree_rr.student_rr.postal_locality }}
         </div>
       </div>
 
@@ -77,7 +77,7 @@
           {% trans 'Registration ID' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+          #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }}
         </div>
       </div>
 
@@ -93,14 +93,27 @@
         </div>
       </div>
 
-      {# module #}
+
+      {# degreecategory #}
 
       <div>
         <div class="h5 text-muted text-uppercase">
-          {% trans 'Module' %}
+          {% trans 'Category' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          {% include 'logo/module.html' %} {{ module_rr.module.title }}
+          {% include 'logo/degree_alt.html' %} {{ degree_rr.degree.category.name }}
+        </div>
+      </div>
+
+
+      {# degree #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Degree' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          {% include 'logo/degree.html' %} {{ degree_rr.degree.title }}
         </div>
       </div>
 
@@ -124,7 +137,7 @@
           {% trans 'Price (V.A.T. included)' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          € {{ module_rr.module.price }}
+          € {{ degree_rr.degree.total_price }}
         </div>
       </div>
 
@@ -151,8 +164,8 @@
 
         {# cancel button #}
 
-        <a href="{{ module_rr.get_absolute_url }}" class="btn btn-outline-light">
-          {% trans 'Cancel and go back to module report page' %} {% include 'logo/back.html' %}
+        <a href="{{ degree_rr.get_absolute_url }}" class="btn btn-outline-light">
+          {% trans 'Cancel and go back to degree report page' %} {% include 'logo/back.html' %}
         </a>
 
         <br><br>

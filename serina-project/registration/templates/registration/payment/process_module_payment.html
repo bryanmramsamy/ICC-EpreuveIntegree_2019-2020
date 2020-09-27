@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+{% load i18n static %}
+
+{% block title %}
+  {% trans 'Checkout' %} #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+{% endblock title %}
+
+
+{% block content %}
+  <section class="container p-2">
+    <div class="container border rounded text-center bg-light py-3" style="max-width: 600px;">
+      <img src="{% static 'draws/pay_online.svg' %}" alt="Checkout" class="img-fluid">
+      <div class="h1">
+        {% trans 'Checkout' %}
+          <span class="h3 text-uppercase text-muted">
+            #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+          </span>
+          {% include 'logo/checkout.html' %}
+      </div>
+
+      <hr>
+
+
+      {# student full_name #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Student full name' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          {{ module_rr.student_rr.created_by.get_full_name }}
+        </div>
+      </div>
+
+
+      {# student registration number #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Student registration number' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          {{ module_rr.student_rr.created_by.username }}
+        </div>
+      </div>
+
+
+      {# student address #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Student address' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          {{ module_rr.student_rr.address }}
+          <br>
+          {% if module_rr.student_rr.additional_address %}
+            {{ module_rr.student_rr.additional_address }}
+            <br>
+          {% endif %}
+          {{ module_rr.student_rr.postal_code }} {{ module_rr.student_rr.postal_locality }}
+        </div>
+      </div>
+
+
+      {# data validity bubble #}
+
+      {% include 'bubbles/warning/verify_profile_data.html' %}
+
+      <hr>
+
+
+      {# registration_number #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Registration ID' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+        </div>
+      </div>
+
+
+      {# date #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Checkout date and time' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          {% now "j F Y H:i" %}
+        </div>
+      </div>
+
+      {# module #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Module' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          {% include 'logo/module.html' %} {{ module_rr.module.title }}
+        </div>
+      </div>
+
+
+      {# vat_excluded_price #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Price (V.A.T. excluded)' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          € {{ vat_excluded_price }}
+        </div>
+      </div>
+
+
+      {# vat_included_price #}
+
+      <div>
+        <div class="h5 text-muted text-uppercase">
+          {% trans 'Price (V.A.T. included)' %}
+        </div>
+        <div class="h3 p-2 border rounded text-dark bg-light">
+          € {{ module_rr.module.price }}
+        </div>
+      </div>
+
+
+      {# paypal info bubble #}
+
+      <div class="bg-info text-light rounded">
+        {% include 'bubbles/info/paypal_only.html' %}
+
+
+        {# paypal logo #}
+
+        <div class="mx-5 my-3 p-5 rounded bg-light">
+          <img src="{% static 'logo/paypal_logo.png' %}" alt="Checkout" class="img-fluid">
+        </div>
+
+
+        {# paypal form #}
+
+        {{ form.render }}
+
+        <br>
+
+
+        {# cancel button #}
+
+        <a href="{{ module_rr.get_absolute_url }}" class="btn btn-outline-light">
+          {% trans 'Cancel and go back to module report page' %} {% include 'logo/back.html' %}
+        </a>
+
+        <br><br>
+
+      </div>
+    </div>
+  </section>
+{% endblock content %}

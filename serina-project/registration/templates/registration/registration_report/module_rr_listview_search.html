@@ -1,0 +1,122 @@
+{% load i18n %}
+
+
+{% include 'filter_tag.html' %}
+<section class="container p-3 rounded text-left text-light bg-dark">
+  <form method="GET" action="{% url 'module_rr_listview' %}">
+
+
+    <div class="row row-cols-1 row-cols-md-3">
+
+
+      {# q_student #}
+
+      <div class="form-group col">
+        <label for="q_student" class="h5 text-uppercase">
+          {% include 'logo/person.html' %} {% trans 'Student' %}
+        </label>
+
+        <select id="q_student" name="q_student" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All students' %} ---
+          </option>
+          {% for student in s_students %}
+            <option value="{{ student.pk }}" {% if q_student|add:"0" == student.pk %}selected{% endif %}>
+              {{ student.username }} | {{ student.get_full_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_module #}
+
+      <div class="form-group col">
+        <label for="q_module" class="h5 text-uppercase">
+          {% include 'logo/module.html' %} {% trans 'Module' %}
+        </label>
+
+        <select id="q_module" name="q_module" class="form-control form-control-sm">
+          <option {% if q_module == '' or q_module is None %}selected{% endif %} value="">
+            --- {% trans 'All modules' %} ---
+          </option>
+          {% for module in s_modules %}
+            <option value="{{ module.pk }}" {% if q_module|add:"0" == module.pk %}selected{% endif %}>
+              {{ module.reference }} | {{ module.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_status #}
+
+      <div class="form-group col">
+        <label for="q_status" class="h5 text-uppercase">
+          {% trans 'Status' %}
+        </label>
+
+        <select id="q_status" name="q_status" class="form-control form-control-sm">
+          <option {% if q_status == '' or q_status is None %}selected{% endif %} value="">
+            --- {% trans 'All statuses' %} ---
+          </option>
+          {% for status in s_statuses %}
+            <option value="{{ status.0 }}" {% if q_status == status.0 %}selected{% endif %}>
+              {{ status.1 }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_degree #}
+
+      <div class="form-group col">
+        <label for="q_degree" class="h5 text-uppercase">
+          {% include 'logo/degree.html' %} {% trans 'Degree' %}
+        </label>
+
+        <select id="q_degree" name="q_degree" class="form-control form-control-sm">
+          <option {% if q_degree == '' or q_degree is None %}selected{% endif %} value="">
+            --- {% trans 'All degrees' %} ---
+          </option>
+          {% for degree in s_degrees %}
+            <option value="{{ degree.pk }}" {% if q_degree|add:"0" == degree.pk %}selected{% endif %}>
+              {{ degree.reference }} | {{ degree.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_course #}
+
+      <div class="form-group col">
+        <label for="q_course" class="h5 text-uppercase">
+          {% include 'logo/course.html' %} {% trans 'Course' %}
+        </label>
+
+        <select id="q_course" name="q_course" class="form-control form-control-sm">
+          <option {% if q_course == '' or q_course is None %}selected{% endif %} value="">
+            --- {% trans 'All courses' %} ---
+          </option>
+          {% for course in s_courses %}
+            <option value="{{ course.pk }}" {% if q_course|add:"0" == course.pk %}selected{% endif %}>
+              {{ course.reference }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# submit #}
+
+      <div class="form-group col">
+        <label class="h5 text-uppercase d-none d-md-block">
+          <br>
+        </label>
+        <input type="submit" value="{% trans 'Filter' %}" class="btn btn-block btn-sm btn-outline-light h5 text-uppercase"/>
+      </div>
+    </div>
+  </form>
+</section>
