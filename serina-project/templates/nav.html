@@ -80,9 +80,15 @@
               </button>
 
               <div class="dropdown-menu bg-warning" aria-labelledby="admin_nav">
+                <a href="{% url 'degree_rr_listview' %}" class="dropdown-item">
+                  {% trans 'Degree Registrations List' %} {% include 'logo/degree_rr.html' %}
+                </a>
                 <a href="{% url 'module_rr_listview' %}" class="dropdown-item">
                   {% trans 'Module Registrations List' %} {% include 'logo/module_rr.html' %}
                 </a>
+
+                <div class="dropdown-divider border border-dark"></div>
+
                 <a href="{% url 'admin:index' %}" class="dropdown-item">
                   {% trans 'Advanced back-office panel' %} {% include 'logo/gear.html' %}
                 </a>

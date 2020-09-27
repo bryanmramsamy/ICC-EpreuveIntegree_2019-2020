@@ -42,12 +42,22 @@
             <a href="{% url 'userprofile_detailview' module_rr.student_rr.created_by.pk %}"" class="text-reset">{{ module_rr.student_rr.created_by.username }}</a>
           </td>
           <td class="col-2">
-            <a href="{{ module_rr.module.get_absolute_url }}" class="text-reset">{{ module_rr.module.reference }}</a>
+            <a href="{{ module_rr.module.get_absolute_url }}" class="text-reset">
+              {{ module_rr.module.title }}
+              <small class="text-muted">
+                {{ module_rr.module.reference }}
+              </small>
+            </a>
           </td>
 
         {% else %}
           <td class="col-4">
-            <a href="{{ module_rr.module.get_absolute_url }}" class="text-reset">{{ module_rr.module.title }} <small class="text-muted">{{ module_rr.module.reference }}</small></a>
+            <a href="{{ module_rr.module.get_absolute_url }}" class="text-reset">
+              {{ module_rr.module.title }}
+              <small class="text-muted">
+                {{ module_rr.module.reference }}
+              </small>
+            </a>
           </td>
         {% endif %}
         <td>

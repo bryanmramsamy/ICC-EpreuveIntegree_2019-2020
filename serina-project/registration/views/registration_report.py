@@ -283,19 +283,76 @@ class DegreeRegistrationReportListView(
     LoginRequiredMixin,
     mixins_utils.ManagerAdministratorOnlyMixin,
     ListView,
-):  # TODO: Debug view
+):
     """ListView for DegreeRegistrationReportListView."""
 
     model = DegreeRegistrationReport
     context_object_name = "degrees_rrs"
     template_name = "registration/registration_report/degree_rr_listview.html"
 
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+
+        search_student = self.request.GET.get('q_student')
+        search_degree = self.request.GET.get('q_degree')
+        search_status = self.request.GET.get('q_status')
+
+        # Main query
+
+        query_result = DegreeRegistrationReport.objects.all()
+
+        # Foreign key conditions
+
+        if search_student:
+            query_result = query_result.filter(
+                student_rr__created_by__pk=search_student,
+            )
+
+        if search_degree:
+            query_result = query_result.filter(
+                degree__pk=search_degree,
+            )
+
+        # FIXME: utils. status function not ready yet
+        # if search_status:
+        #     query_result = query_result.filter(
+        #         status=search_status,
+        #     )
+
+        # Query result
+
+        return query_result  # TODO: Order by status
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+
+        context['q_student'] = self.request.GET.get('q_student')
+        context['q_degree'] = self.request.GET.get('q_degree')
+        context['q_status'] = self.request.GET.get('q_status')
+
+        # Search values
+
+        context['s_students'] = User.objects.filter(
+            groups__name="Student",
+            student_rr__isnull=False,
+        )
+        context['s_degrees'] = models.Degree.objects.all()
+        # context['s_statuses'] = ModuleRegistrationReport.STATUS  # FIXME: utils. status function not ready yet
+
+        return context
+
 
 class DegreeRegistrationReportDetailView(
     LoginRequiredMixin,
     mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
     DetailView,
-):  # TODO: Debug view
+):
     """DetailView for DegreeRegistrationReportListView."""
 
     model = DegreeRegistrationReport
