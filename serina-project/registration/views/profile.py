@@ -212,8 +212,10 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
 def user_listview(request):
     """Back-Office User ListView."""
 
+    all_users = User.objects.all().order_by("-groups")
+
     return render(
         request,
         "registration/userprofile/user_admin_panel.html",
-        {},
+        locals(),
     )

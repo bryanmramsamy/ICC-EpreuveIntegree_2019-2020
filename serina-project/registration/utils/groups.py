@@ -44,6 +44,12 @@ def is_manager_or_administrator(user):
                               | Q(name="Administrator")).exists()
 
 
+def is_administrator(user):
+    """Check if the user is an administrator."""
+
+    return user.groups.filter(name="Administrator").exists()
+
+
 def main_group_i18n(user):
     """Main group of the user in the case one has multiple groups.
 
