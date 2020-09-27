@@ -23,7 +23,7 @@
         {% trans 'Invoice ID' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }}
       </div>
       <div class="col text-right">
-        {% trans 'Module Registration Report' %} {% include 'logo/module_rr.html' %}
+        {% trans 'Degree Registration Report' %} {% include 'logo/degree_rr.html' %}
       </div>
     </div>
   </div>
@@ -31,52 +31,61 @@
   <section class="container border border-secondary rounded">
 
     <br>
-    {{ degree_rr }}
 
-    <h1>
-      degree_rr|get_degree_rr_status =
-      <strong>
-        {{ degree_rr|get_degree_rr_status }}
-      </strong>
-    </h1>
+  {% with debug=False  %}
 
-    <br>
 
-    <h2>
-      modules_rrs
-    </h2>
-    <ul>
-      {% for module_rr in degree_rr.modules_rrs.all %}
-      <li>
-        {{ module_rr }}
-      </li>
-      {% endfor %}
-    </ul>
+  {% if debug %}
 
-    <h2>
-      modules
-    </h2>
-    <ul>
-      {% for module in degree_rr.degree.modules.all %}
-      <li>
-        {{ module }}
-      </li>
-      {% endfor %}
-    </ul>
 
-    {# Status info bubble #}
+  {{ degree_rr }}
 
-    {% if request.user|is_student %}
-      {% if module_rr.status == "PENDING" %}
-        {% include 'bubbles/warning/module_rr_pending.html' %}
+  <h1>
+    degree_rr|get_degree_rr_status =
+    <strong>
+      {{ degree_rr|get_degree_rr_status }}
+    </strong>
+  </h1>
 
-      {% elif module_rr.status == "DENIED" %}
-        {% include 'bubbles/danger/module_rr_denied.html' %}
+  <br>
 
-      {% elif module_rr.status == "APPROVED" %}
-        {% include 'bubbles/warning/module_rr_unpayed.html' %}
-      {% endif %}
-    {% endif %} -->
+  <h2>
+    modules_rrs
+  </h2>
+  <ul>
+    {% for module_rr in degree_rr.modules_rrs.all %}
+    <li>
+      {{ module_rr }}
+    </li>
+    {% endfor %}
+  </ul>
+
+  <h2>
+    modules
+  </h2>
+  <ul>
+    {% for module in degree_rr.degree.modules.all %}
+    <li>
+      {{ module }}
+    </li>
+    {% endfor %}
+  </ul>
+
+  {# Status info bubble #}
+
+  {% if request.user|is_student %}
+  {% if module_rr.status == "PENDING" %}
+  {% include 'bubbles/warning/module_rr_pending.html' %}
+
+  {% elif module_rr.status == "DENIED" %}
+  {% include 'bubbles/danger/module_rr_denied.html' %}
+
+  {% elif module_rr.status == "APPROVED" %}
+  {% include 'bubbles/warning/module_rr_unpayed.html' %}
+  {% endif %}
+  {% endif %} -->
+  {% endif %}
+  {% endwith %}
 
 
     {# Module_rr details #}
@@ -87,47 +96,186 @@
           {% trans 'Registration status' %}:
         </td>
         <th class="col-8">
-          {% if module_rr.status == "PENDING" %}
-            <span class="text-warning">
-              {% include 'logo/check_ready.html' %}
-          {% elif module_rr.status == "DENIED" %}
-            <span class="text-danger">
-              {% include 'logo/check_invalid.html' %}
-          {% elif module_rr.status == "APPROVED" %}
-            <span class="text-info">
-              {% include 'logo/check_info.html' %}
-          {% else %}
-            <span class="text-success">
-              {% include 'logo/check_valid.html' %}
-          {% endif %}
+          DEBUG: Status of degree  {# TODO: utils. status function not ready yet #}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration fee' %}:
+        </td>
+        <th class="col-8">
+          € {{ degree_rr.total_paid_price }}
+          <small class="text-muted text-uppercase">
+            {% trans 'V.A.T. included' %}
+          </small>
+        </th>
+      </tr>
+      {% if degree_rr.date_payed %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Payment date and time' %}:
+          </td>
+          <th class="col-8">
+            {{ degree_rr.date_payed }} {# TODO: utils. status function not ready yet #}
+          </th>
+        </tr>
+      {% endif %}
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s registration number' %}:
+        </td>
+        <th class="col-8">
+          {{ degree_rr.student_rr.created_by.username }}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s name' %}:
+        </td>
+        <th class="col-8">
+          <a href="{% url 'userprofile_detailview' degree_rr.student_rr.created_by.pk %}" class="text-reset">
+            {% include 'logo/person.html' %} {{ degree_rr.student_rr.created_by.get_full_name }}
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Degree' %}:
+        </td>
+        <th class="col-8">
+          <a href="{{ degree_rr.degree.get_absolute_url }}" class="text-reset">
+            {% include 'logo/degree.html' %} {{ degree_rr.degree.title }}
+            <small class="text-muted">
+              {{ degree_rr.degree.reference }}
+            </small>
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Modules' %}:
+        </td>
+        <th class="col-8">
+          {% blocktrans with nb_modules=degree_rr.degree.modules.count %}
+            This module contains {{ nb_modules }} modules
+          {% endblocktrans %}
+          :
+          <br>
+          <ul class="list-unstyled">
+            {% for module in degree_rr.degree.modules.all %}
+              <li>
+                <a href="{{ module.get_absolute_url }}" class="text-reset">
+                  {% include 'logo/module.html' %} {{ module.title }}
+                  <small class="text-muted">
+                    {{ module.reference }}
+                  </small>
+                </a>
+              </li>
+            {% endfor %}
+          </ul>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Exemption request' %}:
+        </td>
+        <th class="col-8">
+          {% if degree_rr.exemption_request %}
+              <span class="text-info">
+                {% include 'logo/check_info.html' %} {% trans 'Uploaded' %}
+              </span>
 
-          {{ module_rr.get_status_display }}
-          </span>
+            {% if degree_rr.exemption_report %}
+              <a href="{{ degree_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+              </a>
+
+            {% else %}
+              <span class="badge badge-danger">
+                {% trans 'No file found !' %} <a href="mailto:{{ contact_mails.support }}" class="badge badge-light">Contact our support team {% include 'logo/mail.html' %}</a>.
+              </span>
+            {% endif %}
+
+          {% else %}
+            <span class="text-muted">
+              {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+            </span>
+          {% endif %}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'ECTS' %}:
+        </td>
+        <th class="col-8">
+          {{ degree_rr.degree.total_ECTS_value }}
         </th>
       </tr>
     </table>
+  </section>
+
+  <br>
 
 
+  {# Actions #}
 
+  <div class="row row-cols-1
+    {% if request.user == module_rr.student_rr.created_by and module_rr.status == 'APPROVED' or request.user|is_back_office_user %}
+      row-cols-md-2
+    {% endif %}
+  ">
+    {% if request.user|is_manager_or_administrator and module_rr.status == 'PENDING' %}
+      <div class="col pb-3">
+        <a href="{% url 'backoffice_module_validation' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-success">
+          {% trans 'Approve registration' %} {% include 'logo/check_valid.html' %}
+        </a>
+      </div>
+      <div class="col pb-3">
+        <a href="{% url 'backoffice_module_deny' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-danger">
+          {% trans 'Deny registration' %} {% include 'logo/check_invalid.html' %}
+        </a>
+      </div>
+    {% endif %}
 
-    <h1>DegreeRRDetailView</h1>
+    {% if request.user|is_back_office_user %}
+      <div class="col pb-3">
+        <a data-toggle="collapse" href="#score_form" role="button" aria-expanded="false" aria-controls="collapseExample" class="btn btn-block btn-lg btn-warning {% if module_rr.status == 'DENIED' %}disabled{% endif %}">
+          {% if module_rr.status == 'PENDING' %}
+            {% trans 'Exempt this registration' %} {% include 'logo/score.html' %}
 
-    <p>{{ degree_rr.student_rr.student.get_full_name }}</p>
-    <ul>
-      <li>statuts = </li>
-        <li>{{ degree_rr.degree.title }}</li>
-        <li>Nb modules = {{ degree_rr.modules_rrs.count }}</li>
-        <li>from: {{ degree_rr.date_start }} to {{ degree_rr.date_end }}</li>
-        <li>partially approved ? {{ degree_rr.partially_approved }}</li>
-        <li>fully approved ? {{ degree_rr.fully_approved }}</li>
-        <li>partially_payed ? {{ degree_rr.partially_payed }}</li>
-        <li>fully_payed ? {{ degree_rr.fully_payed }}</li>
-        <li>total_paid_price = {{ degree_rr.total_paid_price }}</li>
+          {% elif module_rr.status == 'DENIED' %}
+            {% trans 'This regitration was denied' %} {% include 'logo/score.html' %}
 
-        <ul>
-            {% for module_rr in degree_rr.modules_rrs.all %}
-                <li>{{ module_rr.module.title }}</li>
-            {% endfor %}
-        </ul>
-    </ul>
+          {% elif module_rr.final_score %}
+            {% trans 'Update final score' %} {% include 'logo/score.html' %}
+
+          {% else %}
+            {% trans 'Add final score' %} {% include 'logo/score.html' %}
+          {% endif %}
+        </a>
+      </div>
+
+      <div class="col">
+        <a href="{% url 'module_rr_listview' %}" class="btn btn-block btn-lg btn-outline-warning">
+          {% trans 'Back to all module registrations lists' %} {% include 'logo/back.html' %}
+        </a>
+      </div>
+
+    {% elif request.user == module_rr.student_rr.created_by %}
+
+      {% if module_rr.status == 'APPROVED' %}
+        <div class="col pb-3">
+          <a href="{% url 'module_payment' pk=module_rr.pk %}" class="btn btn-block btn-lg btn-success">
+            {% trans 'Checkout' %} {% include 'logo/checkout.html' %}
+          </a>
+        </div>
+      {% endif %}
+
+      <div class="col pb-3">
+        <a href="{% url 'userprofile_detailview' pk=request.user.pk %}" class="btn btn-block btn-lg btn-outline-dark">
+          {% trans 'Back to profile' %} {% include 'logo/profile.html' %}
+        </a>
+      </div>
+    {% endif %}
+  </div>
 {% endblock content %}

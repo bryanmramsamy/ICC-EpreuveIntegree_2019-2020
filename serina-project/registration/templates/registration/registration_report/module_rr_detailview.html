@@ -211,7 +211,7 @@
           </th>
         </tr>
       {% endif %}
-      {% if module_rr.approved or module_rr.status == 'EXEMPTED' %}
+      {% if module_rr.approved_or_exempted %}
         <tr>
           <td class="col-4">
             {% trans 'ECTS' %}:

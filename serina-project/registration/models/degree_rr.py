@@ -222,7 +222,7 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
 
 
 @receiver(post_save, sender=DegreeRegistrationReport)
-def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
+def generate_all_modules_rrs_of_degree_rr(sender, instance, created, **kwargs):
     """Create all the Module Registration Reports for each module of the
     degree from the given Degree Registration Report.
 
@@ -233,4 +233,5 @@ def generate_all_modules_rrs_of_degree_rr(sender, instance, **kwargs):
 
     from ..utils import registration as registration_utils
 
-    registration_utils.create_modules_rrs_for_degree_rr(instance)
+    if created:
+        registration_utils.create_modules_rrs_for_degree_rr(instance)
