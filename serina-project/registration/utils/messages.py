@@ -49,6 +49,33 @@ def permission_denied(request):
     )
 
 
+# User's group promotion
+
+def promote_to_group(request, user, group):
+    """Inform that a user successfully has been promoted as guest."""
+
+    messages.success(
+        request,
+        _("{} ({}) has successfully been promoted to the {} group."
+          .format(user.get_full_name(), user.username, group.name))
+    )
+
+
+def cannot_promote_to_student_student_rr_missing(request, user):
+    """Warn that a user wan't promoted as student bacause the user hasn't a
+    Student Registration Report yet.."""
+
+    messages.error(
+        request,
+        _(
+            "{} ({}) can not be promoted to the Student group. The user "
+            "doesn't has his/her own Student Registration Report which is "
+            "mandatory for joining this group."
+            .format(user.get_full_name(), user.username)
+        )
+    )
+
+
 # StudentRegistrationReport
 
 def student_rr_created(request):

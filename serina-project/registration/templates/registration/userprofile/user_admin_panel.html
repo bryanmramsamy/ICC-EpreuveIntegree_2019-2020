@@ -69,21 +69,35 @@
               </a>
             </td>
             <td>
-              <div class="dropdown">
-                <button class="btn btn-warning btn-sm btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <div class="dropdown btn-group dropleft">
+                <button class="btn btn-warning btn-sm btn-block dropdown-toggle
+                {% if request.user == one_user or one_user|is_administrator and not request.user|is_administrator %}
+                  disabled
+                {% endif %}
+                  " type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   {% trans 'Options' %} {% include 'logo/options.html' %}
                 </button>
                 <div class="dropdown-menu bg-warning" aria-labelledby="dropdownMenuButton">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="{% url 'backoffice_promote_user_to_group' user_pk=one_user.pk  group_name='guest' %}">
+                    {% include 'logo/group.html' %} {% trans 'Promote to guest' %}
+                  </a>
+                  <a class="dropdown-item" href="{% url 'backoffice_promote_user_to_group' user_pk=one_user.pk  group_name='student' %}">
+                    {% include 'logo/group.html' %} {% trans 'Promote to student' %}
+                  </a>
+                  <a class="dropdown-item" href="{% url 'backoffice_promote_user_to_group' user_pk=one_user.pk  group_name='teacher' %}">
+                    {% include 'logo/group.html' %} {% trans 'Promote to teacher' %}
+                  </a>
+                  <a class="dropdown-item" href="{% url 'backoffice_promote_user_to_group' user_pk=one_user.pk  group_name='manager' %}">
+                    {% include 'logo/group.html' %} {% trans 'Promote to manager' %}
+                  </a>
+                  <a class="dropdown-item" href="{% url 'backoffice_promote_user_to_group' user_pk=one_user.pk  group_name='administrator' %}">
+                    {% include 'logo/group.html' %} {% trans 'Promote to administrator' %}
+                  </a>
 
                   <div class="dropdown-divider border border-dark"></div>
 
-                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?admin=true" class="dropdown-item bg-{% if request.user == one_user or not request.user|is_administrator and one_user|is_manager_or_administrator %}warning disabled{% elif one_user.is_active %}danger{% else %}success{% endif %}">
-                    {% if request.user == one_user or not request.user|is_administrator and one_user|is_manager_or_administrator %}
-                      {% trans 'Cannot be desactivated' %} {% include 'logo/check_invalid.html' %}
-
-                    {% elif one_user.is_active %}
+                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?admin=true" class="dropdown-item bg-{% if one_user.is_active %}danger{% else %}success{% endif %}">
+                    {% if one_user.is_active %}
                       {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
 
                     {% else %}

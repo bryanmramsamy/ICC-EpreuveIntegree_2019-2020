@@ -89,10 +89,8 @@ def add_to_group(user, group_name):
     """Add a user to a given group. Creates it if the group does not exist yet.
     """
 
-    group, isCreated = Group.objects.get_or_create(name=group_name)
+    group = Group.objects.get(name=group_name)
     group.user_set.add(user)
-
-    return isCreated
 
 
 def change_group(user, group_name):
