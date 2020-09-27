@@ -303,6 +303,19 @@ class DegreeRegistrationReportDetailView(
     template_name = "registration/registration_report/degree_rr_detailview" \
                     ".html"
 
+    def get_context_data(self, **kwargs):
+        """Add score submission form to context for back-office user only."""
+
+        context = super().get_context_data(**kwargs)
+
+        if groups_utils.is_back_office_user(self.request.user):
+            context["form_notes"] = SubmitNotesForm
+
+            if self.get_object().notes:
+                context['notes_value'] = self.get_object().notes
+
+        return context
+
 
 class DegreeRegistrationReportCreateView(
     LoginRequiredMixin,

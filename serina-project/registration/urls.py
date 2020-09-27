@@ -195,11 +195,26 @@ urlpatterns = [
         views.module_deny,
         name='backoffice_module_deny'
     ),
-
     url(
         r'^back_office/module_score_submit/(?P<pk>[0-9]+)/$',
         views.module_score_submit,
         name='backoffice_module_score_submit'
+    ),
+
+    url(
+        r'^back_office/degree_validation/(?P<pk>[0-9]+)/$',
+        views.degree_validation,
+        name='backoffice_degree_validation'
+    ),
+    url(
+        r'^back_office/degree_deny/(?P<pk>[0-9]+)/$',
+        views.degree_deny,
+        name='backoffice_degree_deny'
+    ),
+    url(
+        r'^back_office/degree_notes_submit/(?P<pk>[0-9]+)/$',
+        views.degree_notes_submit,
+        name='backoffice_degree_notes_submit'
     ),
 
 
