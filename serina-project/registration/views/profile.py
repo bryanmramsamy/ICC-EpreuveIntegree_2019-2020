@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.shortcuts import render
 from django.views.generic import DetailView, FormView
 from django.urls import reverse
 
@@ -205,3 +206,13 @@ class UserProfileUpdateView(LoginRequiredMixin, FormView):
 
         return reverse("userprofile_detailview",
                        kwargs={"pk": self.request.user.pk})
+
+
+def user_listview(request):
+    """Back-Office User ListView."""
+
+    return render(
+        request,
+        "",
+        {},
+    )

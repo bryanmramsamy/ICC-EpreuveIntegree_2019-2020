@@ -13,11 +13,6 @@ urlpatterns = [
         views.home,
         name="home",
     ),
-    url(  # TODO: Debug root
-        r"^home$",
-        views.home_old,
-        name="home_old",
-    ),
     url(
         r"^who_are_we/$",
         views.home,
@@ -170,7 +165,12 @@ urlpatterns = [
     # Back-Office functions
 
     url(
-        r'^back_office/user_activation/(?P<user_pk>[0-9]+)/$',
+        r'^back_office/user/l/$',
+        views.user_listview,
+        name='backoffice_user_listview'
+    ),
+    url(
+        r'^back_office/user/activation/(?P<user_pk>[0-9]+)/$',
         views.activate_deactivate_user,
         name='backoffice_user_activation'
     ),

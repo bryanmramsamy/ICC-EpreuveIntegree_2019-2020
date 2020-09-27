@@ -39,9 +39,3 @@ def cookies_policy(request):
     """Render the 'Cookies policy' page."""
 
     return render(request, "registration/general/cookies_policy.html")
-
-
-def home_old(request):  # TODO: Debug view
-    """Old omepage render."""
-
-    return render(request, "registration/general/home_old.html", {})
