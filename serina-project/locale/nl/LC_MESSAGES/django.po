@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-24 04:01+0200\n"
+"POT-Creation-Date: 2020-09-26 23:07+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,12 +30,12 @@ msgstr ""
 #: registration/templates/registration/userprofile/courses_list.html:25
 #: registration/templates/registration/userprofile/modules_rrs_list.html:26
 msgid "Module"
-msgstr ""
+msgstr "Module"
 
 #: management/forms/course.py:23 management/models/course.py:26
 #: management/models/course.py:34
 msgid "Module teached in the created course."
-msgstr ""
+msgstr "Module geleerd in de gemaakte cursus"
 
 #: management/forms/course.py:28 management/models/course.py:33
 #: management/templates/management/module/related_courses_list.html:10
@@ -43,73 +43,75 @@ msgstr ""
 #: registration/templates/registration/userprofile/courses_list.html:26
 #: registration/utils/groups.py:58
 msgid "Teacher"
-msgstr ""
+msgstr "Docent"
 
 #: management/forms/course.py:29
 msgid "Teacher of this course."
-msgstr ""
+msgstr "Docent van deze cursus"
 
 #: management/forms/course.py:34 management/models/course.py:41
 #: management/models/room.py:54
 #: management/templates/management/module/related_courses_list.html:11
 #: registration/templates/registration/userprofile/courses_list.html:27
 msgid "Classroom"
-msgstr ""
+msgstr "Klas"
 
 #: management/forms/course.py:35
 msgid "Classroom where this course will be given."
-msgstr ""
+msgstr "Klas waar deze les gegeven zal worden"
 
 #: management/forms/degree.py:21 management/forms/degree.py:41
 #: management/models/degree.py:23 management/models/degree.py:67
 #: management/templates/management/degree/degreecategory_detailview.html:5
 msgid "Degree category"
-msgstr ""
+msgstr "Graad categorie"
 
 #: management/forms/degree.py:22 management/forms/degree.py:42
 msgid "Defines the academic level of the degree."
-msgstr ""
+msgstr "Bepaald het academisch niveau van de opleiding."
 
 #: management/forms/degree.py:47 management/models/degree.py:72
-#: management/models/module.py:131 templates/nav.html:37
+#: management/models/module.py:131 templates/nav.html:39
 msgid "Modules"
-msgstr ""
+msgstr "Modules"
 
 #: management/forms/degree.py:48 management/models/degree.py:73
 msgid "All the modules which are part of the degree."
-msgstr ""
+msgstr "Alle modules die deel uitmaken van de opleiding."
 
 #: management/forms/module.py:22 management/forms/module.py:42
 #: management/models/module.py:80
 msgid "Difficulty level"
-msgstr ""
+msgstr "Moeilijkheidsgraad"
 
 #: management/forms/module.py:23 management/forms/module.py:43
 #: management/models/module.py:81
 msgid "Rank the module by it's diffictuly."
-msgstr ""
+msgstr "Rangschilk de module op zijn moeilijkheidsgraad."
 
 #: management/forms/module.py:48
 msgid "Prerequisite modules"
-msgstr ""
+msgstr "Vereiste modules"
 
 #: management/forms/module.py:49
 msgid ""
 "If a prerequisite has prerequisites itself, those becomes prerequisites for "
 "this module too."
 msgstr ""
+"Als een voorwaarde zelf ook voorwaarden heeft, worden dat ook voorwaarden  "
+"voor deze module."
 
 #: management/forms/module.py:55 management/models/module.py:94
 msgid "Eligible teachers"
-msgstr ""
+msgstr "Geschikte docenten"
 
 #: management/forms/module.py:56
 msgid "If no teacher is selected, the module woill be unteachable."
-msgstr ""
+msgstr "Als er geen docent is geselecteerd, kan de module niet worden onderwezen."
 
 #: management/forms/resource.py:68
 msgid "{} (Capacity: {}/{})"
-msgstr ""
+msgstr "{} (Capaciteit: {}/{})"
 
 #: management/models/course.py:20 management/models/degree.py:61
 #: management/models/module.py:68 management/models/room.py:23
@@ -118,38 +120,40 @@ msgstr ""
 #: management/templates/management/module/module_updateview.html:42
 #: management/templates/management/room/classroom_updateview.html:41
 msgid "Reference"
-msgstr ""
+msgstr "Referentie"
 
 #: management/models/course.py:44
 #: management/templates/management/module/related_courses_list.html:13
 #: management/templates/management/room/related_courses_list.html:13
 msgid "Start date"
-msgstr ""
+msgstr "Begin datum"
 
 #: management/models/course.py:45
 msgid "When the course starts."
-msgstr ""
+msgstr "Wanneer de cursus begint."
 
 #: management/models/course.py:48
 #: management/templates/management/module/related_courses_list.html:14
 #: management/templates/management/room/related_courses_list.html:14
 msgid "End date"
-msgstr ""
+msgstr "Eind datum"
 
 #: management/models/course.py:49
 msgid "When the course ends."
-msgstr ""
+msgstr "Wanneer de cursus eindigt."
 
 #: management/models/course.py:53
 #: management/templates/management/course/course_card.html:31
 msgid "Prebooked seats"
-msgstr ""
+msgstr "Vooraf geboekte zetels"
 
 #: management/models/course.py:55
 msgid ""
 "Seats unbookable by the regular students. Used for V.I.P. and substracted by "
 "the total amount of available seats."
 msgstr ""
+"Zitplaatsen niet te boeken voor de reguliere studenten. "
+"Gebruikt voor V.I.P. en afgetrokken van het totale aantal beschikbare stoelen."
 
 #: management/models/course.py:63
 #: management/templates/management/course/course_detailview.html:5
@@ -160,88 +164,92 @@ msgstr ""
 #: registration/templates/registration/userprofile/courses_list.html:24
 #: registration/templates/registration/userprofile/modules_rrs_list.html:32
 msgid "Course"
-msgstr ""
+msgstr "Cursus"
 
 #: management/models/course.py:64
 #: registration/templates/registration/userprofile/courses_list.html:11
 msgid "Courses"
-msgstr ""
+msgstr "Cursus"
 
 #: management/models/course.py:160
 msgid "({}) {} course"
-msgstr ""
+msgstr "({}) {} cursus"
 
 #: management/models/course.py:164
 msgid " given"
-msgstr ""
+msgstr " gegeven"
 
 #: management/models/course.py:167
 msgid " by {}"
-msgstr ""
+msgstr " door {}"
 
 #: management/models/course.py:170
 msgid " at {}"
-msgstr ""
+msgstr " bij {}"
 
 #: management/models/course.py:196
 msgid "{} is not eligible to teach this course."
-msgstr ""
+msgstr "{} is niet geschikt om deze cursus te geven."
 
 #: management/models/course.py:204
 msgid "Start date ({}) must be set before end date ({})."
-msgstr ""
+msgstr "Begin datum ({}) moet voor de eind datum ({}) komen."
 
 #: management/models/course.py:213
 msgid "Start date ({}) must be set after today's date ({})."
-msgstr ""
+msgstr "Begin datum ({}) moet na de eind datum ({}) komen."
 
 #: management/models/course.py:220
 msgid ""
 "Amount of registrants ({}) cannot be higher than the maximum capacity of the "
 "assigned classroom ({})."
 msgstr ""
+"Het aantal registranten ({}) kan niet hoger zijn dan de maximale capaciteit van het "
+"toegewezen klaslokaal ({})."
 
 #: management/models/degree.py:15 management/models/module.py:21
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: management/models/degree.py:16
 msgid ""
 "An explicite name is recommended, such as 'Bachelor', 'PhD', or 'Master'. "
 msgstr ""
+"Een expliciete naam wordt aanbevolen, zoals 'Bachelor', 'PhD' of 'Master'."
 
-#: management/models/degree.py:24 templates/nav.html:32
+#: management/models/degree.py:24 templates/nav.html:34
 msgid "Degree categories"
-msgstr ""
+msgstr "Graadcategorieën"
 
 #: management/models/degree.py:56
 msgid "Degree name"
-msgstr ""
+msgstr "Graad naam"
 
 #: management/models/degree.py:57
 msgid ""
 "To avoid confusion, it's recommended to use different names for each degree."
 msgstr ""
+"Om verwarring te voorkomen, wordt aanbevolen om voor elke graad verschillende namen te gebruiken."
 
 #: management/models/degree.py:78 management/models/module.py:72
 #: management/models/room.py:27
 msgid "Description"
-msgstr ""
+msgstr "Omschrijving"
 
 #: management/models/degree.py:79 management/models/module.py:73
 #: management/models/room.py:28
 msgid "Should provide as much information on the module as possible."
-msgstr ""
+msgstr "Moet zoveel mogelijk informatie over de module geven."
 
 #: management/models/degree.py:88 management/models/module.py:122
 #: management/models/room.py:46
 msgid "Picture"
-msgstr ""
+msgstr "Afbeelding"
 
 #: management/models/degree.py:89 management/models/module.py:123
 #: management/models/room.py:47
 msgid "Not required. If no picture is sent, the default picture will be used."
-msgstr ""
+msgstr "Niet verplicht. Als er geen afbeelding wordt verzonden, wordt de standaardafbeelding gebruikt."
 
 #: management/models/degree.py:96
 #: management/templates/management/degree/related_degrees_list.html:8
@@ -249,73 +257,78 @@ msgstr ""
 #: registration/templates/registration/userprofile/degrees_rrs_list.html:26
 #: registration/templates/registration/userprofile/modules_rrs_list.html:29
 msgid "Degree"
-msgstr ""
+msgstr "Graad"
 
-#: management/models/degree.py:97 templates/nav.html:29
+#: management/models/degree.py:97 templates/nav.html:31
 msgid "Degrees"
-msgstr ""
+msgstr "Graad"
 
 #: management/models/module.py:15
 msgid "Rank"
-msgstr ""
+msgstr "Rang"
 
 #: management/models/module.py:16
 msgid ""
 "Each level must have a unique rank. The higer the rank, the harder the "
 "difficulty level."
 msgstr ""
+"Elk niveau moet een unieke rang hebben. Hoe hoger de rang, hoe moeilijker de "
+"moeilijkheidsgraad."
 
 #: management/models/module.py:22
 msgid "An explicite name is recommended, such as 'Beginner' or 'Intermediate'."
-msgstr ""
+msgstr "Een expliciete naam wordt aanbevolen, zoals 'Beginner' of 'Gevorderd'"
 
 #: management/models/module.py:29
 msgid "Module level"
-msgstr ""
+msgstr "Module niveau"
 
-#: management/models/module.py:30 templates/nav.html:38
+#: management/models/module.py:30 templates/nav.html:40
 msgid "Module levels"
-msgstr ""
+msgstr "Module niveau"
 
 #: management/models/module.py:63
 msgid "Module name"
-msgstr ""
+msgstr "Module niveau"
 
 #: management/models/module.py:64
 msgid ""
 "To avoid confusion, it's recommended to use different names for each modules."
 msgstr ""
+"Om verwarring te voorkomen, wordt aanbevolen om voor elke module verschillende namen te gebruiken."
 
 #: management/models/module.py:88
 msgid "Prerequisites"
-msgstr ""
+msgstr "Prerequisites"
 
 #: management/models/module.py:99
 msgid "ECTS value"
-msgstr ""
+msgstr "ECTS-waarde"
 
 #: management/models/module.py:100 management/models/module.py:107
 #: management/models/module.py:114
 msgid "Cannot be negative."
-msgstr ""
+msgstr "Kan niet negatief zijn"
 
 #: management/models/module.py:106
 msgid "Cost per student"
-msgstr ""
+msgstr "kost per student"
 
 #: management/models/module.py:113
 msgid "Student charge price"
-msgstr ""
+msgstr "Prijs studententoeslag"
 
 #: management/models/module.py:171
 msgid ""
 "{} cannot be added as eligible teacher. The user is not a 'Teacher'-group "
 "member."
 msgstr ""
+"{} kan niet worden toegevoegd als in aanmerking komende docent. De gebruiker "
+"is geen 'Docent'-groep member."
 
 #: management/models/module.py:180
 msgid "This module can not be its own prerequisite."
-msgstr ""
+msgstr "Deze module kan niet zijn eigen vereiste zijn."
 
 #: management/models/module.py:190
 #, python-brace-format
@@ -323,62 +336,68 @@ msgid ""
 "[{0}] {1} cannot be a prerequisite for this module. [{0}] {1} already has "
 "this module as prerequisite."
 msgstr ""
+"[{0}] {1} kan geen vereiste zijn voor deze module. [{0}] {1} heeft al"
+"deze module als vereiste."
 
 #: management/models/resource.py:22
 msgid "Created by"
-msgstr ""
+msgstr "Gemaakt door"
 
 #: management/models/resource.py:25 registration/models/resource.py:13
 msgid "Created on"
-msgstr ""
+msgstr "Created op"
 
 #: management/models/resource.py:27 registration/models/resource.py:15
 msgid "Updated on"
-msgstr ""
+msgstr "Updated op"
 
 #: management/models/resource.py:43
 msgid ""
 "{} is not allowed to perform tasks. This action must be performed by a back-"
 "office user. Please contact the support team ({}) for more information."
 msgstr ""
+"{} mag geen taken uitvoeren. Deze actie moet worden uitgevoerd door een back-"
+"kantoorgebruiker. Neem contact op met het ondersteuningsteam ({}) voor meer informatie."
 
 #: management/models/room.py:19
 msgid "Designation"
-msgstr ""
+msgstr "Aanwijzing"
 
 #: management/models/room.py:20
 msgid "Must be as short and descriptive as possible."
-msgstr ""
+msgstr "Moet zo kort en beschrijvend mogelijk zijn"
 
 #: management/models/room.py:32
 msgid "Recommended capacity"
-msgstr ""
+msgstr "Aanbevolen capaciteit"
 
 #: management/models/room.py:33
 msgid "Capacity where the attendees can work in optimal conditions."
-msgstr ""
+msgstr "Capaciteit waar de aanwezigen in optimale omstandigheden kunnen werken."
 
 #: management/models/room.py:37
 msgid "Maximum capacity"
-msgstr ""
+msgstr "Maximum capaciteit"
 
 #: management/models/room.py:38
 msgid "Maximal capacity in case of over attendance."
-msgstr ""
+msgstr "Maximale capaciteit in geval van overbezetting."
 
-#: management/models/room.py:55 templates/nav.html:63
+#: management/models/room.py:55 templates/nav.html:65
 msgid "Classrooms"
-msgstr ""
+msgstr "klas"
 
 #: management/models/room.py:80
 msgid "The capacity of a classroom cannot be zero."
-msgstr ""
+msgstr "De capaciteit van een klaslokaal mag niet nul zijn."
 
 #: management/models/room.py:86
 msgid ""
 "The recommended capacity ({}) cannot be higher than the maximum capacity "
 "({})."
 msgstr ""
+"De aanbevolen capaciteit ({}) mag niet hoger zijn dan de maximale capaciteit "
+"({})."
 
 #: management/templates/management/course/actions.html:7
 #: management/templates/management/course/course_listview.html:119
@@ -391,7 +410,7 @@ msgstr ""
 #: management/templates/management/room/actions.html:7
 #: management/templates/management/room/classroom_listview.html:70
 msgid "Update"
-msgstr ""
+msgstr "Update"
 
 #: management/templates/management/course/actions.html:10
 #: management/templates/management/course/course_listview.html:122
@@ -404,7 +423,7 @@ msgstr ""
 #: management/templates/management/room/actions.html:10
 #: management/templates/management/room/classroom_listview.html:73
 msgid "Delete"
-msgstr ""
+msgstr "Delete"
 
 #: management/templates/management/course/actions.html:15
 #: management/templates/management/course/course_listview.html:129
@@ -415,28 +434,28 @@ msgstr ""
 #: management/templates/management/room/actions.html:15
 #: management/templates/management/room/classroom_listview.html:80
 msgid "DEBUG: No functionality yet for Teachers"
-msgstr ""
+msgstr "DEBUG: nog geen functionaliteit voor docenten"
 
 #: management/templates/management/course/actions.html:21
 #: management/templates/management/course/course_listview.html:140
 #: management/templates/management/module/actions.html:39
 #: management/templates/management/module/module_listcard.html:63
 msgid "You cannot subscribe to this module yet again"
-msgstr ""
+msgstr "U kunt zich nog niet abonneren op deze module"
 
 #: management/templates/management/course/actions.html:24
 #: management/templates/management/course/course_listview.html:143
 #: management/templates/management/module/actions.html:42
 #: management/templates/management/module/module_listcard.html:66
 msgid "Subscribe to this module"
-msgstr ""
+msgstr "Abonneer u op deze module"
 
 #: management/templates/management/course/actions.html:30
 #: management/templates/management/degree/actions.html:23
 #: management/templates/management/module/actions.html:49
 #: templates/registered_user_warning.html:8
 msgid "Complete your registration"
-msgstr ""
+msgstr "Voltooi je registratie"
 
 #: management/templates/management/course/actions.html:37
 #: management/templates/management/course/course_listview.html:156
@@ -448,8 +467,9 @@ msgstr ""
 #: registration/templates/registration/authentication/login.html:53
 #: registration/templates/registration/authentication/register.html:16
 #: registration/templates/registration/authentication/register.html:107
+#: templates/nav.html:94
 msgid "Sign up"
-msgstr ""
+msgstr "Zich registreren"
 
 #: management/templates/management/course/actions.html:40
 #: management/templates/management/course/course_listview.html:159
@@ -461,138 +481,139 @@ msgstr ""
 #: registration/templates/registration/authentication/login.html:15
 #: registration/templates/registration/authentication/login.html:36
 #: registration/templates/registration/authentication/register.html:117
+#: templates/nav.html:99
 msgid "Sign in"
-msgstr ""
+msgstr "Aanmelden"
 
 #: management/templates/management/course/course_back_to_list_button.html:8
 msgid "Back to the courses list"
-msgstr ""
+msgstr "Terug naar de cursuslijst"
 
 #: management/templates/management/course/course_back_to_list_button.html:16
 msgid "Back to my courses"
-msgstr ""
+msgstr "Terug naar mijn cursussen"
 
 #: management/templates/management/course/course_card.html:23
 msgid "Registrants"
-msgstr ""
+msgstr "Registranten"
 
 #: management/templates/management/course/course_card.html:39
 msgid "Available/total seats before over attendance"
-msgstr ""
+msgstr "Beschikbare / totale zitplaatsen vóór overbezoek"
 
 #: management/templates/management/course/course_card.html:47
 msgid "Available/total seats"
-msgstr ""
+msgstr "Beschikbare / totale zitplaatsen "
 
 #: management/templates/management/course/course_card.html:63
 #: management/templates/management/course/course_listview.html:63
 msgid "Starts on"
-msgstr ""
+msgstr "Begint op"
 
 #: management/templates/management/course/course_card.html:66
 #: management/templates/management/course/course_listview.html:69
 msgid "Ends on"
-msgstr ""
+msgstr "Eindigt op"
 
 #: management/templates/management/course/course_card.html:87
 msgid "Full attendance"
-msgstr ""
+msgstr "Volledige opkomst"
 
 #: management/templates/management/course/course_card.html:90
 msgid "Over attendance"
-msgstr ""
+msgstr "Over opkomst"
 
 #: management/templates/management/course/course_card.html:93
 msgid "Acceptable attendance"
-msgstr ""
+msgstr "Aanvaardbare opkomst"
 
 #: management/templates/management/course/course_card.html:97
 msgid "No seats available"
-msgstr ""
+msgstr "Geen stoelen beschikbaar"
 
 #: management/templates/management/course/course_card.html:100
 msgid "Few seats left"
-msgstr ""
+msgstr "Er zijn maar weinig stoelen over"
 
 #: management/templates/management/course/course_card.html:103
 msgid "Seats available"
-msgstr ""
+msgstr "Beschikbare plaatsen"
 
 #: management/templates/management/course/course_card.html:112
 msgid "Module teached in this course"
-msgstr ""
+msgstr "Module gegeven in deze cursus"
 
 #: management/templates/management/course/course_card.html:124
 msgid "Teacher of this course"
-msgstr ""
+msgstr "Docent van deze cursus"
 
 #: management/templates/management/course/course_card.html:128
 #: management/templates/management/module/module_card.html:44
 msgid "Contact by mail"
-msgstr ""
+msgstr "Neem contact op via mail"
 
 #: management/templates/management/course/course_card.html:134
 msgid "Classroom assigned to this course"
-msgstr ""
+msgstr "Klas toegewezen aan deze cursus"
 
 #: management/templates/management/course/course_createview.html:5
 #: management/templates/management/course/course_createview.html:12
 #: management/templates/management/course/course_updateview.html:4
 msgid "Add a new course"
-msgstr ""
+msgstr "Voeg een nieuwe cursus toe"
 
 #: management/templates/management/course/course_createview.html:57
 #: management/templates/management/course/course_createview.html:76
 #: management/templates/management/course/course_updateview.html:72
 #: management/templates/management/course/course_updateview.html:91
 msgid "The chosen teacher must be eligible for the chosen module"
-msgstr ""
+msgstr "De gekozen docent moet in aanmerking komen voor de gekozen module"
 
 #: management/templates/management/course/course_createview.html:94
 #: management/templates/management/course/course_updateview.html:108
 msgid "Must be set before the end date"
-msgstr ""
+msgstr "Moet worden ingesteld vóór de einddatum"
 
 #: management/templates/management/course/course_createview.html:106
 #: management/templates/management/course/course_updateview.html:120
 msgid "Must be set after the start date"
-msgstr ""
+msgstr "Moet worden ingesteld na de startdatum"
 
 #: management/templates/management/course/course_createview.html:127
 msgid "Create the new course"
-msgstr ""
+msgstr "Maak de nieuwe cursus"
 
 #: management/templates/management/course/course_createview.html:132
 msgid "Cancel and back to courses list"
-msgstr ""
+msgstr "Annuleer en terug naar de cursuslijst"
 
 #: management/templates/management/course/course_createview.html:155
 #: management/templates/management/course/course_updateview.html:167
 #: management/templates/management/module/module_listview.html:46
 msgid "Create a new module"
-msgstr ""
+msgstr "Maak een nieuwe module"
 
 #: management/templates/management/course/course_createview.html:160
 #: management/templates/management/course/course_updateview.html:172
 msgid "Go to users manager"
-msgstr ""
+msgstr "Ga naar gebruikersbeheer"
 
 #: management/templates/management/course/course_createview.html:165
 #: management/templates/management/course/course_updateview.html:177
 #: management/templates/management/room/classroom_createview.html:4
 #: management/templates/management/room/classroom_createview.html:11
 msgid "Register a new classroom"
-msgstr ""
+msgstr "Registreer een nieuw klaslokaal"
 
 #: management/templates/management/course/course_createview.html:173
 #: management/templates/management/course/course_updateview.html:185
 msgid "Back to courses list"
-msgstr ""
+msgstr "Terug naar cursuslijst"
 
 #: management/templates/management/course/course_deleteview.html:5
 #: management/templates/management/course/course_deleteview.html:13
 msgid "Delete the course"
-msgstr ""
+msgstr "verwijder De Cursus"
 
 #: management/templates/management/course/course_deleteview.html:23
 #: management/templates/management/degree/degree_deleteview.html:23
@@ -601,15 +622,15 @@ msgstr ""
 #: management/templates/management/module/modulelevel_deleteview.html:23
 #: management/templates/management/room/classroom_deleteview.html:23
 msgid "Confirm deletation"
-msgstr ""
+msgstr "Bevestig het verwijderen"
 
 #: management/templates/management/course/course_deleteview.html:28
 msgid "Cancel and back to course page"
-msgstr ""
+msgstr "Annuleer en terug naar de cursuspagina"
 
 #: management/templates/management/course/course_detailview.html:35
 msgid "List of attendees"
-msgstr ""
+msgstr "Lijst met aanwezigen"
 
 #: management/templates/management/course/course_detailview_jumbotron.html:19
 #, python-format
@@ -619,10 +640,14 @@ msgid ""
 "%(start_date)s to %(end_date)s.\n"
 "  "
 msgstr ""
+"\n"
+"    %(module_title)s gegeven door %(teacher_name)s op %(room_name)s van "
+"%(start_date)s tot %(end_date)s.\n"
+"  "
 
 #: management/templates/management/course/course_listview.html:4
 msgid "CourseListView"
-msgstr ""
+msgstr "cursuslijstweergave"
 
 #: management/templates/management/course/course_listview.html:17
 #, python-format
@@ -652,11 +677,11 @@ msgstr[1] ""
 
 #: management/templates/management/course/course_listview.html:40
 msgid "Register a new course"
-msgstr ""
+msgstr "Registreer een nieuwe cursus"
 
 #: management/templates/management/course/course_listview.html:102
 msgid "You are registered to this course"
-msgstr ""
+msgstr "U bent ingeschreven voor deze cursus"
 
 #: management/templates/management/course/course_listview.html:113
 #: management/templates/management/degree/degree_listview.html:100
@@ -668,70 +693,72 @@ msgstr ""
 #: registration/templates/registration/userprofile/modules_rrs_list.html:41
 #: templates/footer.html:56
 msgid "See more"
-msgstr ""
+msgstr "Bekijk meer"
 
 #: management/templates/management/course/course_listview.html:134
 msgid "DEBUG: Link to module_rr"
-msgstr ""
+msgstr "DEBUG: Link naar module_rr"
 
 #: management/templates/management/course/course_listview.html:149
 #: management/templates/management/degree/degree_listview.html:127
 #: management/templates/management/module/module_listcard.html:72
 #: management/templates/management/room/classroom_listview.html:85
 msgid "Finish your registration as a student"
-msgstr ""
+msgstr "Rond je inschrijving als student af"
 
 #: management/templates/management/course/course_listview_jumbotron.html:11
 #: management/templates/management/course/course_listview_jumbotron.html:26
 msgid "All our courses"
-msgstr ""
+msgstr "Al onze cursussen"
 
 #: management/templates/management/course/course_listview_jumbotron.html:16
 msgid ""
 "Here is a list of all our courses. Feel free to look around. If you are "
 "already our student, you can even follow your progression from here."
 msgstr ""
+"Hier is een lijst van al onze cursussen. Kijk gerust eens rond. Als je bent "
+"al onze student, je kunt van hieruit zelfs je vorderingen volgen."
 
 #: management/templates/management/course/course_status.html:6
 msgid "Course already finished"
-msgstr ""
+msgstr "Cursus is al afgelopen"
 
 #: management/templates/management/course/course_status.html:9
 msgid "Already started"
-msgstr ""
+msgstr "Al begonnen"
 
 #: management/templates/management/course/course_status.html:12
 msgid "Starting soon"
-msgstr ""
+msgstr "Begint binnenkort"
 
 #: management/templates/management/course/course_updateview.html:11
 msgid "Update course"
-msgstr ""
+msgstr "Update cursus"
 
 #: management/templates/management/course/course_updateview.html:51
 #: management/templates/management/degree/degree_updateview.html:43
 #: management/templates/management/module/module_updateview.html:45
 #: management/templates/management/room/classroom_updateview.html:44
 msgid "Automatically generated"
-msgstr ""
+msgstr "Automatisch gegenereerd"
 
 #: management/templates/management/course/course_updateview.html:139
 msgid "Update the course"
-msgstr ""
+msgstr "Werk de cursus bij"
 
 #: management/templates/management/course/course_updateview.html:144
 msgid "Cancel and back to the course"
-msgstr ""
+msgstr "Annuleer en terug naar de cursus"
 
 #: management/templates/management/course/related_modules_rrs_list.html:8
 msgid "Number"
-msgstr ""
+msgstr "Aantal"
 
 #: management/templates/management/course/related_modules_rrs_list.html:11
 #: rating/models.py:22 registration/models/degree_rr.py:24
 #: registration/models/student_rr.py:22 registration/utils/groups.py:60
 msgid "Student"
-msgstr ""
+msgstr "Leerling"
 
 #: management/templates/management/course/related_modules_rrs_list.html:15
 #: management/templates/management/degree/related_degrees_list.html:11
@@ -740,17 +767,17 @@ msgstr ""
 #: registration/templates/registration/userprofile/courses_list.html:28
 #: registration/templates/registration/userprofile/modules_rrs_list.html:35
 msgid "Status"
-msgstr ""
+msgstr "Toestand"
 
 #: management/templates/management/course/related_modules_rrs_list.html:18
 #: registration/templates/registration/userprofile/modules_rrs_list.html:38
 msgid "Score"
-msgstr ""
+msgstr "score"
 
 #: management/templates/management/course/related_modules_rrs_list.html:21
 #: management/templates/management/course/related_modules_rrs_list.html:48
 msgid "Options"
-msgstr ""
+msgstr "Opties"
 
 #: management/templates/management/course/related_modules_rrs_list.html:43
 #: management/templates/management/room/related_courses_list.html:35
@@ -760,29 +787,29 @@ msgstr ""
 #: registration/templates/registration/userprofile/modules_rrs_list.html:80
 #: registration/templates/registration/userprofile/student_statistics.html:29
 msgid "N/A"
-msgstr ""
+msgstr "N/A"
 
 #: management/templates/management/course/related_modules_rrs_list.html:56
 msgid "No student found"
-msgstr ""
+msgstr "Geen student gevonden"
 
 #: management/templates/management/degree/actions.html:18
 #: management/templates/management/degree/degree_listview.html:122
 msgid "Subscribe to this degree"
-msgstr ""
+msgstr "Schrijf je in voor deze graad"
 
 #: management/templates/management/degree/degree_back_to_catalog_button.html:7
 msgid "Back to the degrees catalog"
-msgstr ""
+msgstr "Terug naar de diplomacatalogus"
 
 #: management/templates/management/degree/degree_createview.html:5
 #: management/templates/management/module/module_createview.html:5
 msgid "Add a new module"
-msgstr ""
+msgstr "Voeg een nieuwe module toe"
 
 #: management/templates/management/degree/degree_createview.html:12
 msgid "Add a new degree to the catalog"
-msgstr ""
+msgstr "Voeg een nieuw diploma toe aan de catalogus"
 
 #: management/templates/management/degree/degree_createview.html:57
 #: management/templates/management/degree/degree_updateview.html:73
@@ -802,40 +829,40 @@ msgstr ""
 #: registration/templates/registration/registration_report/student_rr_createview.html:268
 #: registration/templates/registration/registration_report/student_rr_createview.html:284
 msgid "Supported formats"
-msgstr ""
+msgstr "Ondersteunde formaten"
 
 #: management/templates/management/degree/degree_createview.html:77
 msgid "Create the new degree"
-msgstr ""
+msgstr "Creëer de nieuwe graad"
 
 #: management/templates/management/degree/degree_createview.html:82
 #: management/templates/management/degree/degree_updateview.html:114
 msgid "Cancel and back to degrees catalog"
-msgstr ""
+msgstr "Annuleer en terug naar de gradencatalogus"
 
 #: management/templates/management/degree/degree_createview.html:95
 #: management/templates/management/degree/degree_updateview.html:127
 msgid "Create a new degree category"
-msgstr ""
+msgstr "Maak een nieuwe categorie voor diploma's"
 
 #: management/templates/management/degree/degree_createview.html:101
 #: management/templates/management/degree/degree_updateview.html:133
 msgid "Back to degrees catalog"
-msgstr ""
+msgstr "Terug naar diplomacatalogus"
 
 #: management/templates/management/degree/degree_deleteview.html:5
 #: management/templates/management/degree/degree_deleteview.html:13
 msgid "Delete the degree"
-msgstr ""
+msgstr "Verwijder de graad"
 
 #: management/templates/management/degree/degree_deleteview.html:28
 msgid "Cancel and back to degree page"
-msgstr ""
+msgstr "Annuleren en terug naar de gradenpagina"
 
 #: management/templates/management/degree/degree_listview.html:4
 #: management/templates/management/degree/degree_listview_jumbotron.html:12
 msgid "Degrees catalog"
-msgstr ""
+msgstr "Graden catalogus"
 
 #: management/templates/management/degree/degree_listview.html:26
 #, python-format
@@ -853,7 +880,7 @@ msgstr[1] ""
 #: management/templates/management/degree/degree_listview.html:73
 #: management/templates/management/module/module_listcard.html:11
 msgid "Regitration fee"
-msgstr ""
+msgstr "Regitratievergoeding"
 
 #: management/templates/management/degree/degree_listview_jumbotron.html:17
 msgid ""
@@ -863,14 +890,19 @@ msgid ""
 "you keep going, you will end on the top.\n"
 "  "
 msgstr ""
+"\n"
+"Een graad is als een trap: je begint van beneden, je moet ze allemaal nemen"
+"trap een voor een in je eigen tempo, onderweg vind je dit misschien vermoeiend, maar als"
+"je blijftgaan, eindig je bovenaan. \n "
+""
 
 #: management/templates/management/degree/degree_status.html:8
 msgid "Degree completed"
-msgstr ""
+msgstr "Diploma afgerond"
 
 #: management/templates/management/degree/degree_status.html:12
 msgid "Degree uncompleted"
-msgstr ""
+msgstr "Graad niet voltooid"
 
 #: management/templates/management/degree/degree_status.html:18
 #, python-format
@@ -888,53 +920,53 @@ msgstr[1] ""
 #: management/templates/management/degree/degree_updateview.html:5
 #: management/templates/management/degree/degree_updateview.html:11
 msgid "Update the degree"
-msgstr ""
+msgstr "Werk de graad bij"
 
 #: management/templates/management/degree/degree_updateview.html:102
 #: management/templates/management/module/module_updateview.html:154
 #: management/templates/management/module/module_updateview.html:170
 msgid "To select multiple entries, hold <kbd>Ctrl</kbd> while selecting"
-msgstr ""
+msgstr "Om meerdere items te selecteren, houdt u <kbd> Ctrl </kbd> ingedrukt tijdens het selecteren"
 
 #: management/templates/management/degree/degree_updateview.html:109
 msgid "Update degree"
-msgstr ""
+msgstr "Update graad"
 
 #: management/templates/management/degree/degreecategory_back_to_catalog_button.html:7
 msgid "Back to the degree categories catalog"
-msgstr ""
+msgstr "Terug naar de catalogus met diplomacategorieën"
 
 #: management/templates/management/degree/degreecategory_createview.html:5
 #: management/templates/management/degree/degreecategory_deleteview.html:4
 msgid "DegreeCategoryCreateView"
-msgstr ""
+msgstr "graadscategorieCreërenWeergave"
 
 #: management/templates/management/degree/degreecategory_createview.html:13
 msgid "Add a new degree category to the catalog"
-msgstr ""
+msgstr "Voeg een nieuwe categorie toe aan de catalogus"
 
 #: management/templates/management/degree/degreecategory_createview.html:39
 #: management/templates/management/degree/degreecategory_updateview.html:39
 msgid "Create the new degree category"
-msgstr ""
+msgstr "Maak de nieuwe categorie met diploma's"
 
 #: management/templates/management/degree/degreecategory_createview.html:44
 #: management/templates/management/degree/degreecategory_updateview.html:44
 msgid "Cancel and back to degree categories catalog"
-msgstr ""
+msgstr "Annuleren en terug naar de catalogus met gradencategorieën"
 
 #: management/templates/management/degree/degreecategory_deleteview.html:11
 msgid "Delete the degree category"
-msgstr ""
+msgstr "Verwijder de categorie met graden"
 
 #: management/templates/management/degree/degreecategory_deleteview.html:26
 msgid "Cancel and back to degree category page"
-msgstr ""
+msgstr "Annuleren en terug naar de categoriepagina van het diploma"
 
 #: management/templates/management/degree/degreecategory_listview.html:5
 #: management/templates/management/degree/degreecategory_listview_jumbotron.html:12
 msgid "Degrees by category"
-msgstr ""
+msgstr "Graden per categorie"
 
 #: management/templates/management/degree/degreecategory_listview.html:24
 #, python-format
@@ -948,7 +980,13 @@ msgid_plural ""
 "available.\n"
 "        "
 msgstr[0] ""
+"\n"
+"          Er is momenteel maar één graadcategorie beschikbaar.\n"
+"        "
 msgstr[1] ""
+"\n"
+"          Er zijn momenteel %(nb_categories)s graadcategorieën beschikbaar.\n"
+"        "
 
 #: management/templates/management/degree/degreecategory_listview_jumbotron.html:17
 msgid ""
@@ -957,11 +995,15 @@ msgid ""
 "master, you may find it easier to order our degrees by their categories.\n"
 "  "
 msgstr ""
+"\n"
+"Als je op zoek bent naar een specifieke bachelor of misschien een meer gevorderde"
+"meester, misschien vindt u het gemakkelijker om onze graden in categorieën te rangschikken. \n"
+"  "
 
 #: management/templates/management/degree/degreecategory_updateview.html:5
 #: management/templates/management/degree/degreecategory_updateview.html:13
 msgid "Update the degree category"
-msgstr ""
+msgstr "Werk de gradencategorie bij"
 
 #: management/templates/management/degree/related_degrees_list.html:37
 msgid "No degree found"
@@ -1325,7 +1367,8 @@ msgid "Password"
 msgstr ""
 
 #: registration/forms/authentication.py:32
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:34
+#: registration/templates/registration/authentication/passwd_change.html:40
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:36
 msgid "Password confirmation"
 msgstr ""
 
@@ -1697,8 +1740,8 @@ msgid "Registration number or password forgotten ?"
 msgstr ""
 
 #: registration/templates/registration/authentication/login.html:46
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:5
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:12
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:6
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:14
 msgid "Reset your password"
 msgstr ""
 
@@ -1706,12 +1749,22 @@ msgstr ""
 msgid "Not registered yet ?"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_change.html:4
-msgid "Password change"
+#: registration/templates/registration/authentication/passwd_change.html:6
+#: registration/templates/registration/authentication/passwd_change.html:14
+#: registration/templates/registration/authentication/passwd_change.html:45
+#: registration/templates/registration/userprofile/actions.html:13
+msgid "Change your password"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_change.html:16
-msgid "Change password"
+#: registration/templates/registration/authentication/passwd_change.html:26
+#: registration/templates/registration/authentication/passwd_change.html:33
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:29
+msgid "Your new password"
+msgstr ""
+
+#: registration/templates/registration/authentication/passwd_change.html:48
+#: registration/templates/registration/userprofile/userprofile_updateview.html:151
+msgid "Cancel and back to profile"
 msgstr ""
 
 #: registration/templates/registration/authentication/passwd_reset.html:14
@@ -1736,7 +1789,7 @@ msgstr ""
 msgid "Send mail"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:16
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:18
 msgid ""
 "\n"
 "        <p>\n"
@@ -1745,27 +1798,23 @@ msgid ""
 "      "
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:27
-msgid "Your new password"
-msgstr ""
-
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:39
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:41
 msgid "Reset password"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_reset_confirm.html:41
+#: registration/templates/registration/authentication/passwd_reset_confirm.html:43
 msgid "Cancel and login"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_reset_done.html:4
+#: registration/templates/registration/authentication/passwd_reset_done.html:6
 msgid "Password reset mail sent"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_reset_done.html:10
+#: registration/templates/registration/authentication/passwd_reset_done.html:14
 msgid "The mail has been sent"
 msgstr ""
 
-#: registration/templates/registration/authentication/passwd_reset_done.html:14
+#: registration/templates/registration/authentication/passwd_reset_done.html:18
 #, python-format
 msgid ""
 "\n"
@@ -2275,10 +2324,6 @@ msgstr ""
 msgid "Update your profile"
 msgstr ""
 
-#: registration/templates/registration/userprofile/actions.html:13
-msgid "Change your password"
-msgstr ""
-
 #: registration/templates/registration/userprofile/actions.html:21
 msgid "Deactivate user account"
 msgstr ""
@@ -2510,10 +2555,6 @@ msgstr ""
 
 #: registration/templates/registration/userprofile/userprofile_updateview.html:146
 msgid "Update my profile"
-msgstr ""
-
-#: registration/templates/registration/userprofile/userprofile_updateview.html:151
-msgid "Cancel and back to profile"
 msgstr ""
 
 #: registration/utils/groups.py:54
@@ -3272,40 +3313,32 @@ msgstr ""
 msgid "Change the language"
 msgstr ""
 
-#: templates/nav.html:25
+#: templates/nav.html:27
 msgid "Catalog"
 msgstr ""
 
-#: templates/nav.html:47
+#: templates/nav.html:49
 msgid "Resources"
 msgstr ""
 
-#: templates/nav.html:51
+#: templates/nav.html:53
 msgid "All courses"
 msgstr ""
 
-#: templates/nav.html:56
+#: templates/nav.html:58
 msgid "My courses"
 msgstr ""
 
-#: templates/nav.html:76
+#: templates/nav.html:78
 msgid "Admin"
 msgstr ""
 
-#: templates/nav.html:81
+#: templates/nav.html:83
 msgid "Profile"
 msgstr ""
 
-#: templates/nav.html:86
+#: templates/nav.html:88
 msgid "Sign out"
-msgstr ""
-
-#: templates/nav.html:92
-msgid "Sign Up"
-msgstr ""
-
-#: templates/nav.html:97
-msgid "Sign In"
 msgstr ""
 
 #: templates/pagination_main.html:21
