@@ -1,10 +1,11 @@
 from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 
-from management.models import Module
+from management.models import Degree, Module
 
 
 class StudentRating(models.Model):
@@ -28,14 +29,28 @@ class StudentRating(models.Model):
     module = models.ForeignKey(
         Module,
         on_delete=models.CASCADE,
+        null=True,
+        blank=True,
         related_name="ratings",
         verbose_name=_("Module"),
+    )
+    degree = models.ForeignKey(
+        Degree,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        related_name="ratings",
+        verbose_name=_("Degree"),
     )
     rate = models.PositiveIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         verbose_name=_("Rate"),
     )
     comment = models.TextField(verbose_name=_("Comment"))
+    is_visible = models.BooleanField(
+        default=True,
+        verbose_name=_("Is visible"),
+    )
 
     class Meta:
         """Meta definition for StudentRating."""
@@ -53,10 +68,13 @@ class StudentRating(models.Model):
             self.module.title,
         )
 
-    # def save(self):
-    #     """Save method for StudentRating."""
+    def clean(self):
+        """If the rating is related to a module, it cannot be related to a
+        degree. The opposite is true as well."""
 
-        # TODO: Prevent student from leaving multiple rates on the same module
+        if self.module and self.degree:
+            ValidationError(_("A rating can not be assigned to a module and a "
+                              "degree at the same time."))
 
     def get_absolute_url(self):
         """Return absolute url for StudentRating."""
