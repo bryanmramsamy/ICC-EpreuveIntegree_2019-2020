@@ -11,6 +11,7 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from rating.models import StudentRating
 from registration.utils import registration
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
@@ -45,6 +46,8 @@ class ModuleDetailView(DetailView):
         context["all_prerequisites_validated"] = registration \
             .all_prerequisites_validated_by_user(self.request.user,
                                                  self.object)
+
+        context["ratings"] = StudentRating.objects.filter(module=self.object)
 
         return context
 

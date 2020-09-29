@@ -29,4 +29,12 @@ urlpatterns = [
         views.StudentRatingDeleteView.as_view(),
         name="rating_deleteview"
     ),
+
+    # Actions
+
+    url(
+        r"v/(?P<pk>[0-9]+)/$",
+        views.change_visibility,
+        name="change_visibility"
+    ),
 ]

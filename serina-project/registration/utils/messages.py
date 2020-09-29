@@ -280,3 +280,27 @@ def user_deactivated(request):
             "reactivated anytime."
         )
     )
+
+
+# Student Ratings
+
+def rating_is_visible(request):
+    """Informs the user that the selected rating has been made visible."""
+
+    messages.success(
+        request,
+        _(
+            "The rating is now visible."
+        )
+    )
+
+
+def rating_is_invisible(request):
+    """Informs the user that the selected rating has been made invisible."""
+
+    messages.success(
+        request,
+        _(
+            "The rating is now hidden."
+        )
+    )

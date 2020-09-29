@@ -46,7 +46,7 @@ class StudentRating(models.Model):
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         verbose_name=_("Rate"),
     )
-    comment = models.TextField(verbose_name=_("Comment"))
+    comment = models.TextField(max_length=512, verbose_name=_("Comment"))
     is_visible = models.BooleanField(
         default=True,
         verbose_name=_("Is visible"),
