@@ -11,6 +11,7 @@ from .resource import (
     BackOfficeResourceUpdateViewMixin,
 )
 from rating.models import StudentRating
+from registration.utils import groups as group_utils
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
@@ -36,8 +37,10 @@ class DegreeDetailView(DetailView):
         context = super().get_context_data(**kwargs)
         context["ratings"] = StudentRating.objects.filter(degree=self.object)
 
-        return context
+        if not groups_utils.is_manager_or_administrator(self.request.user):
+            context["ratings"] = context["ratings"].filter(is_visible=True)
 
+        return context
 
 
 class DegreeCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,

@@ -81,10 +81,22 @@
     </div>
 
     <div class="card-footer text-muted">
-      {% trans 'Sent on' %} {{ rating.date_created }}
-      {% if rating.date_updated > rating.date_created %}
-        | {% trans 'Last updated on' %} {{ rating.date_updated }}
-      {% endif %}
+      <div class="row">
+        <div class="col text-left">
+          {% trans 'Sent on' %}
+          {% if rating.date_updated > rating.date_created %}
+            <br>
+            {% trans 'Last updated on' %}
+          {% endif %}
+        </div>
+        <div class="col text-right">
+          {{ rating.date_created }}
+          {% if rating.date_updated > rating.date_created %}
+            <br>
+            {{ rating.date_updated }}
+          {% endif %}
+        </div>
+      </div>
     </div>
   </div>
 </div>

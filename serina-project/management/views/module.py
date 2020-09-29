@@ -12,7 +12,7 @@ from .resource import (
     BackOfficeResourceUpdateViewMixin,
 )
 from rating.models import StudentRating
-from registration.utils import registration
+from registration.utils import groups, registration
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
@@ -48,6 +48,9 @@ class ModuleDetailView(DetailView):
                                                  self.object)
 
         context["ratings"] = StudentRating.objects.filter(module=self.object)
+
+        if not groups.is_manager_or_administrator(self.request.user):
+            context["ratings"] = context["ratings"].filter(is_visible=True)
 
         return context
 

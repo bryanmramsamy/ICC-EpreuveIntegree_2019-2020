@@ -14,7 +14,8 @@ def home(request):
 
     degrees = Degree.objects.order_by("?")[:3]
     modules = Module.objects.order_by("?")[:3]
-    ratings = StudentRating.objects.order_by("?")[:4]
+    ratings = StudentRating.objects.filter(is_visible=True) \
+                                   .order_by("-date_updated")[:4]
 
     return render(
         request,
