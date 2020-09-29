@@ -15,7 +15,7 @@ urlpatterns = [
         name="rating_detailview"
     ),
     url(
-        r"c/$",
+        r"c/(?P<module_or_degree>[0-9]+)/(?P<module_or_degree_pk>[0-9]+)/$",
         views.StudentRatingCreateView.as_view(),
         name="rating_createview"
     ),

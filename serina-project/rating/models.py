@@ -22,10 +22,10 @@ class StudentRating(models.Model):
         related_name="ratings",
         verbose_name=_("Student"),
     )
-    date_created = models.DateField(auto_now_add=True,
-                                    verbose_name=_("Creation date"))
-    date_updated = models.DateField(auto_now=True,
-                                    verbose_name=_("Creation date"))
+    date_created = models.DateTimeField(auto_now_add=True,
+                                        verbose_name=_("Creation date"))
+    date_updated = models.DateTimeField(auto_now=True,
+                                        verbose_name=_("Last update date"))
     module = models.ForeignKey(
         Module,
         on_delete=models.CASCADE,
