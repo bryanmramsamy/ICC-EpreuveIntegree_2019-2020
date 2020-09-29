@@ -153,33 +153,27 @@
   {# Latest ratings left #}
 
   <div class="bg-light text-light p-3 my-md-3">
-    <div class="p-2 text-center bg-secondary text-white mb-4 rounded">
+    <div class="p-2 text-center bg-dark mb-4 rounded">
       <h3>
         {% include 'logo/rating.html' %}
         {% trans 'Read the latest ratings left by our students' %}
       </h3>
     </div>
 
-    <div class="row row-cols-1 row-cols-md-2">
-      {% for rating in ratings %}
-        <div class="col mb-4">
-          <a href="{% url 'module_detailview' pk=rating.module.pk %}" style="color: inherit; text-decoration: inherit;">
-            <div class="card bg-secondary">
-              <div class="card-body">
-                <h5 class="card-title">{{ rating.rate }}</h5>
-                <p class="card-text">{{ rating.comment }}</p>
-              </div>
+    <div class="row row-cols-1
+    {% if ratings.count > 1 %}
+      row-cols-lg-2
+    {% endif %}">
+      {% with on_homeview=True %}
+        {% for rating in ratings %}
+          {% include 'rating/rating_card.html' %}
 
-              <div class="card-footer text-right">
-                <small class="text-light">
-                  {% include 'logo/module.html' %}
-                  {{ rating.module.title }}
-                </small>
-              </div>
-            </div>
-          </a>
-        </div>
-      {% endfor %}
+        {% empty %}
+          <div class="h3 text-center text-light">
+            {% include 'logo/check_info.html' %} {% trans 'No student\'s rating left yet' %}
+          </div>
+        {% endfor %}
+      {% endwith %}
     </div>
   </div>
 

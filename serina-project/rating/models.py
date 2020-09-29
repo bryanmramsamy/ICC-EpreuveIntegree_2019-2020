@@ -62,15 +62,26 @@ class StudentRating(models.Model):
     def __str__(self):
         """Unicode representation of StudentRating."""
 
+        if self.module:
+            title = self.module.title
+
+        else:
+            title = self.degree.title
+
         return "[{}] {}'s rating on {}".format(
             self.pk,
             self.created_by.get_full_name(),
-            self.module.title,
+            title,
         )
 
     def clean(self):
         """If the rating is related to a module, it cannot be related to a
-        degree. The opposite is true as well."""
+        degree. The opposite is true as well but it must be related to one of
+        them."""
+
+        if not self.module and not self.degree:
+            ValidationError(_("A rating must be assigned either to a module "
+                              "or to a degree."))
 
         if self.module and self.degree:
             ValidationError(_("A rating can not be assigned to a module and a "

@@ -30,4 +30,26 @@
   {# Back to ListView button #}
 
   {% include 'management/degree/degree_back_to_catalog_button.html' %}
+
+  <br>
+
+
+  {# Ratings #}
+
+  {% include 'rating_tag.html' %}
+  <section class="container p-1 p-md-3 rounded border border-dark text-light bg-dark">
+    <div class="row row-cols-1
+    {% if ratings.count > 1 %}
+      row-cols-lg-2
+    {% endif %}">
+      {% for rating in ratings %}
+        {% include 'rating/rating_card.html' %}
+
+      {% empty %}
+        <div class="h3 text-center text-light">
+          {% include 'logo/check_info.html' %} {% trans 'No student\'s rating left yet for this degree' %}
+        </div>
+      {% endfor %}
+    </div>
+  </section>
 {% endblock content %}
