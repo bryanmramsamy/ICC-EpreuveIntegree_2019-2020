@@ -160,7 +160,7 @@
       </h3>
     </div>
 
-    <div class="row row-cols-1
+    <div class="justify-content-center row row-cols-1
     {% if ratings.count > 1 %}
       row-cols-lg-2
     {% endif %}">
@@ -169,7 +169,7 @@
           {% include 'rating/rating_card.html' %}
 
         {% empty %}
-          <div class="h3 text-center text-light">
+          <div class="h3 text-center text-info">
             {% include 'logo/check_info.html' %} {% trans 'No student\'s rating left yet' %}
           </div>
         {% endfor %}
