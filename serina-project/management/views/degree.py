@@ -86,9 +86,11 @@ class DegreeDetailView(DetailView):
 
         if not groups_utils.is_manager_or_administrator(self.request.user):
             context["ratings"] = context["ratings"].filter(is_visible=True)
-            context["student_rating"] = context["ratings"].filter(
-                created_by=self.request.user
-            ).last()
+
+            if groups_utils.is_student(self.request.user):
+                context["student_rating"] = context["ratings"].filter(
+                    created_by=self.request.user
+                ).last()
 
         return context
 
