@@ -1,0 +1,60 @@
+{% load i18n %}
+
+
+{% include 'filter_tag.html' %}
+<section class="container p-3 rounded text-left text-light bg-dark">
+  <form method="GET" action="{% url 'degree_listview' %}">
+    <div class="row row-cols-1 row-cols-md-3 justify-content-center">
+
+
+      {# q_category #}
+
+      <div class="form-group col">
+        <label for="q_category" class="h5 text-uppercase">
+          {% include 'logo/degree_alt.html' %} {% trans 'Category' %}
+        </label>
+
+        <select id="q_category" name="q_category" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All categories' %} ---
+          </option>
+          {% for category in s_categories %}
+            <option value="{{ category.pk }}" {% if q_category|add:"0" == category.pk %}selected{% endif %}>
+              {{ category.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_module #}
+
+      <div class="form-group col">
+        <label for="q_module" class="h5 text-uppercase">
+          {% include 'logo/module.html' %} {% trans 'Module' %}
+        </label>
+
+        <select id="q_module" name="q_module" class="form-control form-control-sm">
+          <option {% if q_module == '' or q_module is None %}selected{% endif %} value="">
+            --- {% trans 'All modules' %} ---
+          </option>
+          {% for module in s_modules %}
+            <option value="{{ module.pk }}" {% if q_module|add:"0" == module.pk %}selected{% endif %}>
+              {{ module.reference }} | {{ module.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# submit #}
+
+      <div class="form-group col">
+        <label class="h5 text-uppercase d-none d-md-block">
+          <br>
+        </label>
+        <input type="submit" value="{% trans 'Filter' %}" class="btn btn-block btn-sm btn-outline-light h5 text-uppercase"/>
+      </div>
+    </div>
+  </form>
+</section>

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -24,6 +25,52 @@ class DegreeListView(ListView):
     template_name = "management/degree/degree_listview.html"
     context_object_name = "degrees"
     paginate_by = settings.PAGINATION["listview"]
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+        search_title_reference_description = self.request.GET.get(
+            'q_title_reference_description',
+        )
+        search_category = self.request.GET.get('q_category')
+        search_module = self.request.GET.get('q_module')
+
+        # Main query
+        query_result = Degree.objects.all()
+
+        # Filtering
+        if search_title_reference_description:
+            query_result = query_result.filter(
+                Q(title__icontains=search_title_reference_description)
+                | Q(reference__icontains=search_title_reference_description)
+                | Q(description__icontains=search_title_reference_description)
+            )
+        if search_category:
+            query_result = query_result.filter(category=search_category)
+        if search_module:
+            query_result = query_result.filter(modules=search_module)
+
+        # Query result
+        return query_result
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+        context['q_title_reference_description'] = self.request.GET.get(
+            'q_title_reference_description',
+        )
+        context['q_category'] = self.request.GET.get('q_category')
+        context['q_module'] = self.request.GET.get('q_module')
+
+        # Search values
+        context['s_categories'] = DegreeCategory.objects.all()
+        context['s_modules'] = Module.objects.all()
+
+        return context
 
 
 class DegreeDetailView(DetailView):
