@@ -1,0 +1,103 @@
+{% load i18n registration_extra %}
+
+
+<div class="col text-dark">
+  <div class="card mb-3">
+    <div class="card-header h3">
+      <div class="row justify-content-between">
+        <div class="col-6 text-left">
+          {% with rate=rating.rate %}
+            {% include 'rating_stars.html' %}
+          {% endwith %}
+        </div>
+        <div class="col-6 text-right">
+          <div class="btn-group" role="group" aria-label="Basic example">
+            {% if request.user|is_manager_or_administrator and rating.is_visible %}
+              <a href="{% url 'change_visibility' pk=rating.pk %}" class="btn btn-warning">
+                {% include 'logo/eye_slash.html' %}
+              </a>
+
+            {% elif request.user|is_manager_or_administrator %}
+              <a href="{% url 'change_visibility' pk=rating.pk %}" class="btn btn-warning">
+                {% include 'logo/eye.html' %}
+              </a>
+            {% endif %}
+
+            {% if request.user|is_manager_or_administrator or request.user == rating.created_by %}
+              <a href="{% url 'rating_updateview' pk=rating.pk %}" class="btn btn-secondary">
+                {% include 'logo/edit.html' %}
+              </a>
+              <a href="{% url 'rating_deleteview' pk=rating.pk %}" class="btn btn-danger">
+                {% include 'logo/delete.html' %}
+              </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-body">
+      {% if on_homeview %}
+        {% if rating.module %}
+          <a href="{{ rating.module.get_absolute_url }}" class="text-reset h4">
+            {% include 'logo/module.html' %} {{ rating.module.title }}
+            <small class="text-muted">
+              {{ rating.module.reference }}
+            </small>
+          </a>
+
+        {% elif rating.degree %}
+          <a href="{{ rating.degree.get_absolute_url }}" class="text-reset h4">
+            {% include 'logo/degree.html' %} {{ rating.degree.title }}
+            <small class="text-muted">
+              {{ rating.degree.reference }}
+            </small>
+          </a>
+        {% endif %}
+
+        <hr>
+      {% endif %}
+
+      <p class="text-justify">
+        {{ rating.comment }}
+      </p>
+      <div class="row justify-content-between h5">
+        <div class="col text-left">
+          {% if request.user|is_manager_or_administrator and rating.is_visible %}
+            <span class="text-success">
+              {% include 'logo/check_valid.html' %} {% trans 'Visible' %}
+            </span>
+
+          {% elif request.user|is_manager_or_administrator  %}
+            <span class="text-danger">
+              {% include 'logo/check_invalid.html' %} {% trans 'Hidden' %}
+            </span>
+          {% endif %}
+        </div>
+
+        <div class="col text-right text-muted">
+          {{ rating.created_by.get_full_name }}
+        </div>
+      </div>
+    </div>
+
+    <div class="card-footer text-muted">
+      <div class="row">
+        <div class="col text-left">
+          {% trans 'Sent on' %}
+          {% if rating.date_updated > rating.date_created %}
+            <br>
+            {% trans 'Last updated on' %}
+          {% endif %}
+        </div>
+        <div class="col text-right">
+          {{ rating.date_created }}
+          {% if rating.date_updated != rating.date_created %}
+            <br>
+            {{ rating.date_updated }}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

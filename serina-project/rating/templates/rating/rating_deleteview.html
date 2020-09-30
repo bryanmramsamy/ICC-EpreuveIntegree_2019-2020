@@ -1,18 +1,58 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'StudentRatingDeleteView' %}{% endblock title %}
+{% block title %}
+  {% trans 'Delete your rating for ' %}
+  {% if rating.module %}
+    {% trans 'module' %}: {{ rating.module.title }}
+
+  {% elif rating.degree %}
+    {% trans 'degree' %}: {{ rating.degree.title }}
+  {% endif %}
+  ?
+{% endblock title %}
 
 {% block content %}
-    <h1>StudentRatingDeleteView</h1>
-    <form method="post">
-        {% csrf_token %}
-        <p>Are you sure you want to delete "{{ module.title }}"?</p>
-        <input type="submit" value="Confirm">
-    </form>
+<section class="container">
+  {% include 'backoffice_tag.html' %}
+  <div class="container p-3 rounded border border-warning">
+    <h1 class="text-center">
+      {% trans 'Update your rating for ' %}
+      {% if rating.module %}
+        {% trans 'module' %}: {{ rating.module.title }}
 
-    <p>Created by: {{ rating.created_by.get_full_name }}</p>
-    <p>Module: {{ rating.module.title }}</p>
-    <p>Rate: {{ rating.rate }}/5</p>
-    <p>Comment: {{ rating.comment }}</p>
+      {% elif rating.degree %}
+        {% trans 'degree' %}: {{ rating.degree.title }}
+      {% endif %}
+      ?
+    </h1>
+
+    <form method="post">
+      {% csrf_token %}
+
+      {% include 'bubbles/danger/confirm_deletation.html' %}
+
+      <div class="row row-cols-1 row-cols-md-2">
+        <div class="col mb-2 mb-md-0">
+          <input type="submit" class="btn btn-block btn-lg btn-danger text-uppercase" value="{% trans 'Confirm deletation' %}">
+        </div>
+
+        <div class="col">
+          <a href="{{ rating.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-dark">
+            {% trans 'Cancel and go back' %} {% include 'logo/back.html' %}
+          </a>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<br>
+
+
+{# Rating card #}
+
+<section class="container">
+  {% include 'rating/rating_card.html' %}
+</section>
 {% endblock content %}

@@ -10,6 +10,8 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
+from rating.models import StudentRating
+from registration.utils import groups as groups_utils
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
@@ -30,6 +32,15 @@ class DegreeDetailView(DetailView):
     model = Degree
     template_name = "management/degree/degree_detailview.html"
     context_object_name = "degree"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["ratings"] = StudentRating.objects.filter(degree=self.object)
+
+        if not groups_utils.is_manager_or_administrator(self.request.user):
+            context["ratings"] = context["ratings"].filter(is_visible=True)
+
+        return context
 
 
 class DegreeCreateView(LoginRequiredMixin, ManagerAdministratorOnlyMixin,

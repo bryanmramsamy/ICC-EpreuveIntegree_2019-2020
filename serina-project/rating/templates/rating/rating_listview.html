@@ -1,22 +1,42 @@
 {% extends 'base.html' %}
 {% load i18n %}
 
-{% block title %}{% trans 'StudentRatingListView' %}{% endblock title %}
+
+{% block title %}
+  {% trans 'Ratings Admin Panel' %}
+{% endblock title %}
+
 
 {% block content %}
-    <h1>StudentRatingListView</h1>
+  {# Back office tag #}
 
-    {% for rating in ratings %}
-        <p>Created by: {{ rating.created_by.get_full_name }}</p>
-        <p>Module: {{ rating.module.title }}</p>
-        <p>Rate: {{ rating.rate }}/5</p>
-        <p>Comment: {{ rating.comment }}</p>
+  {% include 'backoffice_tag.html' %}
+  <section class="container p-1 p-md-3 rounded border border-warning">
 
-        <a href="{{ rating.get_absolute_url }}">See more...</a>
-        <br>
-        <a href="{% url 'rating_updateview' pk=rating.pk %}">UPDATE</a>
-        <br>
-        <a href="{% url 'rating_deleteview' pk=rating.pk %}">DELETE</a>
-    {% endfor %}
-        
+    {# Filters #}
+
+    {% include 'rating/rating_listview_search.html' %}
+
+    <br>
+
+
+    <div class="text-center h1">
+      {% trans 'Student ratings' %} {% include 'logo/rating.html' %}
+    </div>
+
+    <br>
+
+    <div class="row row-cols-1">
+      {% with on_homeview=True %}
+        {% for rating in ratings %}
+          {% include 'rating/rating_card.html' %}
+
+        {% empty %}
+          <div class="h3 text-center text-light">
+            {% include 'logo/check_info.html' %} {% trans 'No student\'s rating left yet' %}
+          </div>
+        {% endfor %}
+      {% endwith %}
+    </div>
+  </section>
 {% endblock content %}

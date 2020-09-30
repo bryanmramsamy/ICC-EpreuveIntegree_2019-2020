@@ -280,3 +280,53 @@ def user_deactivated(request):
             "reactivated anytime."
         )
     )
+
+
+# Student Ratings
+
+def rating_is_visible(request):
+    """Informs the user that the selected rating has been made visible."""
+
+    messages.success(
+        request,
+        _(
+            "The rating is now visible."
+        )
+    )
+
+
+def rating_is_invisible(request):
+    """Informs the user that the selected rating has been made invisible."""
+
+    messages.success(
+        request,
+        _(
+            "The rating is now hidden."
+        )
+    )
+
+
+def failed_no_rating(request):
+    """Informs the student (s)he is not allowed to leave a rate as long as the
+    related module/degree is not succeeded yet.."""
+
+    messages.error(
+        request,
+        _(
+            "You didn't succeed this module/degree yet. Only student whom "
+            "succeeded it are allowed to rate it."
+        )
+    )
+
+
+def already_rated(request):
+    """Informs the student (s)he already left a rating ont this related module
+    or degree."""
+
+    messages.error(
+        request,
+        _(
+            "You already rated this module/degree. Howerver, you can edit "
+            "your rating left."
+        )
+    )

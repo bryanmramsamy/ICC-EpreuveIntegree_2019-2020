@@ -11,7 +11,8 @@ from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
 )
-from registration.utils import registration
+from rating.models import StudentRating
+from registration.utils import groups, registration
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 
@@ -45,6 +46,11 @@ class ModuleDetailView(DetailView):
         context["all_prerequisites_validated"] = registration \
             .all_prerequisites_validated_by_user(self.request.user,
                                                  self.object)
+
+        context["ratings"] = StudentRating.objects.filter(module=self.object)
+
+        if not groups.is_manager_or_administrator(self.request.user):
+            context["ratings"] = context["ratings"].filter(is_visible=True)
 
         return context
 

@@ -81,7 +81,7 @@
 
               <div class="dropdown-menu bg-warning" aria-labelledby="admin_nav">
                 <a href="{% url 'backoffice_user_admin_panel' %}" class="dropdown-item">
-                  {% include 'logo/group.html' %} {% trans 'Users List' %}
+                  {% include 'logo/group.html' %} {% trans 'Users Admin Panel' %}
                 </a>
 
                 <div class="dropdown-divider border border-dark"></div>
@@ -98,6 +98,13 @@
                 <a href="{% url 'admin:index' %}" class="dropdown-item">
                   {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
                 </a>
+
+                <div class="dropdown-divider border border-dark"></div>
+
+                <a href="{% url 'rating_listview' %}" class="dropdown-item">
+                  {% include 'logo/rating.html' %} {% trans 'Student ratings' %}
+                </a>
+
               </div>
             </span>
           {% endif %}
