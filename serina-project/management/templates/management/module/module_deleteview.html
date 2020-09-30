@@ -2,7 +2,9 @@
 {% load i18n %}
 
 
-{% block title %}{% trans 'Delete the module' %}: {{ module.title }}{% endblock title %}
+{% block title %}
+  {% trans 'Delete the module' %}: {{ module.title }}
+{% endblock title %}
 
 
 {% block content %}
@@ -34,11 +36,11 @@
 
     <br>
 
+
     {# Presentation card #}
 
     {% with module_actions_enabled=False show_description=True %}
       {% include 'management/module/module_card.html' %}
     {% endwith %}
-
   </section>
 {% endblock content %}

@@ -4,11 +4,11 @@
 
 {% block title %}
   {% trans 'Update your rating for ' %}
-  {% if module %}
-    {% trans 'module' %}: {% include 'logo/module.html' %} {{ module.title }}
+  {% if rating.module %}
+    {% trans 'module' %}: {{ rating.module.title }}
 
-  {% elif degree %}
-    {% trans 'degree' %}: {% include 'logo/degree.html' %} {{ degree.title }}
+  {% elif rating.degree %}
+    {% trans 'degree' %}: {{ rating.degree.title }}
   {% endif %}
 {% endblock title %}
 
@@ -18,11 +18,11 @@
   <section class="container p-1 p-md-3 rounded border border-dark text-light bg-dark">
     <h1 class="text-center">
       {% trans 'Update your rating for ' %}
-      {% if module %}
-        {% trans 'module' %}: {% include 'logo/module.html' %} {{ module.title }}
+      {% if rating.module %}
+        {% trans 'module' %}: {% include 'logo/module.html' %} {{ rating.module.title }}
 
-      {% elif degree %}
-        {% trans 'degree' %}: {% include 'logo/degree.html' %} {{ degree.title }}
+      {% elif rating.degree %}
+        {% trans 'degree' %}: {% include 'logo/degree.html' %} {{ rating.degree.title }}
       {% endif %}
     </h1>
 
@@ -83,13 +83,7 @@
         </div>
 
         <div class="col">
-          <a href="
-          {% if module %}
-            {% url 'module_detailview' pk=module.pk %}
-          {% elif degree %}
-            {% url 'degree_detailview' pk=degree.pk %}
-          {% endif %}
-          " class="btn btn-block btn-lg btn-outline-light">
+          <a href="{{ rating.get_absolute_url }}" class="btn btn-block btn-lg btn-outline-light">
             {% trans 'Cancel and go back' %} {% include 'logo/back.html' %}
           </a>
         </div>

@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import generic
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 
 from .forms import StudentRatingForm
 from .models import StudentRating
@@ -138,13 +138,26 @@ class StudentRatingDeleteView(
     mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
     generic.DeleteView,
     mixins_utils.AutofillCreatedByRequestUser,
-):  # TODO: Debug view
+):
     """DeleteView for StudentRating"""
 
     model = StudentRating
     form_class = StudentRatingForm
+    context_object_name = "rating"
     template_name = "rating/rating_deleteview.html"
-    success_url = reverse_lazy('module_listview')
+
+    def get_success_url(self):
+        """Redirect to module/degree page after deletation."""
+
+        if self.get_object().module:
+            redirection = get_object_or_404(Module,
+                                            pk=self.get_object().module.pk)
+
+        elif self.get_object().degree:
+            redirection = get_object_or_404(Degree,
+                                            pk=self.get_object().degree.pk)
+
+        return redirection.get_absolute_url()
 
 
 def change_visibility(request, pk):

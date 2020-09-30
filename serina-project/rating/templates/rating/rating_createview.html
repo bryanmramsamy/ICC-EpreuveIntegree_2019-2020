@@ -5,10 +5,10 @@
 {% block title %}
   {% trans 'Rate the ' %}
   {% if module %}
-    {% trans 'module' %}: {% include 'logo/module.html' %} {{ module.title }}
+    {% trans 'module' %}: {{ module.title }}
 
   {% elif degree %}
-    {% trans 'degree' %}: {% include 'logo/degree.html' %} {{ degree.title }}
+    {% trans 'degree' %}: {{ degree.title }}
   {% endif %}
 {% endblock title %}
 
