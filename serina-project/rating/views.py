@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 
 from .forms import StudentRatingForm
 from .models import StudentRating
+from registration.models import Degree, Module
 from registration.utils import (
     messages as messages_utils,
     mixins as mixins_utils
@@ -33,12 +34,39 @@ class StudentRatingCreateView(
     mixins_utils.StudentOnlyMixin,
     generic.CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
-):  # TODO: Debug view
+):
     """CreateView for StudentRating"""
 
     model = StudentRating
     form_class = StudentRatingForm
     template_name = "rating/rating_createview.html"
+
+    def get_initial(self):
+        """Returns the initial data to use for forms on this view."""
+
+        initial = super().get_initial()
+        initial['created_by'] = self.request.user
+
+        if self.kwargs["type"] == "module":
+            initial['module'] = get_object_or_404(Module, pk=self.kwargs["pk"])
+
+        elif self.kwargs["type"] == "degree":
+            initial['degree'] = get_object_or_404(Degree, pk=self.kwargs["pk"])
+
+        return initial
+
+    def get_context_data(self, **kwargs):
+        """Add check variables for template conditions."""
+
+        context = super().get_context_data(**kwargs)
+
+        if self.kwargs["type"] == "module":
+            context['module'] = get_object_or_404(Module, pk=self.kwargs["pk"])
+
+        elif self.kwargs["type"] == "degree":
+            context['degree'] = get_object_or_404(Degree, pk=self.kwargs["pk"])
+
+        return context
 
 
 class StudentRatingUpdateView(

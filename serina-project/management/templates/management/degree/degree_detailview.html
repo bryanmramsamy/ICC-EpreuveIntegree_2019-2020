@@ -38,6 +38,16 @@
 
   {% include 'rating_tag.html' %}
   <section class="container p-1 p-md-3 rounded border border-dark text-light bg-dark">
+
+    <div>
+      <a href="{% url 'rating_createview' type='degree' pk=degree.pk %}" class="btn btn-block btn-outline-light">
+        {% trans 'Rate this degree' %} {% include 'logo/degree.html' %} {% include 'logo/new.html' %}
+      </a>
+    </div>
+
+    <br>
+
+
     <div class="row row-cols-1
     {% if ratings.count > 1 %}
       row-cols-lg-2

@@ -11,7 +11,7 @@ from .resource import (
     BackOfficeResourceUpdateViewMixin,
 )
 from rating.models import StudentRating
-from registration.utils import groups as group_utils
+from registration.utils import groups as groups_utils
 from registration.utils.mixins import ManagerAdministratorOnlyMixin
 
 

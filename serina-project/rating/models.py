@@ -45,8 +45,17 @@ class StudentRating(models.Model):
     rate = models.PositiveIntegerField(
         validators=[MinValueValidator(1), MaxValueValidator(5)],
         verbose_name=_("Rate"),
+        help_text=_("Give a rate from 1 (very poor) to 5 (very good)"),
     )
-    comment = models.TextField(max_length=512, verbose_name=_("Comment"))
+    comment = models.TextField(
+        max_length=512,
+        verbose_name=_("Comment"),
+        help_text=_(
+            "Leave a comment you want to be displayed on your rate. Your "
+            "comment will be shown as well as your rating on the home page "
+            "and the module/degree page."
+        ),
+    )
     is_visible = models.BooleanField(
         default=True,
         verbose_name=_("Is visible"),
@@ -88,6 +97,16 @@ class StudentRating(models.Model):
                               "degree at the same time."))
 
     def get_absolute_url(self):
-        """Return absolute url for StudentRating."""
+        """Return absolute url for StudentRating.
 
-        return reverse('rating_detailview', kwargs={'pk': self.pk})
+        Redirect to the detail view of the related module or degree.
+        """
+
+        if self.module:
+            redirection = reverse('module_detailview',
+                                  kwargs={'pk': self.module.pk})
+        elif self.degree:
+            redirection = reverse('degree_detailview',
+                                  kwargs={'pk': self.degree.pk})
+
+        return redirection
