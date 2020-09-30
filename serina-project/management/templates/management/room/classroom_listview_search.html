@@ -3,17 +3,17 @@
 
 {% include 'search_tag.html' %}
 <section class="container p-3 pt-4 rounded text-left text-light bg-dark">
-  <form method="GET" action="{% url 'degree_listview' %}">
+  <form method="GET" action="{% url 'classroom_listview' %}">
     <div class="row row-cols-1 row-cols-md-2">
 
 
-      {# q_title_reference_description #}
+      {# q_name_reference_description #}
 
       <div class="col col-md-9">
         <div class="form-group">
-          <input id="q_title_reference_description" name="q_title_reference_description" type="text"
-          {% if q_title_reference_description %}
-          value="{{ q_title_reference_description }}"
+          <input id="q_name_reference_description" name="q_name_reference_description" type="text"
+          {% if q_name_reference_description %}
+          value="{{ q_name_reference_description }}"
           {% endif %}
           class="form-control form-control-sm text-uppercase"/>
         </div>
