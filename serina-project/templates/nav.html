@@ -95,16 +95,15 @@
 
                 <div class="dropdown-divider border border-dark"></div>
 
-                <a href="{% url 'admin:index' %}" class="dropdown-item">
-                  {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
-                </a>
-
-                <div class="dropdown-divider border border-dark"></div>
-
                 <a href="{% url 'rating_listview' %}" class="dropdown-item">
                   {% include 'logo/rating.html' %} {% trans 'Student ratings' %}
                 </a>
 
+                <div class="dropdown-divider border border-dark"></div>
+
+                <a href="{% url 'admin:index' %}" class="dropdown-item">
+                  {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
+                </a>
               </div>
             </span>
           {% endif %}

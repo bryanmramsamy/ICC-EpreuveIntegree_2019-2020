@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -20,6 +21,40 @@ class ClassroomListView(ListView):
     template_name = "management/room/classroom_listview.html"
     context_object_name = "classrooms"
     paginate_by = settings.PAGINATION["listview"]
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+        search_name_reference_description = self.request.GET.get(
+            'q_name_reference_description',
+        )
+
+        # Main query
+        query_result = Classroom.objects.all()
+
+        # Filtering
+        if search_name_reference_description:
+            query_result = query_result.filter(
+                Q(name__icontains=search_name_reference_description)
+                | Q(reference__icontains=search_name_reference_description)
+                | Q(description__icontains=search_name_reference_description)
+            )
+
+        # Query result
+        return query_result
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+        context['q_name_reference_description'] = self.request.GET.get(
+            'q_name_reference_description',
+        )
+
+        return context
 
 
 class ClassroomDetailView(DetailView):

@@ -1,12 +1,13 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
 from ..forms import ModuleCreateForm, ModuleUpdateForm, ModuleLevelForm
-from ..models import Module, ModuleLevel
+from ..models import Degree, Module, ModuleLevel
 from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
@@ -25,6 +26,68 @@ class ModuleListView(ListView):
     context_object_name = "modules"
     template_name = "management/module/module_listview.html"
     paginate_by = settings.PAGINATION["listview"]
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+        search_title_reference_description = self.request.GET.get(
+            'q_title_reference_description',
+        )
+        search_level = self.request.GET.get('q_level')
+        search_prerequisite = self.request.GET.get('q_prerequisite')
+        search_degree = self.request.GET.get('q_degree')
+        search_teacher = self.request.GET.get('q_teacher')
+
+        # Main query
+        query_result = Module.objects.all()
+
+        # Filtering
+        if search_title_reference_description:
+            query_result = query_result.filter(
+                Q(title__icontains=search_title_reference_description)
+                | Q(reference__icontains=search_title_reference_description)
+                | Q(description__icontains=search_title_reference_description)
+            )
+        if search_level:
+            query_result = query_result.filter(level=search_level)
+        if search_prerequisite:
+            query_result = query_result.filter(
+                prerequisites=search_prerequisite,
+            )
+        if search_degree:
+            query_result = query_result.filter(
+                degrees=search_degree,
+            )
+        if search_teacher:
+            query_result = query_result.filter(
+                eligible_teachers=search_teacher,
+            )
+
+        # Query result
+        return query_result
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+        context['q_title_reference_description'] = self.request.GET.get(
+            'q_title_reference_description',
+        )
+        context['q_level'] = self.request.GET.get('q_level')
+        context['q_prerequisite'] = self.request.GET.get('q_prerequisite')
+        context['q_degree'] = self.request.GET.get('q_degree')
+        context['q_teacher'] = self.request.GET.get('q_teacher')
+
+        # Search values
+        context['s_levels'] = ModuleLevel.objects.all()
+        context['s_prerequisites'] = Module.objects.all()
+        context['s_degrees'] = Degree.objects.all()
+        context['s_teachers'] = User.objects.filter(groups__name="Teacher")
+
+        return context
 
 
 class ModuleDetailView(DetailView):
@@ -51,6 +114,9 @@ class ModuleDetailView(DetailView):
 
         if not groups.is_manager_or_administrator(self.request.user):
             context["ratings"] = context["ratings"].filter(is_visible=True)
+            context["student_rating"] = context["ratings"].filter(
+                created_by=self.request.user
+            ).last()
 
         return context
 

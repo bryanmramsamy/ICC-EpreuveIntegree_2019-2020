@@ -1,0 +1,80 @@
+{% load i18n %}
+
+
+{% include 'filter_tag.html' %}
+<section class="container p-3 rounded text-left text-light bg-dark">
+  <form method="GET" action="{% url 'course_listview' %}">
+    <div class="row row-cols-1 row-cols-md-2 justify-content-center">
+
+
+      {# q_module #}
+
+      <div class="form-group col">
+        <label for="q_module" class="h5 text-uppercase">
+          {% include 'logo/module.html' %} {% trans 'Module' %}
+        </label>
+
+        <select id="q_module" name="q_module" class="form-control form-control-sm">
+          <option {% if q_module == '' or q_module is None %}selected{% endif %} value="">
+            --- {% trans 'All modules' %} ---
+          </option>
+          {% for module in s_modules %}
+            <option value="{{ module.pk }}" {% if q_module|add:"0" == module.pk %}selected{% endif %}>
+              {{ module.reference }} | {{ module.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_teacher #}
+
+      <div class="form-group col">
+        <label for="q_teacher" class="h5 text-uppercase">
+          {% include 'logo/person_alt.html' %} {% trans 'Teacher' %}
+        </label>
+
+        <select id="q_teacher" name="q_teacher" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All categories' %} ---
+          </option>
+          {% for teacher in s_teachers %}
+            <option value="{{ teacher.pk }}" {% if q_teacher|add:"0" == teacher.pk %}selected{% endif %}>
+              {{ teacher.get_full_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_room #}
+
+      <div class="form-group col">
+        <label for="q_room" class="h5 text-uppercase">
+          {% include 'logo/room.html' %} {% trans 'Classroom' %}
+        </label>
+
+        <select id="q_room" name="q_room" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All categories' %} ---
+          </option>
+          {% for room in s_rooms %}
+            <option value="{{ room.pk }}" {% if q_room|add:"0" == room.pk %}selected{% endif %}>
+              {{ room.refernece }} | {{ room.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# submit #}
+
+      <div class="form-group col">
+        <label class="h5 text-uppercase d-none d-md-block">
+          <br>
+        </label>
+        <input type="submit" value="{% trans 'Filter' %}" class="btn btn-block btn-sm btn-outline-light h5 text-uppercase"/>
+      </div>
+    </div>
+  </form>
+</section>

@@ -27,10 +27,43 @@ class CourseListView(ListView):
     template_name = "management/course/course_listview.html"
     paginate_by = settings.PAGINATION["listview"]
 
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+        search_module = self.request.GET.get('q_module')
+        search_teacher = self.request.GET.get('q_teacher')
+        search_room = self.request.GET.get('q_room')
+
+        # Main query
+        query_result = Course.objects.all()
+
+        # Filtering
+        if search_module:
+            query_result = query_result.filter(module=search_module)
+        if search_teacher:
+            query_result = query_result.filter(teacher=search_teacher)
+        if search_room:
+            query_result = query_result.filter(room=search_room)
+
+        # Query result
+        return query_result
+
     def get_context_data(self, **kwargs):
-        """Add number of active courses to the context."""
+        """Add search values to context."""
 
         context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+        context['q_module'] = self.request.GET.get('q_module')
+        context['q_teacher'] = self.request.GET.get('q_teacher')
+        context['q_room'] = self.request.GET.get('q_room')
+
+        # Search values
+        context['s_modules'] = Module.objects.all()
+        context['s_teachers'] = User.objects.filter(groups__name="Teacher")
+        context['s_rooms'] = Classroom.objects.all()
+
         context["nb_active_courses"] = len(
             [course.status for course in Course.objects.all()],
         )
