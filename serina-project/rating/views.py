@@ -8,7 +8,8 @@ from .models import StudentRating
 from registration.models import Degree, Module
 from registration.utils import (
     messages as messages_utils,
-    mixins as mixins_utils
+    mixins as mixins_utils,
+    registration as registration_utils,
 )
 
 
@@ -19,14 +20,6 @@ class StudentRatingListView(LoginRequiredMixin, generic.ListView,):  # TODO: Deb
     context_object_name = "ratings"
     template_name = "rating/rating_listview.html"
     paginate_by = 10
-
-
-class StudentRatingDetailView(LoginRequiredMixin, generic.DetailView,):  # TODO: Debug view
-    """DetailView for StudentRating"""
-
-    model = StudentRating
-    context_object_name = "rating"
-    template_name = "rating/rating_detailview.html"
 
 
 class StudentRatingCreateView(
@@ -40,6 +33,49 @@ class StudentRatingCreateView(
     model = StudentRating
     form_class = StudentRatingForm
     template_name = "rating/rating_createview.html"
+
+    def test_func(self):
+        """Check if the student succeeded the module/degree and if (s)he didn't
+        already left a rating before."""
+
+        if self.kwargs["type"] == "module":
+
+            # Check if student succeeded
+            student_succeeded = registration_utils \
+                .succeeded_module_rr_already_exists(
+                    self.request.user,
+                    get_object_or_404(Module, pk=self.kwargs["pk"]),
+                )
+
+            # Check if student already left a rate
+            no_rate_left = not StudentRating.objects.filter(
+                created_by=self.request.user,
+                module=get_object_or_404(Module, pk=self.kwargs["pk"]),
+            ).exists()
+
+        elif self.kwargs["type"] == "degree":
+
+            # Check if student already left a rate
+            student_succeeded = registration_utils \
+                .succeeded_degree_rr_already_exists(
+                    self.request.user,
+                    get_object_or_404(Degree, pk=self.kwargs["pk"]),
+                )
+
+            # Check if student already left a rate
+            no_rate_left = not StudentRating.objects.filter(
+                created_by=self.request.user,
+                degree=get_object_or_404(Degree, pk=self.kwargs["pk"]),
+            ).exists()
+
+        if not student_succeeded:
+            messages_utils.failed_no_rating(self.request)
+
+        elif not no_rate_left:
+            messages_utils.already_rated(self.request)
+
+        return super(StudentRatingCreateView, self).test_func() \
+            and student_succeeded and no_rate_left
 
     def get_initial(self):
         """Returns the initial data to use for forms on this view."""

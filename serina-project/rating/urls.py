@@ -5,6 +5,11 @@ from . import views
 
 urlpatterns = [
     url(
+        r"l/$",
+        views.StudentRatingListView.as_view(),
+        name="rating_listview"
+    ),
+    url(
         r"c/(?P<type>[a-z]{6})/(?P<pk>[0-9]+)/$",
         views.StudentRatingCreateView.as_view(),
         name="rating_createview"
