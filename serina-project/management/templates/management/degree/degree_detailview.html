@@ -39,14 +39,33 @@
   {% include 'rating_tag.html' %}
   <section class="container p-1 p-md-3 rounded border border-dark text-light bg-dark">
 
-    <div>
-      <a href="{% url 'rating_createview' type='degree' pk=degree.pk %}" class="btn btn-block btn-outline-light">
-        {% trans 'Rate this degree' %} {% include 'logo/degree.html' %} {% include 'logo/new.html' %}
-      </a>
-    </div>
 
-    <br>
+    {# New rating button #}
 
+    {% if request.user|is_student %}
+      <div>
+        {% if not request.user|succeeded_degree_rr_already_exists:degree %}
+          <a href="{% url 'rating_createview' type='degree' pk=degree.pk %}" class="btn btn-block btn-outline-warning disabled">
+            {% trans 'You didn\'t succeed this degree yet. Therefore, you cannot rate it' %} {% include 'logo/check_invalid.html' %}
+          </a>
+
+        {% elif request.user == student_rating.created_by %}
+          <a href="{% url 'rating_updateview' pk=student_rating.pk %}" class="btn btn-block btn-outline-light">
+            {% trans 'Update the rating you left' %} {% include 'logo/edit.html' %}
+          </a>
+
+        {% else %}
+          <a href="{% url 'rating_createview' type='degree' pk=degree.pk %}" class="btn btn-block btn-outline-light">
+            {% trans 'Rate this degree' %} {% include 'logo/rating.html' %}
+          </a>
+        {% endif %}
+      </div>
+
+      <br>
+    {% endif %}
+
+
+    {# Ratings list #}
 
     <div class="row row-cols-1
     {% if ratings.count > 1 %}
