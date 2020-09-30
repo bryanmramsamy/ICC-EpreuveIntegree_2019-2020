@@ -110,13 +110,27 @@ class StudentRatingUpdateView(
     mixins_utils.SelfStudentManagerAdministratorOnlyMixin,
     generic.UpdateView,
     mixins_utils.AutofillCreatedByRequestUser,
-):  # TODO: Debug view
+):
     """UpdateView for StudentRating"""
 
     model = StudentRating
     form_class = StudentRatingForm
     context_object_name = "rating"
     template_name = "rating/rating_updateview.html"
+
+    def get_initial(self):
+        """Returns the initial data to use for forms on this view."""
+
+        initial = super().get_initial()
+        initial['created_by'] = self.request.user
+
+        if self.get_object().module:
+            initial['module'] = self.get_object().module
+
+        elif self.get_object().degree:
+            initial['degree'] = self.get_object().degree
+
+        return initial
 
 
 class StudentRatingDeleteView(

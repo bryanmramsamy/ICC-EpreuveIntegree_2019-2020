@@ -103,7 +103,7 @@ def active_degree_rr_already_exists(user, degree):
         if degree_rr else False
 
 
-def succeeded_degree_rr_already_exists(user, degree):
+def succeeded_degree_rr_already_exists(user, degree):  # FIXME
     """Check if a degree has already been completed by a user."""
 
     degree_rr = get_degree_rr_from_user_and_degree(user, degree)
