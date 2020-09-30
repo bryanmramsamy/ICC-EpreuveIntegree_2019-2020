@@ -7,7 +7,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
 
 from ..forms import ModuleCreateForm, ModuleUpdateForm, ModuleLevelForm
-from ..models import Module, ModuleLevel
+from ..models import Degree, Module, ModuleLevel
 from .resource import (
     BackOfficeResourceCreateViewMixin,
     BackOfficeResourceUpdateViewMixin,
@@ -34,10 +34,10 @@ class ModuleListView(ListView):
         search_title_reference_description = self.request.GET.get(
             'q_title_reference_description',
         )
-        # search_module = self.request.GET.get('q_module')
-        # search_degree = self.request.GET.get('q_degree')
-        # search_course = self.request.GET.get('q_course')
-        # search_status = self.request.GET.get('q_status')
+        search_level = self.request.GET.get('q_level')
+        search_prerequisite = self.request.GET.get('q_prerequisite')
+        search_degree = self.request.GET.get('q_degree')
+        search_teacher = self.request.GET.get('q_teacher')
 
         # Main query
         query_result = Module.objects.all()
@@ -48,6 +48,20 @@ class ModuleListView(ListView):
                 Q(title__icontains=search_title_reference_description)
                 | Q(reference__icontains=search_title_reference_description)
                 | Q(description__icontains=search_title_reference_description)
+            )
+        if search_level:
+            query_result = query_result.filter(level=search_level)
+        if search_prerequisite:
+            query_result = query_result.filter(
+                prerequisites=search_prerequisite,
+            )
+        if search_degree:
+            query_result = query_result.filter(
+                degrees=search_degree,
+            )
+        if search_teacher:
+            query_result = query_result.filter(
+                eligible_teachers=search_teacher,
             )
 
         # Query result
@@ -62,16 +76,16 @@ class ModuleListView(ListView):
         context['q_title_reference_description'] = self.request.GET.get(
             'q_title_reference_description',
         )
-        # context['q_module'] = self.request.GET.get('q_module')
-        # context['q_degree'] = self.request.GET.get('q_degree')
-        # context['q_course'] = self.request.GET.get('q_course')
-        # context['q_status'] = self.request.GET.get('q_status')
+        context['q_level'] = self.request.GET.get('q_level')
+        context['q_prerequisite'] = self.request.GET.get('q_prerequisite')
+        context['q_degree'] = self.request.GET.get('q_degree')
+        context['q_teacher'] = self.request.GET.get('q_teacher')
 
         # Search values
-        # context['s_modules'] = models.Module.objects.all()
-        # context['s_degrees'] = models.Degree.objects.all()
-        # context['s_courses'] = models.Course.objects.all()
-        # context['s_statuses'] = ModuleRegistrationReport.STATUS
+        context['s_levels'] = ModuleLevel.objects.all()
+        context['s_prerequisites'] = Module.objects.all()
+        context['s_degrees'] = Degree.objects.all()
+        context['s_teachers'] = User.objects.filter(groups__name="Teacher")
 
         return context
 

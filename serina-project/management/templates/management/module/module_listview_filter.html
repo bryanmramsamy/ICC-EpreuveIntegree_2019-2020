@@ -4,23 +4,43 @@
 {% include 'filter_tag.html' %}
 <section class="container p-3 rounded text-left text-light bg-dark">
   <form method="GET" action="{% url 'module_listview' %}">
-    <div class="row row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1 row-cols-md-3">
 
 
-      {# q_title_reference_description #}
+      {# q_level #}
 
       <div class="form-group col">
-        <label for="q_title_reference_description" class="h5 text-uppercase">
-          {% include 'logo/person.html' %} {% trans 'Student' %}
+        <label for="q_level" class="h5 text-uppercase">
+          {% include 'logo/module_alt.html' %} {% trans 'Difficulty level' %}
         </label>
 
-        <select id="q_title_reference_description" name="q_title_reference_description" class="form-control form-control-sm">
+        <select id="q_level" name="q_level" class="form-control form-control-sm">
           <option {% if False %}selected{% endif %} value="">
-            --- {% trans 'All students' %} ---
+            --- {% trans 'All difficulty levels' %} ---
           </option>
-          {% for student in s_students %}
-            <option value="{{ student.pk }}" {% if q_title_reference_description|add:"0" == student.pk %}selected{% endif %}>
-              {{ student.username }} | {{ student.get_full_name }}
+          {% for level in s_levels %}
+            <option value="{{ level.pk }}" {% if q_level|add:"0" == level.pk %}selected{% endif %}>
+              {{ level.name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_prerequisite #}
+
+      <div class="form-group col">
+        <label for="q_prerequisite" class="h5 text-uppercase">
+          {% include 'logo/module.html' %} {% trans 'Prerequisite' %}
+        </label>
+
+        <select id="q_prerequisite" name="q_prerequisite" class="form-control form-control-sm">
+          <option {% if q_prerequisite == '' or q_prerequisite is None %}selected{% endif %} value="">
+            --- {% trans 'All modules' %} ---
+          </option>
+          {% for pre_module in s_prerequisites %}
+            <option value="{{ pre_module.pk }}" {% if q_prerequisite|add:"0" == pre_module.pk %}selected{% endif %}>
+              {{ pre_module.reference }} | {{ pre_module.title }}
             </option>
           {% endfor %}
         </select>
@@ -51,16 +71,16 @@
 
       <div class="form-group col">
         <label for="q_teacher" class="h5 text-uppercase">
-          {% include 'logo/degree.html' %} {% trans 'Degree' %}
+          {% include 'logo/person_alt.html' %} {% trans 'Eligible teacher' %}
         </label>
 
         <select id="q_teacher" name="q_teacher" class="form-control form-control-sm">
           <option {% if q_teacher == '' or q_teacher is None %}selected{% endif %} value="">
             --- {% trans 'All degrees' %} ---
           </option>
-          {% for degree in s_degrees %}
-            <option value="{{ degree.pk }}" {% if q_teacher|add:"0" == degree.pk %}selected{% endif %}>
-              {{ degree.reference }} | {{ degree.title }}
+          {% for teacher in s_teachers %}
+            <option value="{{ teacher.pk }}" {% if q_teacher|add:"0" == teacher.pk %}selected{% endif %}>
+              {{ teacher.get_full_name }}
             </option>
           {% endfor %}
         </select>
