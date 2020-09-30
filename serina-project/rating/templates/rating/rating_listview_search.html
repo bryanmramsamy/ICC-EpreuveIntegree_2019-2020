@@ -1,0 +1,127 @@
+{% load i18n %}
+
+
+{% include 'filter_tag.html' %}
+<section class="container p-3 rounded text-left text-light bg-dark">
+  <form method="GET" action="{% url 'rating_listview' %}">
+    <div class="row row-cols-1 row-cols-md-3">
+
+
+      {# q_student #}
+
+      <div class="form-group col">
+        <label for="q_student" class="h5 text-uppercase">
+          {% include 'logo/person.html' %} {% trans 'Student' %}
+        </label>
+
+        <select id="q_student" name="q_student" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All students' %} ---
+          </option>
+          {% for student in s_students %}
+            <option value="{{ student.pk }}" {% if q_student|add:"0" == student.pk %}selected{% endif %}>
+              {{ student.username }} | {{ student.get_full_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_module #}
+
+      <div class="form-group col">
+        <label for="q_module" class="h5 text-uppercase">
+          {% include 'logo/module.html' %} {% trans 'Module' %}
+        </label>
+
+        <select id="q_module" name="q_module" class="form-control form-control-sm">
+          <option {% if q_module == '' or q_module is None %}selected{% endif %} value="">
+            --- {% trans 'All modules' %} ---
+          </option>
+          {% for module in s_modules %}
+            <option value="{{ module.pk }}" {% if q_module|add:"0" == module.pk %}selected{% endif %}>
+              {{ module.reference }} | {{ module.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_degree #}
+
+      <div class="form-group col">
+        <label for="q_degree" class="h5 text-uppercase">
+          {% include 'logo/degree.html' %} {% trans 'Degree' %}
+        </label>
+
+        <select id="q_degree" name="q_degree" class="form-control form-control-sm">
+          <option {% if q_degree == '' or q_degree is None %}selected{% endif %} value="">
+            --- {% trans 'All degrees' %} ---
+          </option>
+          {% for degree in s_degrees %}
+            <option value="{{ degree.pk }}" {% if q_degree|add:"0" == degree.pk %}selected{% endif %}>
+              {{ degree.reference }} | {{ degree.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_rate #}
+
+      <div class="form-group col">
+        <label for="q_rate" class="h5 text-uppercase">
+          {% include 'logo/star.html' %} {% trans 'Rate' %}
+        </label>
+
+        <select id="q_rate" name="q_rate" class="form-control form-control-sm">
+          <option {% if q_rate == '' or q_rate is None %}selected{% endif %} value="">
+            --- {% trans 'All ratings' %} ---
+          </option>
+          {% for rate in s_rates %}
+            <option value="{{ rate }}" {% if q_rate|add:"0" == rate %}selected{% endif %}>
+              {{ rate }}
+
+              {% blocktrans count rate=rate %}
+                star
+              {% plural %}
+                stars
+              {% endblocktrans %}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_is_visible #}
+
+      <div class="form-group col">
+        <label for="q_is_visible" class="h5 text-uppercase">
+          {% trans 'Status' %}
+        </label>
+
+        <select id="q_is_visible" name="q_is_visible" class="form-control form-control-sm">
+          <option {% if q_is_visible == '' or q_is_visible is None %}selected{% endif %} value="">
+            --- {% trans 'All statuses' %} ---
+          </option>
+          <option value="True" {% if q_is_visible == "True" %}selected{% endif %}>
+            {% trans 'Visible ratings' %}
+          </option>
+          <option value="False" {% if q_is_visible == "False" %}selected{% endif %}>
+            {% trans 'Hidden ratings' %}
+          </option>
+        </select>
+      </div>
+
+
+      {# submit #}
+
+      <div class="form-group col">
+        <label class="h5 text-uppercase d-none d-md-block">
+          <br>
+        </label>
+        <input type="submit" value="{% trans 'Filter' %}" class="btn btn-block btn-sm btn-outline-light h5 text-uppercase"/>
+      </div>
+    </div>
+  </form>
+</section>

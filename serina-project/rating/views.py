@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import generic
 from django.urls import reverse, reverse_lazy
@@ -13,13 +14,87 @@ from registration.utils import (
 )
 
 
-class StudentRatingListView(LoginRequiredMixin, generic.ListView,):  # TODO: Debug view
+class StudentRatingListView(
+    LoginRequiredMixin,
+    mixins_utils.ManagerAdministratorOnlyMixin,
+    generic.ListView,
+):
     """ListView for StudentRating"""
 
     model = StudentRating
     context_object_name = "ratings"
     template_name = "rating/rating_listview.html"
-    paginate_by = 10
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+
+        search_student = self.request.GET.get('q_student')
+        search_module = self.request.GET.get('q_module')
+        search_degree = self.request.GET.get('q_degree')
+        search_rate = self.request.GET.get('q_rate')
+        search_is_visible = self.request.GET.get('q_is_visible')
+
+        # Main query
+
+        query_result = StudentRating.objects.all()
+
+        # Filtering
+
+        if search_student:
+            query_result = query_result.filter(
+                created_by__pk=search_student,
+            )
+
+        if search_module:
+            query_result = query_result.filter(
+                module__pk=search_module,
+            )
+
+        if search_degree:
+            query_result = query_result.filter(
+                degree__pk=search_degree,
+            )
+
+        if search_rate:
+            query_result = query_result.filter(
+                rate=search_rate,
+            )
+
+        if search_is_visible:
+            query_result = query_result.filter(
+                is_visible=search_is_visible,
+            )
+
+        # Query result
+
+        return query_result.order_by("date_updated")
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+
+        context['q_student'] = self.request.GET.get('q_student')
+        context['q_module'] = self.request.GET.get('q_module')
+        context['q_degree'] = self.request.GET.get('q_degree')
+        context['q_rate'] = self.request.GET.get('q_rate')
+        context['q_is_visible'] = self.request.GET.get('q_is_visible')
+
+        # Search values
+
+        context['s_students'] = User.objects.filter(
+            groups__name="Student",
+            student_rr__isnull=False,
+        )
+        context['s_modules'] = Module.objects.all()
+        context['s_degrees'] = Degree.objects.all()
+        context['s_rates'] = [1, 2, 3, 4, 5]
+
+        return context
 
 
 class StudentRatingCreateView(
