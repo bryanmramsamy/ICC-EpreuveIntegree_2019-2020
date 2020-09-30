@@ -24,7 +24,14 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title"><a href="{{ module.get_absolute_url }}" class="text-reset">{% include 'logo/module.html' %} {{ module.title }}</a></h5>
-            <p class="card-text"><small class="text-muted">{{ module.reference }} | <a href="{% url 'modulelevel_detailview' pk=module.level.pk %}" class="text-reset">{% include 'logo/module_alt.html' %} {{ module.level.name }}</a></small></p>
+            <p class="card-text">
+              <small class="text-muted">
+                {{ module.reference }} |
+                <a href="{{ module.level.get_absolute_url }}}" class="text-reset">
+                  {% include 'logo/module_alt.html' %} {{ module.level.name }}
+                </a>
+              </small>
+            </p>
             <p class="card-text">{{ module.description|linebreaks|truncatechars:256 }}</p>
 
             {% with related_module=module %}

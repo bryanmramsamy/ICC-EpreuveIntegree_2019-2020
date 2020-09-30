@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
+from django.db.models import Q
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import DeleteView, DetailView, ListView
@@ -25,6 +26,54 @@ class ModuleListView(ListView):
     context_object_name = "modules"
     template_name = "management/module/module_listview.html"
     paginate_by = settings.PAGINATION["listview"]
+
+    def get_queryset(self):
+        """Apply filters if submitted by user."""
+
+        # GET variables
+        search_title_reference_description = self.request.GET.get(
+            'q_title_reference_description',
+        )
+        # search_module = self.request.GET.get('q_module')
+        # search_degree = self.request.GET.get('q_degree')
+        # search_course = self.request.GET.get('q_course')
+        # search_status = self.request.GET.get('q_status')
+
+        # Main query
+        query_result = Module.objects.all()
+
+        # Filtering
+        if search_title_reference_description:
+            query_result = query_result.filter(
+                Q(title__icontains=search_title_reference_description)
+                | Q(reference__icontains=search_title_reference_description)
+                | Q(description__icontains=search_title_reference_description)
+            )
+
+        # Query result
+        return query_result
+
+    def get_context_data(self, **kwargs):
+        """Add search values to context."""
+
+        context = super().get_context_data(**kwargs)
+
+        # GET variables for search filters
+        context['q_title_reference_description'] = self.request.GET.get(
+            'q_title_reference_description',
+        )
+        # context['q_module'] = self.request.GET.get('q_module')
+        # context['q_degree'] = self.request.GET.get('q_degree')
+        # context['q_course'] = self.request.GET.get('q_course')
+        # context['q_status'] = self.request.GET.get('q_status')
+
+        # Search values
+        # context['s_modules'] = models.Module.objects.all()
+        # context['s_degrees'] = models.Degree.objects.all()
+        # context['s_courses'] = models.Course.objects.all()
+        # context['s_statuses'] = ModuleRegistrationReport.STATUS
+
+        return context
 
 
 class ModuleDetailView(DetailView):

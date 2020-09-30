@@ -16,7 +16,6 @@
 
   {# Information bubble #}
 
-
   {% if not request.user|is_back_office_user %}
     {% include 'bubbles/info/more_about_prerequisites.html' %}
   {% endif %}
@@ -53,6 +52,13 @@
       </a>
     </div>
   </div>
+
+  <br>
+
+
+  {# Search #}
+
+  {% include 'management/module/module_listview_search.html' %}
 
   <br>
 

@@ -1,0 +1,80 @@
+{% load i18n %}
+
+
+{% include 'filter_tag.html' %}
+<section class="container p-3 rounded text-left text-light bg-dark">
+  <form method="GET" action="{% url 'module_listview' %}">
+    <div class="row row-cols-1 row-cols-md-2">
+
+
+      {# q_title_reference_description #}
+
+      <div class="form-group col">
+        <label for="q_title_reference_description" class="h5 text-uppercase">
+          {% include 'logo/person.html' %} {% trans 'Student' %}
+        </label>
+
+        <select id="q_title_reference_description" name="q_title_reference_description" class="form-control form-control-sm">
+          <option {% if False %}selected{% endif %} value="">
+            --- {% trans 'All students' %} ---
+          </option>
+          {% for student in s_students %}
+            <option value="{{ student.pk }}" {% if q_title_reference_description|add:"0" == student.pk %}selected{% endif %}>
+              {{ student.username }} | {{ student.get_full_name }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_degree #}
+
+      <div class="form-group col">
+        <label for="q_degree" class="h5 text-uppercase">
+          {% include 'logo/degree.html' %} {% trans 'Degree' %}
+        </label>
+
+        <select id="q_degree" name="q_degree" class="form-control form-control-sm">
+          <option {% if q_degree == '' or q_degree is None %}selected{% endif %} value="">
+            --- {% trans 'All degrees' %} ---
+          </option>
+          {% for degree in s_degrees %}
+            <option value="{{ degree.pk }}" {% if q_degree|add:"0" == degree.pk %}selected{% endif %}>
+              {{ degree.reference }} | {{ degree.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# q_teacher #}
+
+      <div class="form-group col">
+        <label for="q_teacher" class="h5 text-uppercase">
+          {% include 'logo/degree.html' %} {% trans 'Degree' %}
+        </label>
+
+        <select id="q_teacher" name="q_teacher" class="form-control form-control-sm">
+          <option {% if q_teacher == '' or q_teacher is None %}selected{% endif %} value="">
+            --- {% trans 'All degrees' %} ---
+          </option>
+          {% for degree in s_degrees %}
+            <option value="{{ degree.pk }}" {% if q_teacher|add:"0" == degree.pk %}selected{% endif %}>
+              {{ degree.reference }} | {{ degree.title }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+
+      {# submit #}
+
+      <div class="form-group col">
+        <label class="h5 text-uppercase d-none d-md-block">
+          <br>
+        </label>
+        <input type="submit" value="{% trans 'Filter' %}" class="btn btn-block btn-sm btn-outline-light h5 text-uppercase"/>
+      </div>
+    </div>
+  </form>
+</section>
