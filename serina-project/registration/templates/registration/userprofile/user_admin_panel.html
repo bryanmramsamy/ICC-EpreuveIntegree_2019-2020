@@ -143,7 +143,7 @@
 
                   <div class="dropdown-divider border border-dark"></div>
 
-                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?admin=true" class="dropdown-item bg-{% if one_user.is_active %}danger{% else %}success{% endif %}">
+                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?redirect_to_user_admin_panel=True" class="dropdown-item bg-{% if one_user.is_active %}danger{% else %}success{% endif %}">
                     {% if one_user.is_active %}
                       {% include 'logo/ban.html' %} {% trans 'Deactivate user account' %}
 

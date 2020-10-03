@@ -37,7 +37,12 @@ def activate_deactivate_user(request, user_pk):
 
     user.save()
 
-    if request.GET['admin'] == "true":
+    redirect_to_user_admin_panel = request.GET.get(
+        'redirect_to_user_admin_panel',
+        False,
+    )
+
+    if redirect_to_user_admin_panel:
         return redirect('backoffice_user_admin_panel')
     else:
         return redirect('userprofile_detailview', pk=user.pk)
