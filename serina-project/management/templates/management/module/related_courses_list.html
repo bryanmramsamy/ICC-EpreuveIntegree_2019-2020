@@ -5,7 +5,7 @@
   <h3 class="h3 text-center">{% trans 'Upcoming and ongoing courses for this module' %}</h3>
   <table class="table table-responsive-md table-stripped table-hover table-sm">
     <thead class="thead-dark">
-      <tr>
+      <tr class="d-flex">
         <th class="col-2">{% include 'logo/course.html' %} {% trans 'Course' %}</th>
         <th class="col-2">{% include 'logo/person_alt.html' %} {% trans 'Teacher' %}</th>
         <th class="col-3">{% include 'logo/room.html' %} {% trans 'Classroom' %}</th>
@@ -18,7 +18,7 @@
 
       {% for course in module.courses.all %}
         {% if course.status != 'FINISHED' %}
-          <tr>
+          <tr class="d-flex">
             <td class="col-2"><a href="{{ course.get_absolute_url }}" class="text-reset">{{ course.reference }}</a></td>
             <td class="col-2">{{ course.teacher.get_full_name }}</td>
             {% if course.room is not None %}

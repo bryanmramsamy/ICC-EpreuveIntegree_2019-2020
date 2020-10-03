@@ -141,7 +141,7 @@ class ModuleRegistrationReportListView(
             )
 
         # Query result
-        return query_result.order_by("status")
+        return query_result.order_by("-status")
 
     def get_context_data(self, **kwargs):
         """Add search values to context."""

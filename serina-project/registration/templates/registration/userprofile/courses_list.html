@@ -20,38 +20,38 @@
 
     <table class="table table-stripped table-hover h5 text-left">
       <thead class="thead-dark">
-        <tr>
+        <tr class="d-flex">
           <th class="col-2">{% include 'logo/course.html' %} {% trans 'Course' %}</th>
-          <th>{% include 'logo/module.html' %} {% trans 'Module' %}</th>
-          <th>{% include 'logo/person_alt.html' %} {% trans 'Teacher' %}</th>
-          <th>{% include 'logo/room.html' %} {% trans 'Classroom' %}</th>
-          <th>{% trans 'Status' %}</th>
+          <th class="col-3">{% include 'logo/module.html' %} {% trans 'Module' %}</th>
+          <th class="col-3">{% include 'logo/person_alt.html' %} {% trans 'Teacher' %}</th>
+          <th class="col-2">{% include 'logo/room.html' %} {% trans 'Classroom' %}</th>
+          <th class="col-2">{% trans 'Status' %}</th>
         </tr>
       </thead>
       <tbody>
 
         {% for course in courses %}
           {% if course.reference %}
-            <tr>
+            <tr class="d-flex">
               <td class="col-2"><a href="{{ course.get_absolute_url }}" class="text-reset">{{ course.reference }}</a></td>
-              <td>
+              <td class="col-3">
                 <a href="{{ course.module.get_absolute_url }}" class="text-reset">
                   {{ course.module.title }} <small class="text-muted">{{ course.module.reference }}</small>
                 </a>
               </td>
-              <td>{{ course.teacher.get_full_name }}</td>
+              <td class="col-3">{{ course.teacher.get_full_name }}</td>
               {% if course.room is not None %}
-                <td>
+                <td class="col-2">
                   <a href="{{ course.room.get_absolute_url }}" class="text-reset">
                     {{ course.room.name }} <small class="text-muted">{{ course.room.reference }}</small>
                   </a>
                 </td>
               {% else %}
-                <td class="font-weight-bold text-danger">
+                <td class="col-2 font-weight-bold text-danger">
                   {% include 'logo/check_warning.html' %} {% trans 'N/A' %}
                 </td>
               {% endif %}
-              <td>
+              <td class="col-2">
                 {% if course.status == "UPCOMING" %}
                   <span class="text-info">
                     {% include 'logo/check_info.html' %} {% trans 'Upcoming' %}
@@ -69,8 +69,8 @@
             </tr>
           {% endif %}
         {% empty %}
-          <tr>
-            <td colspan="5" class="h5 text-center text-info">
+          <tr class="d-flex">
+            <td colspan="5" class="col-12 h5 text-center text-info">
               {% include 'logo/check_warning.html' %} {% trans 'No course available' %}
             </td>
           </tr>

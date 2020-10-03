@@ -60,7 +60,7 @@
           </option>
           {% for room in s_rooms %}
             <option value="{{ room.pk }}" {% if q_room|add:"0" == room.pk %}selected{% endif %}>
-              {{ room.refernece }} | {{ room.name }}
+              {{ room.reference }} | {{ room.name }}
             </option>
           {% endfor %}
         </select>
