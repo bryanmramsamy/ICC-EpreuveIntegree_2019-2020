@@ -51,6 +51,12 @@ class ModuleRegistrationReport(FrontOfficeResource):
         related_name="modules_rrs",
         verbose_name=_("Course")
     )
+    payed_fees = models.DecimalField(
+        null=True,
+        max_digits=5,
+        decimal_places=2,
+        verbose_name=_('Payed fees'),
+    )
     date_payed = models.DateTimeField(
         null=True,
         blank=True,

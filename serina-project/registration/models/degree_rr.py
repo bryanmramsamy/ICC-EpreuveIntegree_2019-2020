@@ -32,6 +32,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         related_name="students_registrations",
         verbose_name=_("Registration degree")
     )
+    payed_fees = models.DecimalField(
+        null=True,
+        max_digits=5,
+        decimal_places=2,
+        verbose_name=_('Payed fees'),
+    )
     date_payed = models.DateTimeField(
         null=True,
         blank=True,
