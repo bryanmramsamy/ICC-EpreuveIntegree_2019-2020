@@ -96,7 +96,8 @@
           {% trans 'Registration status' %}:
         </td>
         <th class="col-8">
-          DEBUG: Status of degree  {# FIXME: utils. status function not ready yet #}
+          {{ degree_rr.status }}       DEBUG: Status of degree  {# FIXME: utils. status function not ready yet #}
+          {{ degree_rr.partially_denied }}
 
           <br><br>
 

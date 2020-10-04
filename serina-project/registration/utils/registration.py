@@ -153,24 +153,125 @@ def create_modules_rrs_for_degree_rr(degree_rr):
 
 # Degree Registration Report statuses
 
+def degree_rr_is_partially_pending(degree_rr):
+    """True if at least on module registration report has been pending for each
+    module of the related degree of the given degree registration report."""
+
+    module_fully_pending_list = []
+    for module in degree_rr.degree.modules.all():
+        module_fully_pending_list += [
+            not module.modules_rrs.filter(degree_rr=degree_rr)
+                                  .exclude(status="PENDING").exists()
+        ]
+
+    return True in module_fully_pending_list
+
+
+def degree_rr_is_fully_pending(degree_rr):
+    """True if all the module registration reports has been pending for each
+    module of the related degree of the given degree registration report."""
+
+    module_fully_pending_list = []
+    for module in degree_rr.degree.modules.all():
+        module_fully_pending_list += [
+            not module.modules_rrs.filter(degree_rr=degree_rr)
+                                  .exclude(status="PENDING").exists()
+        ]
+
+    return False not in module_fully_pending_list
+
+
+def degree_rr_is_partially_denied(degree_rr):
+    """True if at least on module registration report has been denied for each
+    module of the related degree of the given degree registration report."""
+
+    module_fully_denied_list = []
+    for module in degree_rr.degree.modules.all():
+        module_fully_denied_list += [
+            not module.modules_rrs.filter(degree_rr=degree_rr)
+                                  .exclude(status="DENIED").exists()
+        ]
+
+    return True in module_fully_denied_list
+
+
+def degree_rr_is_fully_denied(degree_rr):
+    """True if all the module registration reports has been denied for each
+    module of the related degree of the given degree registration report."""
+
+    module_fully_denied_list = []
+    for module in degree_rr.degree.modules.all():
+        module_fully_denied_list += [
+            not module.modules_rrs.filter(degree_rr=degree_rr)
+                                  .exclude(status="DENIED").exists()
+        ]
+
+    return False not in module_fully_denied_list
+
+
+def degree_rr_is_partially_approved(degree_rr):
+    """True if at least on module registration report has been approved, payed
+    or was completed or exempted for each module of the related degree of the
+    given degree registration report."""
+
+    module_partially_approved_list = []
+    for module in degree_rr.degree.modules.all():
+        module_partially_approved_list += [
+            True in [module_rr.approved_or_exempted for module_rr
+                     in module.modules_rrs.filter(degree_rr=degree_rr)]
+        ]
+
+    return True in module_partially_approved_list
+
+
+def degree_rr_is_fully_approved(degree_rr):
+    """True if all the module registration reports has been approved, payed or
+    was completed or exempted for each module of the related degree of the
+    given degree registration report."""
+
+    module_fully_approved_list = []
+    for module in degree_rr.degree.modules.all():
+        module_fully_approved_list += [
+            False not in [module_rr.approved_or_exempted for module_rr
+                          in module.modules_rrs.filter(degree_rr=degree_rr)]
+        ]
+
+    return False not in module_fully_approved_list
+
+
+def degree_rr_is_partially_payed(degree_rr):
+    """True if at least on module registration report has been payed or
+    was completed or exempted for each module of the related degree of the
+    given degree registration report."""
+
+    module_partially_paid_list = []
+    for module in degree_rr.degree.modules.all():
+        module_partially_paid_list += [
+            True in [module_rr.payed_or_exempted for module_rr
+                     in module.modules_rrs.filter(degree_rr=degree_rr)]
+        ]
+
+    return True in module_partially_paid_list
+
+
 def degree_rr_is_fully_payed(degree_rr):
-    """Return True is at least on module registration report has been payed or
-    was completed or exempted for each modules of the related degree of the
+    """True if all the module registration reports has been payed or
+    was completed or exempted for each module of the related degree of the
     given degree registration report."""
 
     module_fully_paid_list = []
     for module in degree_rr.degree.modules.all():
         module_fully_paid_list += [
-            True in [module_rr.succeeded for module_rr
-                     in module.modules_rrs.filter(degree_rr=degree_rr)]
+            False not in [module_rr.payed_or_exempted for module_rr
+                          in module.modules_rrs.filter(degree_rr=degree_rr)]
         ]
 
-    return "hola"
+    return False not in module_fully_paid_list
 
 
 def degree_rr_is_completed(degree_rr):
-    """Return True is at least on module registration report has been succeeded
-    for each modules of the related degree of the given degree registration
+    """True if at least on module registration report has been succeeded
+    for each module of the related degree of the given degree registration
     report.
 
     NOTE:
