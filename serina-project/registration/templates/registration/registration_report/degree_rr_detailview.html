@@ -3,7 +3,7 @@
 
 
 {% block title %}
-  {% trans 'Degree registration' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }} for {{ degree_rr.degree.title }}
+  {% trans 'Degree Registration Report' %} {{ degree_rr.invoice_id }}
 {% endblock title %}
 
 
@@ -15,12 +15,12 @@
     <section class="container border border-warning rounded py-3">
   {% endif %}
 
-  {# Module Registration Report Tag #}
+  {# Degree Registration Report Tag #}
 
   <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
     <div class="row">
       <div class="col">
-        {% trans 'Invoice ID' %} #{{ degree_rr.student_rr.created_by.username }}D{{ degree_rr.pk }}
+        {% trans 'Invoice ID' %} {{ degree_rr.invoice_id }}
       </div>
       <div class="col text-right">
         {% trans 'Degree Registration Report' %} {% include 'logo/degree_rr.html' %}
@@ -32,103 +32,36 @@
 
     <br>
 
-  {% with debug=False  %}
+  {% with debug=False  %}  {# FIXME #}
+    {% if debug %}
+      {# Status info bubble #}
 
+      {% if request.user|is_student %}
+      {% if module_rr.status == "PENDING" %}
+      {% include 'bubbles/warning/module_rr_pending.html' %}
 
-  {% if debug %}
+      {% elif module_rr.status == "DENIED" %}
+      {% include 'bubbles/danger/module_rr_denied.html' %}
 
-
-  {{ degree_rr }}
-
-  <h1>
-    degree_rr|get_degree_rr_status =
-    <strong>
-      {{ degree_rr|get_degree_rr_status }}
-    </strong>
-  </h1>
-
-  <br>
-
-  <h2>
-    modules_rrs
-  </h2>
-  <ul>
-    {% for module_rr in degree_rr.modules_rrs.all %}
-    <li>
-      {{ module_rr }}
-    </li>
-    {% endfor %}
-  </ul>
-
-  <h2>
-    modules
-  </h2>
-  <ul>
-    {% for module in degree_rr.degree.modules.all %}
-    <li>
-      {{ module }}
-    </li>
-    {% endfor %}
-  </ul>
-
-  {# Status info bubble #}
-
-  {% if request.user|is_student %}
-  {% if module_rr.status == "PENDING" %}
-  {% include 'bubbles/warning/module_rr_pending.html' %}
-
-  {% elif module_rr.status == "DENIED" %}
-  {% include 'bubbles/danger/module_rr_denied.html' %}
-
-  {% elif module_rr.status == "APPROVED" %}
-  {% include 'bubbles/warning/module_rr_unpayed.html' %}
-  {% endif %}
-  {% endif %} -->
-  {% endif %}
+      {% elif module_rr.status == "APPROVED" %}
+      {% include 'bubbles/warning/module_rr_unpayed.html' %}
+      {% endif %}
+      {% endif %} -->
+    {% endif %}
   {% endwith %}
 
 
     {# Degree Registration Report details #}
 
     <table class="table table-hover h5 text-left">
-      <tr>
-        <td class="col-4">
-          {% trans 'Registration status' %}:
+
+
+      {# General information #}
+
+      <tr class="small bg-dark text-light text-center">
+        <td colspan="2" class="col-12">
+          {% trans 'General information' %}
         </td>
-        <th class="col-8">
-          {% with detailed_status=True %}
-            {% include 'registration/registration_report/degree_rr_status.html' %}
-          {% endwith %}
-        </th>
-      </tr>
-      <tr>
-        <td class="col-4">
-          {% trans 'Registration fee' %}:
-        </td>
-        <th class="col-8">
-          € {{ degree_rr.to_pay_fees }}
-          <small class="text-muted text-uppercase">
-            {% trans 'V.A.T. included' %}
-          </small>
-        </th>
-      </tr>
-      {% if degree_rr.date_payed %}
-        <tr>
-          <td class="col-4">
-            {% trans 'Payment date and time' %}:
-          </td>
-          <th class="col-8">
-            {{ degree_rr.date_payed }} {# FIXME: utils. status function not ready yet #}
-          </th>
-        </tr>
-      {% endif %}
-      <tr>
-        <td class="col-4">
-          {% trans 'Student\'s registration number' %}:
-        </td>
-        <th class="col-8">
-          {{ degree_rr.student_rr.created_by.username }}
-        </th>
       </tr>
       <tr>
         <td class="col-4">
@@ -139,6 +72,110 @@
             {% include 'logo/person.html' %} {{ degree_rr.student_rr.created_by.get_full_name }}
           </a>
         </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s registration number' %}:
+        </td>
+        <th class="col-8">
+          <a href="{% url 'userprofile_detailview' degree_rr.student_rr.created_by.pk %}" class="text-reset">
+            {% include 'logo/person.html' %} {{ degree_rr.student_rr.created_by.username }}
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration report type' %}:
+        </td>
+        <th class="col-8">
+          {% include 'logo/degree_rr.html' %} {% trans 'Degree Registration Report' %}
+        </th>
+      </tr>
+      <tr class="
+        {% if degree_rr.status == 'FULLY_DENIED' or degree_rr.status == 'PARTIALLY_DENIED' %}
+          table-danger
+        {% elif degree_rr.status == 'PARTIALLY_APPROVED' or degree_rr.status == 'PARTIALLY_PAYED' %}
+          table-warning
+        {% elif degree_rr.status == 'COMPLETED' %}
+          table-success
+        {% elif degree_rr.status == 'PARTIALLY_PENDING' or degree_rr.status == 'FULLY_PENDING' or degree_rr.status == 'FULLY_APPROVED' or degree_rr.status == 'FULLY_PAYED' %}
+          table-info
+        {% endif %}
+      ">
+        <td class="col-4">
+          {% trans 'Registration status' %}:
+        </td>
+        <th class="col-8">
+          {% with detailed_status=True %}
+            {% include 'registration/registration_report/degree_rr_status.html' %}
+          {% endwith %}
+        </th>
+      </tr>
+
+
+      {# Invoice information #}
+
+      <tr class="text-center small bg-dark text-light">
+        <td colspan="2" class="col-12">
+          {% trans 'Invoice information' %}
+        </td>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Invoice ID' %}:
+        </td>
+        <th class="col-8">
+          {{ degree_rr.invoice_id }}
+        </th>
+      </tr>
+      {% if degree_rr.status == 'FULLY_PENDING' or degree_rr.status == 'PARTIALLY_PENDING' or degree_rr.status == 'FULLY_APPROVED' or degree_rr.status == 'PARTIALLY_APPROVED' or degree_rr.status == 'PARTIALLY_PAYED' %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Total registration fees' %}:
+          </td>
+          <th class="col-8">
+            € {{ degree_rr.total_fees }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
+          </th>
+        </tr>
+      {% endif %}
+      {% if degree_rr.approved %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Payed fees' %}:
+          </td>
+          <th class="col-8">
+            € {{ degree_rr.payed_fees }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
+          </th>
+        </tr>
+      {% endif %}
+      {% if degree_rr.status == 'PARTIALLY_APPROVED' or degree_rr.status == 'FULLY_APPROVED' or degree_rr.status == 'PARTIALLY_PAYED' %}
+        <tr class="table-warning">
+          <td class="col-4">
+            {% trans 'Remaining fees to pay' %}:
+          </td>
+          <th class="col-8">
+            € {{ degree_rr.to_be_payed_fees }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
+          </th>
+        </tr>
+      {% endif %}
+      {% if degree_rr.date_payed %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Payment date and time' %}:
+          </td>
+          <th class="col-8">
+            {{ degree_rr.date_payed }}
+          </th>
+        </tr>
+      {% endif %}
+
+
+      {# Registration information #}
+
+      <tr class="text-center small bg-dark text-light">
+        <td colspan="2" class="col-12">
+          {% trans 'Registration information' %}
+        </td>
       </tr>
       <tr>
         <td class="col-4">
@@ -179,6 +216,23 @@
       </tr>
       <tr>
         <td class="col-4">
+          {% trans 'ECTS' %}:
+        </td>
+        <th class="col-8">
+          {{ degree_rr.degree.total_ECTS_value }}
+        </th>
+      </tr>
+
+
+      {# Results #}
+
+      <tr class="text-center small bg-dark text-light">
+        <td colspan="2" class="col-12">
+          {% trans 'Results' %}
+        </td>
+      </tr>
+      <tr>
+        <td class="col-4">
           {% trans 'Exemption request' %}:
         </td>
         <th class="col-8">
@@ -207,10 +261,17 @@
       </tr>
       <tr>
         <td class="col-4">
-          {% trans 'ECTS' %}:
+          {% trans 'Average score' %}:
         </td>
         <th class="col-8">
-          {{ degree_rr.degree.total_ECTS_value }}
+          {% if degree_rr.average_score == -1 %}
+            <span class="text-muted">
+              {% include 'logo/score.html' %} {% trans 'N/A' %}
+            </span>
+
+          {% else %}
+            {% include 'logo/score.html' %} {{ degree_rr.average_score }}
+          {% endif %}
         </th>
       </tr>
       <tr>
@@ -220,7 +281,7 @@
         <th class="col-8">
           {% if degree_rr.graduated %}
             <span class="text-success">
-              {% include 'logo/score.html' %} {% trans 'Graduated' %}
+              {% include 'logo/score.html' %} {% trans 'Congratulations, you did it!' %}
             </span>
 
           {% else %}

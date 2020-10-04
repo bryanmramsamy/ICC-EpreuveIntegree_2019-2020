@@ -3,11 +3,7 @@
 
 
 {% block title %}
-
-  {% blocktrans with module_rr_id=module_rr.pk module_title=module_rr.module.title %}
-    Registration #{{ module_rr_id }} for {{ module_title }}
-  {% endblocktrans %}
-
+  {% trans 'Module Registration Report' %} {{ module_rr.invoice_id }}
 {% endblock title %}
 
 
