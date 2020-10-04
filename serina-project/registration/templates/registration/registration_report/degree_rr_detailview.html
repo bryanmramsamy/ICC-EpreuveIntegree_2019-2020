@@ -88,7 +88,7 @@
   {% endwith %}
 
 
-    {# Module_rr details #}
+    {# Degree Registration Report details #}
 
     <table class="table table-hover h5 text-left">
       <tr>
@@ -96,13 +96,9 @@
           {% trans 'Registration status' %}:
         </td>
         <th class="col-8">
-          {{ degree_rr.status }}       DEBUG: Status of degree  {# FIXME: utils. status function not ready yet #}
-          {{ degree_rr.partially_denied }}
-
-          <br><br>
-
-          {{ debug_status }}
-
+          {% with detailed_status=True %}
+            {% include 'registration/registration_report/degree_rr_status.html' %}
+          {% endwith %}
         </th>
       </tr>
       <tr>
