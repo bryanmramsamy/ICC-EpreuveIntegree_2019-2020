@@ -103,12 +103,12 @@ def active_degree_rr_already_exists(user, degree):
         if degree_rr else False
 
 
-def succeeded_degree_rr_already_exists(user, degree):  # FIXME
+def succeeded_degree_rr_already_exists(user, degree):
     """Check if a degree has already been completed by a user."""
 
     degree_rr = get_degree_rr_from_user_and_degree(user, degree)
 
-    return degree_rr.student_graduated if degree_rr else False
+    return degree_rr.graduated if degree_rr else False
 
 
 def create_modules_rrs_for_degree_rr(degree_rr):
@@ -153,49 +153,77 @@ def create_modules_rrs_for_degree_rr(degree_rr):
 
 # Degree Registration Report statuses
 
-def get_degree_rr_status(degree_rr):  # FIXME: You motherfucking piece of shit
-    """Get the status of the Degree Registration Report.
+def degree_rr_is_completed(degree_rr):
+    """Return True is at least on module registration report has been succeeded
+    for each modules of the related degree of the given degree registration
+    report.
 
-    The status is based on the statuses of all it's related Module Registration
-    Reports.
+    NOTE:
+    A list booleans (module_succeeded_list) is parsed.
+    One boolean for each module of the degree of the related degree
+    registration report.
+
+    If True, the module has at least one succeeded module registration report
+    related to the given degree registration report.
+    False if none of the modules registration reports, related to a module of
+    the degree related to the given degree registration report, are succeeded.
     """
 
-    # Boolean check instanciation
-    degree_completed = True
-    degree_payed = True
-    degree_approved = True
-    degree_not_denied = True
-    degree_pending = True
-
-    # Loop for each module of the degree
+    module_succeeded_list = []
     for module in degree_rr.degree.modules.all():
+        module_succeeded_list += [
+            True in [module_rr.succeeded for module_rr
+                     in module.modules_rrs.filter(degree_rr=degree_rr)]
+        ]
 
-        # Get all module registrations related to this module only
-        module_related_modules_rrs = degree_rr.modules_rrs.filter(
-            module=module,
-        )  # NOTE: OK
+    return False not in module_succeeded_list
 
-        # If not a single module registration was succeeded, the degree is not
-        # completed
-        if degree_completed and not (True in [
-            module_rr.succeeded for module_rr in module_related_modules_rrs
-        ]):
-            degree_completed = False  # NOTE: OK
+# def get_degree_rr_status(degree_rr):  # FIXME: You motherfucking piece of shit
+#     """Get the status of the Degree Registration Report.
 
-        # If not a single module registration has a 'PAYED' status, the degree
-        # is not payed
-        print([
-            not (True in [
-            (module_rr.payed_or_exempted and not module_rr.succeeded) for module_rr in module_related_modules_rrs
-        ])
-        ])
-        if degree_payed and not (True in [
-            (module_rr.payed_or_exempted and not module_rr.succeeded) for module_rr in module_related_modules_rrs
-        ]):
-            degree_payed = False
+#     The status is based on the statuses of all it's related Module Registration
+#     Reports.
+#     """
 
-    # Result degree registration status
-    if degree_completed:
-        return "COMPLETED"
-    elif degree_payed:
-        return "PAYED"
+#     # Boolean check instanciation
+#     degree_completed = True
+#     degree_payed = True
+#     degree_approved = True
+#     degree_not_denied = True
+#     degree_pending = True
+
+#     # Loop for each module of the degree
+#     for module in degree_rr.degree.modules.all():
+
+#         # Get all module registrations related to this module only
+#         module_related_modules_rrs = degree_rr.modules_rrs.filter(
+#             module=module,
+#         )  # NOTE: OK
+
+#         # If not a single module registration was succeeded, the degree is not
+#         # completed
+#         if degree_completed and not (True in [
+#             module_rr.succeeded for module_rr in module_related_modules_rrs
+#         ]):
+#             degree_completed = False  # NOTE: OK
+
+#         # If not a single module registration has a 'PAYED' status, the degree
+#         # is not payed
+#         print([
+#             not (True in [
+#             (module_rr.payed_or_exempted and not module_rr.succeeded) for module_rr in module_related_modules_rrs
+#         ])
+#         ])
+#         if degree_payed and not (True in [
+#             (module_rr.payed_or_exempted and not module_rr.succeeded) for module_rr in module_related_modules_rrs
+#         ]):
+#             degree_payed = False
+
+#     # Result degree registration status
+#     if degree_completed:
+#         return "COMPLETED"
+#     elif degree_payed:
+#         return "PAYED"
+
+
+

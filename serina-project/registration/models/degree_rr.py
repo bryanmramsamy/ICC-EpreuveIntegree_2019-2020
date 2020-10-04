@@ -169,19 +169,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return fully_payed
 
     @property
-    def student_graduated(self):
+    def graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
-        if self.modules_rrs.all().count() > 0:
-            fully_succeeded = not (False in [module_rr.succeeded for module_rr
-                                             in self.modules_rrs.all()])
-        # FIXME: What if student fails, resubscribe to module and succeed ?
-        # He will accomplish every module, but the fail still count and degree
-        # won't be succeeded
-        # NOTE: Must loop on each module and on each rr of these
-        # NOTE: Use query instead of for-loops if possible
+        from ..utils import registration as registration_utils
 
-        return fully_succeeded
+        return registration_utils.degree_rr_is_completed(self)
 
     @property
     def average_score(self):

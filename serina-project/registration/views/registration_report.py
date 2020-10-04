@@ -335,6 +335,16 @@ class DegreeRegistrationReportDetailView(
             if self.get_object().notes:
                 context['notes_value'] = self.get_object().notes
 
+
+
+
+        from registration.utils import registration as regis
+        context["debug_status"] = \
+            regis.degree_rr_is_completed(self.get_object())  # TODO: DEBUG
+
+
+
+
         return context
 
 

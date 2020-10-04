@@ -97,6 +97,11 @@
         </td>
         <th class="col-8">
           DEBUG: Status of degree  {# FIXME: utils. status function not ready yet #}
+
+          <br><br>
+
+          {{ debug_status }}
+
         </th>
       </tr>
       <tr>
@@ -209,6 +214,23 @@
         </td>
         <th class="col-8">
           {{ degree_rr.degree.total_ECTS_value }}
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Graduation status' %}:
+        </td>
+        <th class="col-8">
+          {% if degree_rr.graduated %}
+            <span class="text-success">
+              {% include 'logo/score.html' %} {% trans 'Graduated' %}
+            </span>
+
+          {% else %}
+            <span class="text-danger">
+              {% include 'logo/score.html' %} {% trans 'Not graduated yet' %}
+            </span>
+          {% endif %}
         </th>
       </tr>
     </table>
