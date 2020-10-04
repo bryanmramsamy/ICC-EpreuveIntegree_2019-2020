@@ -174,18 +174,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
 
         elif registration_utils.degree_rr_is_fully_approved(self):
             status = "FULLY_PENDING"
-<<<<<<< HEAD
 
         elif registration_utils.degree_rr_is_partially_approved(self):
             status = "PARTIALLY_PENDING"
 
         else:
             status = None
-=======
-
-        else:
-            status = "PARTIALLY_PENDING"
->>>>>>> 1e94bf6db8b6dac2c0ded40155add9adad877815
 
         return status
 
