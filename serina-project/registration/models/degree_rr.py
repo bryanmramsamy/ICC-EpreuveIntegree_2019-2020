@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Sum, Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.shortcuts import reverse
@@ -39,7 +39,7 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         verbose_name=_("Invoice ID"),
     )
     payed_fees = models.DecimalField(
-        null=True,
+        default=0,
         max_digits=5,
         decimal_places=2,
         verbose_name=_('Payed fees'),
@@ -184,16 +184,27 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         elif registration_utils.degree_rr_is_partially_approved(self):
             status = "PARTIALLY_APPROVED"
 
-        elif registration_utils.degree_rr_is_fully_approved(self):
+        elif registration_utils.degree_rr_is_fully_pending(self):
             status = "FULLY_PENDING"
 
-        elif registration_utils.degree_rr_is_partially_approved(self):
+        elif registration_utils.degree_rr_is_partially_pending(self):
             status = "PARTIALLY_PENDING"
 
         else:
             status = None
 
         return status
+
+    @property
+    def approved(self):
+        """True if the degree registration report has one of the following
+        statuses: ['FULLY_APPROVED', 'PARTIALLY_PAYED', 'FULLY_PAYED',
+                   'COMPLETED']."""
+
+        return self.status == 'FULLY_APPROVED' \
+            or self.status == 'PARTIALLY_PAYED' \
+            or self.status == 'FULLY_PAYED' \
+            or self.status == 'COMPLETED'
 
     @property
     def graduated(self):
@@ -210,27 +221,24 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return resource.modules_average_score(self)
 
     @property
-    def to_pay_fees(self):
-        """Compute the total price of the student for this degree.
+    def total_fees(self):
+        """Sum of the costs of each module of the degree related to the degree
+        registration report.
 
-        The denied and exempted modules are not included into the price.
+        The denied and exempted modules are excluded.
         """
 
-        # FIXME
+        return self.modules_rrs.exclude(
+            Q(status="DENIED") | Q(status="EXEMPTED")
+        ).aggregate(Sum('module__price'))["module__price__sum"]
 
-        to_pay_fees = [module.price for module in self.degree.modules.all()]
+    @property
+    def to_be_payed_fees(self):
+        """Calculate the amount still to be payed by the student based on the
+        module price and the payed_fees. This is only computed when the module
+        registration report has the 'APPROVED' status."""
 
-        return to_pay_fees
-
-        to_pay_fees = 0
-        for module_rr in self.modules_rrs.filter(
-            Q(status='APPROVED')
-            | Q(status='PAYED')
-            | Q(status='COMPLETED')
-        ):
-            to_pay_fees += module_rr.module.price
-
-        return to_pay_fees if to_pay_fees > 0 else -1
+        return self.total_fees - self.payed_fees
 
     def __str__(self):
         """Unicode representation of DegreeRegistrationRapport."""
