@@ -204,21 +204,27 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return resource.modules_average_score(self)
 
     @property
-    def total_paid_price(self):
+    def to_pay_fees(self):
         """Compute the total price of the student for this degree.
 
         The denied and exempted modules are not included into the price.
         """
 
-        total_paid_price = 0
+        # FIXME
+
+        to_pay_fees = [module.price for module in self.degree.modules.all()]
+
+        return to_pay_fees
+
+        to_pay_fees = 0
         for module_rr in self.modules_rrs.filter(
             Q(status='APPROVED')
             | Q(status='PAYED')
             | Q(status='COMPLETED')
         ):
-            total_paid_price += module_rr.module.price
+            to_pay_fees += module_rr.module.price
 
-        return total_paid_price if total_paid_price > 0 else -1
+        return to_pay_fees if to_pay_fees > 0 else -1
 
     def __str__(self):
         """Unicode representation of DegreeRegistrationRapport."""
