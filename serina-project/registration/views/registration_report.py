@@ -26,7 +26,6 @@ from ..utils import (
     messages as messages_utils,
     mixins as mixins_utils,
     registration as registration_utils,
-    signals as signals_utils,
 )
 from management import models
 
@@ -336,16 +335,6 @@ class DegreeRegistrationReportDetailView(
 
             if self.get_object().notes:
                 context['notes_value'] = self.get_object().notes
-
-
-
-
-        from registration.utils import registration as regis
-        context["debug_status"] = \
-            regis.degree_rr_is_partially_denied(self.get_object())  # TODO: DEBUG
-
-
-
 
         return context
 

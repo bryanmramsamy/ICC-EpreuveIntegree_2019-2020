@@ -247,7 +247,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
             self.invoice_id = "#" + self.student_rr.created_by.username + "M"
             super().save(*args, **kwargs)
             self.invoice_id += str(self.pk).zfill(5)
-            super().save(*args, **kwargs)
+
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for ModuleRegistrationReport."""

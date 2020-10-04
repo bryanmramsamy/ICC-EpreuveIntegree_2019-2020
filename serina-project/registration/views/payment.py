@@ -1,3 +1,4 @@
+import datetime
 from decimal import Decimal
 
 from django.contrib import messages
@@ -89,6 +90,8 @@ def module_payment_done(request):
     else:
         module_rr.status = "PAYED"
 
+    module_rr.payed_fees = module_rr.module.price
+    module_rr.date_payed = datetime.datetime.now()
     module_rr.save()
 
     messages_utils.module_payment_succeeded(request)

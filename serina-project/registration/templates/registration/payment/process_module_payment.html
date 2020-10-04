@@ -12,10 +12,7 @@
       <img src="{% static 'draws/pay_online.svg' %}" alt="Checkout" class="img-fluid">
       <div class="h1">
         {% trans 'Checkout' %}
-          <span class="h3 text-uppercase text-muted">
-            #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
-          </span>
-          {% include 'logo/checkout.html' %}
+        {% include 'logo/checkout.html' %}
       </div>
 
       <hr>
@@ -74,10 +71,10 @@
 
       <div>
         <div class="h5 text-muted text-uppercase">
-          {% trans 'Registration ID' %}
+          {% trans 'Invoice ID' %}
         </div>
         <div class="h3 p-2 border rounded text-dark bg-light">
-          #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+          {{ module_rr.invoice_id }}
         </div>
       </div>
 

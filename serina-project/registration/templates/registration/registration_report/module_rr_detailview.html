@@ -24,7 +24,7 @@
   <div class="mb-0 p-2 h5 rounded text-uppercase text-light bg-secondary">
     <div class="row">
       <div class="col">
-        {% trans 'Invoice ID' %} #{{ module_rr.student_rr.created_by.username }}M{{ module_rr.pk }}
+        {% trans 'Invoice ID' %} {{ module_rr.invoice_id }}
       </div>
       <div class="col text-right">
         {% trans 'Module Registration Report' %} {% include 'logo/module_rr.html' %}
@@ -56,7 +56,45 @@
     {# Module_rr details #}
 
     <table class="table table-hover h5 text-left">
+
+
+      {# General information #}
+
+      <tr class="text-center small bg-dark text-light">
+        <td colspan="2" class="col-12">
+          {% trans 'General information' %}
+        </td>
+      </tr>
       <tr>
+        <td class="col-4">
+          {% trans 'Student\'s name' %}:
+        </td>
+        <th class="col-8">
+          <a href="{% url 'userprofile_detailview' module_rr.student_rr.created_by.pk %}" class="text-reset">
+            {% include 'logo/person.html' %} {{ module_rr.student_rr.created_by.get_full_name }}
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Student\'s registration number' %}:
+        </td>
+        <th class="col-8">
+          <a href="{% url 'userprofile_detailview' module_rr.student_rr.created_by.pk %}" class="text-reset">
+            {% include 'logo/person.html' %} {{ module_rr.student_rr.created_by.username }}
+          </a>
+        </th>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Registration report type' %}:
+        </td>
+        <th class="col-8">
+          {% include 'logo/module_rr.html' %} {% trans 'Module Registration Report' %}
+        </th>
+      </tr>
+
+      <tr class="table-{% if module_rr.status == 'PENDING' %}warning{% elif module_rr.status == 'DENIED' %}danger{% elif module_rr.status == 'APPROVED' %}info{% else %}success{% endif %}">
         <td class="col-4">
           {% trans 'Registration status' %}:
         </td>
@@ -79,13 +117,50 @@
           </span>
         </th>
       </tr>
-      {% if module_rr.status == 'APPROVED' or module_rr.status == 'PAYED' or module_rr.status == 'COMPLETED' %}
+
+
+      {# Invoice information #}
+
+      <tr class="text-center small bg-dark text-light">
+        <td colspan="2" class="col-12">
+          {% trans 'Invoice information' %}
+        </td>
+      </tr>
+      <tr>
+        <td class="col-4">
+          {% trans 'Invoice ID' %}:
+        </td>
+        <th class="col-8">
+          {{ module_rr.invoice_id }}
+        </th>
+      </tr>
+      {% if module_rr.status == 'PENDING' or module_rr.status == 'APPROVED' %}
         <tr>
           <td class="col-4">
-            {% trans 'Registration fee' %}:
+            {% trans 'Total registration fees' %}:
           </td>
           <th class="col-8">
             € {{ module_rr.module.price }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
+          </th>
+        </tr>
+      {% endif %}
+      {% if module_rr.approved %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Payed fees' %}:
+          </td>
+          <th class="col-8">
+            € {{ module_rr.payed_fees }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
+          </th>
+        </tr>
+      {% endif %}
+      {% if module_rr.status == 'APPROVED' %}
+        <tr class="table-warning">
+          <td class="col-4">
+            {% trans 'Remaining fees to pay' %}:
+          </td>
+          <th class="col-8">
+            € {{ module_rr.to_be_payed_fees }} <small class="text-muted text-uppercase">{% trans 'V.A.T. included' %}</small>
           </th>
         </tr>
       {% endif %}
@@ -99,23 +174,14 @@
           </th>
         </tr>
       {% endif %}
-      <tr>
-        <td class="col-4">
-          {% trans 'Student\'s registration number' %}:
+
+
+      {# Registration information #}
+
+      <tr class="text-center small bg-dark text-light">
+        <td colspan="2" class="col-12">
+          {% trans 'Registration information' %}
         </td>
-        <th class="col-8">
-          {{ module_rr.student_rr.created_by.username }}
-        </th>
-      </tr>
-      <tr>
-        <td class="col-4">
-          {% trans 'Student\'s name' %}:
-        </td>
-        <th class="col-8">
-          <a href="{% url 'userprofile_detailview' module_rr.student_rr.created_by.pk %}" class="text-reset">
-            {% include 'logo/person.html' %} {{ module_rr.student_rr.created_by.get_full_name }}
-          </a>
-        </th>
       </tr>
       <tr>
         <td class="col-4">
@@ -127,58 +193,17 @@
       </tr>
       <tr>
         <td class="col-4">
-          {% trans 'Degree related' %}:
+          {% trans 'Related to a degree registration' %}:
         </td>
         <th class="col-8">
           {% if module_rr.degree_rr %}
             <span class="text-success">
               {% include 'logo/check_valid.html' %} {% trans 'Yes' %} <a href="{{ module_rr.degree_rr.get_absolute_url }}" class="badge badge-primary">{% include 'logo/degree_rr.html' %} {% trans 'Click here to see more' %}</a>
             </span>
-          {% else %}
-            <span class="text-muted">
-              {% include 'logo/check_ready.html' %} {% trans 'Not related to a degree' %}
-            </span>
-          {% endif %}
-        </th>
-      </tr>
-      <tr>
-        <td class="col-4">
-          {% trans 'Exemption request' %}:
-        </td>
-        <th class="col-8">
-          {% if module_rr.exemption_request %}
-
-            {% if module_rr.status == "EXEMPTED" %}
-              <span class="text-success">
-                {% include 'logo/check_valid.html' %} {% trans 'Accepted' %}
-              </span>
-
-            {% elif module_rr.status == "PENDING" %}
-              <span class="text-info">
-                {% include 'logo/check_info.html' %} {% trans 'Uploaded' %}
-              </span>
-
-            {% else %}
-              <span class="text-danger">
-                {% include 'logo/check_invalid.html' %} {% trans 'Denied' %}
-              </span>
-            {% endif %}
-
-            {% if module_rr.exemption_report %}
-              <a href="{{ module_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
-                {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
-              </a>
-
-            {% else %}
-              <span class="badge badge-danger">
-                {% trans 'No file found !' %} <a href="mailto:{{ contact_mails.support }}" class="badge badge-light">Contact our support team {% include 'logo/mail.html' %}</a>.
-              </span>
-
-            {% endif %}
 
           {% else %}
             <span class="text-muted">
-              {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+              {% include 'logo/check_ready.html' %} {% trans 'Not related to a degree registration report' %}
             </span>
           {% endif %}
         </th>
@@ -193,14 +218,6 @@
           </th>
         </tr>
       {% endif %}
-      <tr>
-        <td class="col-4">
-          {% trans 'Attempt number' %}:
-        </td>
-        <th class="col-8">
-          {{ module_rr.nb_attempt }}
-        </th>
-      </tr>
       {% if module_rr.course %}
         <tr>
           <td class="col-4">
@@ -208,6 +225,16 @@
           </td>
           <th class="col-8">
             <a href="{{ module_rr.course.get_absolute_url }}" class="text-reset">{% include 'logo/course.html' %} {{ module_rr.course.reference }}</a>
+          </th>
+        </tr>
+      {% endif %}
+      {% if module_rr.approved %}
+        <tr>
+          <td class="col-4">
+            {% trans 'Attempt number' %}:
+          </td>
+          <th class="col-8">
+            {{ module_rr.nb_attempt }}
           </th>
         </tr>
       {% endif %}
@@ -220,26 +247,76 @@
             {{ module_rr.module.ECTS_value }}
           </th>
         </tr>
+
+
+        {# Results #}
+
+        <tr class="text-center small bg-dark text-light">
+          <td colspan="2" class="col-12">
+            {% trans 'Results' %}
+          </td>
+        </tr>
+        <tr>
+          <td class="col-4">
+            {% trans 'Exemption request' %}:
+          </td>
+          <th class="col-8">
+            {% if module_rr.exemption_request %}
+
+              {% if module_rr.status == "EXEMPTED" %}
+                <span class="text-success">
+                  {% include 'logo/check_valid.html' %} {% trans 'Accepted' %}
+                </span>
+
+              {% elif module_rr.status == "PENDING" %}
+                <span class="text-info">
+                  {% include 'logo/check_info.html' %} {% trans 'Uploaded' %}
+                </span>
+
+              {% else %}
+                <span class="text-danger">
+                  {% include 'logo/check_invalid.html' %} {% trans 'Denied' %}
+                </span>
+              {% endif %}
+
+              {% if module_rr.exemption_report %}
+                <a href="{{ module_rr.exemption_report.url }}" target="_blank" rel="noopener noreferrer" class="badge badge-dark text-uppecase">
+                  {% trans 'Click here to see the file sent' %} {% include 'logo/new_tab.html' %}
+                </a>
+
+              {% else %}
+                <span class="badge badge-danger">
+                  {% trans 'No file found !' %} <a href="mailto:{{ contact_mails.support }}" class="badge badge-light">Contact our support team {% include 'logo/mail.html' %}</a>.
+                </span>
+
+              {% endif %}
+
+            {% else %}
+              <span class="text-muted">
+                {% include 'logo/check_ready.html' %} {% trans 'Not sent' %}
+              </span>
+            {% endif %}
+          </th>
+        </tr>
         <tr>
           <td class="col-4">
             {% trans 'Final score' %}:
           </td>
           <th class="col-8">
-            {% include 'logo/score.html' %}
             {% if module_rr.final_score %}
               {% if module_rr.success_score_threshold_reached %}
                 <span class="text-success">
-                  {{ module_rr.final_score }}
+                  {% include 'logo/score.html' %} {{ module_rr.final_score }}
                 </span>
 
               {% else %}
                 <span class="text-danger">
-                  {{ module_rr.final_score }}
+                  {% include 'logo/score.html' %} {{ module_rr.final_score }}
                 </span>
               {% endif %}
 
             {% else %}
-              <span class="text-muted">{% trans 'N/A' %}</span>
+              <span class="text-muted">{% include 'logo/score.html' %} {% trans 'N/A' %}</span>
             {% endif %}
           </th>
         </tr>
@@ -266,7 +343,10 @@
               {% endif %}
 
             {% else %}
-              <span class="text-muted">{% trans 'N/A' %}</span>
+              <span class="text-muted">
+                {% include 'logo/check_ready.html' %}
+                {% trans 'N/A' %}
+              </span>
             {% endif %}
           </th>
         </tr>
@@ -398,7 +478,7 @@
       </p>
 
     {% else %}
-      <div class="h5 text-center text-muted">
+      <div class="h4 text-center text-info">
         {% include 'logo/check_info.html' %} {% trans 'No notes available' %}
       </div>
     {% endif %}
