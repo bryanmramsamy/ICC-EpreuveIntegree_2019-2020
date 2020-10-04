@@ -32,6 +32,12 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         related_name="students_registrations",
         verbose_name=_("Registration degree")
     )
+    invoice_id = models.CharField(
+        unique=True,
+        editable=False,
+        max_length=16,
+        verbose_name=_("Invoice ID"),
+    )
     payed_fees = models.DecimalField(
         null=True,
         max_digits=5,
@@ -234,6 +240,15 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
             self.student_rr.created_by.get_full_name(),
             self.degree.title,
         )
+
+    def save(self, *args, **kwargs):
+        """Save the unique invoice ID on creation."""
+
+        if not self.pk:
+            self.invoice_id = "#" + self.student_rr.created_by.username + "D"
+            super().save(*args, **kwargs)
+            self.invoice_id += str(self.pk).zfill(5)
+            super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for DegreeRegistrationRappport."""

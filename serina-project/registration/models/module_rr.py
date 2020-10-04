@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import (
@@ -51,8 +53,13 @@ class ModuleRegistrationReport(FrontOfficeResource):
         related_name="modules_rrs",
         verbose_name=_("Course")
     )
-    payed_fees = models.DecimalField(
+    invoice_id = models.CharField(
         null=True,
+        max_length=16,
+        verbose_name=_("Invoice ID"),
+    )
+    payed_fees = models.DecimalField(
+        default=0,
         max_digits=5,
         decimal_places=2,
         verbose_name=_('Payed fees'),
@@ -181,6 +188,14 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return (self.status == "EXEMPTED" or self.status == "COMPLETED") \
             and self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
 
+    @property
+    def to_be_payed_fees(self):
+        """Calculate the amount still to be payed by the student based on the
+        module price and the payed_fees. This is only computed when the module
+        registration report has the 'APPROVED' status."""
+
+        return self.module.price - self.payed_fees
+
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
 
@@ -224,6 +239,15 @@ class ModuleRegistrationReport(FrontOfficeResource):
                 "The Module Registration Request cannot be flagged as "
                 "payed nor completed if no payment date was entered."
             ))
+
+    def save(self, *args, **kwargs):
+        """Save the unique invoice ID on creation."""
+
+        if not self.pk:
+            self.invoice_id = "#" + self.student_rr.created_by.username + "M"
+            super().save(*args, **kwargs)
+            self.invoice_id += str(self.pk).zfill(5)
+            super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for ModuleRegistrationReport."""
