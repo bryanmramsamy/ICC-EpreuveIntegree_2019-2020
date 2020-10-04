@@ -178,19 +178,12 @@ class ModuleRegistrationReport(FrontOfficeResource):
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
 
-        result = "[{}] {}'s module registration for {} ({})".format(
+        return "[{}] {}'s module registration for {} ({})".format(
             self.pk,
             self.student_rr.created_by.get_full_name(),
             self.module.title,
             self.status,
         )
-
-        if self.status == "COMPLETED" and self.succeeded:
-            result += " (Succes)"
-        elif self.status == "COMPLETED":
-            result += " (Failure)"
-
-        return result
 
     def clean(self):
         """Clean method for ModuleRegistrationReport.
@@ -206,14 +199,14 @@ class ModuleRegistrationReport(FrontOfficeResource):
                 "completed nor exempted if no final score was given."
             ))
 
-        if not (self.approved or self.status == "EXEMPTED") \
-           and self.final_score:
+        if not self.approved_or_exempted and self.final_score:
             raise ValidationError(_(
                 "You cannot put a final score to a registration which is not "
                 "approved."
             ))
 
-        if self.status == "EXEMPTED" and not self.succeeded:
+        if self.status == "EXEMPTED" \
+           and self.final_score < settings.SUCCESS_SCORE_THRESHOLD:
             raise ValidationError(_(
                 "If a module is exempted, the final score must be equal or "
                 "above the success score threshold, which is actually at {}."
