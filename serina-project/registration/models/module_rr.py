@@ -178,6 +178,13 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return self.status == "COMPLETED" or self.status == "EXEMPTED"
 
     @property
+    def success_score_threshold_reached(self):
+        """True if the final score is equal or above the defined success score
+        threshold."""
+
+        return self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
+
+    @property
     def succeeded(self):
         """Check if the student succeeded the module modules.
 
@@ -186,7 +193,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         """
 
         return (self.status == "EXEMPTED" or self.status == "COMPLETED") \
-            and self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
+            and self.success_score_threshold_reached
 
     @property
     def to_be_payed_fees(self):
@@ -213,11 +220,10 @@ class ModuleRegistrationReport(FrontOfficeResource):
         underaged and if the uploaded files are on the correct format.
         """
 
-        if (self.status == "COMPLETED" or self.status == "EXEMPTED") \
-           and not self.final_score:
+        if self.payed and not self.date_payed:
             raise ValidationError(_(
                 "The Module Registration Request cannot be flagged as "
-                "completed nor exempted if no final score was given."
+                "payed nor completed if no payment date was entered."
             ))
 
         if not self.approved_or_exempted and self.final_score:
@@ -226,18 +232,18 @@ class ModuleRegistrationReport(FrontOfficeResource):
                 "approved."
             ))
 
-        if self.status == "EXEMPTED" \
-           and self.final_score < settings.SUCCESS_SCORE_THRESHOLD:
+        if (self.status == "COMPLETED" or self.status == "EXEMPTED") \
+           and not self.final_score:
+            raise ValidationError(_(
+                "The Module Registration Request cannot be flagged as "
+                "completed nor exempted if no final score was given."
+            ))
+
+        if self.status == "EXEMPTED" and not success_score_threshold_reached:
             raise ValidationError(_(
                 "If a module is exempted, the final score must be equal or "
                 "above the success score threshold, which is actually at {}."
                 .format(settings.SUCCESS_SCORE_THRESHOLD)
-            ))
-
-        if self.payed and not self.date_payed:
-            raise ValidationError(_(
-                "The Module Registration Request cannot be flagged as "
-                "payed nor completed if no payment date was entered."
             ))
 
     def save(self, *args, **kwargs):
