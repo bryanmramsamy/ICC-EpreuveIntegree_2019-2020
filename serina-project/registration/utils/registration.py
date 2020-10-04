@@ -153,6 +153,21 @@ def create_modules_rrs_for_degree_rr(degree_rr):
 
 # Degree Registration Report statuses
 
+def degree_rr_is_fully_payed(degree_rr):
+    """Return True is at least on module registration report has been payed or
+    was completed or exempted for each modules of the related degree of the
+    given degree registration report."""
+
+    module_fully_paid_list = []
+    for module in degree_rr.degree.modules.all():
+        module_fully_paid_list += [
+            True in [module_rr.succeeded for module_rr
+                     in module.modules_rrs.filter(degree_rr=degree_rr)]
+        ]
+
+    return "hola"
+
+
 def degree_rr_is_completed(degree_rr):
     """Return True is at least on module registration report has been succeeded
     for each modules of the related degree of the given degree registration

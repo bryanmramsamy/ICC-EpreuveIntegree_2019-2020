@@ -340,7 +340,7 @@ class DegreeRegistrationReportDetailView(
 
         from registration.utils import registration as regis
         context["debug_status"] = \
-            regis.degree_rr_is_completed(self.get_object())  # TODO: DEBUG
+            regis.degree_rr_is_fully_payed(self.get_object())  # TODO: DEBUG
 
 
 

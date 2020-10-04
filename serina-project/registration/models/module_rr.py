@@ -114,48 +114,55 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Modules Registration Reports')
 
     @property
-    def payed(self):
-        """Check if the module registration request has been payed.
-
-        A payed request is either payed or completed.
-        """
-
-        return self.status == "PAYED" or self.status == "COMPLETED"
-
-    @property
-    def payed_or_exempted(self):
-        """Check if the module registration request has been payed or was
-        exempted.
-
-        A payed request is either payed or completed.
-        """
-
-        return self.status == "EXEMPTED" or self.payed
-
-    @property
     def approved(self):
-        """Check if the module registration request has been approved.
+        """True is the module registration was at least approved.
 
-        An approved request is either approved, payed or completed.
+        True if the request status is in the followinf list:
+        ['APPROVED', 'PAYED', 'COMPLETED']
         """
 
         return self.status == "APPROVED" or self.payed
 
     @property
     def approved_or_exempted(self):
-        """Check if the module registration request has been approved or
-        exempted.
+        """True is the module registration was at least approved or exempted.
 
-        An approved request is either approved, payed or completed.
+        True if the request status is in the followinf list:
+        ['APPROVED', 'PAYED', 'COMPLETED', 'EXEMPTED']
         """
 
         return self.status == "EXEMPTED" or self.approved
 
     @property
-    def success_score_threshold_reached(self):
-        """Check if the final score is above the success score threshold."""
+    def payed(self):
+        """True is the module registration was at least payed.
 
-        return self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
+        True if the request status is in the followinf list:
+        [PAYED', 'COMPLETED']
+        """
+
+        return self.status == "PAYED" or self.status == "COMPLETED"
+
+    @property
+    def payed_or_exempted(self):
+        """True is the module registration was at least payed or exempted.
+
+        True if the request status is in the followinf list:
+        ['PAYED', 'COMPLETED', 'EXEMPTED']
+        """
+
+        return self.status == "EXEMPTED" or self.payed
+
+    @property
+    def finished(self):
+        """True if the module registration is either completed or exempted, no
+        regardless of the student having succeeded or not.
+
+        True if the request status is in the followinf list:
+        ['COMPLETED', 'EXEMPTED']
+        """
+
+        return self.status == "COMPLETED" or self.status == "EXEMPTED"
 
     @property
     def succeeded(self):
@@ -166,7 +173,7 @@ class ModuleRegistrationReport(FrontOfficeResource):
         """
 
         return (self.status == "EXEMPTED" or self.status == "COMPLETED") \
-            and self.success_score_threshold_reached
+            and self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
 
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
