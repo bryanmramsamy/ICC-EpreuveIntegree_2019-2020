@@ -207,6 +207,13 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
             or self.status == 'COMPLETED'
 
     @property
+    def payed(self):
+        """True if the degree registration report has one of the following
+        statuses: ['FULLY_PAYED', 'COMPLETED']."""
+
+        return self.status == 'FULLY_PAYED' or self.status == 'COMPLETED'
+
+    @property
     def graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
