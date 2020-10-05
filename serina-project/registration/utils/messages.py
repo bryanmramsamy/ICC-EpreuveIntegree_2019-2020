@@ -204,6 +204,27 @@ def degree_rr_approved(request):
     )
 
 
+def degree_rr_already_denied(request):
+    """Warns the user that the DegreeRegistrationReport object (s)he wants to
+    approve has already been denied."""
+
+    messages.warning(
+        request,
+        _("This degree registration request has already been denied.")
+    )
+
+
+def degree_rr_denied(request):
+    """Inform the user that the DegreeRegistrationReport object has
+    successfully been denied."""
+
+    messages.success(
+        request,
+        _("The degree registration has been denied. A notification mail has "
+          "been sent to the student.")
+    )
+
+
 # ModuleResgitrationReport Final Score Submission
 
 def module_rr_final_score_submitted(request):

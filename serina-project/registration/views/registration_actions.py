@@ -252,7 +252,21 @@ def degree_validation(request, pk):
 def degree_deny(request, pk):
     """Denies a ModuleRegistrationReport submitted based on its 'pk'."""
 
-    pass  # TODO: Define action
+    degree_rr = get_object_or_404(DegreeRegistrationReport, pk=pk)
+
+    if degree_rr.approved:
+        messages_utils.degree_rr_already_approved(request)
+    elif degree_rr.status == "FULLY_DENIED":
+        messages_utils.degree_rr_already_denied(request)
+    else:
+        for module_rr in degree_rr.modules_rrs.exclude(status="EXEMPTED"):
+            module_rr.status = "DENIED"
+            module_rr.save()
+
+        # TODO: Send mail to student
+        messages_utils.degree_rr_denied(request)
+
+    return redirect(degree_rr.get_absolute_url())
 
 
 def degree_notes_submit(request, pk):

@@ -17,14 +17,8 @@
           {% include 'logo/degree.html' %} {% trans 'Degree' %}
         </th>
       {% endif %}
-      <th class="col-2">
+      <th class="col-6">
         {% trans 'Approvement' %}
-      </th>
-      <th class="col-2">
-        {% trans 'Payment' %}
-      </th>
-      <th class="col-2">
-        {% include 'logo/score.html' %} {% trans 'Graduation' %}
       </th>
       <th class="col-2">
         {% trans 'See more' %} {% include 'logo/more.html' %}
@@ -33,7 +27,7 @@
   </thead>
   <tbody>
     {% for degree_rr in degrees_rrs %}
-      <tr class="d-flex">
+      <tr class="d-flex {% if request.user|is_student and degree_rr.approved or request.user|is_manager_or_administrator and module_rr.status == 'PARTIALLY_PENDING' or request.user|is_manager_or_administrator and module_rr.status == 'FULLY_PENDING' %}table-warning{% elif degree_rr.status == 'FULLY_DENIED'%}table-danger{% endif %}">
         {% if listview_enabled %}
           <td class="col-2">
             <a href="{% url 'userprofile_detailview' degree_rr.student_rr.created_by.pk %}" class="text-reset">
@@ -59,46 +53,10 @@
             </a>
           </td>
         {% endif %}
-        <td class="col-2">
-          {% if degree_rr.fully_approved %}
-            <span class="text-success">
-              {% include 'logo/check_valid.html' %} {% trans 'Completly approved' %}
-            </span>
-          {% elif degree_rr.partially_approved %}
-            <span class="text-warning">
-              {% include 'logo/check_warning.html' %} {% trans 'Partially approved' %}
-            </span>
-          {% else %}
-            <span class="text-danger">
-              {% include 'logo/check_invalid.html' %} {% trans 'Not approved yet' %}
-            </span>
-          {% endif %}
-        </td>
-        <td class="col-2">
-          {% if degree_rr.fully_payed %}
-            <span class="text-success">
-              {% include 'logo/check_valid.html' %} {% trans 'Completly payed' %}
-            </span>
-          {% elif degree_rr.partially_payed %}
-            <span class="text-warning">
-              {% include 'logo/check_warning.html' %} {% trans 'Partially payed' %}
-            </span>
-          {% else %}
-            <span class="text-danger">
-              {% include 'logo/check_invalid.html' %} {% trans 'Not payed yet' %}
-            </span>
-          {% endif %}
-        </td>
-        <td class="col-2">
-          {% if degree_rr.graduated %}
-            <span class="text-success">
-              {% include 'logo/check_valid.html' %} {% trans 'Yes' %}
-            </span>
-          {% else %}
-            <span class="text-danger">
-              {% include 'logo/check_invalid.html' %} {% trans 'Not yet' %}
-            </span>
-          {% endif %}
+        <td class="col-6">
+          {% with detailed_status=True %}
+            {% include 'registration/registration_report/degree_rr_status.html' %}
+          {% endwith %}
         </td>
         <td class="col-2">
           <a href="{{ degree_rr.get_absolute_url }}" class="btn btn-sm btn-block btn-outline-dark">

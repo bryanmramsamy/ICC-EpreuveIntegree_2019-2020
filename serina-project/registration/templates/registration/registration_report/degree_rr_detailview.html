@@ -128,7 +128,7 @@
           {{ degree_rr.invoice_id }}
         </th>
       </tr>
-      {% if not degree_rr.payed or not degree.status == "FULLY_DENIED" %}
+      {% if not degree_rr.payed and not degree_rr.status == "FULLY_DENIED" %}
         <tr>
           <td class="col-4">
             {% trans 'Total registration fees' %}:
@@ -301,12 +301,12 @@
 
   <div class="row row-cols-1
     {% if request.user == degree_rr.student_rr.created_by %}
-      {% if not degree_rr.payed and not degree_rr.status == 'FULLY_PENDING' and not degree_status == 'FULLY_DENIED' %}
+      {% if not degree_rr.payed and not degree_rr.status == 'FULLY_PENDING' and not degree_status == 'FULLY_DENIED' and not degree_rr.status == 'FULLY_DENIED' %}
         row-cols-md-2
       {% endif %}
     {% endif %}
   ">
-    {% if request.user|is_manager_or_administrator and not degree_rr.approved %}
+    {% if request.user|is_manager_or_administrator and not degree_rr.approved and not degree_rr.status == 'FULLY_DENIED' %}
       <div class="col pb-3">
         <div class="row row-cols-1 row-cols-md-2">
           <div class="col">
