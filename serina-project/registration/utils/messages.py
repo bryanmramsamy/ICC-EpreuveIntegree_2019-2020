@@ -313,6 +313,37 @@ def module_not_payable(request):
     )
 
 
+# DegreeRegistrationReport payment
+
+def degree_not_payable(request):
+    """Warns the user the degree request cannot be payed because it has not an
+    'FULLY_APPROVED' status."""
+
+    messages.error(
+        request,
+        _("This degree registration request cannot be payed. It has either "
+          "not been approved, is already payed, completed or exempted.")
+    )
+
+
+def degree_payment_succeeded(request):
+    """Inform the user the payment has been successfully completed."""
+
+    messages.success(
+        request,
+        _("The degree has been successfully payed.")
+    )
+
+
+def degree_payment_failed(request):
+    """Warn the user the payment has failed."""
+
+    messages.error(
+        request,
+        _("The degree payment has unexpectedly been aborted.")
+    )
+
+
 # User (de)activation
 
 def user_activated(request):
