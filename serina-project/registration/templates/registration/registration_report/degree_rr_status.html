@@ -1,0 +1,114 @@
+{% load i18n %}
+
+
+{% if degree_rr.status == "FULLY_DENIED" %}
+  <span class="text-danger">
+    {% include 'logo/check_invalid.html' %}
+    {% if detailed_status %}
+      {% trans 'All modules were denied' %}
+
+    {% else %}
+      {% trans 'Completely denied' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "PARTIALLY_DENIED" %}
+  <span class="text-danger">
+    {% include 'logo/check_invalid.html' %}
+    {% if detailed_status %}
+      {% trans 'Some modules were denied' %}
+
+    {% else %}
+      {% trans 'Partially denied' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "COMPLETED" %}
+  <span class="text-success">
+    {% include 'logo/check_valid.html' %}
+    {% if detailed_status %}
+      {% trans 'All modules are completed and succeeded' %}
+
+    {% else %}
+      {% trans 'Completed' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "FULLY_PAYED" %}
+  <span class="text-info">
+    {% include 'logo/check_valid.html' %}
+    {% if detailed_status %}
+      {% trans 'All modules are payed' %}
+
+    {% else %}
+      {% trans 'Completely payed' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "PARTIALLY_PAYED" %}
+  <span class="text-warning">
+    {% include 'logo/check_ready.html' %}
+    {% if detailed_status %}
+      {% trans 'Payment pending for some modules' %}
+
+    {% else %}
+      {% trans 'Partially payed' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "FULLY_APPROVED" %}
+  <span class="text-info">
+    {% include 'logo/check_valid.html' %}
+    {% if detailed_status %}
+      {% trans 'All modules were approved' %}
+
+    {% else %}
+      {% trans 'Completely approved' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "PARTIALLY_APPROVED" %}
+  <span class="text-warning">
+    {% include 'logo/check_ready.html' %}
+    {% if detailed_status %}
+      {% trans 'Some modules were approved' %}
+
+    {% else %}
+      {% trans 'Partially approved' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "FULLY_PENDING" %}
+  <span class="text-info">
+    {% include 'logo/check_info.html' %}
+    {% if detailed_status %}
+      {% trans 'No modules were approved or denied yet' %}
+
+    {% else %}
+      {% trans 'Pending' %}
+    {% endif %}
+  </span>
+
+{% elif degree_rr.status == "PARTIALLY_PENDING" %}
+  <span class="text-info">
+    {% include 'logo/check_info.html' %}
+    {% if detailed_status %}
+      {% trans 'Some modules are not approved or denied yet' %}
+
+    {% else %}
+      {% trans 'Partially pending' %}
+    {% endif %}
+  </span>
+
+{% else %}
+  <span class="text-muted">
+    {% include 'logo/check_info.html' %}
+    {% if detailed_status %}
+      {% trans 'Status unknown' %}
+
+    {% else %}
+      {% trans 'Unknown' %}
+    {% endif %}
+  </span>
+
+{% endif %}

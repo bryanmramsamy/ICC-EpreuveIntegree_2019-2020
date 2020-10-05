@@ -207,13 +207,6 @@ class Course(BackOfficeResource):
                 ))
             )
 
-        # date_start cannot be set in the past
-        if self.date_start < date.today():
-            raise ValidationError(
-                _("Start date ({}) must be set after today's date ({})."
-                    .format(self.date_start, date.today()))
-                )
-
         # nb_registrants must not exceed room.max_capacity
         if self.room and self.nb_registrants > self.room.max_capacity:
             raise ValidationError(
@@ -235,8 +228,8 @@ class Course(BackOfficeResource):
 
         if not self.pk:
             super().save(*args, **kwargs)
+            self.reference += str(self.pk).zfill(3)
 
-        self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

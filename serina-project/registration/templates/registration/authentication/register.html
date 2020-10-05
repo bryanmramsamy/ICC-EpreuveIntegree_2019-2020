@@ -20,16 +20,18 @@
       <div class="form-group">
         <form action="{% url 'register' %}" method="post">
           {% csrf_token %}
-          
-          <label for="{{ form.first_name.id_for_label }}" class="h5 text-uppercase">{{ form.first_name.label }}</label>
-          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+
+          <label for="{{ form.first_name.id_for_label }}" class="h5 text-uppercase">
+            {{ form.first_name.label }} <span class="badge badge-danger">{{ form.first_name.errors.as_text }}</span>
+          </label>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
             <strong>How is this personal data used ?</strong>
           {% endblocktrans %}
           <br>
           <p class="text-justify small">
             {% blocktrans %}
-              This data is used to indentify each user. It is used to compare your name with the name given on your registration documents. Your name can also appear on the list of attendance of each course you are following, which is only visible by the teachers of the module. 
+              This data is used to indentify each user. It is used to compare your name with the name given on your registration documents. Your name can also appear on the list of attendance of each course you are following, which is only visible by the teachers of the module.
               <br>
               Your name is not shared to anyone outside the organisation.
               <br>
@@ -41,15 +43,17 @@
 
           <br>
 
-          <label for="{{ form.last_name.id_for_label }}" class="h5 text-uppercase">{{ form.last_name.label }}</label>
-          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          <label for="{{ form.last_name.id_for_label }}" class="h5 text-uppercase">
+            {{ form.last_name.label }} <span class="badge badge-danger">{{ form.last_name.errors.as_text }}</span>
+          </label>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
             <strong>How is this personal data used ?</strong>
           {% endblocktrans %}
           <br>
           <p class="text-justify small">
             {% blocktrans %}
-              This data is used to indentify each user. It is used to compare your name with the name given on your registration documents. Your name can also appear on the list of attendance of each course you are following, which is only visible by the teachers of the module. 
+              This data is used to indentify each user. It is used to compare your name with the name given on your registration documents. Your name can also appear on the list of attendance of each course you are following, which is only visible by the teachers of the module.
               <br>
               Your name is not shared to anyone outside the organisation.
               <br>
@@ -61,8 +65,10 @@
 
           <br>
 
-          <label for="{{ form.email.id_for_label }}" class="h5 text-uppercase">{{ form.email.label }}</label>
-          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          <label for="{{ form.email.id_for_label }}" class="h5 text-uppercase">
+            {{ form.email.label }} <span class="badge badge-danger">{{ form.email.errors.as_text }}</span>
+          </label>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
             <strong>How is this personal data used ?</strong>
           {% endblocktrans %}
@@ -79,8 +85,10 @@
 
           <br>
 
-          <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">{{ form.password.label }}</label>
-          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="auto" data-content='
+          <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">
+            {{ form.password.label }} <span class="badge badge-danger">{{ form.password.errors.as_text }}</span>
+          </label>
+          <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
             <strong>How is this personal data used ?</strong>
           {% endblocktrans %}
@@ -95,7 +103,10 @@
 
           <br>
 
-          <label for="{{ form.confirm_password.id_for_label }}" class="h5 text-uppercase">{{ form.confirm_password.label }}</label>
+          <label for="{{ form.confirm_password.id_for_label }}" class="h5 text-uppercase">
+            {{ form.confirm_password.label }} <span class="badge badge-danger">{{ form.confirm_password.errors.as_text }}</span>
+
+          </label>
           <input id="{{ form.confirm_password.auto_id }}" name="{{ form.confirm_password.html_name }}" type="password" class="form-control form-control-lg" required>
 
           <br>

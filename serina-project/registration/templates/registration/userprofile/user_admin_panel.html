@@ -18,13 +18,42 @@
 
     {% include 'registration/userprofile/user_admin_panel_search.html' %}
 
+    <br>
 
-    {# Presentation header#}
+
+    {# Presentation header #}
 
     <div class="h1 text-center">
       {% include 'logo/group.html' %} {% trans 'Users Administration Panel' %}
     </div>
 
+    <br>
+
+
+    {# User table legend #}
+
+    <table class="table table-sm text-center">
+      <thead class="thead-light">
+        <tr class="d-flex">
+          <th colspan="3" class="col-12">
+            {% trans 'Table legend' %}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="d-flex">
+          <td class="col-4" style="background-color: #c8cbcf;">
+            {% trans 'Guest' %}
+          </td>
+          <td class="col-4" style="background-color: #abdde5;">
+            {% trans 'Teacher' %}
+          </td>
+          <td class="col-4" style="background-color: #ffe8a1;">
+            {% trans 'Manager or Administrator' %}
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     {# Users table #}
 
@@ -75,8 +104,8 @@
               {{ one_user|main_group }}
             </td>
             <td>
-              <a href="mailto:{{ one_user.email }}" class="text-reset">
-                {{ one_user.email }}
+              <a href="mailto:{{ one_user.email }}" class="badge badge-light">
+                {{ one_user.email }} {% include 'logo/mail.html' %}
               </a>
             </td>
             <td>
@@ -89,6 +118,13 @@
                   {% trans 'Options' %} {% include 'logo/options.html' %}
                 </button>
                 <div class="dropdown-menu bg-warning" aria-labelledby="dropdownMenuButton">
+
+                  <a class="dropdown-item" href="{% url 'userprofile_detailview' pk=one_user.pk %}">
+                    {% include 'logo/profile.html' %} {% trans 'Consult user profile' %}
+                  </a>
+
+                  <div class="dropdown-divider border border-dark"></div>
+
                   <a class="dropdown-item" href="{% url 'backoffice_promote_user_to_group' user_pk=one_user.pk  group_name='guest' %}">
                     {% include 'logo/group.html' %} {% trans 'Promote to guest' %}
                   </a>
@@ -107,12 +143,12 @@
 
                   <div class="dropdown-divider border border-dark"></div>
 
-                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?admin=true" class="dropdown-item bg-{% if one_user.is_active %}danger{% else %}success{% endif %}">
+                  <a href="{% url 'backoffice_user_activation' user_pk=one_user.pk %}?redirect_to_user_admin_panel=True" class="dropdown-item bg-{% if one_user.is_active %}danger{% else %}success{% endif %}">
                     {% if one_user.is_active %}
-                      {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
+                      {% include 'logo/ban.html' %} {% trans 'Deactivate user account' %}
 
                     {% else %}
-                      {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
+                      {% include 'logo/unban.html' %} {% trans 'Activate user account' %}
                     {% endif %}
                   </a>
                 </div>

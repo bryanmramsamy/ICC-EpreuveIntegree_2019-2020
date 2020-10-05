@@ -242,7 +242,8 @@ class StudentRegistrationReport(resource.FrontOfficeResource):
     def get_absolute_url(self):
         """Return absolute url for StudentRegistrationReport."""
 
-        return reverse("student_rr_detailview", kwargs={"pk": self.pk})
+        return reverse("userprofile_detailview",
+                       kwargs={"pk": self.created_by.pk})
 
 
 # def user_directory_path(instance, filename):

@@ -52,56 +52,59 @@
 
     {# Information table #}
 
-
     <table class="table table-hover h5 text-left">
-      <tr>
+      <tr class="d-flex">
         <td class="col-4">{% trans 'Registration number' %}:</td>
         <th class="col-8">{{ userprofile.username }}</th>
       </tr>
-      <tr>
+      <tr class="d-flex">
         <td class="col-4">{% trans 'First name' %}:</td>
         <th class="col-8">{{ userprofile.first_name }}</th>
       </tr>
-      <tr>
+      <tr class="d-flex">
         <td class="col-4">{% trans 'Last name' %}:</td>
         <th class="col-8">{{ userprofile.last_name }}</th>
       </tr>
-      <tr>
+      <tr class="d-flex">
         <td class="col-4">{% trans 'Group' %}:</td>
         <th class="col-8">{{ main_group }}</th>
       </tr>
-      <tr>
+      <tr class="d-flex">
         <td class="col-4">{% trans 'Registration date' %}:</td>
         <th class="col-8">{{ userprofile.date_joined }}</th>
       </tr>
-      <tr>
+      <tr class="d-flex">
         <td class="col-4">{% trans 'Last login date' %}:</td>
         <th class="col-8">{{ userprofile.last_login }}</th>
       </tr>
-      {% if request.user|is_student %}
-        <tr>
+      {% if request.user|is_student or request.user|is_manager_or_administrator and student_rr.created_by|is_student %}
+        <tr class="d-flex">
           <td class="col-4">{% trans 'Birthday date' %}:</td>
           <th class="col-8">{{ student_rr.birthday }}</th>
         </tr>
-        <tr>
+        <tr class="d-flex">
           <td class="col-4">{% trans 'Nationality' %}:</td>
           <th class="col-8">{{ student_rr.nationality }}</th>
         </tr>
-        <tr>
+        <tr class="d-flex">
           <td class="col-4">{% trans 'Address' %}:</td>
           <th class="col-8">{{ student_rr.address }}</th>
         </tr>
         {% if student_rr.additional_address %}
-          <tr>
-            <td class="col-4"></td>
-            <th class="col-8">{{ student_rr.additional_address }}</th>:
+          <tr class="d-flex">
+            <td class="col-4">
+
+            </td>
+            <th class="col-8">
+              {{ student_rr.additional_address }}
+            </th>
           </tr>
         {% endif %}
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'Location' %}:</td>
             <th class="col-8">{{ student_rr.postal_code }} {{ student_rr.postal_locality }}</th>
           </tr>
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'ID picture' %}:</td>
             <th class="col-8">
               {% if student_rr.id_picture %}
@@ -118,7 +121,7 @@
               {% endif %}
             </th>
           </tr>
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'ID card scan' %}:</td>
             <th class="col-8">
               {% if student_rr.id_card %}
@@ -135,7 +138,7 @@
               {% endif %}
             </th>
           </tr>
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'Secondary Education Certificate' %}:</td>
             <th class="col-8">
               {% if student_rr.secondary_education_certificate %}
@@ -154,7 +157,7 @@
           </tr>
 
           {% if student_rr.student_is_foreigner %}
-            <tr>
+            <tr class="d-flex">
               <td class="col-4">{% trans 'Annex 403' %}:</td>
               <th class="col-8">
                 {% if student_rr.annex_403 %}
@@ -171,7 +174,7 @@
                 {% endif %}
               </th>
             </tr>
-            <tr>
+            <tr class="d-flex">
               <td class="col-4">{% trans 'Other schools inscription certificate' %}:</td>
               <th class="col-8">
                 {% if student_rr.other_school_inscription_certificate %}
@@ -188,7 +191,7 @@
                 {% endif %}
               </th>
             </tr>
-            <tr>
+            <tr class="d-flex">
               <td class="col-4">{% trans 'National Register Extract' %}:</td>
               <th class="col-8">
                 {% if student_rr.national_register_extract %}
@@ -205,7 +208,7 @@
                 {% endif %}
               </th>
             </tr>
-            <tr>
+            <tr class="d-flex">
               <td class="col-4">{% trans 'Belgian Studies History' %}:</td>
               <th class="col-8">
                 {% if student_rr.belgian_studies_history %}
@@ -223,10 +226,10 @@
               </th>
             </tr>
           {% endif %}
-          <tr>
+          <tr class="d-flex">
             <td colspan="2" class="col-12 bg-secondary rounded text-light text-center h4">{% trans 'Optional fields' %}</td>
           </tr>
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'Modules archievement certificates' %}:</td>
             <th class="col-8">
               {% if student_rr.archievement_certificates %}
@@ -243,7 +246,7 @@
               {% endif %}
             </th>
           </tr>
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'Job organizations certificates' %}:</td>
             <th class="col-8">
               {% if student_rr.job_organization_certificates %}
@@ -260,7 +263,7 @@
               {% endif %}
             </th>
           </tr>
-          <tr>
+          <tr class="d-flex">
             <td class="col-4">{% trans 'Exemption reports' %}:</td>
             <th class="col-8">
               {% if student_rr.exemption_report %}
@@ -291,18 +294,18 @@
   <br>
 
 
-  {# Modules Registration Reports List #}
+  {# Degrees Registration Reports List #}
 
-  {% include 'registration/userprofile/modules_rrs_list.html' %}
+  {% include 'registration/userprofile/degrees_rrs_list.html' %}
 
   {% if student_rr.has_been_student %}
     <br>
   {% endif %}
 
 
-  {# Degrees Registration Reports List #}
+  {# Modules Registration Reports List #}
 
-  {% include 'registration/userprofile/degrees_rrs_list.html' %}
+  {% include 'registration/userprofile/modules_rrs_list.html' %}
 
   {% if student_rr.has_been_student %}
     <br>

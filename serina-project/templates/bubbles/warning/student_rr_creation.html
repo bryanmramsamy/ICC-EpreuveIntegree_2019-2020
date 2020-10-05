@@ -10,9 +10,7 @@
 
 
 {% block bubble_content %}
-  {% blocktrans %}
-    Most of these data won't be updatable anymore once submitted. This especially concern the files uploaded. Please check twice before submitting them.
-    <br><br>
-    If you should edit some non-updatable data afterwards, please contact the support team (<a href="mailto:{{ support_team_mail }}">{{ support_team_mail }}</a>).
-  {% endblocktrans %}
+  {% trans 'Most of these data will not be updatable anymore once submitted. This especially concern the files uploaded. Please check twice before submitting them.' %}
+  <br><br>
+  {% trans 'If you should edit some non-updatable data afterwards, please contact our' %} <a href="mailto:{{ support_team_mail }}" class="badge badge-light">{% trans 'Support Team' %} {% include 'logo/mail.html' %}</a>.
 {% endblock bubble_content %}

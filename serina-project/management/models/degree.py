@@ -162,8 +162,8 @@ class Degree(BackOfficeResource):
 
         if not self.pk:
             super().save(*args, **kwargs)
+            self.reference += str(self.pk).zfill(3)
 
-        self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

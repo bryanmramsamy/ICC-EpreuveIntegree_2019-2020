@@ -23,7 +23,8 @@
 
         <div class="form-group">
           <label for="{{ form.old_password.id_for_label }}" class="h5 text-uppercase">
-            {% trans 'Your new password' %}
+            {% trans 'Your current password' %}
+            <span class="badge badge-danger">{{ form.old_password.errors.as_text }}</span>
           </label>
           <input id="{{ form.old_password.auto_id }}" name="{{ form.old_password.html_name }}" type="password" class="form-control form-control-lg" required>
         </div>
@@ -31,13 +32,14 @@
         <div class="form-group">
           <label for="{{ form.new_password1.id_for_label }}" class="h5 text-uppercase">
             {% trans 'Your new password' %}
+            <span class="badge badge-danger">{{ form.new_password1.errors.as_text }}</span>
           </label>
           <input id="{{ form.new_password1.auto_id }}" name="{{ form.new_password1.html_name }}" type="password" class="form-control form-control-lg" required>
         </div>
 
         <div class="form-group">
           <label for="{{ form.new_password2.id_for_label }}" class="h5 text-uppercase">
-            {% trans 'Password confirmation' %}
+            {% trans 'Password confirmation' %}<span class="badge badge-danger">{{ form.new_password2.errors.as_text }}</span>
           </label>
           <input id="{{ form.new_password2.auto_id }}" name="{{ form.new_password2.html_name }}" type="password" class="form-control form-control-lg" required>
         </div>

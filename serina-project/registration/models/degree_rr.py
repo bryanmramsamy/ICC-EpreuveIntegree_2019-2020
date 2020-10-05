@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
 from django.db import models
-from django.db.models import Q
+from django.db.models import Sum, Q
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.shortcuts import reverse
@@ -31,6 +31,18 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         on_delete=models.CASCADE,
         related_name="students_registrations",
         verbose_name=_("Registration degree")
+    )
+    invoice_id = models.CharField(
+        unique=True,
+        editable=False,
+        max_length=16,
+        verbose_name=_("Invoice ID"),
+    )
+    payed_fees = models.DecimalField(
+        default=0,
+        max_digits=5,
+        decimal_places=2,
+        verbose_name=_('Payed fees'),
     )
     date_payed = models.DateTimeField(
         null=True,
@@ -70,118 +82,144 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
 
     @property
     def partially_pending(self):
-        """Check if at least one of the related modules_rr is pending."""
+        """True if at least one of the related modules_rr is pending."""
 
-        if self.modules_rrs.all().count() > 0:
-            partially_pending = self.modules_rrs.filter(status="PENDING")\
-                                                .exists()
+        from ..utils import registration as registration_utils
 
-        return partially_pending
+        return registration_utils.degree_rr_is_partially_pending(self)
 
     @property
     def fully_pending(self):
-        """Check if all the related modules_rr are pending."""
+        """True if all the related modules_rr are pending."""
 
-        if self.modules_rrs.all().count() > 0:
-            fully_pending = self.modules_rrs.exclude(status="PENDING").exists()
+        from ..utils import registration as registration_utils
 
-        # FIXME: See note in student_graduated
-
-        return fully_pending
+        return registration_utils.degree_rr_is_fully_pending(self)
 
     @property
     def partially_denied(self):
-        """Check if at least one of the related modules_rr is denied."""
+        """True if at least one of the related modules_rr is denied."""
 
-        if self.modules_rrs.all().count() > 0:
-            partially_denied = self.modules_rrs.filter(
-                Q(status="DENIED") | ~Q(status="EXEMPTED")).exists()
+        from ..utils import registration as registration_utils
 
-        return partially_denied
+        return registration_utils.degree_rr_is_partially_denied(self)
 
     @property
     def fully_denied(self):
-        """Check if all the related modules_rr are denied."""
+        """True if all the related modules_rr are denied."""
 
-        if self.modules_rrs.all().count() > 0:
-            fully_denied = self.modules_rrs.exclude(
-                Q(status="DENIED") | Q(status="EXEMPTED")
-            ).exists()
+        from ..utils import registration as registration_utils
 
-        # FIXME: See note in student_graduated
-
-        return fully_denied
+        return registration_utils.degree_rr_is_partially_denied(self)
 
     @property
     def partially_approved(self):
-        """Check if at least one of the related modules_rr is approved.
+        """Check if at least one of the related modules_rr is approved."""
 
-        Return 'None' if there is no modules_rrs in the degree_rr.
-        """
+        from ..utils import registration as registration_utils
 
-        if self.modules_rrs.all().count() > 0:
-            partially_approved = True in [module_rr.approved for module_rr in
-                                          self.modules_rrs.all()]
-
-        return partially_approved
+        return registration_utils.degree_rr_is_partially_approved(self)
 
     @property
     def fully_approved(self):
-        """Check if all the related modules_rr are approved.
+        """True if all the related modules_rr are approved."""
 
-        Return 'None' if there is no modules_rrs in the degree_rr.
-        """
+        from ..utils import registration as registration_utils
 
-        if self.modules_rrs.all().count() > 0:
-            fully_approved = not (False in [module_rr.approved for module_rr in
-                                            self.modules_rrs.all()])
-
-        # FIXME: See note in student_graduated
-
-        return fully_approved
+        return registration_utils.degree_rr_is_fully_approved(self)
 
     @property
     def partially_payed(self):
-        """Check if at least one of the related modules_rr is approved.
+        """True if at least one of the related modules_rr is payed."""
 
-        Return 'None' if there is no modules_rrs in the degree_rr.
-        """
+        from ..utils import registration as registration_utils
 
-        if self.modules_rrs.all().count() > 0:
-            partially_payed = True in [module_rr.payed for module_rr in
-                                       self.modules_rrs.all()]
-
-        return partially_payed
+        return registration_utils.degree_rr_is_partially_payed(self)
 
     @property
     def fully_payed(self):
-        """Check if all the related modules_rr are payed.
+        """True if all the related modules_rr are payed."""
 
-        Return 'None' if there is no modules_rrs in the degree_rr.
-        """
+        from ..utils import registration as registration_utils
 
-        if self.modules_rrs.all().count() > 0:
-            fully_payed = not (False in [module_rr.payed for module_rr in
-                                         self.modules_rrs.all()])
-        # FIXME: See note in student_graduated
-
-
-        return fully_payed
+        return registration_utils.degree_rr_is_fully_payed(self)
 
     @property
-    def student_graduated(self):
+    def status(self):
+        """Return the status of the degree according to the statuses of all the
+        related module registration reports.
+
+        Priority order of the statuses:
+        * FULLY_DENIED: All the modules has been denied
+        * PARTIALLY_DENIED: At least one module has been denied
+        * COMPLETED: At least one of each module has been succeeded
+        * FULLY_PAYED: All the modules has been payed
+        * PARTIALLY_PAYED: At least one module has been payed
+        * FULLY_APPROVED: All the modules has been approved
+        * PARTIALLY_APPROVED: At least one module has been approved
+        * FULLY_DENIED: All the modules are still pending
+        * PARTIALLY_DENIED: At least one module is still pending
+        """
+
+        from ..utils import registration as registration_utils
+
+        if registration_utils.degree_rr_is_fully_denied(self):
+            status = "FULLY_DENIED"
+
+        elif registration_utils.degree_rr_is_partially_denied(self):
+            status = "PARTIALLY_DENIED"
+
+        elif registration_utils.degree_rr_is_completed(self):
+            status = "COMPLETED"
+
+        elif registration_utils.degree_rr_is_fully_payed(self):
+            status = "FULLY_PAYED"
+
+        elif registration_utils.degree_rr_is_partially_payed(self):
+            status = "PARTIALLY_PAYED"
+
+        elif registration_utils.degree_rr_is_fully_approved(self):
+            status = "FULLY_APPROVED"
+
+        elif registration_utils.degree_rr_is_partially_approved(self):
+            status = "PARTIALLY_APPROVED"
+
+        elif registration_utils.degree_rr_is_fully_pending(self):
+            status = "FULLY_PENDING"
+
+        elif registration_utils.degree_rr_is_partially_pending(self):
+            status = "PARTIALLY_PENDING"
+
+        else:
+            status = None
+
+        return status
+
+    @property
+    def approved(self):
+        """True if the degree registration report has one of the following
+        statuses: ['FULLY_APPROVED', 'PARTIALLY_PAYED', 'FULLY_PAYED',
+                   'COMPLETED']."""
+
+        return self.status == 'FULLY_APPROVED' \
+            or self.status == 'PARTIALLY_PAYED' \
+            or self.status == 'FULLY_PAYED' \
+            or self.status == 'COMPLETED'
+
+    @property
+    def payed(self):
+        """True if the degree registration report has one of the following
+        statuses: ['FULLY_PAYED', 'COMPLETED']."""
+
+        return self.status == 'FULLY_PAYED' or self.status == 'COMPLETED'
+
+    @property
+    def graduated(self):
         """Check if the student succeeded all the degree's modules."""
 
-        if self.modules_rrs.all().count() > 0:
-            fully_succeeded = not (False in [module_rr.succeeded for module_rr
-                                             in self.modules_rrs.all()])
-        # FIXME: What if student fails, resubscribe to module and succeed ?
-        # He will accomplish every module, but the fail still count and degree
-        # won't be succeeded
-        # NOTE: Must loop on each module and on each rr of these
-        # NOTE: Use query instead of for-loops if possible
+        from ..utils import registration as registration_utils
 
-        return fully_succeeded
+        return registration_utils.degree_rr_is_completed(self)
 
     @property
     def average_score(self):
@@ -190,21 +228,24 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
         return resource.modules_average_score(self)
 
     @property
-    def total_paid_price(self):
-        """Compute the total price of the student for this degree.
+    def total_fees(self):
+        """Sum of the costs of each module of the degree related to the degree
+        registration report.
 
-        The denied and exempted modules are not included into the price.
+        The denied and exempted modules are excluded.
         """
 
-        total_paid_price = 0
-        for module_rr in self.modules_rrs.filter(
-            Q(status='APPROVED')
-            | Q(status='PAYED')
-            | Q(status='COMPLETED')
-        ):
-            total_paid_price += module_rr.module.price
+        return self.modules_rrs.exclude(
+            Q(status="DENIED") | Q(status="EXEMPTED")
+        ).aggregate(Sum('module__price'))["module__price__sum"]
 
-        return total_paid_price if total_paid_price > 0 else -1
+    @property
+    def to_be_payed_fees(self):
+        """Calculate the amount still to be payed by the student based on the
+        module price and the payed_fees. This is only computed when the module
+        registration report has the 'APPROVED' status."""
+
+        return self.total_fees - self.payed_fees
 
     def __str__(self):
         """Unicode representation of DegreeRegistrationRapport."""
@@ -214,6 +255,16 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
             self.student_rr.created_by.get_full_name(),
             self.degree.title,
         )
+
+    def save(self, *args, **kwargs):
+        """Save the unique invoice ID on creation."""
+
+        if not self.pk:
+            self.invoice_id = "#" + self.student_rr.created_by.username + "D"
+            super().save(*args, **kwargs)
+            self.invoice_id += str(self.pk).zfill(5)
+
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for DegreeRegistrationRappport."""

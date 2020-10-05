@@ -1,3 +1,4 @@
+import datetime
 from decimal import Decimal
 
 from django.contrib import messages
@@ -46,7 +47,10 @@ def module_payment(request, pk):
             )),
             'currency_code': 'EUR',
             'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
-            'return_url': 'http://{}{}'.format(host, reverse('module_payment_done')),
+            'return_url': 'http://{}{}'.format(
+                host,
+                reverse('module_payment_done'),
+            ),
             'cancel_return': 'http://{}{}'.format(
                 host,
                 reverse('module_payment_cancelled'),
@@ -89,6 +93,8 @@ def module_payment_done(request):
     else:
         module_rr.status = "PAYED"
 
+    module_rr.payed_fees = module_rr.module.price
+    module_rr.date_payed = datetime.datetime.now()
     module_rr.save()
 
     messages_utils.module_payment_succeeded(request)
@@ -120,24 +126,27 @@ def degree_payment(request, pk):
 
     degree_rr = get_object_or_404(DegreeRegistrationReport, pk=pk)
     request.session['degree_rr'] = degree_rr.pk
-    vat_excluded_price = round(degree_rr.degree.total_price / Decimal(1.21), 2)
+    vat_excluded_price = round(degree_rr.to_be_payed_fees / Decimal(1.21), 2)
 
-    if False:  # FIXME: utils. status function not ready yet
-        messages_utils.module_not_payable(request)  # TODO: Change message for degree_rr
-        return redirect(module_rr.get_absolute_url())
+    if degree_rr.status != "FULLY_APPROVED":
+        messages_utils.degree_not_payable(request)
+        return redirect(degree_rr.get_absolute_url())
     else:
         host = request.get_host()
 
         paypal_dict = {
             'business': settings.PAYPAL_RECEIVER_EMAIL,
-            'amount': degree_rr.degree.total_price,
+            'amount': degree_rr.to_be_payed_fees,
             'item_name': _("Registration for {} to {}".format(
                 degree_rr.student_rr.created_by.get_full_name(),
                 degree_rr.degree.title,
             )),
             'currency_code': 'EUR',
             'notify_url': 'http://{}{}'.format(host, reverse('paypal-ipn')),
-            'return_url': 'http://{}{}'.format(host, reverse('degree_payment_done')),
+            'return_url': 'http://{}{}'.format(
+                host,
+                reverse('degree_payment_done'),
+            ),
             'cancel_return': 'http://{}{}'.format(
                 host,
                 reverse('degree_payment_cancelled'),
@@ -161,7 +170,7 @@ def get_degree_rr_and_clean_session_pk(request):
     stored and clean it."""
 
     degree_rr_pk = request.session.get('degree_rr')
-    degree_rr = ModuleRegistrationReport.objects.get(pk=degree_rr_pk)
+    degree_rr = DegreeRegistrationReport.objects.get(pk=degree_rr_pk)
 
     del request.session['degree_rr']
 
@@ -183,7 +192,7 @@ def degree_payment_done(request):
 
         module_rr.save()
 
-    messages_utils.module_payment_succeeded(request)  # TODO: Change message for degree_rr
+    messages_utils.degree_payment_succeeded(request)
 
     return redirect(degree_rr.get_absolute_url())
 
@@ -195,6 +204,6 @@ def degree_payment_cancelled(request):
 
     degree_rr = get_degree_rr_and_clean_session_pk(request)
 
-    messages_utils.module_payment_failed(request)  # TODO: Change message for degree_rr
+    messages_utils.degree_payment_failed(request)
 
     return redirect(degree_rr.get_absolute_url())

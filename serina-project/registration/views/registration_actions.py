@@ -37,7 +37,12 @@ def activate_deactivate_user(request, user_pk):
 
     user.save()
 
-    if request.GET['admin'] == "true":
+    redirect_to_user_admin_panel = request.GET.get(
+        'redirect_to_user_admin_panel',
+        False,
+    )
+
+    if redirect_to_user_admin_panel:
         return redirect('backoffice_user_admin_panel')
     else:
         return redirect('userprofile_detailview', pk=user.pk)
@@ -50,21 +55,6 @@ def administrator_on_admnistrator_only(request_user, updated_user):
     if groups_utils.is_administrator(updated_user) \
        and not groups_utils.is_administrator(request_user):
         raise PermissionDenied
-
-
-# @decorators_utils.managers_or_administrators_only
-# def promote_to_guest(request, user_pk):
-#     """Promote a registered user to the 'Guest'-group."""
-
-#     user = get_object_or_404(User, pk=user_pk)
-#     administrator_on_admnistrator_only(request.user, user)
-
-#     groups_utils.promote_to_guest(user)
-#     # TODO: Send mail
-#     messages_utils.promote_to_guest(request, user)
-
-#     return redirect('backoffice_user_admin_panel')
-
 
 @decorators_utils.managers_or_administrators_only
 def promote_to_group(request, group_name, user_pk):
@@ -226,14 +216,57 @@ def degree_validation(request, pk):
     chosen module.
     """
 
-    pass  # TODO: Define action
+    degree_rr = get_object_or_404(DegreeRegistrationReport, pk=pk)
+    if degree_rr.approved:
+        messages_utils.degree_rr_already_approved(request)
+    else:
+        module_without_courses = []
+
+        for module_rr in degree_rr.modules_rrs.exclude(status="EXEMPTED"):
+            try:
+                module_rr.course = management_utils. \
+                    still_registrable_course_with_lowest_attendance(
+                        module_rr.module
+                    )
+
+            except ValidationError:
+                messages_utils.module_rr_has_no_course(request,
+                                                       module_rr.module)
+                module_without_courses += module_rr.module
+
+            else:
+                module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
+                    Q(student_rr=module_rr.student_rr),
+                    Q(status="COMPLETED"),
+                ).count() + 1
+                module_rr.status = "APPROVED"
+                module_rr.save()
+
+        # TODO: Send mail to student
+        messages_utils.degree_rr_approved(request)
+
+    return redirect(degree_rr.get_absolute_url())
 
 
 @decorators_utils.managers_or_administrators_only
 def degree_deny(request, pk):
     """Denies a ModuleRegistrationReport submitted based on its 'pk'."""
 
-    pass  # TODO: Define action
+    degree_rr = get_object_or_404(DegreeRegistrationReport, pk=pk)
+
+    if degree_rr.approved:
+        messages_utils.degree_rr_already_approved(request)
+    elif degree_rr.status == "FULLY_DENIED":
+        messages_utils.degree_rr_already_denied(request)
+    else:
+        for module_rr in degree_rr.modules_rrs.exclude(status="EXEMPTED"):
+            module_rr.status = "DENIED"
+            module_rr.save()
+
+        # TODO: Send mail to student
+        messages_utils.degree_rr_denied(request)
+
+    return redirect(degree_rr.get_absolute_url())
 
 
 def degree_notes_submit(request, pk):

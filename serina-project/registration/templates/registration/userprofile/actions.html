@@ -16,12 +16,21 @@
 </div>
 
 {% else %}
-  <a href="{% url 'backoffice_user_activation' user_pk=userprofile.pk %}" class="btn btn-block btn-{% if userprofile.is_active %}danger{% else %}success{% endif %}">
-    {% if userprofile.is_active %}
-      {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
+<div class="row row-cols-1 row-cols-2">
+  <div class="col">
+    <a href="{% url 'backoffice_user_activation' user_pk=userprofile.pk %}" class="btn btn-block btn-{% if userprofile.is_active %}danger{% else %}success{% endif %}">
+      {% if userprofile.is_active %}
+        {% trans 'Deactivate user account' %} {% include 'logo/ban.html' %}
 
-    {% else %}
-      {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
-    {% endif %}
-  </a>
+      {% else %}
+        {% trans 'Activate user account' %} {% include 'logo/unban.html' %}
+      {% endif %}
+    </a>
+  </div>
+  <div class="col">
+    <a href="{% url 'backoffice_user_admin_panel' %}" class="btn btn-block btn-outline-warning">
+      {% trans 'Back to the User Admin Panel' %} {% include 'logo/back.html' %}
+    </a>
+  </div>
+</div>
 {% endif %}

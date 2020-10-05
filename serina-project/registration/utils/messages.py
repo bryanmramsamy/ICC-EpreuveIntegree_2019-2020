@@ -165,6 +165,66 @@ def module_rr_already_denied(request):
     )
 
 
+# ModuleResgitrationReport Validation
+
+def degree_rr_already_approved(request):
+    """Warns the user that the DegreeRegistrationReport object (s)he wants to
+    approve has already been approved."""
+
+    messages.warning(
+        request,
+        _("This degree registration request has already been approved.")
+    )
+
+
+def degree_rr_one_module_rr_has_no_course(request, module):
+    """Warns the user that the DegreeRegistrationReport object cannot be
+    validated because there aren't any course related to the module.
+
+    When a module doesn't have any course related to it, the students cannot be
+    assign to the course and so the module itself. An error message is prompt.
+    """
+
+    messages.error(
+        request,
+        _("There is no course available for the requested module: {} ({}). In "
+          "order to accept any new registration request, a new course must be "
+          "created for this module.".format(module.title, module.reference))
+    )
+
+
+def degree_rr_approved(request):
+    """Inform the user that the DegreeRegistrationReport object has
+    successfully been approved."""
+
+    messages.success(
+        request,
+        _("The degree's registration has been approved. A notification mail "
+          "has been sent to the student.")
+    )
+
+
+def degree_rr_already_denied(request):
+    """Warns the user that the DegreeRegistrationReport object (s)he wants to
+    approve has already been denied."""
+
+    messages.warning(
+        request,
+        _("This degree registration request has already been denied.")
+    )
+
+
+def degree_rr_denied(request):
+    """Inform the user that the DegreeRegistrationReport object has
+    successfully been denied."""
+
+    messages.success(
+        request,
+        _("The degree registration has been denied. A notification mail has "
+          "been sent to the student.")
+    )
+
+
 # ModuleResgitrationReport Final Score Submission
 
 def module_rr_final_score_submitted(request):
@@ -250,6 +310,37 @@ def module_not_payable(request):
         request,
         _("This module registration request cannot be payed. It has either "
           "not been approved, is already payed, completed or exempted.")
+    )
+
+
+# DegreeRegistrationReport payment
+
+def degree_not_payable(request):
+    """Warns the user the degree request cannot be payed because it has not an
+    'FULLY_APPROVED' status."""
+
+    messages.error(
+        request,
+        _("This degree registration request cannot be payed. It has either "
+          "not been approved, is already payed, completed or exempted.")
+    )
+
+
+def degree_payment_succeeded(request):
+    """Inform the user the payment has been successfully completed."""
+
+    messages.success(
+        request,
+        _("The degree has been successfully payed.")
+    )
+
+
+def degree_payment_failed(request):
+    """Warn the user the payment has failed."""
+
+    messages.error(
+        request,
+        _("The degree payment has unexpectedly been aborted.")
     )
 
 

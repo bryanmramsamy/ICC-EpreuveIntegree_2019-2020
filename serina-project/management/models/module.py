@@ -202,14 +202,15 @@ class Module(BackOfficeResource):
         and pk after generating the pk if it wasn't defined yet.
         """
 
-        self.reference = self.title[0:4].upper()
-
         if not self.pk:
+            self.reference = self.title[0:4].upper()
+
             super().save(*args, **kwargs)
+
             self.eligible_teachers.clear()
             self.prerequisites.clear()
+            self.reference += str(self.pk).zfill(3)
 
-        self.reference += str(self.pk).zfill(3)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):

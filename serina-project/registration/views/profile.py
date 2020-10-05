@@ -103,7 +103,7 @@ class UserProfileDetailView(
                 context["nb_fully_approved_degrees_rrs"] \
                 - context["nb_fully_payed_degrees_rrs"]
             context["nb_graduated_degrees_rrs"] = \
-                len([x for x in context["degrees_rrs"] if x.student_graduated])
+                len([x for x in context["degrees_rrs"] if x.graduated])
 
             # Courses
 

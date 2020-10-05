@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.exceptions import PermissionDenied
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect
@@ -34,6 +35,7 @@ from management import models
 class StudentRegistrationReportCreateView(
     LoginRequiredMixin,
     UserPassesTestMixin,
+    SuccessMessageMixin,
     CreateView,
     mixins_utils.AutofillCreatedByRequestUser,
 ):
@@ -69,14 +71,6 @@ class StudentRegistrationReportCreateView(
 
         raise PermissionDenied
 
-    def form_valid(self, form):
-        """Promote the user to the 'Student'-group and notificate him/her with
-        a message."""
-
-        groups_utils.promote_to_student(self.request.user)
-        messages_utils.student_rr_created(self.request)
-        return super().form_valid(form)
-
     def get_context_data(self, *args, **kwargs):
         """Add foreign student flag to view in order hide/show foreign
         student's additional fields to fill."""
@@ -86,6 +80,13 @@ class StudentRegistrationReportCreateView(
         context["foreign_form"] = False
 
         return context
+
+    def get_success_message(self, cleaned_data):
+        """Change the user's group from 'Guest' to 'Student' with a
+        success message displayed."""
+
+        groups_utils.promote_to_student(self.request.user)
+        messages_utils.student_rr_created(self.request)
 
 
 # ModuleRegistrationReport
@@ -141,7 +142,7 @@ class ModuleRegistrationReportListView(
             )
 
         # Query result
-        return query_result.order_by("status")
+        return query_result.order_by("-status")
 
     def get_context_data(self, **kwargs):
         """Add search values to context."""

@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.core.validators import (
@@ -50,6 +52,17 @@ class ModuleRegistrationReport(FrontOfficeResource):
         on_delete=models.CASCADE,
         related_name="modules_rrs",
         verbose_name=_("Course")
+    )
+    invoice_id = models.CharField(
+        null=True,
+        max_length=16,
+        verbose_name=_("Invoice ID"),
+    )
+    payed_fees = models.DecimalField(
+        default=0,
+        max_digits=5,
+        decimal_places=2,
+        verbose_name=_('Payed fees'),
     )
     date_payed = models.DateTimeField(
         null=True,
@@ -114,46 +127,60 @@ class ModuleRegistrationReport(FrontOfficeResource):
         verbose_name_plural = _('Modules Registration Reports')
 
     @property
-    def payed(self):
-        """Check if the module registration request has been payed.
-
-        A payed request is either payed or completed.
-        """
-
-        return self.status == "PAYED" or self.status == "COMPLETED"
-
-    @property
-    def payed_or_exempted(self):
-        """Check if the module registration request has been payed or was
-        exempted.
-
-        A payed request is either payed or completed.
-        """
-
-        return self.status == "EXEMPTED" or self.payed
-
-    @property
     def approved(self):
-        """Check if the module registration request has been approved.
+        """True is the module registration was at least approved.
 
-        An approved request is either approved, payed or completed.
+        True if the request status is in the followinf list:
+        ['APPROVED', 'PAYED', 'COMPLETED']
         """
 
         return self.status == "APPROVED" or self.payed
 
     @property
     def approved_or_exempted(self):
-        """Check if the module registration request has been approved or
-        exempted.
+        """True is the module registration was at least approved or exempted.
 
-        An approved request is either approved, payed or completed.
+        True if the request status is in the followinf list:
+        ['APPROVED', 'PAYED', 'COMPLETED', 'EXEMPTED']
         """
 
         return self.status == "EXEMPTED" or self.approved
 
     @property
+    def payed(self):
+        """True is the module registration was at least payed.
+
+        True if the request status is in the followinf list:
+        [PAYED', 'COMPLETED']
+        """
+
+        return self.status == "PAYED" or self.status == "COMPLETED"
+
+    @property
+    def payed_or_exempted(self):
+        """True is the module registration was at least payed or exempted.
+
+        True if the request status is in the followinf list:
+        ['PAYED', 'COMPLETED', 'EXEMPTED']
+        """
+
+        return self.status == "EXEMPTED" or self.payed
+
+    @property
+    def finished(self):
+        """True if the module registration is either completed or exempted, no
+        regardless of the student having succeeded or not.
+
+        True if the request status is in the followinf list:
+        ['COMPLETED', 'EXEMPTED']
+        """
+
+        return self.status == "COMPLETED" or self.status == "EXEMPTED"
+
+    @property
     def success_score_threshold_reached(self):
-        """Check if the final score is above the success score threshold."""
+        """True if the final score is equal or above the defined success score
+        threshold."""
 
         return self.final_score >= settings.SUCCESS_SCORE_THRESHOLD
 
@@ -168,22 +195,23 @@ class ModuleRegistrationReport(FrontOfficeResource):
         return (self.status == "EXEMPTED" or self.status == "COMPLETED") \
             and self.success_score_threshold_reached
 
+    @property
+    def to_be_payed_fees(self):
+        """Calculate the amount still to be payed by the student based on the
+        module price and the payed_fees. This is only computed when the module
+        registration report has the 'APPROVED' status."""
+
+        return self.module.price - self.payed_fees
+
     def __str__(self):
         """Unicode representation of ModuleRegistrationReport."""
 
-        result = "[{}] {}'s module registration for {} ({})".format(
+        return "[{}] {}'s module registration for {} ({})".format(
             self.pk,
             self.student_rr.created_by.get_full_name(),
             self.module.title,
             self.status,
         )
-
-        if self.status == "COMPLETED" and self.succeeded:
-            result += " (Succes)"
-        elif self.status == "COMPLETED":
-            result += " (Failure)"
-
-        return result
 
     def clean(self):
         """Clean method for ModuleRegistrationReport.
@@ -192,6 +220,18 @@ class ModuleRegistrationReport(FrontOfficeResource):
         underaged and if the uploaded files are on the correct format.
         """
 
+        if self.payed and not self.date_payed:
+            raise ValidationError(_(
+                "The Module Registration Request cannot be flagged as "
+                "payed nor completed if no payment date was entered."
+            ))
+
+        if not self.approved_or_exempted and self.final_score:
+            raise ValidationError(_(
+                "You cannot put a final score to a registration which is not "
+                "approved."
+            ))
+
         if (self.status == "COMPLETED" or self.status == "EXEMPTED") \
            and not self.final_score:
             raise ValidationError(_(
@@ -199,25 +239,22 @@ class ModuleRegistrationReport(FrontOfficeResource):
                 "completed nor exempted if no final score was given."
             ))
 
-        if not (self.approved or self.status == "EXEMPTED") \
-           and self.final_score:
-            raise ValidationError(_(
-                "You cannot put a final score to a registration which is not "
-                "approved."
-            ))
-
-        if self.status == "EXEMPTED" and not self.succeeded:
+        if self.status == "EXEMPTED" and not success_score_threshold_reached:
             raise ValidationError(_(
                 "If a module is exempted, the final score must be equal or "
                 "above the success score threshold, which is actually at {}."
                 .format(settings.SUCCESS_SCORE_THRESHOLD)
             ))
 
-        if self.payed and not self.date_payed:
-            raise ValidationError(_(
-                "The Module Registration Request cannot be flagged as "
-                "payed nor completed if no payment date was entered."
-            ))
+    def save(self, *args, **kwargs):
+        """Save the unique invoice ID on creation."""
+
+        if not self.pk:
+            self.invoice_id = "#" + self.student_rr.created_by.username + "M"
+            super().save(*args, **kwargs)
+            self.invoice_id += str(self.pk).zfill(5)
+
+        super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         """Return absolute url for ModuleRegistrationReport."""
