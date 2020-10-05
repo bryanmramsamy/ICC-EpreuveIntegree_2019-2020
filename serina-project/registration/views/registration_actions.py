@@ -216,7 +216,36 @@ def degree_validation(request, pk):
     chosen module.
     """
 
-    pass  # TODO: Define action
+    degree_rr = get_object_or_404(DegreeRegistrationReport, pk=pk)
+    if degree_rr.approved:
+        messages_utils.degree_rr_already_approved(request)
+    else:
+        module_without_courses = []
+
+        for module_rr in degree_rr.modules_rrs.exclude(status="EXEMPTED"):
+            try:
+                module_rr.course = management_utils. \
+                    still_registrable_course_with_lowest_attendance(
+                        module_rr.module
+                    )
+
+            except ValidationError:
+                messages_utils.module_rr_has_no_course(request,
+                                                       module_rr.module)
+                module_without_courses += module_rr.module
+
+            else:
+                module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
+                    Q(student_rr=module_rr.student_rr),
+                    Q(status="COMPLETED"),
+                ).count() + 1
+                module_rr.status = "APPROVED"
+                module_rr.save()
+
+        # TODO: Send mail to student
+        messages_utils.degree_rr_approved(request)
+
+    return redirect(degree_rr.get_absolute_url())
 
 
 @decorators_utils.managers_or_administrators_only
