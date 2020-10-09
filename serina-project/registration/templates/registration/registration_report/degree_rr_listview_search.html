@@ -6,7 +6,7 @@
   <form method="GET" action="{% url 'degree_rr_listview' %}">
 
 
-    <div class="row row-cols-1 row-cols-md-2">
+    <div class="row row-cols-1 row-cols-md-3">
 
 
       {# q_student #}
@@ -43,26 +43,6 @@
           {% for degree in s_degrees %}
             <option value="{{ degree.pk }}" {% if q_degree|add:"0" == degree.pk %}selected{% endif %}>
               {{ degree.reference }} | {{ degree.title }}
-            </option>
-          {% endfor %}
-        </select>
-      </div>
-
-
-      {# q_status #}
-
-      <div class="form-group col">
-        <label for="q_status" class="h5 text-uppercase">
-          {% trans 'Status' %}
-        </label>
-
-        <select id="q_status" name="q_status" class="form-control form-control-sm">
-          <option {% if q_status == '' or q_status is None %}selected{% endif %} value="">
-            --- {% trans 'All statuses' %} ---
-          </option>
-          {% for status in s_statuses %}
-            <option value="{{ status.0 }}" {% if q_status == status.0 %}selected{% endif %}>
-              {{ status.1 }}
             </option>
           {% endfor %}
         </select>
