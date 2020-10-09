@@ -100,7 +100,7 @@ class TeacherCourseListView(
     def get_queryset(self):
         """Get the courses of the student only."""
 
-        return Course.objects.filter(modules_rrs__student_rr__created_by=self.request.user)
+        return Course.objects.filter(teacher=self.request.user)
 
 
 class CourseDetailView(DetailView):
