@@ -16,6 +16,7 @@ from registration.models import ModuleRegistrationReport
 from registration.utils.mixins import (
     ManagerAdministratorOnlyMixin,
     StudentOnlyMixin,
+    TeacherOnlyMixin,
 )
 
 
@@ -73,6 +74,22 @@ class CourseListView(ListView):
 class StudentCourseListView(
     LoginRequiredMixin,
     StudentOnlyMixin,
+    CourseListView
+):
+    """Course detailed view for student.
+
+    Ony the student's courses will be displayed.
+    """
+
+    def get_queryset(self):
+        """Get the courses of the student only."""
+
+        return Course.objects.filter(modules_rrs__student_rr__created_by=self.request.user)
+
+
+class TeacherCourseListView(
+    LoginRequiredMixin,
+    TeacherOnlyMixin,
     CourseListView
 ):
     """Course detailed view for student.

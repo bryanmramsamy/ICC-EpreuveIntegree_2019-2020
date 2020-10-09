@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.utils.translation import gettext_lazy as _
 
 from ..models import ModuleRegistrationReport
@@ -32,6 +32,17 @@ def student_attends_course(user, course):
 
     return groups_utils.is_student(user) \
         and course.modules_rrs.filter(student_rr__created_by=user).exists()
+
+
+def student_module_rr_related_to_course(user, course):
+    """Return the related Module Registration Report of the given course for
+    the given user."""
+
+    if not groups_utils.is_student(user):
+        raise PermissionDenied
+
+    else:
+        return course.modules_rrs.all()
 
 
 def still_registrable_courses(module):

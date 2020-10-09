@@ -133,27 +133,37 @@
 
               {% elif request.user|is_teacher %}
                 <div class="col">
-                  <a href="#" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+                  <a href="404" class="btn btn-block btn-info">
+                    {% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}
+                  </a>  <!-- TODO: add functionality -->
                 </div>
 
               {% elif request.user|attends_course:course %}
                 <div class="col">
-                  <a href="404" class="btn btn-block btn-primary">{% trans 'DEBUG: Link to module_rr' %} {% include 'logo/puzzle.html' %}</a>  <!-- TODO: redirect to module_rr_createview -->
+                  <a href="404" class="btn btn-block btn-primary">
+                    {% trans 'DEBUG: Link to module_rr' %} {% include 'logo/puzzle.html' %}
+                  </a>  <!-- TODO: redirect to module_rr_createview -->
                 </div>
 
                 {% elif request.user|is_student %}
                 <div class="col">
                   {% if request.user|active_module_rr_already_exists:course.module %}
-                  <a href="{% url 'module_rr_createview' module_pk=course.module.pk %}" class="btn btn-block btn-warning disabled">{% trans 'You cannot subscribe to this module yet again' %} {% include 'logo/puzzle.html' %}</a>
+                  <a href="{% url 'module_rr_createview' module_pk=course.module.pk %}" class="btn btn-block btn-warning disabled">
+                    {% trans 'You cannot subscribe to this module yet again' %} {% include 'logo/puzzle.html' %}
+                  </a>
 
                   {% else %}
-                    <a href="{% url 'module_rr_createview' module_pk=course.module.pk %}" class="btn btn-block btn-success">{% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}</a>
+                    <a href="{% url 'module_rr_createview' module_pk=course.module.pk %}" class="btn btn-block btn-success">
+                      {% trans 'Subscribe to this module' %} {% include 'logo/puzzle.html' %}
+                    </a>
                   {% endif %}
                 </div>
 
               {% elif request.user|is_guest %}
                 <div class="col">
-                  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
+                  <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">
+                    {% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}
+                  </a>
                 </div>
 
               {% else %}

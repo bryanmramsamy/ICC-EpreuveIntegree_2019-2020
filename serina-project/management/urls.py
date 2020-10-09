@@ -48,6 +48,11 @@ urlpatterns = [
         name="student_course_listview",
     ),
     url(
+        r"^course/lt/$",
+        views.TeacherCourseListView.as_view(),
+        name="teacher_course_listview",
+    ),
+    url(
         r"^course/r/(?P<pk>[0-9]+)/$",
         views.CourseDetailView.as_view(),
         name="course_detailview",

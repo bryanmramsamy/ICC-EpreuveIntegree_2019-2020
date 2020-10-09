@@ -127,3 +127,11 @@ def attends_course(user, course):
     course."""
 
     return management_utils.student_attends_course(user, course)
+
+
+@register.filter
+def student_module_rr_related_to_course(user, course):
+    """Return the related Module Registration Report of the given course for
+    the given user."""
+
+    return management_utils.student_module_rr_related_to_course(user, course)

@@ -54,6 +54,15 @@ class BackOfficeUsersOnlyMixin(AccessRestrictionMixin):
         return groups_utils.is_back_office_user(self.request.user)
 
 
+class TeacherOnlyMixin(AccessRestrictionMixin):
+    """Restrict view access to Teachers users."""
+
+    def test_func(self):
+        """Check if the user is a teacher."""
+
+        return groups_utils.is_teacher(self.request.user)
+
+
 class ManagerAdministratorOnlyMixin(AccessRestrictionMixin):
     """Restrict view access to 'Manager'-group members and
     'Administrator'-group members."""

@@ -12,7 +12,9 @@
   </div>
 
 {% elif request.user|is_teacher %}
-  <a href="404" class="btn btn-block btn-info">{% trans 'DEBUG: No functionality yet for Teachers' %} {% include 'logo/warning.html' %}</a>  <!-- TODO: add functionality -->
+  <a href="{% url 'teacher_course_listview' %}" class="btn btn-block btn-warning">
+     {% include 'logo/course_alt.html' %} {% trans 'My courses' %}
+  </a>
 
 {% elif request.user|is_student %}
   {% if request.user|active_module_rr_already_exists:course.module %}
