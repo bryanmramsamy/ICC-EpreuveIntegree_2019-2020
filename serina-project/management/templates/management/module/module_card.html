@@ -68,7 +68,9 @@
 
   <hr>
 
-  <h3 class="text-center">{% include 'logo/module.html' %} Prerequisites</h3>
+  <h3 class="text-center">
+    {% include 'logo/module.html' %} {% trans 'Prerequisites' %}
+  </h3>
 
   {% with module_list_queryset=module.prerequisites.all %}
     {% include 'management/module/related_modules_list.html' %}
@@ -76,10 +78,11 @@
 
   <hr>
 
-  <h3 class="text-center">{% include 'logo/module.html' %} Postrequisites</h3>
+  <h3 class="text-center">
+    {% include 'logo/module.html' %} {% trans 'Postrequisites' %}
+  </h3>
 
   {% with module_list_queryset=module.postrequisites.all %}
     {% include 'management/module/related_modules_list.html' %}
   {% endwith %}
-
 </section>
