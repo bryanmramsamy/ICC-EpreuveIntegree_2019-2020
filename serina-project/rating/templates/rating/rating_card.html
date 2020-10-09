@@ -85,14 +85,14 @@
       <div class="row">
         <div class="col text-left">
           {% trans 'Sent on' %}
-          {% if rating.date_updated > rating.date_created %}
+          {% if rating.updated_once %}
             <br>
             {% trans 'Last updated on' %}
           {% endif %}
         </div>
         <div class="col text-right">
           {{ rating.date_created }}
-          {% if rating.date_updated != rating.date_created %}
+          {% if rating.updated_once %}
             <br>
             {{ rating.date_updated }}
           {% endif %}

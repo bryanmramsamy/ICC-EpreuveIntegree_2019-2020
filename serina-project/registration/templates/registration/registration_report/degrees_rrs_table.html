@@ -27,7 +27,7 @@
   </thead>
   <tbody>
     {% for degree_rr in degrees_rrs %}
-      <tr class="d-flex {% if request.user|is_student and degree_rr.approved or request.user|is_manager_or_administrator and module_rr.status == 'PARTIALLY_PENDING' or request.user|is_manager_or_administrator and module_rr.status == 'FULLY_PENDING' %}table-warning{% elif degree_rr.status == 'FULLY_DENIED'%}table-danger{% endif %}">
+      <tr class="d-flex {% if request.user|is_student and degree_rr.status == 'COMPLETED' %}table-success{% elif request.user|is_student and degree_rr.approved or request.user|is_manager_or_administrator and degree_rr.status == 'PARTIALLY_PENDING' or request.user|is_manager_or_administrator and degree_rr.status == 'FULLY_PENDING' %}table-warning{% elif degree_rr.status == 'FULLY_DENIED'%}table-danger{% endif %}">
         {% if listview_enabled %}
           <td class="col-2">
             <a href="{% url 'userprofile_detailview' degree_rr.student_rr.created_by.pk %}" class="text-reset">

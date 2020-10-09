@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -67,6 +69,12 @@ class StudentRating(models.Model):
         verbose_name = 'Rating'
         verbose_name_plural = 'Ratings'
         ordering = ("-date_updated",)
+
+    @property
+    def updated_once(self):
+        """True if the rating was updated at least once."""
+
+        return self.date_created - self.date_updated > timedelta(0)
 
     def __str__(self):
         """Unicode representation of StudentRating."""

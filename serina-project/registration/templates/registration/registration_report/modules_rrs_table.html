@@ -100,7 +100,7 @@
       </tr>
     {% empty %}
       <tr class="d-flex">
-        <td class="col-12" colspan="{% if listview_enabled %}7{% else %}6{% endif %}" class="h5 text-center text-info">
+        <td colspan="{% if listview_enabled %}7{% else %}6{% endif %}" class="h5 text-center text-info">
           {% include 'logo/check_info.html' %} {% trans 'No module registration found' %}
         </td>
       </tr>
