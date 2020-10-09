@@ -92,7 +92,7 @@
                   <a href="{% url 'pursue_registration' %}" class="btn btn-block btn-dark">{% trans 'Finish your registration as a student' %} {% include 'logo/register_alt.html' %}</a>
                 </div>
 
-              {% elif not user.authenticated %}
+              {% elif not request.user.is_authenticated %}
                 <div class="col">
                   <div class="row">
                     <div class="col">
