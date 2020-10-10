@@ -251,7 +251,9 @@ class ModuleRegistrationReport(FrontOfficeResource):
 
         if not self.pk:
             self.invoice_id = "#" + self.student_rr.created_by.username + "M"
+
             super().save(*args, **kwargs)
+
             self.invoice_id += str(self.pk).zfill(5)
 
         super().save(*args, **kwargs)

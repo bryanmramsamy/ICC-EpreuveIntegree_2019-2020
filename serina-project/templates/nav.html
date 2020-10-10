@@ -106,11 +106,13 @@
                   {% include 'logo/rating.html' %} {% trans 'Student ratings' %}
                 </a>
 
-                <div class="dropdown-divider border border-dark"></div>
+                {% if request.user|is_administrator %}
+                    <div class="dropdown-divider border border-dark"></div>
 
-                <a href="{% url 'admin:index' %}" class="dropdown-item">
-                  {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
-                </a>
+                    <a href="{% url 'admin:index' %}" class="dropdown-item">
+                      {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
+                    </a>
+                {% endif %}
               </div>
             </span>
           {% endif %}

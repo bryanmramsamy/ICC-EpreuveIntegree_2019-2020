@@ -53,6 +53,9 @@
     {# Information table #}
 
     <table class="table table-hover h5 text-left">
+      <tr class="d-flex small text-center text-light bg-dark">
+        <td class="col-12">{% trans 'Mandatory information' %}</td>
+      </tr>
       <tr class="d-flex">
         <td class="col-4">{% trans 'Registration number' %}:</td>
         <th class="col-8">{{ userprofile.username }}</th>
@@ -226,8 +229,8 @@
               </th>
             </tr>
           {% endif %}
-          <tr class="d-flex">
-            <td colspan="2" class="col-12 bg-secondary rounded text-light text-center h4">{% trans 'Optional fields' %}</td>
+          <tr class="d-flex small text-center text-light bg-dark">
+            <td class="col-12">{% trans 'Optional information' %}</td>
           </tr>
           <tr class="d-flex">
             <td class="col-4">{% trans 'Modules archievement certificates' %}:</td>
