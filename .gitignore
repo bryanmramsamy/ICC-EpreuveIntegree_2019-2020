@@ -7,9 +7,9 @@
 __pycache__/
 
 
-# # Uploaded Media files
-# serina-project/media/*
-# !serina-project/media/management/books.png
+# Uploaded Media files
+serina-project/media/*
+!serina-project/media/management/books.png
 
 
 # Do not ignore any .gitkeep file
