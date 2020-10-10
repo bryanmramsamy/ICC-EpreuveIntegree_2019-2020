@@ -68,7 +68,6 @@ class Degree(BackOfficeResource):
     )
     modules = models.ManyToManyField(
         Module,
-        null=True,
         blank=True,
         related_name="degrees",
         verbose_name=_("Modules"),
