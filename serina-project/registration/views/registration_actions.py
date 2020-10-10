@@ -232,7 +232,7 @@ def degree_validation(request, pk):
             except ValidationError:
                 messages_utils.module_rr_has_no_course(request,
                                                        module_rr.module)
-                module_without_courses += module_rr.module
+                # module_without_courses += module_rr.module
 
             else:
                 module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
@@ -242,8 +242,8 @@ def degree_validation(request, pk):
                 module_rr.status = "APPROVED"
                 module_rr.save()
 
-        # TODO: Send mail to student
-        messages_utils.degree_rr_approved(request)
+                # TODO: Send mail to student
+                messages_utils.degree_rr_approved(request)
 
     return redirect(degree_rr.get_absolute_url())
 

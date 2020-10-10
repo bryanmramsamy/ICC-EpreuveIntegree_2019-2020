@@ -28,7 +28,8 @@ class DegreeRegistrationReport(resource.FrontOfficeResource):
     )
     degree = models.ForeignKey(
         Degree,
-        on_delete=models.CASCADE,
+        null=True,
+        on_delete=models.SET_NULL,
         related_name="students_registrations",
         verbose_name=_("Registration degree")
     )

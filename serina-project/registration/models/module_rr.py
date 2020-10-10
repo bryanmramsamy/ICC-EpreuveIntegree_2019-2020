@@ -41,7 +41,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
     )
     module = models.ForeignKey(
         Module,
-        on_delete=models.CASCADE,
+        null=True,
+        on_delete=models.SET_NULL,
         related_name="modules_rrs",
         verbose_name=_("Registration module")
     )
