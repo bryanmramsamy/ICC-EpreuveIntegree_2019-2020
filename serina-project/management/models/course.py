@@ -223,11 +223,12 @@ class Course(BackOfficeResource):
         Add a reference based on the course's pk and it's module name.
         """
 
-        module_reference = self.module.reference
-        self.reference = module_reference + "-"
-
         if not self.pk:
+            module_reference = self.module.reference
+            self.reference = module_reference + "-"
+
             super().save(*args, **kwargs)
+
             self.reference += str(self.pk).zfill(3)
 
         super().save(*args, **kwargs)

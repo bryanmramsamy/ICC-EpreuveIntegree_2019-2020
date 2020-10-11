@@ -220,6 +220,7 @@ def degree_validation(request, pk):
     if degree_rr.approved:
         messages_utils.degree_rr_already_approved(request)
     else:
+        failed = False
         module_without_courses = []
 
         for module_rr in degree_rr.modules_rrs.exclude(status="EXEMPTED"):
@@ -230,9 +231,10 @@ def degree_validation(request, pk):
                     )
 
             except ValidationError:
+                failed = True
                 messages_utils.module_rr_has_no_course(request,
                                                        module_rr.module)
-                module_without_courses += module_rr.module
+                # module_without_courses += module_rr.module
 
             else:
                 module_rr.nb_attempt = ModuleRegistrationReport.objects.filter(
@@ -242,6 +244,7 @@ def degree_validation(request, pk):
                 module_rr.status = "APPROVED"
                 module_rr.save()
 
+    if not failed:
         # TODO: Send mail to student
         messages_utils.degree_rr_approved(request)
 

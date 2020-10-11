@@ -68,6 +68,7 @@ class Degree(BackOfficeResource):
     )
     modules = models.ManyToManyField(
         Module,
+        blank=True,
         related_name="degrees",
         verbose_name=_("Modules"),
         help_text=_("All the modules which are part of the degree.")
@@ -158,10 +159,11 @@ class Degree(BackOfficeResource):
         Add a reference based on the degree's title and pk.
         """
 
-        self.reference = self.title[0:4].upper()
-
         if not self.pk:
+            self.reference = self.title[0:4].upper()
+
             super().save(*args, **kwargs)
+
             self.reference += str(self.pk).zfill(3)
 
         super().save(*args, **kwargs)

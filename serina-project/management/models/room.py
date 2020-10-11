@@ -95,10 +95,12 @@ class Classroom(BackOfficeResource):
         make it unique.
         """
 
-        self.reference = self.name[0:4].upper()
 
         if not self.pk:
+            self.reference = self.name[0:4].upper()
+
             super().save(*args, **kwargs)
+
             self.reference += str(self.pk).zfill(3)
 
         super().save(*args, **kwargs)

@@ -190,7 +190,13 @@ def degree_payment_done(request):
         else:
             module_rr.status = "PAYED"
 
+        module_rr.payed_fees = module_rr.module.price
+        module_rr.date_payed = datetime.datetime.now()
         module_rr.save()
+
+    degree_rr.payed_fees = degree_rr.to_be_payed_fees
+    degree_rr.date_payed = datetime.datetime.now()
+    degree_rr.save()
 
     messages_utils.degree_payment_succeeded(request)
 

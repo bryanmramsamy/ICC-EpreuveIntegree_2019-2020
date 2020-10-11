@@ -106,11 +106,13 @@
                   {% include 'logo/rating.html' %} {% trans 'Student ratings' %}
                 </a>
 
-                <div class="dropdown-divider border border-dark"></div>
+                {% if request.user|is_administrator %}
+                    <div class="dropdown-divider border border-dark"></div>
 
-                <a href="{% url 'admin:index' %}" class="dropdown-item">
-                  {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
-                </a>
+                    <a href="{% url 'admin:index' %}" class="dropdown-item">
+                      {% include 'logo/gear.html' %} {% trans 'Advanced back-office panel' %}
+                    </a>
+                {% endif %}
               </div>
             </span>
           {% endif %}
@@ -143,5 +145,6 @@
 
 <div class="sticky-bottom" id="messages">
   {% include 'messages.html' %}
+  {% include 'forms_errors.html' %}
   {% block additional_messages %}{% endblock additional_messages %}
 </div>

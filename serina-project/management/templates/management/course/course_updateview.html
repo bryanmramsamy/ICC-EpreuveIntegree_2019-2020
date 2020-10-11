@@ -128,7 +128,7 @@
               <label for="{{ form.prebooked_seats.id_for_label }}" class="h5 text-uppercase">
                 {{ form.prebooked_seats.label }} <span class="badge badge-danger">{{ form.prebooked_seats.errors.as_text }}</span>
               </label>
-              <input id="{{ form.prebooked_seats.auto_id }}" name="{{ form.prebooked_seats.html_name }}" type="number" min="0" value="0" class="form-control form-control-lg" required>
+              <input id="{{ form.prebooked_seats.auto_id }}" name="{{ form.prebooked_seats.html_name }}" type="number" min="0" value="{{ course.prebooked_seats }}" class="form-control form-control-lg" required>
               <small class="text-muted">{{ form.prebooked_seats.help_text }}</small>
             </div>
 

@@ -16,10 +16,5 @@ serina-project/media/*
 !*.gitkeep
 
 
-# Debug ngrok tunnel
-ngrok
-
-
 # Certbot data folder
-
 /data
