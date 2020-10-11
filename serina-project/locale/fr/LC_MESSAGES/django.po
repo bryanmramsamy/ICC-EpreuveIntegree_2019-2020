@@ -767,7 +767,7 @@ msgstr "Tous les cours"
 #: registration/templates/registration/registration_report/module_rr_listview_search.html:118
 #: registration/templates/registration/userprofile/user_admin_panel_search.html:59
 msgid "Filter"
-msgstr ""
+msgstr "Filtrer"
 
 #: management/templates/management/course/course_listview_jumbotron.html:11
 #: management/templates/management/course/course_listview_jumbotron.html:26
@@ -945,7 +945,7 @@ msgstr "Annuler et retourner à la page de la formation"
 #: management/templates/management/degree/degree_detailview.html:49
 #: management/templates/management/module/module_detailview.html:56
 msgid "You didn\\"
-msgstr ""
+msgstr "Vous n'avez"
 
 #: management/templates/management/degree/degree_detailview.html:54
 #: management/templates/management/module/module_detailview.html:61
@@ -1540,7 +1540,7 @@ msgstr "Note"
 
 #: rating/models.py:48
 msgid "Give a rate from 1 (very poor) to 5 (very good)"
-msgstr ""
+msgstr "Donne une notre de 1 (très mauvais) à 5 (très bien)"
 
 #: rating/models.py:52
 msgid "Comment"
@@ -1551,22 +1551,23 @@ msgid ""
 "Leave a comment you want to be displayed on your rate. Your comment will be "
 "shown as well as your rating on the home page and the module/degree page."
 msgstr ""
-
+"Indique en commentaire  tu veux voir ton résultat affiché. Ton commentaire sera"
+"également montré comme ta note sur la page d'accueil et la page de la section/module."
 #: rating/models.py:61
 msgid "Is visible"
-msgstr ""
+msgstr "est visible"
 
 #: rating/models.py:92
 msgid "A rating must be assigned either to a module or to a degree."
-msgstr ""
+msgstr "une note doit être affectée à un module ou une formation."
 
 #: rating/models.py:96
 msgid "A rating can not be assigned to a module and a degree at the same time."
-msgstr ""
+msgstr "Une note ne peut être assignée à un module et une formation en même temps."
 
 #: rating/templates/rating/rating_card.html:68
 msgid "Visible"
-msgstr ""
+msgstr "Visible"
 
 #: rating/templates/rating/rating_card.html:73
 #, fuzzy
@@ -1618,7 +1619,7 @@ msgstr "Diplôme"
 #: rating/templates/rating/rating_createview.html:70
 #: rating/templates/rating/rating_updateview.html:70
 msgid "512 characters allowed"
-msgstr ""
+msgstr "512 caractères acceptés"
 
 #: rating/templates/rating/rating_createview.html:82
 #, fuzzy
@@ -1650,7 +1651,7 @@ msgstr "Mettez votre profil à jour"
 
 #: rating/templates/rating/rating_listview.html:6
 msgid "Ratings Admin Panel"
-msgstr ""
+msgstr "Panneau d'administration des notes"
 
 #: rating/templates/rating/rating_listview.html:24 templates/nav.html:99
 #, fuzzy
@@ -1668,7 +1669,7 @@ msgstr "Etudiant"
 
 #: rating/templates/rating/rating_listview_search.html:79
 msgid "All ratings"
-msgstr ""
+msgstr "Toutes les notes"
 
 #: rating/templates/rating/rating_listview_search.html:85
 #, fuzzy
@@ -1707,11 +1708,11 @@ msgstr "Tous les cours"
 
 #: rating/templates/rating/rating_listview_search.html:108
 msgid "Visible ratings"
-msgstr ""
+msgstr "notes visibles"
 
 #: rating/templates/rating/rating_listview_search.html:111
 msgid "Hidden ratings"
-msgstr ""
+msgstr "Notes cachées"
 
 #: rating/templates/rating/rating_updateview.html:82
 #, fuzzy
@@ -2190,7 +2191,7 @@ msgid ""
 "      "
 msgstr ""
 "\n"
-"        Vous serez immédiatement informé par mail via l'adresse mail qui est "
+"        Vous serez immédiatement informé par mail via l`adresse mail qui est "
 "actuellement renseignée dans votre compte.\n"
 "      "
 
@@ -2488,21 +2489,6 @@ msgstr ""
 
 #: registration/templates/registration/authentication/register.html:33
 #: registration/templates/registration/authentication/register.html:55
-#, fuzzy, python-format
-#| msgid ""
-#| "\n"
-#| "              This data is used to indentify each user. It is used to "
-#| "compare your name with the name given on your registration documents. "
-#| "Your name can also appear on the list of attendance of each course you "
-#| "are following, which is only visible by the teachers of the module. \n"
-#| "              <br>\n"
-#| "              Your name is not shared to anyone outside the "
-#| "organisation.\n"
-#| "              <br>\n"
-#| "              <span class=\"text-danger\">This data cannot be changed "
-#| "once set. To change your name, please contact the support team (<a href="
-#| "\"mailto:%(support_mail)s\">%(support_mail)s</a>).</span>\n"
-#| "            "
 msgid ""
 "\n"
 "              This data is used to indentify each user. It is used to "
@@ -2520,12 +2506,12 @@ msgstr ""
 "\n"
 "              Ces données sont utilisées pour identifier chaque utilisateur. "
 "Elles sont utilisées pour comparer votre nom avec le nom donnée dans vos "
-"documents d'inscritpions. Votre nom peut également apparaitre sur la liste "
+"documents d´inscritpions. Votre nom peut également apparaitre sur la liste "
 "des participants à chaque cours que vous suivez, qui est uniquement visible "
 "par les enseignants du module. \n"
 "              <br>\n"
-"              Votre nom n'est partagé avec personne en dehors de "
-"l'organisation.\n"
+"              Votre nom n´est partagé avec personne en dehors de "
+"l´organisation.\n"
 "              <br>\n"
 "              <span class=\"text-danger\">Ces données ne peuvent être "
 "modifiées une fois enregistrées. Pour changer votre nom, contactez notre "
@@ -2546,12 +2532,12 @@ msgid ""
 msgstr ""
 "\n"
 "              Ces données sont utilisées pour communiquer avec "
-"l'utilisateur. L'email est utilisé pour envoyer des notifications, alertes, "
-"réinitialisation de mot de passe mis à  disposition de notre équipe pour "
+"l´utilisateur. L´email est utilisé pour envoyer des notifications, alertes, "
+"réinitialisation de mot de passe mis à disposition de notre équipe pour "
 "directement communiquer avec vous.\n"
 "              <br>\n"
-"              Si vous n'êtes pas membre de l'équipe (invité ou étudiant), "
-"votre adresse mail n'est pas partagée en dehors de l'organisation.\n"
+"              Si vous n´êtes pas membre de l´équipe (invité ou étudiant), "
+"votre adresse mail n´est pas partagée en dehors de l´organisation.\n"
 "            "
 
 #: registration/templates/registration/authentication/register.html:97
@@ -2565,9 +2551,9 @@ msgid ""
 "            "
 msgstr ""
 "\n"
-"              Ces données sont utilisée pour les mesures d'authentification. "
-"Votre mot de passe est haché avant d'être stocké dans notre base de données, "
-"ce qui signifie qu'il est impossible à lire pour n'importe qui, les "
+"              Ces données sont utilisée pour les mesures d´authentification. "
+"Votre mot de passe est haché avant d´être stocké dans notre base de données, "
+"ce qui signifie qu´il est impossible à lire pour n´importe qui, les "
 "administrateurs inclus. Vos mot de passe précédents ne sont pas stockés. "
 "Vous êtes le seule à savoir ce que le mot de passe est exactement.\n"
 "            "
@@ -2682,7 +2668,7 @@ msgstr ""
 
 #: registration/templates/registration/general/home.html:115
 msgid "Or maybe you would prefere individual modules"
-msgstr "ou peut-être préfereriez-vous des modules individuels"
+msgstr "Ou peut-être préfereriez-vous des modules individuels"
 
 #: registration/templates/registration/general/home.html:159
 msgid "Read the latest ratings left by our students"
@@ -2871,7 +2857,7 @@ msgstr "ECTS"
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:231
 #: registration/templates/registration/registration_report/module_rr_detailview.html:252
 msgid "Results"
-msgstr ""
+msgstr "Résultats"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:236
 #: registration/templates/registration/registration_report/module_rr_detailview.html:257
@@ -2926,7 +2912,7 @@ msgstr "Non envoyé"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:264
 msgid "Average score"
-msgstr ""
+msgstr "Score moyen"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:279
 #, fuzzy
@@ -2936,7 +2922,7 @@ msgstr "Obtentions de diplômes"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:284
 msgid "Congratulations, you did it!"
-msgstr ""
+msgstr "Félicitations, tu as réussi!"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:289
 #, fuzzy
@@ -3007,7 +2993,7 @@ msgstr "Rapports d'enregistrement des formations"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:8
 msgid "All modules were denied"
-msgstr ""
+msgstr "Tous les modules ont été refusés"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:11
 #, fuzzy
@@ -3017,7 +3003,7 @@ msgstr "Complètement payé"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:19
 msgid "Some modules were denied"
-msgstr ""
+msgstr "Certains modules ont été refusés"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:22
 #, fuzzy
@@ -3027,7 +3013,7 @@ msgstr "Partiellement payé"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:30
 msgid "All modules are completed and succeeded"
-msgstr ""
+msgstr "Tous les modules sont complétés et réussis"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:41
 #, fuzzy
@@ -3043,7 +3029,7 @@ msgstr "Complètement payé"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:52
 msgid "Payment pending for some modules"
-msgstr ""
+msgstr "Paiement en attente pour certains modules"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:55
 msgid "Partially payed"
@@ -3071,11 +3057,11 @@ msgstr "Approuvé partiellement"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:85
 msgid "No modules were approved or denied yet"
-msgstr ""
+msgstr "Aucun module n'a été approuvé ou refusé pour le moment"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:96
 msgid "Some modules are not approved or denied yet"
-msgstr ""
+msgstr "Certains modules ne sont pas approuvés ou refusés pour le moment"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:99
 #, fuzzy
@@ -3091,7 +3077,7 @@ msgstr "Status"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:110
 msgid "Unknown"
-msgstr ""
+msgstr "Inconnu"
 
 #: registration/templates/registration/registration_report/degrees_rrs_table.html:21
 msgid "Approvement"
@@ -3164,7 +3150,7 @@ msgstr "Module réussi mais pas encore payé"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:337
 msgid "Failed"
-msgstr ""
+msgstr "Raté"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:380
 #, fuzzy
@@ -3380,7 +3366,7 @@ msgstr "Modules réussis"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:6
 msgid "Users administation panel"
-msgstr ""
+msgstr "Panneau d'administration des utilisateurs"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:27
 #, fuzzy
@@ -3390,7 +3376,7 @@ msgstr "Administrateur"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:39
 msgid "Table legend"
-msgstr ""
+msgstr "Légende"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:46
 #: registration/utils/groups.py:68
@@ -3429,7 +3415,7 @@ msgstr "Mettez votre profil à jour"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:129
 msgid "Promote to guest"
-msgstr ""
+msgstr "Promouvoir comme invité"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:132
 #, fuzzy
@@ -3439,7 +3425,7 @@ msgstr "Coût par étudiant"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:135
 msgid "Promote to teacher"
-msgstr ""
+msgstr "promouvoir comme enseignant"
 
 #: registration/templates/registration/userprofile/user_admin_panel.html:138
 #, fuzzy
@@ -3473,7 +3459,7 @@ msgstr "Activez votre compte utilisateur"
 
 #: registration/templates/registration/userprofile/user_admin_panel_search.html:47
 msgid "Inactive users"
-msgstr ""
+msgstr "Utilisateurs inactifs"
 
 #: registration/templates/registration/userprofile/userprofile_detailview.html:6
 msgid "Profile of"
@@ -3745,32 +3731,39 @@ msgid ""
 "The selected user's account has been successfully re-enabled. It can be "
 "disabled again without cuasing any data loss."
 msgstr ""
+"Le compte utilisateur sélectionné a été réactivé avec succès. Il peut être "
+"Désactivé à nouveau sans perte de données."
 
 #: registration/utils/messages.py:369
 msgid ""
 "The selected user's account has been successfully disabled. All his/her is "
 "still saved in the database and the account can be reactivated anytime."
 msgstr ""
+"Le compte utilisateur sélectionné a été désactivé avec succès. Toutes ses"
+"données sont suavegardées dans la base de données et le compte peut être réactivé à tout moment."
 
 #: registration/utils/messages.py:384
 msgid "The rating is now visible."
-msgstr ""
+msgstr "La note est maintenant visible."
 
 #: registration/utils/messages.py:395
 msgid "The rating is now hidden."
-msgstr ""
+msgstr "La note est maintenant cachée."
 
 #: registration/utils/messages.py:407
 msgid ""
 "You didn't succeed this module/degree yet. Only student whom succeeded it "
 "are allowed to rate it."
 msgstr ""
+"Vous n'avez pas réussi ce/cette module/formation pour le moment. Seulement les étudiants l'ayant réussi"
+"sont autorisés à la noter."
 
 #: registration/utils/messages.py:420
 msgid ""
 "You already rated this module/degree. Howerver, you can edit your rating "
 "left."
-msgstr ""
+msgstr "Vous avez déjà noté ce/cette module/présentation. Cependant, vous pouvez éditer votre note"
+"sur la gauche."
 
 #: registration/views/errors.py:11
 msgid "Bad request"
@@ -3975,6 +3968,17 @@ msgid ""
 "again, which will make your path to your next degree shorter.\n"
 "  "
 msgstr ""
+"\n"
+"    Vous ne pouvez vous inscrire à une formation que vous avez déjà terminée.\n"
+"    <br>\n"
+"    Regarder notre catalogue de formation pour trouver un autre qui vous "
+"intéresse.\n"
+"    <br>\n"
+"    Rappelez vous que certaines formations ont des modules en commun, ce qui signifie que si ces "
+"modules sont déjà validés dans cette formation, vous ne devez plus les suivre "
+"à nouveau, ce qui rendra votre chemin vers votre prochaine formation plus court.\n"
+"  "
+
 
 #: templates/bubbles/danger/confirm_deletation.html:6
 msgid ""
@@ -4050,6 +4054,10 @@ msgid ""
 "action.\n"
 "  "
 msgstr ""
+"\n"
+"    L'utilisateur a été désactivé et ne peut plus effectuer d'autres "
+"action.\n"
+"  "
 
 #: templates/bubbles/info/academic_project.html:6
 msgid ""
@@ -4670,6 +4678,7 @@ msgstr ""
 msgid ""
 "If you should edit some non-updatable data afterwards, please contact our"
 msgstr ""
+"Si vous deviez éditer par après des données impossible à mettre à jour, contactez nous"
 
 #: templates/bubbles/warning/student_rr_creation.html:15
 #, fuzzy
@@ -4776,7 +4785,7 @@ msgstr ""
 
 #: templates/filter_tag.html:5
 msgid "Filters"
-msgstr ""
+msgstr "Filtres"
 
 #: templates/footer.html:12
 msgid "It is never to late to learn."
@@ -4788,7 +4797,7 @@ msgstr "A propos de nous"
 
 #: templates/footer.html:47
 msgid "Home"
-msgstr "Maison"
+msgstr "Accueil"
 
 #: templates/footer.html:48
 msgid "Contact us"
@@ -4868,7 +4877,7 @@ msgstr "Admin"
 
 #: templates/nav.html:84
 msgid "Users Admin Panel"
-msgstr ""
+msgstr "Panneau d'administration des utilisateurs"
 
 #: templates/nav.html:90
 #, fuzzy
