@@ -22,7 +22,7 @@
           {% csrf_token %}
 
           <label for="{{ form.first_name.id_for_label }}" class="h5 text-uppercase">
-            {{ form.first_name.label }} <span class="badge badge-danger">{{ form.first_name.errors.as_text }}</span>
+            {% trans 'First name' %}<span class="badge badge-danger">{{ form.first_name.errors.as_text }}</span>
           </label>
           <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
@@ -44,7 +44,7 @@
           <br>
 
           <label for="{{ form.last_name.id_for_label }}" class="h5 text-uppercase">
-            {{ form.last_name.label }} <span class="badge badge-danger">{{ form.last_name.errors.as_text }}</span>
+            {% trans 'Last name' %}<span class="badge badge-danger">{{ form.last_name.errors.as_text }}</span>
           </label>
           <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
@@ -66,7 +66,7 @@
           <br>
 
           <label for="{{ form.email.id_for_label }}" class="h5 text-uppercase">
-            {{ form.email.label }} <span class="badge badge-danger">{{ form.email.errors.as_text }}</span>
+            {% trans 'Email' %}<span class="badge badge-danger">{{ form.email.errors.as_text }}</span>
           </label>
           <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
@@ -86,7 +86,7 @@
           <br>
 
           <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">
-            {{ form.password.label }} <span class="badge badge-danger">{{ form.password.errors.as_text }}</span>
+            {% trans 'Password' %}<span class="badge badge-danger">{{ form.password.errors.as_text }}</span>
           </label>
           <div class="input-group-append" data-toggle="gdpr-popover" data-placement="left" data-content='
           {% blocktrans %}
@@ -104,7 +104,7 @@
           <br>
 
           <label for="{{ form.confirm_password.id_for_label }}" class="h5 text-uppercase">
-            {{ form.confirm_password.label }} <span class="badge badge-danger">{{ form.confirm_password.errors.as_text }}</span>
+            {% trans 'Password confirmation' %}<span class="badge badge-danger">{{ form.confirm_password.errors.as_text }}</span>
 
           </label>
           <input id="{{ form.confirm_password.auto_id }}" name="{{ form.confirm_password.html_name }}" type="password" class="form-control form-control-lg" required>
