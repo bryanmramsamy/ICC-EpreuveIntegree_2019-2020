@@ -18,13 +18,13 @@
       <div class="form-group">
         <form action="{% url 'login' %}" method="post">
           {% csrf_token %}
-          
-          <label for="{{ form.username.id_for_label }}" class="h5 text-uppercase">{{ form.username.label }}</label>
+
+          <label for="{{ form.username.id_for_label }}" class="h5 text-uppercase">{% trans 'Registration number' %}</label>
           <input id="{{ form.username.auto_id }}" name="{{ form.username.html_name }}" type="text" class="form-control form-control-lg" required>
 
           <br>
 
-          <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">{{ form.password.label }}</label>
+          <label for="{{ form.password.id_for_label }}" class="h5 text-uppercase">{% trans 'Password' %}</label>
           <input id="{{ form.password.auto_id }}" name="{{ form.password.html_name }}" type="password" class="form-control form-control-lg" required>
 
           {% if form.username.errors %}
