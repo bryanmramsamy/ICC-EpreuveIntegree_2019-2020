@@ -240,7 +240,8 @@ class ModuleRegistrationReport(FrontOfficeResource):
                 "completed nor exempted if no final score was given."
             ))
 
-        if self.status == "EXEMPTED" and not success_score_threshold_reached:
+        if self.status == "EXEMPTED" \
+           and not self.success_score_threshold_reached:
             raise ValidationError(_(
                 "If a module is exempted, the final score must be equal or "
                 "above the success score threshold, which is actually at {}."

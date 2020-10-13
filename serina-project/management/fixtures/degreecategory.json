@@ -1,0 +1,32 @@
+[
+{
+  "model": "management.degreecategory",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T00:56:41.726Z",
+    "date_updated": "2020-10-10T00:56:41.726Z",
+    "name": "Bachelier"
+  }
+},
+{
+  "model": "management.degreecategory",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:12:17.062Z",
+    "date_updated": "2020-10-10T01:12:17.063Z",
+    "name": "Master"
+  }
+},
+{
+  "model": "management.degreecategory",
+  "pk": 3,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:12:26.636Z",
+    "date_updated": "2020-10-10T01:12:26.636Z",
+    "name": "Spécialisation"
+  }
+}
+]

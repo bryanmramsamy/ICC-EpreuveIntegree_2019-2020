@@ -1,0 +1,189 @@
+[
+{
+  "model": "management.module",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:08:30.183Z",
+    "date_updated": "2020-10-10T01:08:45.462Z",
+    "title": "Principe de développement en Java",
+    "reference": "PRIN001",
+    "description": "Java est un langage de programmation orienté objet créé par James Gosling et Patrick Naughton, employés de Sun Microsystems, avec le soutien de Bill Joy (cofondateur de Sun Microsystems en 1982), présenté officiellement le 23 mai 1995 au SunWorld.\r\n\r\nLa société Sun a été ensuite rachetée en 2009 par la société Oracle qui détient et maintient désormais Java.\r\n\r\nUne particularité de Java est que les logiciels écrits dans ce langage sont compilés vers une représentation binaire intermédiaire qui peut être exécutée dans une machine virtuelle Java (JVM) en faisant abstraction du système d'exploitation.",
+    "level": 1,
+    "ECTS_value": 10,
+    "cost": "24.95",
+    "price": "17.27",
+    "picture": "management/modules/java.jpg",
+    "prerequisites": [],
+    "eligible_teachers": [
+      4,
+      5,
+      12
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:37:34.604Z",
+    "date_updated": "2020-10-10T01:44:34.969Z",
+    "title": "Système de gestion de base de données",
+    "reference": "SYST002",
+    "description": "Un système de gestion de base de données (abr. SGBD) est un logiciel système servant à stocker, à manipuler ou gérer, et à partager des données dans une base de données, en garantissant la qualité, la pérennité et la confidentialité des informations, tout en cachant la complexité des opérations.\r\n\r\nUn SGBD (en anglais DBMS pour database management system) permet d'inscrire, de retrouver, de modifier, de trier, de transformer ou d'imprimer les informations de la base de données. Il permet d'effectuer des comptes rendus des informations enregistrées et comporte des mécanismes pour assurer la cohérence des informations, éviter des pertes d'informations dues à des pannes, assurer la confidentialité et permettre son utilisation par d'autres logiciels1. Selon le modèle, le SGBD peut comporter une simple interface graphique jusqu'à des langages de programmation sophistiqués1.\r\n\r\nLes systèmes de gestion de base de données sont des logiciels universels, indépendants de l'usage qui est fait des bases de données2. Ils sont utilisés pour de nombreuses applications informatiques, notamment les guichets automatiques bancaires, les logiciels de réservation, les bibliothèques numériques, les logiciels d'inventaire, les progiciels de gestion intégrés ou la plupart des blogs et sites web. Il existe de nombreux systèmes de gestion de base de données. En 2008, Oracle détenait près de la moitié du marché des SGBD avec MySQL et Oracle Database. Vient ensuite IBM avec près de 20 %, laissant peu de place pour les autres acteurs3.\r\n\r\nLes SGBD sont souvent utilisés par d'autres logiciels ainsi que les administrateurs ou les développeurs. Ils peuvent être sous forme de composant logiciel, de serveur, de logiciel applicatif ou d'environnement de programmation.\r\n\r\nEn 2011, la majorité des SGBD du marché manipulent des bases de données relationnelles.",
+    "level": 2,
+    "ECTS_value": 10,
+    "cost": "18.89",
+    "price": "11.01",
+    "picture": "management/modules/sgbd.jpg",
+    "prerequisites": [
+      1,
+      3
+    ],
+    "eligible_teachers": [
+      12
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 3,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:40:35.143Z",
+    "date_updated": "2020-10-10T01:41:20.979Z",
+    "title": "Principe de développement en Python",
+    "reference": "PRIN003",
+    "description": "Python est un langage de programmation interprété, multi-paradigme et multiplateformes. Il favorise la programmation impérative structurée, fonctionnelle et orientée objet. Il est doté d'un typage dynamique fort, d'une gestion automatique de la mémoire par ramasse-miettes et d'un système de gestion d'exceptions ; il est ainsi similaire à Perl, Ruby, Scheme, Smalltalk et Tcl.\r\n\r\nLe langage Python est placé sous une licence libre proche de la licence BSD28 et fonctionne sur la plupart des plates-formes informatiques, des smartphones aux ordinateurs centraux29, de Windows à Unix avec notamment GNU/Linux en passant par macOS, ou encore Android, iOS, et peut aussi être traduit en Java ou .NET. Il est conçu pour optimiser la productivité des programmeurs en offrant des outils de haut niveau et une syntaxe simple à utiliser.\r\n\r\nIl est également apprécié par certains pédagogues qui y trouvent un langage où la syntaxe, clairement séparée des mécanismes de bas niveau, permet une initiation aisée aux concepts de base de la programmation30.",
+    "level": 1,
+    "ECTS_value": 10,
+    "cost": "13.50",
+    "price": "8.89",
+    "picture": "management/modules/python.jpg",
+    "prerequisites": [],
+    "eligible_teachers": [
+      5,
+      12
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 4,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:43:58.313Z",
+    "date_updated": "2020-10-10T01:45:25.777Z",
+    "title": "Projet de développement en orienté objet",
+    "reference": "PROJ004",
+    "description": "La programmation orientée objet (POO), ou programmation par objet, est un paradigme de programmation informatique. Il consiste en la définition et l'interaction de briques logicielles appelées objets ; un objet représente un concept, une idée ou toute entité du monde physique, comme une voiture, une personne ou encore une page d'un livre. Il possède une structure interne et un comportement, et il sait interagir avec ses pairs. Il s'agit donc de représenter ces objets et leurs relations ; l'interaction entre les objets via leurs relations permet de concevoir et réaliser les fonctionnalités attendues, de mieux résoudre le ou les problèmes. Dès lors, l'étape de modélisation revêt une importance majeure et nécessaire pour la POO. C'est elle qui permet de transcrire les éléments du réel sous forme virtuelle.\r\n\r\nLa programmation par objet consiste à utiliser des techniques de programmation pour mettre en œuvre une conception basée sur les objets. Celle-ci peut être élaborée en utilisant des méthodologies de développement logiciel objet, dont la plus connue est le processus unifié (« Unified Software Development Process » en anglais), et exprimée à l'aide de langages de modélisation tels que le Unified Modeling Language (UML).",
+    "level": 2,
+    "ECTS_value": 20,
+    "cost": "20.00",
+    "price": "17.63",
+    "picture": "management/modules/project.jpg",
+    "prerequisites": [
+      2
+    ],
+    "eligible_teachers": [
+      5
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 5,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:53:47.658Z",
+    "date_updated": "2020-10-10T01:54:06.331Z",
+    "title": "Administration des réseaux",
+    "reference": "ADMI005",
+    "description": "Un administrateur réseau est une personne chargée de la gestion du réseau, c'est-à-dire de gérer les comptes et les machines d'un réseau informatique d'une organisation (entreprise par exemple). Cela peut concerner notamment des concentrateurs, commutateurs, routeurs, modems, pare-feu, proxy, connectivité Internet, les réseaux privés virtuels (VPN).\r\n\r\nIl est souvent assisté d'un ingénieur architecte informatique qui conçoit une architecture réseau (voir aussi DMZ, DNS, LAN, NAT, SAN, WAN).\r\n\r\nL'administration de réseau est une discipline de l'informatique qui peut éventuellement s'étendre à la téléphonie.\r\n\r\nL'administrateur réseau est parfois également administrateur système, il gère alors également les postes de travail (PC, Macintosh), imprimantes et serveurs de l'entreprise.",
+    "level": 2,
+    "ECTS_value": 15,
+    "cost": "24.45",
+    "price": "21.31",
+    "picture": "management/modules/admin_reseau.jpg",
+    "prerequisites": [
+      1,
+      3
+    ],
+    "eligible_teachers": [
+      4
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 6,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:56:46.492Z",
+    "date_updated": "2020-10-10T01:56:56.038Z",
+    "title": "Administration des systèmes",
+    "reference": "ADMI006",
+    "description": "En informatique, le titre d'administrateur systèmes désigne la personne responsable des serveurs d'une organisation (entreprise, association, administration).\r\n\r\nIl travaille au sein d'une DSI (direction des systèmes d'information) ou d'une SSII (société de services en ingénierie informatique). L'administrateur systèmes intervient auprès du DSI (directeur des systèmes d'information), des DBA (Database Administrator, administrateur de bases de données), des administrateurs réseau, des webmestres et apparentés, des développeurs, des responsables bureautique (postes de travail) et enfin des usagers. Il est responsable de la disponibilité des informations au sein de son entreprise. Son rôle ne se limite pas à la résolution des problèmes, mais il doit proposer des solutions en adéquation avec les besoins de son client.",
+    "level": 2,
+    "ECTS_value": 15,
+    "cost": "21.00",
+    "price": "14.63",
+    "picture": "management/modules/admin_system.jpg",
+    "prerequisites": [
+      1,
+      3
+    ],
+    "eligible_teachers": [
+      4,
+      5
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 7,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T02:10:02.637Z",
+    "date_updated": "2020-10-10T02:10:08.097Z",
+    "title": "Cryptographie appliquée",
+    "reference": "CRYP007",
+    "description": "La cryptographie est une des disciplines de la cryptologie s'attachant à protéger des messages (assurant confidentialité, authenticité et intégrité) en s'aidant souvent de secrets ou clés. Elle se distingue de la stéganographie qui fait passer inaperçu un message dans un autre message alors que la cryptographie rend un message supposément inintelligible à autre que qui-de-droit.\r\n\r\nElle est utilisée depuis l'Antiquité, mais certaines de ses méthodes les plus modernes, comme la cryptographie asymétrique, datent de la fin du XXe siècle.",
+    "level": 3,
+    "ECTS_value": 30,
+    "cost": "35.00",
+    "price": "27.14",
+    "picture": "management/modules/crypto.jpg",
+    "prerequisites": [],
+    "eligible_teachers": [
+      12
+    ]
+  }
+},
+{
+  "model": "management.module",
+  "pk": 8,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T02:11:52.209Z",
+    "date_updated": "2020-10-10T02:12:04.837Z",
+    "title": "Hacking éthique",
+    "reference": "HACK008",
+    "description": "Le hacking éthique, en sécurité informatique décrit l'activité de hacking lorsqu'elle n'est pas malveillante.\r\n\r\nLes mêmes pratiques de piratage, exploitation de faille, contournement des limitations... peuvent être utilisées par des white hat (français : chapeaux blancs) avec un objectif bienveillant (analyse, information, protection...) ou des black hat (français : chapeaux noirs) avec un objectif malveillant (destruction, prise de contrôle, vol...).\r\n\r\nPar exemple, il est plus éthique de pratiquer une divulgation responsable et d'agir dans un cadre légal : mission de test d'intrusion ou bug bounty (chasse aux bugs).",
+    "level": 3,
+    "ECTS_value": 30,
+    "cost": "46.98",
+    "price": "40.10",
+    "picture": "management/modules/hack.jpg",
+    "prerequisites": [
+      7,
+      1,
+      3
+    ],
+    "eligible_teachers": [
+      4
+    ]
+  }
+}
+]

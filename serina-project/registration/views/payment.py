@@ -185,14 +185,15 @@ def degree_payment_done(request):
     degree_rr = get_degree_rr_and_clean_session_pk(request)
 
     for module_rr in degree_rr.modules_rrs.all():
-        if module_rr.final_score:
-            module_rr.status = "COMPLETED"
-        else:
-            module_rr.status = "PAYED"
+        if module_rr.status != "EXEMPTED":
+            if module_rr.final_score:
+                module_rr.status = "COMPLETED"
+            else:
+                module_rr.status = "PAYED"
 
-        module_rr.payed_fees = module_rr.module.price
-        module_rr.date_payed = datetime.datetime.now()
-        module_rr.save()
+            module_rr.payed_fees = module_rr.module.price
+            module_rr.date_payed = datetime.datetime.now()
+            module_rr.save()
 
     degree_rr.payed_fees = degree_rr.to_be_payed_fees
     degree_rr.date_payed = datetime.datetime.now()

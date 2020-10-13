@@ -1,0 +1,35 @@
+[
+{
+  "model": "management.modulelevel",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:05:23.611Z",
+    "date_updated": "2020-10-10T01:05:23.611Z",
+    "rank": 10,
+    "name": "Débutant"
+  }
+},
+{
+  "model": "management.modulelevel",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:37:48.081Z",
+    "date_updated": "2020-10-10T01:37:48.081Z",
+    "rank": 20,
+    "name": "Confirmé"
+  }
+},
+{
+  "model": "management.modulelevel",
+  "pk": 3,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T01:37:59.570Z",
+    "date_updated": "2020-10-10T01:37:59.570Z",
+    "rank": 30,
+    "name": "Avancé"
+  }
+}
+]

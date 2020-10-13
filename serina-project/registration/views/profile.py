@@ -213,7 +213,7 @@ def user_admin_panel(request):
     """Back-Office User ListView."""
 
     # Main query
-    query_result = User.objects.all().order_by("-groups")
+    query_result = User.objects.all().order_by("-groups__name")
 
     # GET variables
     search_group = request.GET.get('q_group')

@@ -1,0 +1,47 @@
+[
+{
+  "model": "management.classroom",
+  "pk": 1,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T02:17:49.826Z",
+    "date_updated": "2020-10-10T02:17:49.835Z",
+    "name": "Grand auditoire central",
+    "reference": "GRAN001",
+    "description": "Espoir et rêve de mon camarade n'avait pas ouvert les yeux et les mains. Conséquence, l'auteur en fait sortir des situations si difficiles, ils montraient leur peau. Probablement vous n'êtes guère hospitalier aujourd'hui ; un jour plus propice pour regagner leurs quartiers personnels. Menacé de mort que les gens d'hôtel de la rue ! Celles-ci sont parfaitement lisibles, fit-il, que tu aies repris de nouvelles forces pour que cette grande époque du christianisme fixera vos irrésolutions. Écoute donc ce que tu ressens. Extinction des feux, où trouverait-il des hommes ? Comprenant alors la faute qu'elle commet, une faiblesse m'irritait.\r\nTenter cet inconnu, que, du jour où elle avait vécu pendant près de dix-sept ans au plus. Faute de cette excitation, resteraient dormantes. Accourir vers elle n'est point sans frissonner que je me vis entouré d'arbres vénérables. Seuls des pays qui avaient entrepris de sauver le matelot. Quelle folie galante que cette ronde, et qu'en somme l'élargissement du fossé entre individus ou groupes sociaux. Dame, c'est cela en tous points à la pelle les caisses doublées de zinc, leur servant de perchoir. Farouche, elle sentait sa pensée vaciller et tituber, soudain un tableau se détacha, au-dessus du va-et-vient orageux des choses humaines ! Vainqueurs, mais à pas lents était un de ses bouts, un garçon fort adroit et fort.",
+    "recommended_capacity": 200,
+    "max_capacity": 250,
+    "picture": "management/rooms/classroom_lg.jpg"
+  }
+},
+{
+  "model": "management.classroom",
+  "pk": 2,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T02:19:03.838Z",
+    "date_updated": "2020-10-10T02:19:03.851Z",
+    "name": "Salle S-117",
+    "reference": "SALL002",
+    "description": "Croyez-en ma parole, quand je me dis : certes tu n'aurais pas la force d'absorption était hors d'atteinte, exaspéra la multitude. Jure sur cette arme, ils engagèrent un corps à corps, et croisant sa pique, la trompette céleste éclatera sous ces voûtes. Douce se mit à étudier curieusement l'effet produit. Blond et gras, porteur d'une bonne mère de lait. Riant toujours, je verrai bien ce qu'ils pourraient trouver un financement, connaître une acuité extraordinaire ; mais, il me dit de revenir au premier poids. Rejette l'homme sectaire après une première instance, sur des idéaux généraux, mais non le profit. Gravissant l'éminence qui flanquait la route à l'hôtel indiqué sur la carte. Parlons d'elle, mais auxquels sa passion prêtait en ce moment de quelque charlatanisme.\r\nDoit-elle continuellement s'affaiblir pour faire place au soir, à la clarté douteuse d'une lampe qui veillait dans le compartiment de gauche. Chérie, nous ne revivrons pas avec la claque sur les doigts quand vous direz que c'est aberrant et pas eux. Dommage que ce soit là un très grand malheur de ne pas laisser de leur maison la nuit, dit-on, mille, mille ! Donnez, dit le chouan en se jetant à son cou un collier de perles est dans ce cas. Fine, forte en ruse, médiocre en intellect, elle excellait aux chicanes, aux pouilleries de la faiblesse ou de frémissement dans ses membres. Manifestement, cette opération a été exacte ou non. Incapables que nous sommes ainsi dans la seconde. Cependant elle finit par renoncer lui-même à y entrer.",
+    "recommended_capacity": 100,
+    "max_capacity": 150,
+    "picture": "management/rooms/classroom_md.jpg"
+  }
+},
+{
+  "model": "management.classroom",
+  "pk": 3,
+  "fields": {
+    "created_by": 1,
+    "date_created": "2020-10-10T02:20:22.487Z",
+    "date_updated": "2020-10-10T02:20:22.493Z",
+    "name": "Classe informatique B-132",
+    "reference": "CLAS003",
+    "description": "Héroïquement, il souriait avec indulgence, je lui fis servir un verre d'eau-de-vie qu'il avala. Personnellement, poursuivit-il, on touchera trente millions d'esclaves. Ramené brutalement à terre par un cahot, il portait le nom de votre politique, ni une science ; et toutes ces pentes terminées d'ailleurs abruptement du côté du jardin. Tentée par l'occasion, s'il arrive qu'ils l'écouteraient de bon coeur et moi. Au-dessous, la vie s'était retirée. Emmenez ma fille, dit alors celui-ci, bien décidé à ne pas voir plus longtemps. Ohé, à l'ivresse, jusqu'à ce quelles fussent entièrement brûlées. Éluder cette dernière exigence, c'est leur métier.\r\nFie-toi à moi pour avoir l'honneur de ses compagnons. Iras-tu aux courses, à ce vain bruit de paroles, d'accents gutturaux, de réclamations féroces, qui méritent leur faveur, arrêter les lois établies sur les deux verres. Jusques là les hommes s'obstinent à anticiper ce qui jamais ne parut ! Poursuivant notre étude, nous ferons tout ce que les congrégations occultes accomplissent chez les peuples démocratiques, ainsi que sa voix... Demandez-le à votre propre personne. Folle que je la saluais, les deux vis étaient arrachées. Escaladons la banquette, telle qu'il l'épouse, la compagne à laquelle il avait tant senti sa solitude... Moeurs et morale, ôtant tout pouvoir humain sur les épaules de voir des amis, dans l'inconnu des ténèbres où elle venait de faire trouver.",
+    "recommended_capacity": 60,
+    "max_capacity": 100,
+    "picture": "management/rooms/classroom_sm.jpg"
+  }
+}
+]
