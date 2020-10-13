@@ -682,7 +682,13 @@ msgid_plural ""
 "          They were %(nb_courses)s courses given ever.\n"
 "        "
 msgstr[0] ""
+"\n"
+"          Er is ooit maar één cursus gegeven.\n"
+"        "
 msgstr[1] ""
+"\n"
+"          Het waren %(nb_courses)s cursussen die ooit werden gegeven.\n"
+"        "
 
 #: management/templates/management/course/course_listview.html:24
 #, python-format
@@ -695,7 +701,13 @@ msgid_plural ""
 "          They are actually %(nb_active_courses)s courses given.\n"
 "        "
 msgstr[0] ""
+"\n"
+"          Er wordt eigenlijk maar één cursus gegeven.\n"
+"        "
 msgstr[1] ""
+"\n"
+"          Het zijn eigenlijk %(nb_active_courses)s cursussen die worden gegeven.\n"
+"        "
 
 #: management/templates/management/course/course_listview.html:40
 msgid "Register a new course"
@@ -756,7 +768,7 @@ msgstr "Graadcategorieën"
 #: registration/templates/registration/registration_report/module_rr_listview_search.html:118
 #: registration/templates/registration/userprofile/user_admin_panel_search.html:59
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
 #: management/templates/management/course/course_listview_jumbotron.html:11
 #: management/templates/management/course/course_listview_jumbotron.html:26
@@ -934,7 +946,7 @@ msgstr "Annuleren en terug naar de gradenpagina"
 #: management/templates/management/degree/degree_detailview.html:49
 #: management/templates/management/module/module_detailview.html:56
 msgid "You didn\\"
-msgstr ""
+msgstr "Je hebt niet \\"
 
 #: management/templates/management/degree/degree_detailview.html:54
 #: management/templates/management/module/module_detailview.html:61
@@ -974,11 +986,17 @@ msgid_plural ""
 "          They are actually %(nb_degrees)s degrees available.\n"
 "        "
 msgstr[0] ""
+"\n"
+"          Er is eigenlijk maar één diploma beschikbaar.\n"
+"        "
 msgstr[1] ""
+"\n"
+"          Het zijn eigenlijk %(nb_degrees)s graden beschikbaar.\n"
+"        "
 
 #: management/templates/management/degree/degree_listview.html:84
 msgid "Number of modules"
-msgstr ""
+msgstr "Aantal modules"
 
 #: management/templates/management/degree/degree_listview.html:87
 #: management/templates/management/module/module_listcard.html:11
@@ -1017,7 +1035,7 @@ msgstr ""
 #: management/templates/management/room/classroom_listview_search.html:27
 #: templates/search_tag.html:5
 msgid "Search"
-msgstr ""
+msgstr "Zoeken"
 
 #: management/templates/management/degree/degree_status.html:7
 msgid "Degree completed"
@@ -1025,7 +1043,7 @@ msgstr "Diploma afgerond"
 
 #: management/templates/management/degree/degree_status.html:12
 msgid "Ongoing degree"
-msgstr ""
+msgstr "Doorlopende opleiding"
 
 #: management/templates/management/degree/degree_status.html:18
 #, python-format
@@ -1038,7 +1056,13 @@ msgid_plural ""
 "        This degree is composed of %(nb_modules)s modules.\n"
 "      "
 msgstr[0] ""
+"\n"
+"        Deze graad is samengesteld uit slechts één module.\n"
+"      "
 msgstr[1] ""
+"\n"
+"        Deze graad is samengesteld uit %(nb_modules)s modules.\n"
+"      "
 
 #: management/templates/management/degree/degree_updateview.html:5
 #: management/templates/management/degree/degree_updateview.html:11
@@ -1133,60 +1157,60 @@ msgstr "Werk de gradencategorie bij"
 
 #: management/templates/management/degree/related_degrees_list.html:37
 msgid "No degree found"
-msgstr ""
+msgstr "Geen diploma gevonden"
 
 #: management/templates/management/module/module_back_to_catalog_button.html:7
 msgid "Back to the modules catalog"
-msgstr ""
+msgstr "Terug naar de modulecatalogus"
 
 #: management/templates/management/module/module_card.html:24
 msgid "This module is part of the following degrees"
-msgstr ""
+msgstr "Deze module maakt deel uit van de volgende opleidingen"
 
 #: management/templates/management/module/module_card.html:35
 msgid "This module does not belong to any degree."
-msgstr ""
+msgstr "Deze module behoort tot geen enkele graad."
 
 #: management/templates/management/module/module_card.html:40
 msgid "Teachers of this module"
-msgstr ""
+msgstr "Leraar van deze module"
 
 #: management/templates/management/module/module_card.html:49
 msgid "There is actually no eligible teacher for this course."
-msgstr ""
+msgstr "Er is eigenlijk geen geschikte docent voor deze cursus."
 
 #: management/templates/management/module/module_createview.html:12
 msgid "Add a new module to the catalog"
-msgstr ""
+msgstr "Voeg een nieuwe module toe aan de catalogus"
 
 #: management/templates/management/module/module_createview.html:127
 msgid "Create the new module"
-msgstr ""
+msgstr "Maak de nieuwe module"
 
 #: management/templates/management/module/module_createview.html:132
 msgid "Cancel and back to modules catalog"
-msgstr ""
+msgstr "Annuleer en terug naar de modulecatalogus"
 
 #: management/templates/management/module/module_createview.html:145
 #: management/templates/management/module/module_updateview.html:195
 msgid "Create a new module level"
-msgstr ""
+msgstr "Creëer een nieuw moduleniveau"
 
 #: management/templates/management/module/module_createview.html:151
 #: management/templates/management/module/module_updateview.html:201
 msgid "Back to modules catalog"
-msgstr ""
+msgstr "Terug naar modulecatalogus"
 
 #: management/templates/management/module/module_deleteview.html:6
 #: management/templates/management/module/module_deleteview.html:15
 #: management/templates/management/room/classroom_deleteview.html:5
 msgid "Delete the module"
-msgstr ""
+msgstr "Verwijder de module"
 
 #: management/templates/management/module/module_deleteview.html:30
 #: management/templates/management/module/module_updateview.html:182
 msgid "Cancel and back to module page"
-msgstr ""
+msgstr "Annuleer en terug naar de modulepagina"
 
 #: management/templates/management/module/module_detailview.html:66
 #, fuzzy
@@ -1196,16 +1220,16 @@ msgstr "Abonneer u op deze module"
 
 #: management/templates/management/module/module_listcard.html:8
 msgid "Number of eligible teacher"
-msgstr ""
+msgstr "Nummer van in aanmerking komende leraar"
 
 #: management/templates/management/module/module_listcard.html:14
 msgid "Number of courses available"
-msgstr ""
+msgstr "Aantal cursussen beschikbaar"
 
 #: management/templates/management/module/module_listview.html:4
 #: management/templates/management/module/module_listview_jumbotron.html:12
 msgid "Modules catalog"
-msgstr ""
+msgstr "Modules catalogus"
 
 #: management/templates/management/module/module_listview.html:29
 #, python-format
@@ -1218,11 +1242,17 @@ msgid_plural ""
 "          They are actually %(nb_modules)s modules available.\n"
 "        "
 msgstr[0] ""
+"\n"
+"          Er is eigenlijk maar één module beschikbaar.\n"
+"        "
 msgstr[1] ""
+"\n"
+"          Het zijn eigenlijk %(nb_modules)s modules die beschikbaar zijn.\n"
+"        "
 
 #: management/templates/management/module/module_listview.html:51
 msgid "Consult the modules by level"
-msgstr ""
+msgstr "Raadpleeg de modules per niveau"
 
 #: management/templates/management/module/module_listview_filter.html:19
 #, fuzzy
@@ -1259,26 +1289,30 @@ msgid ""
 "propose a collection of modules.\n"
 "  "
 msgstr ""
+"\n"
+"    Voor de studenten die stuk voor stuk hun eigen pad willen bouwen, wij "
+"stel een verzameling modules voor.\n"
+"  "
 
 #: management/templates/management/module/module_status.html:8
 msgid "Module completed"
-msgstr ""
+msgstr "Module voltooid"
 
 #: management/templates/management/module/module_status.html:12
 msgid "No prerequisite needed"
-msgstr ""
+msgstr "Geen vereiste vereist"
 
 #: management/templates/management/module/module_status.html:16
 msgid "Prerequisites completed, not module itself"
-msgstr ""
+msgstr "Vereisten voltooid, niet de module zelf"
 
 #: management/templates/management/module/module_status.html:20
 msgid "Prerequisites missing"
-msgstr ""
+msgstr "Vereisten ontbreken"
 
 #: management/templates/management/module/module_status.html:28
 msgid "You already registered to this module"
-msgstr ""
+msgstr "U bent al geregistreerd voor deze module"
 
 #: management/templates/management/module/module_status.html:34
 #, python-format
@@ -1291,7 +1325,13 @@ msgid_plural ""
 "        This module has %(nb_prerequisites)s prerequisites\n"
 "      "
 msgstr[0] ""
+"\n"
+"        Deze module heeft maar één voorwaarde\n"
+"      "
 msgstr[1] ""
+"\n"
+"        Deze module heeft %(nb_prerequisites) s vereisten\n"
+"      "
 
 #: management/templates/management/module/module_updateview.html:5
 #: management/templates/management/module/module_updateview.html:12
@@ -1300,28 +1340,28 @@ msgstr ""
 
 #: management/templates/management/module/module_updateview.html:177
 msgid "Update module"
-msgstr ""
+msgstr "Update de module"
 
 #: management/templates/management/module/modulelevel_back_to_catalog_button.html:7
 msgid "Back to the module levels catalog"
-msgstr ""
+msgstr "Terug naar de catalogus met moduleniveaus"
 
 #: management/templates/management/module/modulelevel_createview.html:4
 msgid "Add a new module level"
-msgstr ""
+msgstr "Voeg een nieuw moduleniveau toe"
 
 #: management/templates/management/module/modulelevel_createview.html:11
 msgid "Add a new module level to the catalog"
-msgstr ""
+msgstr "Voeg een nieuw moduleniveau toe aan de catalogus"
 
 #: management/templates/management/module/modulelevel_createview.html:48
 msgid "Create the new difficulty level"
-msgstr ""
+msgstr "Creëer de nieuwe moeilijkheidsgraad"
 
 #: management/templates/management/module/modulelevel_createview.html:53
 #: management/templates/management/module/modulelevel_updateview.html:53
 msgid "Cancel and back to module levels catalog"
-msgstr ""
+msgstr "Annuleer en terug naar de catalogus met moduleniveaus"
 
 #: management/templates/management/module/modulelevel_deleteview.html:5
 msgid "ModuleLevelDetailView"
@@ -1329,20 +1369,20 @@ msgstr ""
 
 #: management/templates/management/module/modulelevel_deleteview.html:13
 msgid "Delete the module difficulty level"
-msgstr ""
+msgstr "Verwijder de moeilijkheidsgraad van de module"
 
 #: management/templates/management/module/modulelevel_deleteview.html:28
 msgid "Cancel and back to module level page"
-msgstr ""
+msgstr "Annuleren en terug naar de pagina op moduleniveau"
 
 #: management/templates/management/module/modulelevel_detailview.html:4
 msgid "Module diffculty level"
-msgstr ""
+msgstr "Module moeilijkheidsgraad"
 
 #: management/templates/management/module/modulelevel_listview.html:5
 #: management/templates/management/module/modulelevel_listview_jumbotron.html:12
 msgid "Modules by level"
-msgstr ""
+msgstr "Modules op niveau"
 
 #: management/templates/management/module/modulelevel_listview.html:24
 #, python-format
@@ -1355,7 +1395,13 @@ msgid_plural ""
 "          They are actually %(nb_levels)s module's levels available.\n"
 "        "
 msgstr[0] ""
+"\n"
+"          Er is eigenlijk maar één module-niveau beschikbaar.\n"
+"        "
 msgstr[1] ""
+"\n"
+"          Het zijn feitelijk beschikbare moduleniveaus van %(nb_levels) s.\n"
+"        "
 
 #: management/templates/management/module/modulelevel_listview_jumbotron.html:17
 msgid ""
@@ -1363,77 +1409,80 @@ msgid ""
 "    Before you climb a mountain, it may be better to see how tall it is.\n"
 "  "
 msgstr ""
+"\n"
+"    Voordat u een berg beklimt, is het wellicht beter om te zien hoe hoog deze is.\n"
+"  "
 
 #: management/templates/management/module/modulelevel_updateview.html:4
 msgid "Update the module level"
-msgstr ""
+msgstr "Werk het moduleniveau bij"
 
 #: management/templates/management/module/modulelevel_updateview.html:11
 msgid "Update the module difficulty level"
-msgstr ""
+msgstr "Update de moeilijkheidsgraad van de module"
 
 #: management/templates/management/module/modulelevel_updateview.html:48
 msgid "Update the difficulty level"
-msgstr ""
+msgstr "Update de moeilijkheidsgraad"
 
 #: management/templates/management/module/related_courses_list.html:5
 msgid "Upcoming and ongoing courses for this module"
-msgstr ""
+msgstr "Aankomende en lopende cursussen voor deze module"
 
 #: management/templates/management/module/related_courses_list.html:12
 #: management/templates/management/room/related_courses_list.html:12
 msgid "Seats"
-msgstr ""
+msgstr "Zitplaatsen"
 
 #: management/templates/management/module/related_courses_list.html:35
 msgid "No classroom available yet"
-msgstr ""
+msgstr "Nog geen leslokaal beschikbaar"
 
 #: management/templates/management/module/related_courses_list.html:45
 #: management/templates/management/room/related_courses_list.html:45
 msgid "No course available for this module"
-msgstr ""
+msgstr "Geen cursus beschikbaar voor deze module"
 
 #: management/templates/management/module/related_modules_list.html:35
 msgid "No module found"
-msgstr ""
+msgstr "Geen module gevonden"
 
 #: management/templates/management/room/back_to_room_list_button.html:7
 msgid "Back to the classroom list"
-msgstr ""
+msgstr "Terug naar de klaslijst"
 
 #: management/templates/management/room/classroom_card.html:18
 msgid "Classroom capacity"
-msgstr ""
+msgstr "Classroom capaciteit"
 
 #: management/templates/management/room/classroom_card.html:22
 msgid "Recommended"
-msgstr ""
+msgstr "Aanbevolen"
 
 #: management/templates/management/room/classroom_card.html:27
 msgid "Maximal"
-msgstr ""
+msgstr "Maximaal"
 
 #: management/templates/management/room/classroom_createview.html:86
 msgid "Register new classroom"
-msgstr ""
+msgstr "Registreer een nieuw klaslokaal"
 
 #: management/templates/management/room/classroom_createview.html:91
 #: management/templates/management/room/classroom_deleteview.html:28
 msgid "Cancel and back to classroom list"
-msgstr ""
+msgstr "Annuleer en terug naar de klaslijst"
 
 #: management/templates/management/room/classroom_deleteview.html:13
 msgid "Remove the classroom"
-msgstr ""
+msgstr "Verwijder het klaslokaal"
 
 #: management/templates/management/room/classroom_listview.html:5
 msgid "All our classroom"
-msgstr ""
+msgstr "Heel ons klaslokaal"
 
 #: management/templates/management/room/classroom_listview_jumbotron.html:12
 msgid "All our classrooms"
-msgstr ""
+msgstr "Al onze klaslokalen"
 
 #: management/templates/management/room/classroom_listview_jumbotron.html:17
 msgid ""
@@ -1444,31 +1493,37 @@ msgid ""
 "    Here is a list of ours.\n"
 "  "
 msgstr ""
+"\n"
+"    Elke persoon zou zijn / haar huis moeten hebben, elke sportclub zou er een moeten hebben "
+"stadion en elke school zou zijn eigen klaslokalen moeten hebben.\n"
+"    <br>\n"
+"    Hier is een lijst van ons.\n"
+"  "
 
 #: management/templates/management/room/classroom_listview_jumbotron.html:31
 msgid "A list of all our classrooms"
-msgstr ""
+msgstr "Een lijst van al onze klaslokalen"
 
 #: management/templates/management/room/classroom_updateview.html:5
 #: management/templates/management/room/classroom_updateview.html:12
 msgid "Update the classroom"
-msgstr ""
+msgstr "Update het klaslokaal"
 
 #: management/templates/management/room/classroom_updateview.html:105
 msgid "Update classroom"
-msgstr ""
+msgstr "Update klaslokaal"
 
 #: management/templates/management/room/classroom_updateview.html:110
 msgid "Cancel and back to classroom page"
-msgstr ""
+msgstr "Annuleer en terug naar de klaspagina"
 
 #: management/templates/management/room/related_courses_list.html:5
 msgid "Upcoming and ongoing courses in this classroom"
-msgstr ""
+msgstr "Aankomende en lopende cursussen in deze klas"
 
 #: rating/models.py:26
 msgid "Creation date"
-msgstr ""
+msgstr "Aanmaakdatum"
 
 #: rating/models.py:28
 #, fuzzy
@@ -1478,45 +1533,47 @@ msgstr "Begin datum"
 
 #: rating/models.py:47 rating/templates/rating/rating_listview_search.html:74
 msgid "Rate"
-msgstr ""
+msgstr "Beoordeel"
 
 #: rating/models.py:48
 msgid "Give a rate from 1 (very poor) to 5 (very good)"
-msgstr ""
+msgstr "Geef een cijfer van 1 (zeer slecht) tot 5 (zeer goed)"
 
 #: rating/models.py:52
 msgid "Comment"
-msgstr ""
+msgstr "Commentaar"
 
 #: rating/models.py:54
 msgid ""
 "Leave a comment you want to be displayed on your rate. Your comment will be "
 "shown as well as your rating on the home page and the module/degree page."
 msgstr ""
+"Laat een opmerking achter die u op uw tarief wilt laten zien. Uw opmerking wordt"
+"weergegeven, evenals uw beoordeling op de startpagina en de module / graadpagina."
 
 #: rating/models.py:61
 msgid "Is visible"
-msgstr ""
+msgstr "Is zichtbaar"
 
 #: rating/models.py:92
 msgid "A rating must be assigned either to a module or to a degree."
-msgstr ""
+msgstr "Een beoordeling moet worden toegekend aan een module of aan een graad."
 
 #: rating/models.py:96
 msgid "A rating can not be assigned to a module and a degree at the same time."
-msgstr ""
+msgstr "Een beoordeling kan niet tegelijkertijd aan een module en een graad worden toegekend."
 
 #: rating/templates/rating/rating_card.html:68
 msgid "Visible"
-msgstr ""
+msgstr "Zichtbaar"
 
 #: rating/templates/rating/rating_card.html:73
 msgid "Hidden"
-msgstr ""
+msgstr "Verborgen"
 
 #: rating/templates/rating/rating_card.html:87
 msgid "Sent on"
-msgstr ""
+msgstr "Verzonden op"
 
 #: rating/templates/rating/rating_card.html:90
 #, fuzzy
@@ -1556,7 +1613,7 @@ msgstr "Graad"
 #: rating/templates/rating/rating_createview.html:70
 #: rating/templates/rating/rating_updateview.html:70
 msgid "512 characters allowed"
-msgstr ""
+msgstr "512 tekens toegestaan"
 
 #: rating/templates/rating/rating_createview.html:82
 #, fuzzy
@@ -1582,11 +1639,11 @@ msgstr "Voltooi je registratie"
 #: rating/templates/rating/rating_updateview.html:6
 #: rating/templates/rating/rating_updateview.html:20
 msgid "Update your rating for "
-msgstr ""
+msgstr "Update uw beoordeling voor "
 
 #: rating/templates/rating/rating_listview.html:6
 msgid "Ratings Admin Panel"
-msgstr ""
+msgstr "Beoordelingen Admin Panel"
 
 #: rating/templates/rating/rating_listview.html:24 templates/nav.html:99
 #, fuzzy
@@ -1604,7 +1661,7 @@ msgstr "Leerling"
 
 #: rating/templates/rating/rating_listview_search.html:79
 msgid "All ratings"
-msgstr ""
+msgstr "Alle beoordelingen"
 
 #: rating/templates/rating/rating_listview_search.html:85
 msgid ""
@@ -1616,21 +1673,27 @@ msgid_plural ""
 "                stars\n"
 "              "
 msgstr[0] ""
+"\n"
+"                ster\n"
+"              "
 msgstr[1] ""
+"\n"
+"                sterren \n"
+"              "
 
 #: rating/templates/rating/rating_listview_search.html:105
 #: registration/templates/registration/registration_report/degree_rr_listview_search.html:61
 #: registration/templates/registration/registration_report/module_rr_listview_search.html:61
 msgid "All statuses"
-msgstr ""
+msgstr "Alle statussen"
 
 #: rating/templates/rating/rating_listview_search.html:108
 msgid "Visible ratings"
-msgstr ""
+msgstr "Zichtbare beoordelingen"
 
 #: rating/templates/rating/rating_listview_search.html:111
 msgid "Hidden ratings"
-msgstr ""
+msgstr "Verborgen beoordelingen"
 
 #: rating/templates/rating/rating_updateview.html:82
 #, fuzzy
@@ -1641,161 +1704,171 @@ msgstr "Update cursus"
 #: registration/forms/authentication.py:16 registration/forms/profile.py:10
 #: registration/templates/registration/userprofile/userprofile_detailview.html:61
 msgid "First name"
-msgstr ""
+msgstr "Voornaam"
 
 #: registration/forms/authentication.py:17 registration/forms/profile.py:15
 #: registration/templates/registration/userprofile/userprofile_detailview.html:65
 msgid "Last name"
-msgstr ""
+msgstr "Achternaam"
 
 #: registration/forms/authentication.py:19
 msgid "Email"
-msgstr ""
+msgstr "E-mail"
 
 #: registration/forms/authentication.py:22
 msgid "Mail address invalid. Check the spelling or try another one."
-msgstr ""
+msgstr "E-mailadres is ongeldig. Controleer de spelling of probeer een andere."
 
 #: registration/forms/authentication.py:27
 #: registration/forms/authentication.py:73
 msgid "Password"
-msgstr ""
+msgstr "Wachtwoord"
 
 #: registration/forms/authentication.py:32
 #: registration/templates/registration/authentication/passwd_change.html:42
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:36
 msgid "Password confirmation"
-msgstr ""
+msgstr "wachtwoordbevestiging"
 
 #: registration/forms/authentication.py:50
 msgid ""
 "The entered mail address is already in use. Please use another one or "
 "contact our support team ({})."
 msgstr ""
+"Het ingevoerde e-mailadres is al in gebruik. Gebruik een andere of "
+"neem contact op met ons ondersteuningsteam ({})."
 
 #: registration/forms/authentication.py:60
 msgid ""
 "Your password and your password confirmation does not match. Please try "
 "again."
 msgstr ""
+"Uw wachtwoord en uw wachtwoordbevestiging komen niet overeen. Probeer het alsjeblieft "
+"opnieuw."
 
 #: registration/forms/authentication.py:69
 #: registration/templates/registration/userprofile/user_admin_panel.html:64
 #: registration/templates/registration/userprofile/userprofile_detailview.html:57
 #: registration/templates/registration/userprofile/userprofile_updateview.html:58
 msgid "Registration number"
-msgstr ""
+msgstr "Registratie nummer"
 
 #: registration/forms/authentication.py:82
 msgid "Old password"
-msgstr ""
+msgstr "Oud Wachtwoord"
 
 #: registration/forms/authentication.py:87
 msgid "New password"
-msgstr ""
+msgstr "Nieuw paswoord"
 
 #: registration/forms/authentication.py:92
 msgid "New password confirmation"
-msgstr ""
+msgstr "Bevestiging van nieuwe wachtwoord"
 
 #: registration/forms/authentication.py:101
 msgid "Email address"
-msgstr ""
+msgstr "E-mailadres"
 
 #: registration/forms/profile.py:11 registration/forms/profile.py:16
 msgid "Your legal first name declared on your ID card."
-msgstr ""
+msgstr "Uw officiële voornaam vermeld op uw identiteitskaart."
 
 #: registration/forms/profile.py:20
 msgid "Contact e-mail address"
-msgstr ""
+msgstr "Contact e-mailadres"
 
 #: registration/forms/profile.py:21
 msgid ""
 "E-mail address on which you will receive notifications and where our staff "
 "can contact you."
 msgstr ""
+"E-mailadres waarop u meldingen ontvangt en waar onze medewerkers "
+"kan contact met u opnemen."
 
 #: registration/forms/profile.py:32 registration/models/student_rr.py:28
 #: registration/templates/registration/userprofile/userprofile_detailview.html:90
 msgid "Address"
-msgstr ""
+msgstr "Adres"
 
 #: registration/forms/profile.py:33
 msgid "Your legal residential address."
-msgstr ""
+msgstr "Uw wettelijke woonadres."
 
 #: registration/forms/profile.py:38 registration/models/student_rr.py:33
 msgid "Additional address"
-msgstr ""
+msgstr "Extra adres"
 
 #: registration/forms/profile.py:39
 msgid "Address complement for long addresses."
-msgstr ""
+msgstr "Adresaanvulling voor lange adressen."
 
 #: registration/forms/profile.py:43 registration/models/student_rr.py:36
 msgid "Postal code"
-msgstr ""
+msgstr "Postcode"
 
 #: registration/forms/profile.py:44
 msgid "Your legal residential postal code."
-msgstr ""
+msgstr "Uw wettelijke postcode."
 
 #: registration/forms/profile.py:48 registration/models/student_rr.py:38
 msgid "Locality"
-msgstr ""
+msgstr "Plaats"
 
 #: registration/forms/profile.py:49
 msgid "Your legal residential postal locality designation."
-msgstr ""
+msgstr "Uw wettelijke woonplaatsaanduiding."
 
 #: registration/forms/registration_actions.py:12
 msgid "Student's module final score"
-msgstr ""
+msgstr "Eindscore van de module van de student"
 
 #: registration/forms/registration_actions.py:13
 msgid ""
 "Student's final score on this module. This score will determine if the "
 "student succeeded the module or not."
 msgstr ""
+"De uiteindelijke score van de student voor deze module. Deze score bepaalt of de "
+"student is geslaagd voor de module of niet."
 
 #: registration/forms/registration_actions.py:23
 msgid "Additonal notes"
-msgstr ""
+msgstr "Extra notities"
 
 #: registration/forms/registration_actions.py:24
 msgid "Additional notes from the staff or the teachers."
-msgstr ""
+msgstr "Aanvullende aantekeningen van het personeel of de docenten."
 
 #: registration/forms/registration_report.py:27
 msgid "Your ID photo"
-msgstr ""
+msgstr "Uw identiteitsfoto"
 
 #: registration/forms/registration_report.py:28
 msgid "Scan of your ID card"
-msgstr ""
+msgstr "Scan van uw identiteitskaart"
 
 #: registration/forms/registration_report.py:29
 msgid "Additional notes you would like to add"
-msgstr ""
+msgstr "Aanvullende opmerkingen die u zou willen toevoegen"
 
 #: registration/forms/registration_report.py:33
 msgid "Secondary education completion certificate or equivalent document."
-msgstr ""
+msgstr "Certificaat van voltooiing van het secundair onderwijs of gelijkwaardig document."
 
 #: registration/forms/registration_report.py:37
 msgid ""
 "Check this if you are a foreign student. If you are, you must fill "
 "additional fields."
 msgstr ""
+"Check this if you are a foreign student. If you are, you must fill "
+"additional fields."
 
 #: registration/forms/registration_report.py:40
 msgid "Circular annex 403 for social promotion studies."
-msgstr ""
+msgstr "Circulaire bijlage 403 voor studies over sociale promotie."
 
 #: registration/forms/registration_report.py:42
 msgid "Other school registration certificate for 60 ECTS."
-msgstr ""
+msgstr "Ander inschrijvingsbewijs van de school voor 60 ECTS."
 
 #: registration/forms/registration_report.py:47
 msgid ""
@@ -1804,20 +1877,26 @@ msgid ""
 "one or some certificates can grant you an exemption for one or some or our "
 "modules."
 msgstr ""
+"Als je al geslaagd bent voor een of meer vergelijkbare modules op een andere school, "
+"kan uw succescertificaten in een zip-bestand verzenden. Onze medewerkers beslissen of "
+"een of enkele certificaten kunnen u een vrijstelling verlenen voor een of enkele of onze "
+"modules."
 
 #: registration/forms/registration_report.py:53
 msgid ""
 "Any job certificates from organizations such as the 'VDAB', the 'CPAS', the "
 "'PHARE' or any similar organization."
 msgstr ""
+"Eventuele functiecertificaten van organisaties zoals de 'VDAB', de 'OCMW's', de "
+"'PHARE' of een vergelijkbare organisatie."
 
 #: registration/forms/registration_report.py:57
 msgid "Any of your academic reports which could lead to a potential exemption."
-msgstr ""
+msgstr "Al uw academische rapporten die kunnen leiden tot een mogelijke vrijstelling."
 
 #: registration/models/degree_rr.py:33
 msgid "Registration degree"
-msgstr ""
+msgstr "Inschrijvingsgraad"
 
 #: registration/models/degree_rr.py:39 registration/models/module_rr.py:59
 #: registration/templates/registration/payment/process_degree_payment.html:74
@@ -1827,21 +1906,21 @@ msgstr ""
 #: registration/templates/registration/registration_report/module_rr_detailview.html:23
 #: registration/templates/registration/registration_report/module_rr_detailview.html:127
 msgid "Invoice ID"
-msgstr ""
+msgstr "Factuur-ID"
 
 #: registration/models/degree_rr.py:45 registration/models/module_rr.py:65
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:144
 #: registration/templates/registration/registration_report/module_rr_detailview.html:146
 msgid "Payed fees"
-msgstr ""
+msgstr "Betaalde vergoedingen"
 
 #: registration/models/degree_rr.py:50 registration/models/module_rr.py:70
 msgid "Payment date"
-msgstr ""
+msgstr "Betaaldatum"
 
 #: registration/models/degree_rr.py:54 registration/models/module_rr.py:86
 msgid "Student exemption request"
-msgstr ""
+msgstr "Verzoek om vrijstelling van studenten"
 
 #: registration/models/degree_rr.py:56
 msgid ""
@@ -1850,12 +1929,16 @@ msgid ""
 "This will prevent you from passing paying this module if your request is "
 "accepted by our staff."
 msgstr ""
+"Als je dit of een vergelijkbaar moduleonderdeel van deze opleiding al hebt behaald in "
+"een andere school of onderwijsorganisatie, kunt u vrijstelling aanvragen. "
+"Dit voorkomt dat u deze module betaalt als u dat wenst "
+"geaccepteerd door onze medewerkers."
 
 #: registration/models/degree_rr.py:68 registration/models/module_rr.py:100
 #: registration/models/student_rr.py:114
 #: registration/templates/registration/userprofile/userprofile_detailview.html:267
 msgid "Exemption reports"
-msgstr ""
+msgstr "Vrijstellingsrapporten"
 
 #: registration/models/degree_rr.py:70
 msgid ""
@@ -1863,36 +1946,39 @@ msgid ""
 "modules of this degree. The documents will be verified by our staff and help "
 "them taking a decision regarding your request."
 msgstr ""
+"Stuur de documenten die u een vrijstelling kunnen geven voor één of meerdere "
+"modules van deze graad. De documenten zullen worden geverifieerd door onze medewerkers en hulp "
+"ze nemen een beslissing over uw verzoek."
 
 #: registration/models/degree_rr.py:80 registration/models/module_rr.py:40
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:6
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:26
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:91
 msgid "Degree Registration Report"
-msgstr ""
+msgstr "Diploma-registratierapport"
 
 #: registration/models/degree_rr.py:81
 #: registration/templates/registration/registration_report/degree_rr_listview.html:25
 #: registration/templates/registration/userprofile/degrees_rrs_list.html:12
 msgid "Degrees Registration Reports"
-msgstr ""
+msgstr "Gradenregistratierapporten"
 
 #: registration/models/module_rr.py:32
 msgid "Student Registration Report"
-msgstr ""
+msgstr "Studentregistratierapport"
 
 #: registration/models/module_rr.py:46
 msgid "Registration module"
-msgstr ""
+msgstr "Inschrijfmodule"
 
 #: registration/models/module_rr.py:74
 msgid "Student's attempt number"
-msgstr ""
+msgstr "Pogingnummer van de student"
 
 #: registration/models/module_rr.py:82
 #: registration/templates/registration/registration_report/module_rr_detailview.html:299
 msgid "Final score"
-msgstr ""
+msgstr "Eindscore"
 
 #: registration/models/module_rr.py:88
 msgid ""
@@ -1900,6 +1986,9 @@ msgid ""
 "educational organization, you can ask for an exemption. This will prevent "
 "you from passing paying this module if your request is accepted by our staff."
 msgstr ""
+"Als je deze of een vergelijkbare module al hebt behaald op een andere school of "
+"onderwijsorganisatie, je kunt vrijstelling aanvragen. Hiermee voorkom je "
+"u slaagt voor het betalen van deze module als uw verzoek wordt geaccepteerd door onze medewerkers."
 
 #: registration/models/module_rr.py:102
 msgid ""
@@ -1907,69 +1996,78 @@ msgid ""
 "documents will be verified by our staff and help them taking a decision "
 "regarding your request."
 msgstr ""
+"Stuur de documenten die u een vrijstelling kunnen geven voor deze module. De "
+"documenten worden geverifieerd door onze medewerkers en helpen hen bij het nemen van een beslissing "
+"aangaande uw verzoek."
 
 #: registration/models/module_rr.py:109
 #: registration/templates/registration/registration_report/degree_rr_status.html:88
 msgid "Pending"
-msgstr ""
+msgstr "In afwachting"
 
 #: registration/models/module_rr.py:110
 #: registration/templates/registration/registration_report/module_rr_detailview.html:274
 msgid "Denied"
-msgstr ""
+msgstr "Geweigerd"
 
 #: registration/models/module_rr.py:111
 msgid "Approved"
-msgstr ""
+msgstr "Goedgekeurd"
 
 #: registration/models/module_rr.py:112
 msgid "Payed"
-msgstr ""
+msgstr "Betaald"
 
 #: registration/models/module_rr.py:113
 #: registration/templates/registration/registration_report/degree_rr_status.html:33
 msgid "Completed"
-msgstr ""
+msgstr "Voltooid"
 
 #: registration/models/module_rr.py:114
 msgid "Exempted"
-msgstr ""
+msgstr "Vrijgesteld"
 
 #: registration/models/module_rr.py:126
 #: registration/templates/registration/registration_report/module_rr_detailview.html:6
 #: registration/templates/registration/registration_report/module_rr_detailview.html:26
 #: registration/templates/registration/registration_report/module_rr_detailview.html:89
 msgid "Module Registration Report"
-msgstr ""
+msgstr "Module registratierapport"
 
 #: registration/models/module_rr.py:127
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:425
 #: registration/templates/registration/registration_report/module_rr_listview.html:25
 #: registration/templates/registration/userprofile/modules_rrs_list.html:11
 msgid "Modules Registration Reports"
-msgstr ""
+msgstr "Modules Registratierapporten"
 
 #: registration/models/module_rr.py:225
 msgid ""
 "The Module Registration Request cannot be flagged as payed nor completed if "
 "no payment date was entered."
 msgstr ""
+"Het moduleregistratieverzoek kan niet worden gemarkeerd als betaald of voltooid als "
+"er is geen betalingsdatum ingevoerd."
 
 #: registration/models/module_rr.py:231
 msgid "You cannot put a final score to a registration which is not approved."
-msgstr ""
+msgstr "U kunt geen eindscore toekennen aan een registratie die niet is goedgekeurd."
 
 #: registration/models/module_rr.py:238
 msgid ""
 "The Module Registration Request cannot be flagged as completed nor exempted "
 "if no final score was given."
 msgstr ""
+"Het moduleregistratieverzoek kan niet worden gemarkeerd als voltooid of vrijgesteld "
+"als er geen eindscore is gegeven."
 
 #: registration/models/module_rr.py:244
 msgid ""
 "If a module is exempted, the final score must be equal or above the success "
 "score threshold, which is actually at {}."
 msgstr ""
+"Als een module is vrijgesteld, moet de eindscore gelijk of hoger zijn dan het succes "
+"scoredrempel, die eigenlijk op {} ligt."
 
 #: registration/models/resource.py:17
 msgid "Additional notes"
@@ -1978,68 +2076,68 @@ msgstr ""
 #: registration/models/student_rr.py:25
 #: registration/templates/registration/userprofile/userprofile_detailview.html:82
 msgid "Birthday date"
-msgstr ""
+msgstr "Extra notities"
 
 #: registration/models/student_rr.py:27
 #: registration/templates/registration/userprofile/userprofile_detailview.html:86
 msgid "Nationality"
-msgstr ""
+msgstr "Nationaliteit"
 
 #: registration/models/student_rr.py:45
 #: registration/templates/registration/userprofile/userprofile_detailview.html:108
 msgid "ID picture"
-msgstr ""
+msgstr "ID-afbeelding"
 
 #: registration/models/student_rr.py:49
 msgid "ID card"
-msgstr ""
+msgstr "indentiteitskaart"
 
 #: registration/models/student_rr.py:51
 #: registration/templates/registration/userprofile/userprofile_detailview.html:142
 msgid "Secondary Education Certificate"
-msgstr ""
+msgstr "Certificaat secundair onderwijs"
 
 #: registration/models/student_rr.py:59
 msgid "Foreign student"
-msgstr ""
+msgstr "Buitenlandse student"
 
 #: registration/models/student_rr.py:65
 #: registration/templates/registration/userprofile/userprofile_detailview.html:161
 msgid "Annex 403"
-msgstr ""
+msgstr "Bijlage 403"
 
 #: registration/models/student_rr.py:73
 #: registration/templates/registration/userprofile/userprofile_detailview.html:178
 msgid "Other schools inscription certificate"
-msgstr ""
+msgstr "Inschrijvingsbewijs van andere scholen"
 
 #: registration/models/student_rr.py:81
 #: registration/templates/registration/userprofile/userprofile_detailview.html:195
 msgid "National Register Extract"
-msgstr ""
+msgstr "Uittreksel nationaal register"
 
 #: registration/models/student_rr.py:89
 #: registration/templates/registration/userprofile/userprofile_detailview.html:212
 msgid "Belgian Studies History"
-msgstr ""
+msgstr "Belgische Studies Geschiedenis"
 
 #: registration/models/student_rr.py:98
 #: registration/templates/registration/userprofile/userprofile_detailview.html:233
 msgid "Modules archievement certificates"
-msgstr ""
+msgstr "Modules prestatiecertificaten"
 
 #: registration/models/student_rr.py:106
 #: registration/templates/registration/userprofile/userprofile_detailview.html:250
 msgid "Job organizations certificates"
-msgstr ""
+msgstr "Certificaten van banenorganisaties"
 
 #: registration/models/student_rr.py:123
 msgid "Student registration report"
-msgstr ""
+msgstr "Studentenregistratierapport"
 
 #: registration/models/student_rr.py:124
 msgid "Student registration reports"
-msgstr ""
+msgstr "Studentenregistratierapporten"
 
 #: registration/templates/registration/authentication/gdpr_checkbox.html:5
 msgid ""
@@ -2047,6 +2145,9 @@ msgid ""
 "      <strong>What if the terms and/or the policies changes ?</strong>\n"
 "    "
 msgstr ""
+"\n"
+"      <strong>Wat als de voorwaarden en / of het beleid veranderen?</strong>\n"
+"    "
 
 #: registration/templates/registration/authentication/gdpr_checkbox.html:10
 msgid ""
@@ -2055,6 +2156,10 @@ msgid ""
 "which is currently assigned to your account.\n"
 "      "
 msgstr ""
+"\n"
+"        U wordt onmiddellijk per mail op de hoogte gebracht via het mailadres "
+"die momenteel is toegewezen aan uw account.\n"
+"      "
 
 #: registration/templates/registration/authentication/gdpr_checkbox.html:21
 #, python-format
@@ -2066,48 +2171,54 @@ msgid ""
 "a>.\n"
 "      "
 msgstr ""
+"\n"
+"        Door dit vakje aan te vinken, gaat u akkoord met onze  <a href="
+"\"%(link_terms)s\">Algemene voorwaarden</a>, our <a href=\"%(link_privacy)s"
+"\">Privacybeleid</a> en ons <a href=\"%(link_cookies)s\">cookiebeleid </"
+"a>.\n"
+"      "
 
 #: registration/templates/registration/authentication/login.html:4
 #: registration/templates/registration/authentication/passwd_reset.html:34
 msgid "Login"
-msgstr ""
+msgstr "Log in"
 
 #: registration/templates/registration/authentication/login.html:44
 #: registration/templates/registration/authentication/passwd_reset.html:4
 #: registration/templates/registration/authentication/passwd_reset.html:10
 msgid "Registration number or password forgotten ?"
-msgstr ""
+msgstr "Registratienummer of wachtwoord vergeten?"
 
 #: registration/templates/registration/authentication/login.html:46
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:6
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:14
 msgid "Reset your password"
-msgstr ""
+msgstr "Stel je wachtwoord opnieuw in"
 
 #: registration/templates/registration/authentication/login.html:51
 msgid "Not registered yet ?"
-msgstr ""
+msgstr "Nog niet geregistreerd ?"
 
 #: registration/templates/registration/authentication/passwd_change.html:6
 #: registration/templates/registration/authentication/passwd_change.html:14
 #: registration/templates/registration/authentication/passwd_change.html:47
 #: registration/templates/registration/userprofile/actions.html:13
 msgid "Change your password"
-msgstr ""
+msgstr "Wijzig uw wachtwoord"
 
 #: registration/templates/registration/authentication/passwd_change.html:26
 msgid "Your current password"
-msgstr ""
+msgstr "je huidige wachtwoord"
 
 #: registration/templates/registration/authentication/passwd_change.html:34
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:29
 msgid "Your new password"
-msgstr ""
+msgstr "uw nieuwe wachtwoord"
 
 #: registration/templates/registration/authentication/passwd_change.html:50
 #: registration/templates/registration/userprofile/userprofile_updateview.html:151
 msgid "Cancel and back to profile"
-msgstr ""
+msgstr "Annuleer en terug naar profiel"
 
 #: registration/templates/registration/authentication/passwd_reset.html:14
 msgid ""
@@ -2122,14 +2233,24 @@ msgid ""
 "        </p>\n"
 "      "
 msgstr ""
+"\n"
+"        <p>\n"
+"          Als je al een account hebt, vul dan je e-mailadres in "
+"toegewezen aan uw account.\n"
+"          <br>\n"
+"          Als het e-mailadres in onze databases voorkomt, wordt er een e-mail gestuurd naar "
+"het met uw registratienummer en een link die bruikbaar is om uw wachtwoord opnieuw in te stellen als "
+"nodig zijn.\n"
+"        </p>\n"
+"      "
 
 #: registration/templates/registration/authentication/passwd_reset.html:27
 msgid "Your email address"
-msgstr ""
+msgstr "jouw e-mailadres"
 
 #: registration/templates/registration/authentication/passwd_reset.html:32
 msgid "Send mail"
-msgstr ""
+msgstr "Verzend mail"
 
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:18
 msgid ""
@@ -2139,22 +2260,27 @@ msgid ""
 "        </p>\n"
 "      "
 msgstr ""
+"\n"
+"        <p>\n"
+"          Voer een nieuw wachtwoord in voor uw account.\n"
+"        </p>\n"
+"      "
 
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:41
 msgid "Reset password"
-msgstr ""
+msgstr "Wachtwoord opnieuw instellen"
 
 #: registration/templates/registration/authentication/passwd_reset_confirm.html:43
 msgid "Cancel and login"
-msgstr ""
+msgstr "Annuleer en log in"
 
 #: registration/templates/registration/authentication/passwd_reset_done.html:6
 msgid "Password reset mail sent"
-msgstr ""
+msgstr "E-mail voor opnieuw instellen van wachtwoord verzonden"
 
 #: registration/templates/registration/authentication/passwd_reset_done.html:14
 msgid "The mail has been sent"
-msgstr ""
+msgstr "De mail is verzonden"
 
 #: registration/templates/registration/authentication/passwd_reset_done.html:18
 #, python-format
@@ -2175,14 +2301,29 @@ msgid ""
 "        </p>\n"
 "      "
 msgstr ""
+"\n"
+"        <p>\n"
+"          U ontvangt binnenkort een e-mail met uw registratie "
+"number and link to reset your password.\n"
+"          <br><br>\n"
+"          Als u uw wachtwoord niet opnieuw hoeft in te stellen, kunt u het "
+"mail.\n"
+"          <br>\n"
+"          Om veiligheidsredenen raden we je aan om de mail één keer te verwijderen "
+"uw accounttoegang is hersteld.\n"
+"          <br><br>\n"
+"          Als je geen mail hebt ontvangen, probeer het dan opnieuw of neem contact op met onze "
+"ondersteuningsteam (<a href=\"%(support_team_mail)s\">%(support_team_mail)s</a>).\n"
+"        </p>\n"
+"      "
 
 #: registration/templates/registration/authentication/pursue_register.html:4
 msgid "Finish your registration"
-msgstr ""
+msgstr "Rond uw registratie af"
 
 #: registration/templates/registration/authentication/pursue_register.html:11
 msgid "One more step..."
-msgstr ""
+msgstr "Nog een stap..."
 
 #: registration/templates/registration/authentication/pursue_register.html:18
 #, python-format
@@ -2234,18 +2375,64 @@ msgid ""
 "        </h2>\n"
 "      "
 msgstr ""
+"\n"
+"        <h2>\n"
+"          Gefeliciteerd %(user_fullname)s !\n"
+"        </h2>\n"
+"        Je bent nu als gast aangemeld bij het SERINA-Project en zal "
+"ontvang binnen een uur na uw registratie een bevestigingsmail "
+"onze applicatie.\n"
+"        <br><br>\n"
+"        Als u geen e-mail heeft ontvangen, klik dan hier om te <a href=\"404\">verzenden "
+"it again</a> of neem contact op met ons ondersteuningsteam(<a href=\"mailto:"
+"%(support_team_mail)s\">%(support_team_mail)s</a>).\n"
+"\n"
+"        <div class=\"px-5\">\n"
+"          <div class=\"mx-5 my-2 px-5 py-3 h5 rounded text-light bg-dark\">\n"
+"            Uw registratienummer is:\n"
+"            <div class=\"display-3\">\n"
+"              %(registration_number)s\n"
+"            </div>\n"
+"            Vergeet uw registratienummer niet.\n"
+"            <br>\n"
+"            Deze is vereist om in te loggen.\n"
+"            <br><br>\n"
+"            U kunt het ook terugvinden in uw aanmeldingsmail.\n"
+"            <br><br>\n"
+"            Mocht u uw registratienummer vergeten zijn, neem dan contact op met de "
+"ondersteuningsteam (<a href=\"mailto:%(support_team_mail)s\">"
+"%(support_team_mail)s</a>).\n"
+"          </div>\n"
+"        </div>\n"
+"\n"
+"        <hr>\n"
+"\n"
+"        <h2>\n"
+"          Maar je bent nog geen student! Er is nog een stap naar "
+"complete !\n"
+"        </h2>\n"
+"        Om student te worden en zich in te schrijven voor onze diploma's en "
+"our modules, you must finish your registration by filling the student "
+"registration report form.\n"
+"        <br>\n"
+"        U kunt uw registratie ook later voltooien als u dat wilt.\n"
+"        <hr>\n"
+"        <h2>\n"
+"          Selecteer een optie om door te gaan\n"
+"        </h2>\n"
+"      "
 
 #: registration/templates/registration/authentication/pursue_register.html:57
 msgid "I want to complete my registration"
-msgstr ""
+msgstr "Ik wil mijn registratie voltooien"
 
 #: registration/templates/registration/authentication/pursue_register.html:60
 msgid "I want to complete my registration later"
-msgstr ""
+msgstr "Ik wil mijn registratie later voltooien"
 
 #: registration/templates/registration/authentication/register.html:4
 msgid "Register"
-msgstr ""
+msgstr "Registreren"
 
 #: registration/templates/registration/authentication/register.html:28
 #: registration/templates/registration/authentication/register.html:50
@@ -2256,6 +2443,9 @@ msgid ""
 "            <strong>How is this personal data used ?</strong>\n"
 "          "
 msgstr ""
+"\n"
+"            <strong>Hoe worden deze persoonlijke gegevens gebruikt?</strong>\n"
+"          "
 
 #: registration/templates/registration/authentication/register.html:33
 #: registration/templates/registration/authentication/register.html:55
@@ -2274,6 +2464,18 @@ msgid ""
 "%(support_mail)s\">%(support_mail)s</a>).</span>\n"
 "            "
 msgstr ""
+"\n"
+"              Deze gegevens worden gebruikt om elke gebruiker te identificeren. Het is gewend "
+"compare your name with the name given on your registration documents. Your "
+"vergelijk uw naam met de naam die op uw registratiedocumenten staat. Uw "
+"volgende, die alleen zichtbaar is voor de docenten van de module.\n"
+"              <br>\n"
+"              Uw naam wordt met niemand buiten de organisatie gedeeld.\n"
+"              <br>\n"
+"              <span class=\"text-danger\">Deze gegevens kunnen niet één keer worden gewijzigd "
+"set. Neem contact op met het ondersteuningsteam om uw naam te wijzigen (<a href=\"mailto:"
+"%(support_mail)s\">%(support_mail)s</a>).</span>\n"
+"            "
 
 #: registration/templates/registration/authentication/register.html:77
 msgid ""
@@ -2286,6 +2488,14 @@ msgid ""
 "email address is not shared to anyone outside the organisation.\n"
 "            "
 msgstr ""
+"\n"
+"              Deze gegevens worden gebruikt om met de gebruiker te communiceren. De e-mail is "
+"gebruikt om u meldingen, waarschuwingen, tokens voor het opnieuw instellen van wachtwoorden te sturen of ingesteld op "
+"disposal of our staff to directly communicate with you.\n"
+"              <br>\n"
+"              Als je geen deel uitmaakt van het personeel (gast of student), dan is je "
+"e-mailadres wordt niet gedeeld met iemand buiten de organisatie.\n"
+"            "
 
 #: registration/templates/registration/authentication/register.html:97
 msgid ""
@@ -2297,37 +2507,46 @@ msgid ""
 "exactly is.\n"
 "            "
 msgstr ""
+"\n"
+"              Deze gegevens worden gebruikt als beveiligingsmaatregel voor authenticatie. U "
+"wachtwoord wordt gehasht voordat het in onze database wordt opgeslagen, wat betekent dat het "
+"blijft voor iedereen onleesbaar, inclusief onze beheerders. Uw vorige "
+"wachtwoord wordt niet opgeslagen. U bent de enige die weet wat het wachtwoord is "
+"precies is.\n"
+"            "
 
 #: registration/templates/registration/authentication/register.html:126
 msgid "Already registered ?"
-msgstr ""
+msgstr "Al geregistreerd ?"
 
 #: registration/templates/registration/general/cookies_policy.html:5
 #: templates/base.html:65
 msgid "Cookies Policy"
-msgstr ""
+msgstr "Cookiebeleid"
 
 #: registration/templates/registration/general/error.html:36
 msgid ""
 "Please try again or contact our support team by clicking on the button "
 "bellow."
 msgstr ""
+"Probeer het opnieuw of neem contact op met ons ondersteuningsteam door op de knop te klikken "
+"balg."
 
 #: registration/templates/registration/general/error.html:42
 msgid "Back to the homepage"
-msgstr ""
+msgstr "Terug naar de homepagina"
 
 #: registration/templates/registration/general/error.html:46
 msgid "Contact our support team"
-msgstr ""
+msgstr "Neem contact op met ons ondersteuningsteam"
 
 #: registration/templates/registration/general/home.html:4
 msgid "Welcome"
-msgstr ""
+msgstr "Welkom"
 
 #: registration/templates/registration/general/home.html:18
 msgid "Welcome on the SERINA-Project page"
-msgstr ""
+msgstr "Welkom op de SERINA-Project pagina"
 
 #: registration/templates/registration/general/home.html:22
 msgid ""
@@ -2340,18 +2559,26 @@ msgid ""
 "follow a whole degree.\n"
 "          "
 msgstr ""
+"\n"
+"            Het SERINA-project is een app die uw school kan maken "
+"registratie eenvoudig. Kijk naar het diploma dat u interessant lijkt, "
+"registreer je als gast of gebruik je eigen account als je er al een hebt "
+"inschrijven tot de graad en zodra uw inschrijving is bevestigd, betalen "
+"rechtstreeks. U kunt zich ook registreren voor geïsoleerde modules als u dat niet wilt "
+"volg een hele opleiding.\n"
+"          "
 
 #: registration/templates/registration/general/home.html:31
 msgid "See the available degrees"
-msgstr ""
+msgstr "Bekijk de beschikbare graden"
 
 #: registration/templates/registration/general/home.html:35
 msgid "See the available modules"
-msgstr ""
+msgstr "Bekijk de beschikbare modules"
 
 #: registration/templates/registration/general/home.html:48
 msgid "Come check our degrees"
-msgstr ""
+msgstr "Kom onze diploma's bekijken"
 
 #: registration/templates/registration/general/home.html:77
 #, python-format
@@ -2364,11 +2591,17 @@ msgid_plural ""
 "                    Composed of %(nb_modules)s modules\n"
 "                  "
 msgstr[0] ""
+"\n"
+"                    Enkele module graad\n"
+"                  "
 msgstr[1] ""
+"\n"
+"                    Samengesteld uit %(nb_modules)s modules\n"
+"                  "
 
 #: registration/templates/registration/general/home.html:97
 msgid "It has never been so easy to subscribe to a course !"
-msgstr ""
+msgstr "Aanmelden voor een cursus was nog nooit zo eenvoudig!"
 
 #: registration/templates/registration/general/home.html:100
 msgid ""
@@ -2380,24 +2613,31 @@ msgid ""
 "confirmation. Procceed to the payment. And the job is done.\n"
 "          "
 msgstr ""
+"\n"
+"            Blader door onze bibliotheek met graden of modules. Vind die (n) "
+"wat interessant voor je lijkt. Registreer en stuur je student in "
+"registratierapport als het nog niet gedaan is. Selecteer de gewenste graad en/"
+"of module. Klik op de knop \" Een aanmeldingsverzoek indienen \". Wacht op een "
+"bevestiging. Ga verder met de betaling. En de klus is geklaard.\n"
+"          "
 
 #: registration/templates/registration/general/home.html:115
 msgid "Or maybe you would prefere individual modules"
-msgstr ""
+msgstr "Of misschien geeft u de voorkeur aan individuele modules"
 
 #: registration/templates/registration/general/home.html:159
 msgid "Read the latest ratings left by our students"
-msgstr ""
+msgstr "Lees de laatste beoordelingen van onze studenten"
 
 #: registration/templates/registration/general/privacy_policy.html:6
 #: templates/base.html:65
 msgid "Privacy Policy"
-msgstr ""
+msgstr "Privacybeleid"
 
 #: registration/templates/registration/general/terms_and_conditions.html:6
 #: templates/base.html:65 templates/footer.html:49
 msgid "Terms and conditions"
-msgstr ""
+msgstr "Voorwaarden"
 
 #: registration/templates/registration/payment/process_degree_payment.html:5
 #: registration/templates/registration/payment/process_degree_payment.html:14
@@ -2406,37 +2646,37 @@ msgstr ""
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:337
 #: registration/templates/registration/registration_report/module_rr_detailview.html:405
 msgid "Checkout"
-msgstr ""
+msgstr "Uitchecken"
 
 #: registration/templates/registration/payment/process_degree_payment.html:25
 #: registration/templates/registration/payment/process_module_payment.html:25
 msgid "Student full name"
-msgstr ""
+msgstr "Volledige naam van de student"
 
 #: registration/templates/registration/payment/process_degree_payment.html:37
 #: registration/templates/registration/payment/process_module_payment.html:37
 msgid "Student registration number"
-msgstr ""
+msgstr "Studentenregistratienummer"
 
 #: registration/templates/registration/payment/process_degree_payment.html:49
 #: registration/templates/registration/payment/process_module_payment.html:49
 msgid "Student address"
-msgstr ""
+msgstr "Student adres"
 
 #: registration/templates/registration/payment/process_degree_payment.html:86
 #: registration/templates/registration/payment/process_module_payment.html:86
 msgid "Checkout date and time"
-msgstr ""
+msgstr "Afrekendatum en -tijd"
 
 #: registration/templates/registration/payment/process_degree_payment.html:122
 #: registration/templates/registration/payment/process_module_payment.html:109
 msgid "Price (V.A.T. excluded)"
-msgstr ""
+msgstr "Prijs (exclusief BTW)"
 
 #: registration/templates/registration/payment/process_degree_payment.html:134
 #: registration/templates/registration/payment/process_module_payment.html:121
 msgid "Price (V.A.T. included)"
-msgstr ""
+msgstr "Prijs (inclusief BTW)"
 
 #: registration/templates/registration/payment/process_degree_payment.html:165
 #, fuzzy
@@ -2446,12 +2686,12 @@ msgstr "Annuleren en terug naar de categoriepagina van het diploma"
 
 #: registration/templates/registration/payment/process_module_payment.html:152
 msgid "Cancel and go back to module report page"
-msgstr ""
+msgstr "Annuleer en ga terug naar de rapportpagina van de module"
 
 #: registration/templates/registration/registration_report/degree_rr_createview.html:6
 #: registration/templates/registration/registration_report/module_rr_createview.html:6
 msgid "Subscribe to"
-msgstr ""
+msgstr "Abboneer op"
 
 #: registration/templates/registration/registration_report/degree_rr_createview.html:33
 #, fuzzy
@@ -2471,23 +2711,25 @@ msgid ""
 "Do you want to ask for an exemption for one or multiple modules part of this "
 "degree ?"
 msgstr ""
+"Wilt u vrijstelling aanvragen voor één of meerdere modules hiervan onderdeel "
+"diploma?"
 
 #: registration/templates/registration/registration_report/degree_rr_createview.html:95
 #: registration/templates/registration/registration_report/module_rr_createview.html:93
 msgid "Send registration request"
-msgstr ""
+msgstr "Stuur een registratieverzoek"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:63
 #: registration/templates/registration/registration_report/module_rr_detailview.html:61
 msgid "General information"
-msgstr ""
+msgstr "Algemene informatie"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:68
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:78
 #: registration/templates/registration/registration_report/module_rr_detailview.html:66
 #: registration/templates/registration/registration_report/module_rr_detailview.html:76
 msgid "Student\\"
-msgstr ""
+msgstr "Leerling\\"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:88
 #: registration/templates/registration/registration_report/module_rr_detailview.html:86
@@ -2499,12 +2741,12 @@ msgstr "Regitratievergoeding"
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:106
 #: registration/templates/registration/registration_report/module_rr_detailview.html:95
 msgid "Registration status"
-msgstr ""
+msgstr "Registratie Status"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:120
 #: registration/templates/registration/registration_report/module_rr_detailview.html:122
 msgid "Invoice information"
-msgstr ""
+msgstr "Factuurinformatie"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:134
 #: registration/templates/registration/registration_report/module_rr_detailview.html:136
@@ -2520,17 +2762,17 @@ msgstr "Regitratievergoeding"
 #: registration/templates/registration/registration_report/module_rr_detailview.html:149
 #: registration/templates/registration/registration_report/module_rr_detailview.html:159
 msgid "V.A.T. included"
-msgstr ""
+msgstr "VAT. inbegrepen"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:154
 #: registration/templates/registration/registration_report/module_rr_detailview.html:156
 msgid "Remaining fees to pay"
-msgstr ""
+msgstr "Resterende te betalen vergoedingen"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:164
 #: registration/templates/registration/registration_report/module_rr_detailview.html:166
 msgid "Payment date and time"
-msgstr ""
+msgstr "Betaaldatum en -tijd"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:177
 #: registration/templates/registration/registration_report/module_rr_detailview.html:179
@@ -2546,21 +2788,24 @@ msgid ""
 "            This degree contains %(nb_modules)s modules\n"
 "          "
 msgstr ""
+"\n"
+"            Deze graad bevat %(nb_modules)s modules\n"
+"          "
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:219
 #: registration/templates/registration/registration_report/module_rr_detailview.html:240
 msgid "ECTS"
-msgstr ""
+msgstr "ECTS"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:231
 #: registration/templates/registration/registration_report/module_rr_detailview.html:252
 msgid "Results"
-msgstr ""
+msgstr "Resultaten"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:236
 #: registration/templates/registration/registration_report/module_rr_detailview.html:257
 msgid "Exemption request"
-msgstr ""
+msgstr "Vrijstellingsverzoek"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:241
 #: registration/templates/registration/registration_report/module_rr_detailview.html:269
@@ -2575,7 +2820,7 @@ msgstr ""
 #: registration/templates/registration/userprofile/userprofile_detailview.html:254
 #: registration/templates/registration/userprofile/userprofile_detailview.html:271
 msgid "Uploaded"
-msgstr ""
+msgstr "Geupload"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:246
 #: registration/templates/registration/registration_report/module_rr_detailview.html:280
@@ -2589,7 +2834,7 @@ msgstr ""
 #: registration/templates/registration/userprofile/userprofile_detailview.html:257
 #: registration/templates/registration/userprofile/userprofile_detailview.html:274
 msgid "Click here to see the file sent"
-msgstr ""
+msgstr "Klik hier om het verzonden bestand te zien"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:251
 #: registration/templates/registration/registration_report/module_rr_detailview.html:285
@@ -2604,33 +2849,33 @@ msgstr "Geen student gevonden"
 #: registration/templates/registration/userprofile/userprofile_detailview.html:261
 #: registration/templates/registration/userprofile/userprofile_detailview.html:278
 msgid "Not sent"
-msgstr ""
+msgstr "Niet verzonden"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:264
 msgid "Average score"
-msgstr ""
+msgstr "Niet verzonden"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:279
 msgid "Graduation status"
-msgstr ""
+msgstr "Afstudeerstatus"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:284
 msgid "Congratulations, you did it!"
-msgstr ""
+msgstr "Gefeliciteerd, je hebt het gedaan!"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:289
 msgid "Not graduated yet"
-msgstr ""
+msgstr "Nog niet afgestudeerd"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:314
 #: registration/templates/registration/registration_report/module_rr_detailview.html:366
 msgid "Approve registration"
-msgstr ""
+msgstr "Keur de registratie goed"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:319
 #: registration/templates/registration/registration_report/module_rr_detailview.html:371
 msgid "Deny registration"
-msgstr ""
+msgstr "Registratie weigeren"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:329
 #: registration/templates/registration/userprofile/degrees_rrs_list.html:31
@@ -2642,32 +2887,32 @@ msgstr "Terug naar de catalogus met diplomacategorieën"
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:344
 #: registration/templates/registration/registration_report/module_rr_detailview.html:412
 msgid "Back to profile"
-msgstr ""
+msgstr "Terug naar profiel"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:357
 #: registration/templates/registration/registration_report/module_rr_detailview.html:466
 msgid "Notes from the teachers and the staff"
-msgstr ""
+msgstr "Aantekeningen van de docenten en het personeel"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:369
 #: registration/templates/registration/registration_report/module_rr_detailview.html:478
 msgid "No notes available"
-msgstr ""
+msgstr "Geen aantekeningen beschikbaar"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:382
 #: registration/templates/registration/registration_report/module_rr_detailview.html:489
 msgid "Add a note"
-msgstr ""
+msgstr "Voeg een notitie toe"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:400
 #: registration/templates/registration/registration_report/module_rr_detailview.html:507
 msgid "Keep the pre-existing notes in order to not over override them"
-msgstr ""
+msgstr "Bewaar de reeds bestaande notities om ze niet te overschrijven"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:410
 #: registration/templates/registration/registration_report/module_rr_detailview.html:517
 msgid "Update final score and/or notes"
-msgstr ""
+msgstr "Werk de eindscore en / of notities bij"
 
 #: registration/templates/registration/registration_report/degree_rr_detailview.html:444
 #: registration/templates/registration/registration_report/module_rr_detailview.html:396
@@ -2679,19 +2924,19 @@ msgstr "Terug naar cursuslijst"
 
 #: registration/templates/registration/registration_report/degree_rr_listview.html:5
 msgid "Degree Registration Report List"
-msgstr ""
+msgstr "Lijst met diplomaregistratierapporten"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:8
 msgid "All modules were denied"
-msgstr ""
+msgstr "Alle modules zijn geweigerd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:11
 msgid "Completely denied"
-msgstr ""
+msgstr "Helemaal ontkend"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:19
 msgid "Some modules were denied"
-msgstr ""
+msgstr "Sommige modules zijn geweigerd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:22
 #, fuzzy
@@ -2701,7 +2946,7 @@ msgstr "Automatisch gegenereerd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:30
 msgid "All modules are completed and succeeded"
-msgstr ""
+msgstr "Alle modules zijn afgerond en geslaagd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:41
 #, fuzzy
@@ -2711,15 +2956,15 @@ msgstr "Alle modules die deel uitmaken van de opleiding."
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:44
 msgid "Completely payed"
-msgstr ""
+msgstr "Helemaal betaald"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:52
 msgid "Payment pending for some modules"
-msgstr ""
+msgstr "Voor sommige modules is betaling in afwachting"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:55
 msgid "Partially payed"
-msgstr ""
+msgstr "Gedeeltelijk betaald"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:63
 #, fuzzy
@@ -2729,27 +2974,27 @@ msgstr "Alle modules die deel uitmaken van de opleiding."
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:66
 msgid "Completely approved"
-msgstr ""
+msgstr "Volledig goedgekeurd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:74
 msgid "Some modules were approved"
-msgstr ""
+msgstr "Sommige modules zijn goedgekeurd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:77
 msgid "Partially approved"
-msgstr ""
+msgstr "Gedeeltelijk goedgekeurd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:85
 msgid "No modules were approved or denied yet"
-msgstr ""
+msgstr "Er zijn nog geen modules goedgekeurd of geweigerd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:96
 msgid "Some modules are not approved or denied yet"
-msgstr ""
+msgstr "Sommige modules zijn nog niet goedgekeurd of geweigerd"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:99
 msgid "Partially pending"
-msgstr ""
+msgstr "Gedeeltelijk in behandeling"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:107
 #, fuzzy
@@ -2759,29 +3004,29 @@ msgstr "Toestand"
 
 #: registration/templates/registration/registration_report/degree_rr_status.html:110
 msgid "Unknown"
-msgstr ""
+msgstr "Onbekend"
 
 #: registration/templates/registration/registration_report/degrees_rrs_table.html:21
 msgid "Approvement"
-msgstr ""
+msgstr "Goedkeuring"
 
 #: registration/templates/registration/registration_report/degrees_rrs_table.html:70
 #: registration/templates/registration/registration_report/modules_rrs_table.html:104
 msgid "No module registration found"
-msgstr ""
+msgstr "Geen moduleregistratie gevonden"
 
 #: registration/templates/registration/registration_report/module_rr_createview.html:27
 msgid "Go back to module catalog"
-msgstr ""
+msgstr "Ga terug naar de modulecatalogus"
 
 #: registration/templates/registration/registration_report/module_rr_createview.html:30
 #: registration/templates/registration/registration_report/module_rr_createview.html:96
 msgid "Go back to module page"
-msgstr ""
+msgstr "Ga terug naar de modulepagina"
 
 #: registration/templates/registration/registration_report/module_rr_createview.html:66
 msgid "Do you want to ask for an exemption ?"
-msgstr ""
+msgstr "Wilt u vrijstelling aanvragen?"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:192
 #, fuzzy
@@ -2792,39 +3037,39 @@ msgstr "Voltooi je registratie"
 #: registration/templates/registration/registration_report/module_rr_detailview.html:197
 #: registration/templates/registration/registration_report/modules_rrs_table.html:66
 msgid "Yes"
-msgstr ""
+msgstr "Ya"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:197
 msgid "Click here to see more"
-msgstr ""
+msgstr "Klik hier om meer te zien"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:202
 msgid "Not related to a degree registration report"
-msgstr ""
+msgstr "Niet gerelateerd aan een diploma-registratierapport"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:230
 msgid "Attempt number"
-msgstr ""
+msgstr "Poging nummer"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:264
 msgid "Accepted"
-msgstr ""
+msgstr "Geaccepteerd"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:321
 msgid "Success status"
-msgstr ""
+msgstr "Successtatus"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:327
 msgid "Succeeded"
-msgstr ""
+msgstr "Geslaagd"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:332
 msgid "Succeeded but not payed yet"
-msgstr ""
+msgstr "Geslaagd maar nog niet betaald"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:337
 msgid "Failed"
-msgstr ""
+msgstr "Mislukt"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:380
 #, fuzzy
@@ -2841,12 +3086,12 @@ msgstr "Rond je inschrijving als student af"
 #: registration/templates/registration/registration_report/module_rr_detailview.html:386
 #: registration/templates/registration/registration_report/module_rr_detailview.html:448
 msgid "Update final score"
-msgstr ""
+msgstr "Update de eindscore"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:389
 #: registration/templates/registration/registration_report/module_rr_detailview.html:451
 msgid "Add final score"
-msgstr ""
+msgstr "Eindscore toevoegen"
 
 #: registration/templates/registration/registration_report/module_rr_detailview.html:445
 #, fuzzy
@@ -2856,42 +3101,42 @@ msgstr "Rond je inschrijving als student af"
 
 #: registration/templates/registration/registration_report/module_rr_listview.html:5
 msgid "Module Registration Reports Lists"
-msgstr ""
+msgstr "Module registratierapporten lijsten"
 
 #: registration/templates/registration/registration_report/module_rr_listview_search.html:101
 #: templates/nav.html:53
 msgid "All courses"
-msgstr ""
+msgstr "Alle cursussen"
 
 #: registration/templates/registration/registration_report/modules_rrs_table.html:70
 #: registration/templates/registration/registration_report/modules_rrs_table.html:81
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: registration/templates/registration/registration_report/student_rr_createview.html:6
 msgid "Complete yout registration"
-msgstr ""
+msgstr "Voltooi je registratie"
 
 #: registration/templates/registration/registration_report/student_rr_createview.html:22
 msgid "Mandatory information"
-msgstr ""
+msgstr "verplichte informatie"
 
 #: registration/templates/registration/registration_report/student_rr_createview.html:235
 msgid "Additional information"
-msgstr ""
+msgstr "Extra informatie"
 
 #: registration/templates/registration/registration_report/student_rr_createview.html:304
 msgid "Submit your registration report"
-msgstr ""
+msgstr "Dien uw registratierapport in"
 
 #: registration/templates/registration/registration_report/student_rr_createview.html:306
 msgid "Cancel and return to previous page"
-msgstr ""
+msgstr "Annuleer en keer terug naar de vorige pagina"
 
 #: registration/templates/registration/registration_report/student_rr_createview_jumbotron.html:11
 #: registration/templates/registration/registration_report/student_rr_createview_jumbotron.html:33
 msgid "Register now as a student by creating your own registration report"
-msgstr ""
+msgstr "Schrijf je nu in als student door je eigen inschrijfverslag aan te maken"
 
 #: registration/templates/registration/registration_report/student_rr_createview_jumbotron.html:17
 msgid ""
@@ -2908,22 +3153,34 @@ msgid ""
 "pending payment, consult your invoices or your scores and many more.\n"
 "  "
 msgstr ""
+"\n"
+"    Je studentregistratierapport is het bewijs dat je staat geregistreerd als "
+"een student.\n"
+"    <br>\n"
+"    Het bevat al uw juridische gegevens, bestanden en al uw "
+"abonnementen op elk van uw opleidingen en / of modules.\n"
+"    <br>\n"
+"    Vanuit je studentinschrijvingsrapport kun je je "
+"gegevens, volg je voortgang langs je graden en / of modules, controleer of "
+"je inschrijving voor een opleiding en / of module is gevalideerd, ga verder met a "
+"in afwachting van betaling, raadpleeg uw facturen of uw scores en nog veel meer.\n"
+"  "
 
 #: registration/templates/registration/userprofile/actions.html:8
 #: registration/templates/registration/userprofile/userprofile_updateview.html:5
 #: registration/templates/registration/userprofile/userprofile_updateview.html:12
 msgid "Update your profile"
-msgstr ""
+msgstr "update je profiel"
 
 #: registration/templates/registration/userprofile/actions.html:23
 #: registration/templates/registration/userprofile/user_admin_panel.html:148
 msgid "Deactivate user account"
-msgstr ""
+msgstr "Deactiveer gebruikersaccount"
 
 #: registration/templates/registration/userprofile/actions.html:26
 #: registration/templates/registration/userprofile/user_admin_panel.html:151
 msgid "Activate user account"
-msgstr ""
+msgstr "Activeer gebruikersaccount"
 
 #: registration/templates/registration/userprofile/actions.html:32
 #, fuzzy
@@ -2933,56 +3190,56 @@ msgstr "Terug naar de diplomacatalogus"
 
 #: registration/templates/registration/userprofile/courses_list.html:57
 msgid "Upcoming"
-msgstr ""
+msgstr "Aankomende"
 
 #: registration/templates/registration/userprofile/courses_list.html:61
 msgid "Ongoing"
-msgstr ""
+msgstr "Voortdurende"
 
 #: registration/templates/registration/userprofile/courses_list.html:65
 msgid "Finished"
-msgstr ""
+msgstr "Afgewerkt"
 
 #: registration/templates/registration/userprofile/courses_list.html:74
 msgid "No course available"
-msgstr ""
+msgstr "Geen cursus beschikbaar"
 
 #: registration/templates/registration/userprofile/student_statistics.html:10
 msgid "Student statistics"
-msgstr ""
+msgstr "Student statistieken"
 
 #: registration/templates/registration/userprofile/student_statistics.html:22
 msgid "Success rate"
-msgstr ""
+msgstr "Slagingspercentage"
 
 #: registration/templates/registration/userprofile/student_statistics.html:36
 msgid "ECTS spent"
-msgstr ""
+msgstr "ECTS uitgegeven"
 
 #: registration/templates/registration/userprofile/student_statistics.html:46
 msgid "ECTS won"
-msgstr ""
+msgstr "ECTS gewonnen"
 
 #: registration/templates/registration/userprofile/student_statistics.html:60
 msgid "Degrees statistics"
-msgstr ""
+msgstr "Graden statistieken"
 
 #: registration/templates/registration/userprofile/student_statistics.html:63
 #: registration/templates/registration/userprofile/student_statistics.html:98
 msgid "Total registrations"
-msgstr ""
+msgstr "Totaal aantal registraties"
 
 #: registration/templates/registration/userprofile/student_statistics.html:67
 msgid "Partially approved registrations"
-msgstr ""
+msgstr "Gedeeltelijk goedgekeurde registraties"
 
 #: registration/templates/registration/userprofile/student_statistics.html:71
 msgid "Fully approved registrations"
-msgstr ""
+msgstr "Volledig goedgekeurde registraties"
 
 #: registration/templates/registration/userprofile/student_statistics.html:75
 msgid "Partially payed registrations"
-msgstr ""
+msgstr "Gedeeltelijk betaalde inschrijvingen"
 
 #: registration/templates/registration/userprofile/student_statistics.html:79
 msgid "Fully payed registrations"
@@ -3547,6 +3804,9 @@ msgid ""
 "    This project was made for academic purposes\n"
 "  "
 msgstr ""
+"\n"
+"    Dit project is gemaakt voor academische doeleinden\n"
+"  "
 
 #: templates/bubbles/info/academic_project.html:13
 msgid ""
@@ -3557,6 +3817,12 @@ msgid ""
 "    If you want your own app, contact the owner:\n"
 "  "
 msgstr ""
+"\n"
+"    Dit project is geen officiële winstaanvraag ingediend voor een "
+"officiële organisatie.\n"
+"    <br>\n"
+"    Als je een eigen app wilt, neem dan contact op met de eigenaar:\n"
+"  "
 
 #: templates/bubbles/info/metadata_profile_update.html:6
 msgid ""
@@ -3834,6 +4100,12 @@ msgid ""
 "    To pursue, you must create a degree category first.\n"
 "  "
 msgstr ""
+"\n"
+"    Er is momenteel geen categorie beschikbaar. Elke gecreëerde graad moet zijn "
+"toegewezen aan een graadcategorie.\n"
+"    <br>\n"
+"    Om door te gaan, moet u eerst een categorie met diploma's maken.\n"
+"  "
 
 #: templates/bubbles/warning/no_module.html:6
 msgid ""
@@ -3841,6 +4113,9 @@ msgid ""
 "    No module available\n"
 "  "
 msgstr ""
+"\n"
+"    Geen module beschikbaar\n"
+"  "
 
 #: templates/bubbles/warning/no_module.html:13
 msgid ""
@@ -3851,6 +4126,12 @@ msgid ""
 "    To pursue, you must create a module first.\n"
 "  "
 msgstr ""
+"\n"
+"    Er is momenteel geen module beschikbaar. Elke cursus moet worden toegewezen "
+"een module.\n"
+"    <br>\n"
+"    Om door te gaan, moet u eerst een module maken.\n"
+"  "
 
 #: templates/bubbles/warning/no_modulelevel.html:6
 msgid ""
@@ -3858,6 +4139,9 @@ msgid ""
 "    No module level available\n"
 "  "
 msgstr ""
+"\n"
+"    Geen moduleniveau beschikbaar\n"
+"  "
 
 #: templates/bubbles/warning/no_modulelevel.html:13
 msgid ""
@@ -3868,6 +4152,12 @@ msgid ""
 "    To pursue, you must create a module level first.\n"
 "  "
 msgstr ""
+"\n"
+"    Er is momenteel geen niveau beschikbaar. Elke aangemaakte module moet "
+"toegewezen aan een moduleniveau.\n"
+"    <br>\n"
+"    Om door te gaan, moet u eerst een moduleniveau maken.\n"
+"  "
 
 #: templates/bubbles/warning/no_teacher.html:6
 msgid ""
@@ -3875,6 +4165,9 @@ msgid ""
 "    No teachers found\n"
 "  "
 msgstr ""
+"\n"
+"    Geen leraren gevonden\n"
+"  "
 
 #: templates/bubbles/warning/no_teacher.html:13
 msgid ""
@@ -3885,6 +4178,12 @@ msgid ""
 "    To pursue, a user must be promoted to Teacher.\n"
 "  "
 msgstr ""
+"\n"
+"    Er zijn momenteel geen docenten geregistreerd. Elke cursus moet worden toegewezen "
+"aan een leraar.\n"
+"    <br>\n"
+"    Om door te gaan, moet een gebruiker worden gepromoveerd tot leraar.\n"
+"  "
 
 #: templates/bubbles/warning/still_registered_guest_not_student.html:6
 msgid ""
@@ -3892,6 +4191,9 @@ msgid ""
 "    Your registration is not completed yet\n"
 "  "
 msgstr ""
+"\n"
+"    Uw registratie is nog niet voltooid\n"
+"  "
 
 #: templates/bubbles/warning/still_registered_guest_not_student.html:13
 msgid ""
@@ -3904,6 +4206,14 @@ msgid ""
 "registration complete as student, come back to this page.\n"
 "  "
 msgstr ""
+"\n"
+"    U bent momenteel een geregistreerde gast. Om door te gaan met deze actie, u "
+"moet als student ingeschreven staan.\n"
+"    <br>\n"
+"    Om student te worden, hoef je alleen maar je inschrijving te voltooien "
+"door op de onderstaande knop te klikken en de instructies te volgen. Zodra je "
+"inschrijving compleet als student, kom terug naar deze pagina.\n"
+"  "
 
 #: templates/bubbles/warning/student_rr_creation.html:6
 msgid ""
@@ -3912,6 +4222,10 @@ msgid ""
 "updatable anymore !\n"
 "  "
 msgstr ""
+"\n"
+"    Controleer uw gegevens twee keer! Zodra uw gegevens zijn ingediend, zullen sommige dat niet zijn "
+"meer bij te werken!\n"
+"  "
 
 #: templates/bubbles/warning/student_rr_creation.html:13
 msgid ""
@@ -3919,6 +4233,9 @@ msgid ""
 "especially concern the files uploaded. Please check twice before submitting "
 "them."
 msgstr ""
+"De meeste van deze gegevens kunnen na verzending niet meer worden bijgewerkt. Deze "
+"hebben vooral betrekking op de geüploade bestanden. Controleer twee keer voordat u verzendt "
+"them."
 
 #: templates/bubbles/warning/student_rr_creation.html:15
 msgid ""
@@ -3937,6 +4254,9 @@ msgid ""
 "    You already have succeeded this module\n"
 "  "
 msgstr ""
+"\n"
+"    Je bent al geslaagd voor deze module\n"
+"  "
 
 #: templates/bubbles/warning/succeeded_module_rr_already_exists.html:13
 msgid ""
@@ -3954,6 +4274,19 @@ msgid ""
 "score will be taken in consideration.\n"
 "  "
 msgstr ""
+"\n"
+"    U bent al eerder geslaagd voor deze module of u was vrijgesteld.\n"
+"    <br><br>\n"
+"    However, you are allowed to subscribe to this module again.\n"
+"    <br>\n"
+"    U kunt zich echter opnieuw op deze module abonneren. "
+"gevalideerd door ons personeel en u moet betalen voor uw registratie.\n"
+"    <br><br>\n"
+"    Als u faalt, wordt de module nog steeds als gevalideerd beschouwd.\n"
+"    <br>\n"
+"    Als deze module deel uitmaakt van een opleiding die je volgt, de beste finale "
+"score zal in overweging worden genomen.\n"
+"  "
 
 #: templates/bubbles/warning/unregistered.html:6
 msgid ""
@@ -3961,6 +4294,9 @@ msgid ""
 "    You are not registered\n"
 "  "
 msgstr ""
+"\n"
+"    U bent niet geregistreerd\n"
+"  "
 
 #: templates/bubbles/warning/unregistered.html:13
 msgid ""
@@ -3971,6 +4307,12 @@ msgid ""
 "    Once registered as a student, come back to this page and try again.\n"
 "  "
 msgstr ""
+"\n"
+"    Om deze actie uit te voeren, moet u zich eerst als gast registreren. Achtervolg dan je "
+"inschrijving volledig om student te worden.\n"
+"    <br>\n"
+"    Eenmaal geregistreerd als student, keer terug naar deze pagina en probeer het opnieuw.\n"
+"  "
 
 #: templates/bubbles/warning/verify_profile_data.html:6
 msgid ""
@@ -3978,6 +4320,9 @@ msgid ""
 "    Check the validity of these data\n"
 "  "
 msgstr ""
+"\n"
+"    Controleer de geldigheid van deze gegevens\n"
+"  "
 
 #: templates/bubbles/warning/verify_profile_data.html:13
 msgid ""
@@ -3989,50 +4334,57 @@ msgid ""
 "    If one of these data is incorrect, you can edit it from your profile.\n"
 "  "
 msgstr ""
+"\n"
+"    Voor juridische doeleinden moeten uw gegevens correct zijn.\n"
+"    <br>\n"
+"    Controleer de geldigheid voordat u tot betaling overgaat.\n"
+"    <br><br>\n"
+"    Als een van deze gegevens onjuist is, kunt u deze vanuit uw profiel bewerken.\n"
+"  "
 
 #: templates/filter_tag.html:5
 msgid "Filters"
-msgstr ""
+msgstr "Filters"
 
 #: templates/footer.html:12
 msgid "It is never to late to learn."
-msgstr ""
+msgstr "Het is nooit te laat om te leren."
 
 #: templates/footer.html:45
 msgid "About us"
-msgstr ""
+msgstr "Over ons"
 
 #: templates/footer.html:47
 msgid "Home"
-msgstr ""
+msgstr "Startpagina"
 
 #: templates/footer.html:48
 msgid "Contact us"
-msgstr ""
+msgstr "Neem contact op"
 
 #: templates/footer.html:50
 msgid "Privacy policy"
-msgstr ""
+msgstr "Privacybeleid"
 
 #: templates/footer.html:51
 msgid "Cookies policy"
-msgstr ""
+msgstr "Cookiebeleid"
 
 #: templates/footer.html:58
 msgid "Application Programming Interface"
-msgstr ""
+msgstr "Interface voor applicatieprogrammering"
 
 #: templates/footer.html:59
 msgid "Project report: Volume 1"
-msgstr ""
+msgstr "Projectrapport: deel 1"
 
 #: templates/footer.html:60
 msgid "Project report: Volume 2"
-msgstr ""
+msgstr "Projectrapport: deel 2"
 
 #: templates/footer.html:61
 msgid "GitLab.com project repository"
-msgstr ""
+msgstr "GitLab.com projectrepository"
 
 #: templates/i18n.html:21
 msgid ""
@@ -4040,6 +4392,9 @@ msgid ""
 "        <strong>How is this personal data used ?</strong>\n"
 "      "
 msgstr ""
+"\n"
+"        <strong>Hoe worden deze persoonlijke gegevens gebruikt?</strong>\n"
+"      "
 
 #: templates/i18n.html:26
 msgid ""
@@ -4054,27 +4409,27 @@ msgstr ""
 
 #: templates/i18n.html:33
 msgid "Change the language"
-msgstr ""
+msgstr "Verander de taal"
 
 #: templates/nav.html:27
 msgid "Catalog"
-msgstr ""
+msgstr "Catalogus"
 
 #: templates/nav.html:49
 msgid "Resources"
-msgstr ""
+msgstr "Middelen"
 
 #: templates/nav.html:58
 msgid "My courses"
-msgstr ""
+msgstr "Mijn vakken"
 
 #: templates/nav.html:79
 msgid "Admin"
-msgstr ""
+msgstr "Admin"
 
 #: templates/nav.html:84
-msgid "Users Admin Panel"
-msgstr ""
+msgid "Users beheerder Paneel"
+msgstr "Gebruikers admin paneel"
 
 #: templates/nav.html:90
 #, fuzzy
@@ -4096,19 +4451,19 @@ msgstr "Annuleer en terug naar de cursuspagina"
 
 #: templates/nav.html:112
 msgid "Profile"
-msgstr ""
+msgstr "Profiel"
 
 #: templates/nav.html:117
 msgid "Sign out"
-msgstr ""
+msgstr "Afmelden"
 
 #: templates/pagination_main.html:21
 msgid "Page"
-msgstr ""
+msgstr "pagina"
 
 #: templates/profile_tag.html:10
 msgid "profile"
-msgstr ""
+msgstr "Profiel"
 
 #: templates/rating_tag.html:4
 #, fuzzy
