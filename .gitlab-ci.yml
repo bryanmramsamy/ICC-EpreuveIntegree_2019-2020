@@ -11,38 +11,47 @@ stages:
   - deploy
 
 
-Build and push stage:
+Build (web):
   stage: build
   script:
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA ./serina-project
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
+    - docker pull $CI_REGISTRY_IMAGE/web:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/web:latest -t $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA ./serina-project
+    - docker push $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA
   only:
     - master
-    - tests
 
 
-Test stage:
+Build (nginx-proxy):
+  stage: build
+  script:
+    - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE/nginx-proxy:latest || true
+    - docker build --cache-from $CI_REGISTRY_IMAGE/nginx-proxy:latest -t $CI_REGISTRY_IMAGE/nginx-proxy:$CI_COMMIT_SHA ./nginx
+    - docker push $CI_REGISTRY_IMAGE/nginx-proxy:$CI_COMMIT_SHA
+  only:
+    - master
+
+
+Test:
   stage: test
   variables:
     SECRET_KEY: '2(o^nzfzonpqr*5d-6-trf1-l+s4zlvq-(v1u*f)acfb&h6$#!'  # Dummy key for pipeline
     DJANGO_ALLOWED_HOSTS: 'localhost 127.0.0.1 [::1]'
   script:
     - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
-    - docker pull $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker run --rm -e SECRET_KEY='$SECRET_KEY' -e DJANGO_ALLOWED_HOSTS='$DJANGO_ALLOWED_HOSTS' $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA pytest
-    - docker tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker pull $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA
+    - docker run --rm -e SECRET_KEY='$SECRET_KEY' -e DJANGO_ALLOWED_HOSTS='$DJANGO_ALLOWED_HOSTS' $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA pytest
+    - docker tag $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
     - docker push $CI_REGISTRY_IMAGE:latest
   only:
     - master
-    - tests
 
 
-Deploy stage:
+Deploy:
   stage: deploy
   script:
     - chmod 600 $DEPLOYMENT_KEY_FILE
-    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 "bash ICC-EpreuveIntegree_2019-2020/serina-project/scripts/deployment.sh"
+    - ssh -i "$DEPLOYMENT_KEY_FILE" -o "StrictHostKeyChecking=no" -o "IdentitiesOnly=yes" bryan@78.46.198.120 "bash ~/ICC-EpreuveIntegree_2019-2020/serina-project/scripts/deployment.sh"
   only:
     - master

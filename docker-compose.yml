@@ -6,7 +6,7 @@ services:
     build:
       context: ./serina-project
       dockerfile: Dockerfile
-    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/web
 
     networks:
       - serina_network
@@ -29,7 +29,7 @@ services:
 
   db:
     container_name: serina_db
-    image: postgres:12.3-alpine
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/db
     networks:
       - serina_network
     restart: unless-stopped

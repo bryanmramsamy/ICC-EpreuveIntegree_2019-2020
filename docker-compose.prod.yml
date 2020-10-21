@@ -6,7 +6,7 @@ services:
     build:
       context: ./serina-project
       dockerfile: Dockerfile.prod
-    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/web
 
     networks:
       - serina_network
@@ -33,7 +33,7 @@ services:
 
   db:
     container_name: serina_db
-    image: postgres:12.3
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/db
 
     networks:
       - serina_network
@@ -53,6 +53,7 @@ services:
     build:
       context: ./nginx
       dockerfile: Dockerfile
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/nginx-proxy
 
     networks:
       - serina_network
@@ -92,7 +93,7 @@ services:
 
 
   ngnix-proxy-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
+    image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/ngnix-proxy-letsencrypt
 
     networks:
       - serina_network
