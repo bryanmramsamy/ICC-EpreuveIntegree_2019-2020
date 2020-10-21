@@ -1,6 +1,6 @@
 # Pull official python image
 
-FROM python:3.8
+FROM registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/web:latest
 
 
 # Set environnement variables
