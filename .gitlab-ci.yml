@@ -33,7 +33,7 @@ Build (nginx-proxy):
     - master
 
 
-Test:
+Test (web):
   stage: test
   variables:
     SECRET_KEY: '2(o^nzfzonpqr*5d-6-trf1-l+s4zlvq-(v1u*f)acfb&h6$#!'  # Dummy key for pipeline
@@ -43,7 +43,18 @@ Test:
     - docker pull $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA
     - docker run --rm -e SECRET_KEY='$SECRET_KEY' -e DJANGO_ALLOWED_HOSTS='$DJANGO_ALLOWED_HOSTS' $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA pytest
     - docker tag $CI_REGISTRY_IMAGE/web:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
-    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE/web:latest
+  only:
+    - master
+
+
+Test (nginx-proxy):
+  stage: test
+  script:
+    - docker login --username $CI_REGISTRY_USER --password "$CI_BUILD_TOKEN" $CI_REGISTRY
+    - docker pull $CI_REGISTRY_IMAGE/nginx-proxy:$CI_COMMIT_SHA
+    - docker tag $CI_REGISTRY_IMAGE/nginx-proxy:$CI_COMMIT_SHA $CI_REGISTRY_IMAGE:latest
+    - docker push $CI_REGISTRY_IMAGE/nginx-proxy:latest
   only:
     - master
 
