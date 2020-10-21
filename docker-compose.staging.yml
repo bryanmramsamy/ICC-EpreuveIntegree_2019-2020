@@ -92,6 +92,7 @@ services:
 
 
   ngnix-proxy-letsencrypt:
+    container_name: nginx-proxy-letsencrypt
     image: registry.gitlab.com/bryanmramsamy/icc-epreuveintegree_2019-2020/ngnix-proxy-letsencrypt
 
     networks:
